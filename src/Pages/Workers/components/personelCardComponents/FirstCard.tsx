@@ -30,9 +30,9 @@ export const FirstCard = ({sizes,catergories}:any) => {
   return (
     <Box sx={{display:'flex'}} >
     <Box sx={{display:'flex',flexDirection:'column',width:'500px',height:'600px',mr:4}} >
-       
-     <img src={catergories[index].image} style={{width:'500px',height:'500px',borderRadius:'8px'}} />
-
+      
+     <img src={catergories[index].image} style={{width:'500px',height:'500px',borderRadius:'8px'}}  />
+   
      <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'center',width:'100%',height:'100px',overflow:'hidden',position:'relative'}} >
 
      { catergories.slice(currentIndex, currentIndex + 6).map((category:any)=> 

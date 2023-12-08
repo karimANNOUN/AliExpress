@@ -8,13 +8,24 @@ import WorkspacePremiumOutlinedIcon from '@mui/icons-material/WorkspacePremiumOu
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { DetailVendeur } from './components/DetailVendeur';
+import { CategoryCard } from './components/CategoryCard';
+import { FirstCategoryCard } from './components/FirstCategoryCard';
 
 
 export const Header = () => {
     const [expand,setExpand]=useState(false)
     const [show,setShow]=useState(false)
+
+
+    const [expands,setExpands]=useState(false)
+    const [shows,setShows]=useState(false)
+
+    const [hovers,setHovers]=useState(0);
+   
+   
+
   return (
- 
+     <Box sx={{width:'100%',display:'flex',flexDirection:'column',alignItems:'center'}} >
     <Box sx={{display:'flex',height:'70px',width:'60%',alignItems:'center'}} >
     <Button onMouseEnter={()=>setShow(true)} onMouseLeave={()=>setShow(false)} sx={{color:'black',fontFamily:'unset',":hover":{bgcolor:'Window',fontFamily:'unset',color:'#ef6c00',textDecorationLine:'underline'}}} variant="text">ChicSoleHQ Store</Button>
  
@@ -40,7 +51,86 @@ export const Header = () => {
  </Typography>
  { show ? <DetailVendeur setShow={setShow} /> : "" }
     </Box>
-    
+
+
+    <Box sx={{height:'60px',width:'100%'}} >
+    <Typography sx={{fontWeight:'800'}} variant='h5' gutterBottom>
+    ChicSoleHQ Store
+ </Typography>
+    </Box>
+
+    <Box sx={{display:'flex',justifyContent:'center',height:'50px',bgcolor:'black',width:'100%',alignItems:'center',position:'relative'}}>
+     <Box sx={{display:'flex',width:'60%',height:'100%'}} >
+     
+     { hovers === 0 ? <Button onClick={()=>(setHovers(0))}  sx={{color:'white',bgcolor:'#757575',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
+   Page d'accueil
+   
+   </Button>
+    :
+    <Button onClick={()=>(setHovers(0))}  sx={{color:'white',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
+   Page d'accueil
+   
+   </Button>
+   
+   }
+
+{ hovers === 1 ?  <Button  onMouseEnter={()=>(setExpands(true),setShows(true))} onMouseLeave={()=>(setExpands(false),setShows(false))} sx={{color:'white',bgcolor:'#757575',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
+   Catégories { !expands ? <ExpandMoreIcon sx={{fontSize:'20px'}} /> : <ExpandLessIcon sx={{fontSize:'20px'}} /> } 
+   </Button>
+   :
+   <Button   onMouseEnter={()=>(setExpands(true),setShows(true))} onMouseLeave={()=>(setExpands(false),setShows(false))} sx={{color:'white',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
+   Catégories { !expands ? <ExpandMoreIcon sx={{fontSize:'20px'}} /> : <ExpandLessIcon sx={{fontSize:'20px'}} /> } 
+   </Button>}
+          
+   { hovers === 2 ? <Button onClick={()=>(setHovers(2))} sx={{color:'white',bgcolor:'#757575',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
+   Article en promos
+   
+   </Button>
+   :
+   <Button onClick={()=>(setHovers(2))} sx={{color:'white',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
+   Article en promos
+   
+   </Button>
+}
+
+{ hovers === 3 ?  <Button onClick={()=>(setHovers(3))} sx={{color:'white',bgcolor:'#757575',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
+   Meilleur Ventes
+   
+   </Button>
+   :
+   <Button onClick={()=>(setHovers(3))} sx={{color:'white',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
+   Meilleur Ventes
+   
+   </Button>
+}
+
+{ hovers === 4 ?  <Button onClick={()=>(setHovers(4))}  sx={{color:'white',bgcolor:'#757575',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
+   Avis sur le vendeur
+   
+   </Button>
+
+ :
+ <Button onClick={()=>(setHovers(4))} sx={{color:'white',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
+   Avis sur le vendeur
+   
+   </Button>
+}
+
+
+     </Box>
+
+
+
+  {shows ? <CategoryCard setHovers={setHovers} setShows={setShows} setExpands={setExpands} /> : "" }
+  
+
+   
+    </Box>
+
+
+
+
+    </Box>
     
   )
 }

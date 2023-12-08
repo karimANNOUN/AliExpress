@@ -15,7 +15,7 @@ import FlashlightOnRoundedIcon from '@mui/icons-material/FlashlightOnRounded';
 import AccessibilityIcon from '@mui/icons-material/Accessibility';
 export default function List2() {
   return (
-    <Box sx={{ width: '100%',position:'absolute',top:35,left:0, bgcolor: '#eeeeee',borderRadius:'12px' }}>
+    <Box sx={{ width: '100%',position:'absolute',zIndex:1,top:35,left:0, bgcolor: '#eeeeee',borderRadius:'12px' }}>
     <nav aria-label="main mailbox folders">
       <List>
         <ListItem disablePadding>

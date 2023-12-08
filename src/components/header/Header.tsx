@@ -112,7 +112,7 @@ export const Header = () => {
 
             </Box>
 
-            { !qrcode ?  <div style={{position:'absolute' ,top:'120px' ,left:'1330px',backgroundColor:'red',width:'100%',borderRadius:'20px',maxWidth:560}} >
+            { !qrcode ?  <div style={{position:'absolute',zIndex:1 ,top:'120px' ,left:'1330px',backgroundColor:'red',width:'100%',borderRadius:'20px',maxWidth:560}} >
          <Paper elevation={12} sx={{ bgcolor: 'background.paper',display:'flex' }}>
          <QrCode2Icon sx={{fontSize:'125px'}} />
          <Box>
@@ -149,7 +149,7 @@ export const Header = () => {
           </Box>
 
 
-          { !accord ? <motion.div style={{position:'absolute' ,top:'120px' ,left:'1530px',width:'100%',borderRadius:'20px',maxWidth:360}} >
+          { !accord ? <motion.div style={{position:'absolute',zIndex:1 ,top:'120px' ,left:'1530px',width:'100%',borderRadius:'20px',maxWidth:360}} >
             <Paper elevation={12} sx={{ bgcolor: 'background.paper' , borderRadius:'16px' }}>
            <nav  aria-label="main mailbox folders">
          <List  >

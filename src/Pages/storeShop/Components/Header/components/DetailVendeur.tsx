@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 export const DetailVendeur = ({setShow}:any) => {
   return (
-    <Paper onMouseEnter={()=>setShow(true)} onMouseLeave={()=>setShow(false)} sx={{width:'670px',height:'250px',display:'flex',flexDirection:'column',position:'absolute',top:'170px',left:'390px'}} elevation={7} >
+    <Paper onMouseEnter={()=>setShow(true)} onMouseLeave={()=>setShow(false)} sx={{width:'670px',height:'250px',display:'flex',flexDirection:'column',position:'absolute',top:'170px',left:'390px',zIndex:1}} elevation={7} >
 
    <Box sx={{display:'flex',height:'75%',borderBottomStyle:'solid',borderBottomColor:'#eeeeee',width:'100%'}} >
       <Box sx={{width:'40%',height:'100%',borderRightStyle:'solid',borderRightColor:'#eeeeee',display:'flex',flexDirection:'column',pl:3}} >

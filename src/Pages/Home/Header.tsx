@@ -27,14 +27,14 @@ const [vu,setVu]=useState(true)
  { vu ? <ExpandMoreIcon sx={{fontSize:'20px',ml:1,color:'white'}} /> : <ExpandLessIcon sx={{fontSize:'20px',ml:1,color:'white'}} />  }
  { !vu ? <List2/> : "" }
  </Button>
-<Button variant="text" sx={{position:'static' ,color:'white',borderRadius:'12px' ,":hover":{bgcolor:'#9e9e9e',borderRadius:'12px'}}} >Text</Button>
-<Button variant="text" sx={{position:'static' ,color:'white',borderRadius:'12px' ,":hover":{bgcolor:'#9e9e9e',borderRadius:'12px'}}} >Text</Button>
-<Button variant="text" sx={{position:'static' ,color:'white',borderRadius:'12px' ,":hover":{bgcolor:'#9e9e9e',borderRadius:'12px'}}} >Text</Button>
-<Button variant="text" sx={{position:'static' ,color:'white',borderRadius:'12px' ,":hover":{bgcolor:'#9e9e9e',borderRadius:'12px'}}} >Text</Button>
-<Button variant="text" sx={{position:'static' ,color:'white',borderRadius:'12px' ,":hover":{bgcolor:'#9e9e9e',borderRadius:'12px'}}} >Text</Button>
-<Button variant="text" sx={{position:'static' ,color:'white',borderRadius:'12px' ,":hover":{bgcolor:'#9e9e9e',borderRadius:'12px'}}} >Text</Button>
-<Button variant="text" sx={{position:'static' ,color:'white',borderRadius:'12px' ,":hover":{bgcolor:'#9e9e9e',borderRadius:'12px'}}} >Text</Button>
-<Button variant="text" sx={{position:'static' ,color:'white',borderRadius:'12px' ,":hover":{bgcolor:'#9e9e9e',borderRadius:'12px'}}} >Text</Button>
+<Button variant="text" sx={{color:'white',borderRadius:'12px' ,":hover":{bgcolor:'#9e9e9e',borderRadius:'12px'}}} >Text</Button>
+<Button variant="text" sx={{color:'white',borderRadius:'12px' ,":hover":{bgcolor:'#9e9e9e',borderRadius:'12px'}}} >Text</Button>
+<Button variant="text" sx={{color:'white',borderRadius:'12px' ,":hover":{bgcolor:'#9e9e9e',borderRadius:'12px'}}} >Text</Button>
+<Button variant="text" sx={{color:'white',borderRadius:'12px' ,":hover":{bgcolor:'#9e9e9e',borderRadius:'12px'}}} >Text</Button>
+<Button variant="text" sx={{color:'white',borderRadius:'12px' ,":hover":{bgcolor:'#9e9e9e',borderRadius:'12px'}}} >Text</Button>
+<Button variant="text" sx={{color:'white',borderRadius:'12px' ,":hover":{bgcolor:'#9e9e9e',borderRadius:'12px'}}} >Text</Button>
+<Button variant="text" sx={{color:'white',borderRadius:'12px' ,":hover":{bgcolor:'#9e9e9e',borderRadius:'12px'}}} >Text</Button>
+<Button variant="text" sx={{color:'white',borderRadius:'12px' ,":hover":{bgcolor:'#9e9e9e',borderRadius:'12px'}}} >Text</Button>
 
 <Button variant="outlined" onMouseEnter={ ()=> setShow(false)} onMouseLeave={()=> setShow(true)} sx={{ borderWidth:'2px',borderColor:'#e0e0e0' ,color:'white',borderRadius:'12px' ,":hover":{bgcolor:'#9e9e9e',borderRadius:'12px',borderColor:'#e0e0e0'}}} > 
  Outlined
