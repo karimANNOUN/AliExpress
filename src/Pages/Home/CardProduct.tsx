@@ -1,12 +1,32 @@
-
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 import Button from '@mui/material/Button';
-import {  Link  } from 'react-router-dom'
+import {  Link  } from 'react-router-dom';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import {CardModalProduct} from '../CardProducts/CardModalProduct'
 export const CardProduct = () => {
 
+  const [over, setOver] = useState(false);
+  const handleFermer = () => {
+    setOver(false);
+  };
 
+ 
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOver(true)
+
+    setTimeout(() => {
+      setOver(false)
+      setOpen(true)
+    }, 1000);
+   
+  
+  }
 
 const article = [
     {id:1,name:'zarbia',prix:'2.568'},
@@ -69,10 +89,18 @@ const article = [
       </Typography>
        </Box>
 
-       <Button variant="contained" sx={{bgcolor:'black',color:'Window',width:'100%',my:1,borderRadius:'20px',":hover":{bgcolor:'black',color:'Window'}}} >Apercu</Button> 
+       <Button onClick={handleOpen} variant="contained" sx={{bgcolor:'black',color:'Window',width:'100%',my:1,borderRadius:'20px',":hover":{bgcolor:'black',color:'Window'}}} >Apercu</Button> 
 
           </Box>
         </Box>)} 
+        <CardModalProduct open={open} setOpen={setOpen} />
+        <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={over}
+        onClick={handleFermer}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       </Box>
 
 

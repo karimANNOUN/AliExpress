@@ -16,7 +16,7 @@ export const CategoryCard = ({setShows,setExpands,setHovers}:any) => {
     const [second,setSecond]=useState(false)
 
   return (
-    <div onMouseEnter={()=>(setExpands(true),setShows(true))} onMouseLeave={()=>(setExpands(false),setShows(false))} style={{position:'absolute',top:'99%',left:'26.58%'}} >
+    <div onMouseEnter={()=>(setExpands(true),setShows(true))} onMouseLeave={()=>(setExpands(false),setShows(false))} style={{position:'absolute',zIndex:2,top:'99%',left:'26.58%'}} >
     <Box sx={{width:'260px',bgcolor:'Window',borderStyle:'solid',borderColor:'#eeeeee',borderRadius:'8px'}} >
            <List>
           <ListItem onMouseEnter={()=>(setExpands(true),setShows(true),setFirst(true))} onMouseLeave={()=>(setExpands(false),setShows(false),setFirst(false))} disablePadding>

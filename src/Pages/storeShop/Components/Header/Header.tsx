@@ -9,10 +9,16 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { DetailVendeur } from './components/DetailVendeur';
 import { CategoryCard } from './components/CategoryCard';
-import { FirstCategoryCard } from './components/FirstCategoryCard';
+import {useNavigate,useLocation} from 'react-router-dom'
+import path from 'path';
+import { execFile } from 'child_process';
 
 
 export const Header = () => {
+
+    const navigate=useNavigate()
+    const location=useLocation()
+
     const [expand,setExpand]=useState(false)
     const [show,setShow]=useState(false)
 
@@ -20,9 +26,19 @@ export const Header = () => {
     const [expands,setExpands]=useState(false)
     const [shows,setShows]=useState(false)
 
-    const [hovers,setHovers]=useState(0);
-   
-   
+   const active=()=>{
+    if(location.pathname == '/store/1/articleprosmos'){
+        return 2
+     }if(location.pathname == '/store/1'){
+        return 0
+     }if(location.pathname == '/store/1/meilleur'){
+        return 3
+     }if (location.pathname == '/store/1/avis') {
+         return 4
+     }
+        
+     }
+     const [hovers,setHovers]=useState(active) 
 
   return (
      <Box sx={{width:'100%',display:'flex',flexDirection:'column',alignItems:'center'}} >
@@ -62,12 +78,12 @@ export const Header = () => {
     <Box sx={{display:'flex',justifyContent:'center',height:'50px',bgcolor:'black',width:'100%',alignItems:'center',position:'relative'}}>
      <Box sx={{display:'flex',width:'60%',height:'100%'}} >
      
-     { hovers === 0 ? <Button onClick={()=>(setHovers(0))}  sx={{color:'white',bgcolor:'#757575',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
+     { hovers === 0 ? <Button onClick={()=>(setHovers(0),navigate('/store/1'))}  sx={{color:'white',bgcolor:'#757575',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
    Page d'accueil
    
    </Button>
     :
-    <Button onClick={()=>(setHovers(0))}  sx={{color:'white',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
+    <Button onClick={()=>(setHovers(0),navigate('/store/1'))}  sx={{color:'white',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
    Page d'accueil
    
    </Button>
@@ -82,35 +98,35 @@ export const Header = () => {
    Catégories { !expands ? <ExpandMoreIcon sx={{fontSize:'20px'}} /> : <ExpandLessIcon sx={{fontSize:'20px'}} /> } 
    </Button>}
           
-   { hovers === 2 ? <Button onClick={()=>(setHovers(2))} sx={{color:'white',bgcolor:'#757575',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
+   { hovers === 2 ? <Button onClick={()=>(setHovers(2),navigate('/store/1/articleprosmos'))} sx={{color:'white',bgcolor:'#757575',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
    Article en promos
    
    </Button>
    :
-   <Button onClick={()=>(setHovers(2))} sx={{color:'white',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
+   <Button onClick={()=>(setHovers(2),navigate('/store/1/articleprosmos'))} sx={{color:'white',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
    Article en promos
    
    </Button>
 }
 
-{ hovers === 3 ?  <Button onClick={()=>(setHovers(3))} sx={{color:'white',bgcolor:'#757575',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
+{ hovers === 3 ?  <Button onClick={()=>(setHovers(3),navigate('/store/1/meilleur'))} sx={{color:'white',bgcolor:'#757575',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
    Meilleur Ventes
    
    </Button>
    :
-   <Button onClick={()=>(setHovers(3))} sx={{color:'white',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
+   <Button onClick={()=>(setHovers(3),navigate('/store/1/meilleur'))} sx={{color:'white',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
    Meilleur Ventes
    
    </Button>
 }
 
-{ hovers === 4 ?  <Button onClick={()=>(setHovers(4))}  sx={{color:'white',bgcolor:'#757575',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
+{ hovers === 4 ?  <Button onClick={()=>(setHovers(4),navigate('/store/1/avis'))}  sx={{color:'white',bgcolor:'#757575',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
    Avis sur le vendeur
    
    </Button>
 
  :
- <Button onClick={()=>(setHovers(4))} sx={{color:'white',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
+ <Button onClick={()=>(setHovers(4),navigate('/store/1/avis'))} sx={{color:'white',fontFamily:'unset',":hover":{bgcolor:'#757575',fontFamily:'unset',color:'white'}}} variant="text">
    Avis sur le vendeur
    
    </Button>

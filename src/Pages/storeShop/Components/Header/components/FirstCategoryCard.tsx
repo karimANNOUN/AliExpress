@@ -7,7 +7,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 export const FirstCategoryCard = ({setFirst,setExpands,setShows,setHovers}:any) => {
   return (
-    <div onMouseEnter={()=>(setExpands(true),setFirst(true),setShows(true))} onMouseLeave={()=>(setExpands(false),setFirst(false),setShows(false))} style={{position:'absolute',zIndex:1,top:'10%',left:'98%'}} >
+    <div onMouseEnter={()=>(setExpands(true),setFirst(true),setShows(true))} onMouseLeave={()=>(setExpands(false),setFirst(false),setShows(false))} style={{position:'absolute',zIndex:2,top:'10%',left:'98%'}} >
     <Box sx={{width:'260px',borderStyle:'solid',bgcolor:'Window',borderColor:'#eeeeee',borderRadius:'8px'}} >
            <List>
           <ListItem disablePadding>

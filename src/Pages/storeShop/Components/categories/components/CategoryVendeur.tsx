@@ -7,9 +7,7 @@ import ListItem from '@mui/material/ListItem';
 import ListSubheader from '@mui/material/ListSubheader';
 import SummarizeIcon from '@mui/icons-material/Summarize';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
-import SearchIcon from '@mui/icons-material/Search';
+
 import Button from '@mui/material/Button';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
@@ -19,6 +17,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 export const CategoryVendeur = () => {
 
+    const [active,setActive]=useState(1)
 
     const cardRecomand=[
         {id:1,name:'kimou',price:8,commande:20},
@@ -133,9 +132,9 @@ export const CategoryVendeur = () => {
             </Box>
             <List
       component="nav"
-     
+            sx={{position:'relative'}}
       subheader={
-        <ListSubheader sx={{zIndex:0,textAlign:'left'}} component="div" id="nested-list-subheader">
+        <ListSubheader sx={{textAlign:'left',zIndex:0,position:'relative'}} disableSticky component="div" id="nested-list-subheader">
           <Link sx={{color:'black',display:'flex',alignItems:'center',":hover":{color:'#ff3d00'}}} href="#" underline="none">
           <SummarizeIcon sx={{fontSize:'12px',mr:1}} /> chaussur Homme
       </Link>
@@ -164,7 +163,7 @@ export const CategoryVendeur = () => {
       component="nav"
      
       subheader={
-        <ListSubheader sx={{zIndex:0,textAlign:'left'}} component="div" id="nested-list-subheader">
+        <ListSubheader sx={{textAlign:'left',zIndex:0}} disableSticky component="div" id="nested-list-subheader">
           <Link sx={{color:'black',display:'flex',alignItems:'center',":hover":{color:'#ff3d00'}}} href="#" underline="none">
           <SummarizeIcon sx={{fontSize:'12px',mr:1}} />  chaussur Famme
       </Link>
@@ -243,11 +242,26 @@ export const CategoryVendeur = () => {
             </Box>
           
             <Box sx={{my:2,width:'100%',height:'50px',bgcolor:'#eeeeee',display:'flex',alignItems:'center',pl:3}} >
-            <Button sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">Pertinence</Button>
+                {active === 1 ? 
+                <Button onClick={()=>setActive(1)} sx={{color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">Pertinence</Button>
 
-            <Button sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text"> Commandes<ArrowDownwardIcon sx={{fontSize:'14px'}} /></Button>
+                : 
+                <Button onClick={()=>setActive(1)} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">Pertinence</Button>
+            }
 
-            <Button sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text"> Prix<ImportExportIcon sx={{fontSize:'14px'}} /></Button>
+            
+            {active === 2 ?
+        <Button onClick={()=>setActive(2)} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text"> Commandes<ArrowDownwardIcon sx={{fontSize:'14px',color:'#ff3d00'}} /></Button>
+        :
+        <Button onClick={()=>setActive(2)} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text"> Commandes<ArrowDownwardIcon sx={{fontSize:'14px'}} /></Button>
+        }
+         
+
+           {active === 3 ?
+        <Button onClick={()=>setActive(3)} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text"> Prix<ImportExportIcon sx={{fontSize:'14px',color:'#ff3d00'}} /></Button>
+        :
+        <Button onClick={()=>setActive(3)} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text"> Prix<ImportExportIcon sx={{fontSize:'14px'}} /></Button>
+        }
 
             
              
