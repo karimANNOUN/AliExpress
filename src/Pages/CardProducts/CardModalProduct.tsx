@@ -69,8 +69,8 @@ export const CardModalProduct = ({setOpen,open}:any) => {
 
 
 
-<Box sx={{width:'300px',height:'600px',borderRadius:'10px',borderStyle:'solid',borderColor:'#eeeeee',display:'flex',justifyContent:'center',alignItems:'center'}} >
-   <ImageCardModal/>
+<Box sx={{width:'300px',height:'530px',borderRadius:'10px',borderStyle:'solid',borderColor:'#eeeeee',display:'flex',justifyContent:'center',alignItems:'center'}} >
+   <ImageCardModal setOpen={setOpen} />
 </Box>
 
 </Box>

@@ -12,7 +12,42 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import Button from '@mui/material/Button';
 import ReplyIcon from '@mui/icons-material/Reply';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-export const ImageCardModal = () => {
+import { ProductStoreShop } from '../ProductStore/ProductStoreShop';
+
+
+
+type Anchor = 'right';
+
+export const ImageCardModal = ({setOpen}:any) => {
+
+
+    const [state, setState] = React.useState({
+        right: false
+      });
+    
+      const toggleDrawer =
+        (anchor: Anchor, ovrir: boolean) =>
+        (event: React.KeyboardEvent | React.MouseEvent) => {
+          if (
+            event.type === 'keydown' &&
+            ((event as React.KeyboardEvent).key === 'Tab' ||
+              (event as React.KeyboardEvent).key === 'Shift')
+          ) {
+            return;
+          }
+    
+          setState({ ...state, [anchor]: ovrir });
+        };
+
+        const handelOpen=()=>{
+            setOpen(false)
+            
+                toggleDrawer('right', true);     
+           
+           
+            
+        }
+
   return (
     <Box sx={{width:'95%',height:'95%',mb:1,display:'flex',flexDirection:'column'}} >
 
@@ -91,12 +126,11 @@ Protection acheteur
 759 unités disponibles
 </Typography>
 
-<Button sx={{width:'100%',height:'40px',my:2,borderRadius:'20px',color:'white',bgcolor:'#e64a19',":hover":{bgcolor:'#e64a19'}}} variant="contained">Acheter Maintenant</Button>
-<Button sx={{width:'100%',height:'40px',my:2,borderRadius:'20px',color:'#bf360c',bgcolor:'#fbe9e7',":hover":{bgcolor:'#fbe9e7'}}} variant="contained">Acheter Maintenant</Button>
+<Button onClick={ toggleDrawer('right', true)} sx={{width:'100%',height:'40px',my:2,borderRadius:'20px',color:'white',bgcolor:'#e64a19',":hover":{bgcolor:'#e64a19'}}} variant="contained">Ajouter au Panier</Button>
 <Box sx={{display:'flex',width:'100%',alignItems:'center',justifyContent:'space-between'}} >
 <Button sx={{width:'45%',height:'40px',my:2,borderRadius:'20px',color:'black',":hover":{color:'black'}}} color='inherit' variant="outlined">
  <ReplyIcon/>
- Partager
+ Détails
  </Button>
  <Button sx={{width:'45%',height:'40px',my:1,borderRadius:'20px',color:'black',":hover":{color:'black'}}} color='inherit' variant="outlined">
  <FavoriteBorderOutlinedIcon/>
@@ -104,6 +138,8 @@ Protection acheteur
  </Button>
 </Box>
     </Box>
+ 
+<ProductStoreShop toggleDrawer={toggleDrawer} state={state} />
 
   </Box>
   )
