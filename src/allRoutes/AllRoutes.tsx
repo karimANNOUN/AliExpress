@@ -5,6 +5,7 @@ import { Worker } from '../Pages/Workers/Worker'
 import { ProfilBayer } from '../Pages/storeShop/ProfilBayer'
 import { CategoriesType } from '../Pages/storeShop/Components/categories/CategoriesType'
 import { AvisVendeur } from '../Pages/storeShop/Components/avisvendeur/AvisVendeur'
+import { HomeStore } from '../Pages/ProductStore/Homestore/HomeStore'
 
 
 export default function AllRoutes() {
@@ -16,6 +17,7 @@ export default function AllRoutes() {
         <Route path='/store/:storeId' element={<ProfilBayer/>} />
         <Route path='/store/:storeId/:categories' element={<CategoriesType/>} />
         <Route path='/store/:storeId/avis' element={<AvisVendeur/>} />
+        <Route path='/stores/productuser' element={<HomeStore/>} />
       
         </Routes> 
     </>
