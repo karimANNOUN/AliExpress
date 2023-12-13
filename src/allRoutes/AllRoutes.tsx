@@ -6,6 +6,7 @@ import { ProfilBayer } from '../Pages/storeShop/ProfilBayer'
 import { CategoriesType } from '../Pages/storeShop/Components/categories/CategoriesType'
 import { AvisVendeur } from '../Pages/storeShop/Components/avisvendeur/AvisVendeur'
 import { HomeStore } from '../Pages/ProductStore/Homestore/HomeStore'
+import { PaymentStores } from '../Pages/ProductStore/PaymentStore/PaymentStores'
 
 
 export default function AllRoutes() {
@@ -17,7 +18,10 @@ export default function AllRoutes() {
         <Route path='/store/:storeId' element={<ProfilBayer/>} />
         <Route path='/store/:storeId/:categories' element={<CategoriesType/>} />
         <Route path='/store/:storeId/avis' element={<AvisVendeur/>} />
-        <Route path='/stores/productuser' element={<HomeStore/>} />
+        <Route path='/stores'  >
+          <Route path='productuser' element={<HomeStore/>} />
+          <Route path='payment' element={<PaymentStores/>} />
+        </Route>
       
         </Routes> 
     </>
