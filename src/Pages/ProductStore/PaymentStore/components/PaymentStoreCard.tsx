@@ -9,6 +9,8 @@ import PaymentIcon from '@mui/icons-material/Payment';
 
 import { CardElementStores } from './CardElementStores';
 import { BoxLocation } from './BoxLocation';
+import { AddCard } from './paymentInfo/AddCard';
+import { VoirInfoCard } from './paymentInfo/VoirInfoCard';
 
 export const PaymentStoreCard = () => {
 
@@ -16,9 +18,18 @@ export const PaymentStoreCard = () => {
   const handleOpen = () => setOpen(true);
 
     const [show,setShow]=useState(false)
-    const [adress,setAdress]=useState(false)
+    const [showCard,setShowCard]=useState(false)
 
-const infoAdress=[]
+
+
+    const handelOpenPayment=()=> setShow(true)
+
+    const handelShowCard=()=> setShowCard(true)
+
+
+  
+
+const infoAdress=[{id:1}]
 
 
   return (
@@ -119,7 +130,7 @@ Chihani, el taref, Algeria, 36014
         Moyens de paiement
         </Typography>
           
-        <Button variant='text' sx={{color:'#03a9f4',bgcolor:'Window',fontSize:'12px',fontWeight:'100' ,":hover":{color:'#03a9f4',bgcolor:'Window'} }} >
+        <Button onClick={handelShowCard} variant='text' sx={{color:'#03a9f4',bgcolor:'Window',fontSize:'12px',fontWeight:'100' ,":hover":{color:'#03a9f4',bgcolor:'Window'} }} >
         Voir plus
     </Button>
 
@@ -129,13 +140,13 @@ Chihani, el taref, Algeria, 36014
        
 
 
-<IconButton  sx={{width:'23px',height:'23px',ml:2,borderRadius:'50%',border:'2px solid #e0e0e0',bgcolor:'Window',":hover":{bgcolor:'Window'},display:'flex',justifyContent:'center',alignItems:'center'}} >
+<IconButton onClick={handelOpenPayment} sx={{width:'23px',height:'23px',ml:2,borderRadius:'50%',border:'2px solid #e0e0e0',bgcolor:'Window',":hover":{bgcolor:'Window',borderColor:'#e91e63'},display:'flex',justifyContent:'center',alignItems:'center'}} >
 
 </IconButton>
 
 
 
-<Button variant='text' sx={{color:'black',fontSize:'12px',textAlign:'left',ml:1,":hover":{color:'black'}}} >
+<Button onClick={handelOpenPayment} variant='text' sx={{color:'black',fontSize:'12px',textAlign:'left',ml:1,":hover":{color:'black'}}} >
  <PaymentIcon sx={{fontSize:'16px',mr:1}} />  Ajouter une carte
 </Button> 
 
@@ -144,7 +155,8 @@ Chihani, el taref, Algeria, 36014
 
 
         </Box>
-          
+          <AddCard show={show} setShow={setShow} showCard={showCard} setShowCard={setShowCard} />
+          <VoirInfoCard show={show} setShow={setShow} showCard={showCard} setShowCard={setShowCard} />
         </Box>
 
         <Box sx={{width:'100%',display:'flex',flexDirection:'column',alignItems:'center',bgcolor:'Window',borderRadius:'8px',border:'2px solid #f5f5f5',mt:2}} >
@@ -207,7 +219,7 @@ Chihani, el taref, Algeria, 36014
          (≈DA29,972.11)
            </Typography>
            </Box>
-           <Button variant='contained' sx={{bgcolor:'#ff1744',color:'white',mb:2,width:'100%',borderRadius:'16px' ,":hover":{color:'white',bgcolor:'#ff1744'} }} >
+           <Button onClick={handelShowCard} variant='contained' sx={{bgcolor:'#ff1744',color:'white',mb:2,width:'100%',borderRadius:'16px' ,":hover":{color:'white',bgcolor:'#ff1744'} }} >
           Commander
     </Button>
           </Box>

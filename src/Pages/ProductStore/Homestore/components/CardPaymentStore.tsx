@@ -14,9 +14,12 @@ import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
 
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { useNavigate } from 'react-router-dom';
 
 
 export const CardPaymentStore = () => {
+
+  const navigate=useNavigate()
 
     const [show,setShow]=useState(false)
 
@@ -220,7 +223,7 @@ Perruque Lace Front Wig 360 Brésilienne Naturelle, Cheveux Lisses...
          (≈DA29,972.11)
            </Typography>
            </Box>
-           <Button variant='contained' sx={{bgcolor:'#ff1744',color:'white',mb:2,width:'100%',borderRadius:'16px' ,":hover":{color:'white',bgcolor:'#ff1744'} }} >
+           <Button onClick={()=>navigate("/stores/payment")} variant='contained' sx={{bgcolor:'#ff1744',color:'white',mb:2,width:'100%',borderRadius:'16px' ,":hover":{color:'white',bgcolor:'#ff1744'} }} >
           Payer(2)
     </Button>
           </Box>

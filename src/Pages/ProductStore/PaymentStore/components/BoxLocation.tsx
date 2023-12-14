@@ -31,7 +31,7 @@ export const BoxLocation = ({setOpen,open}:any) => {
     const handleAddLocation = () => setAddLocation(true);
 
 
-       const saveLocation : any[] =[]
+       const saveLocation : {id:number}[] =[{id:1}]
 
 
 
