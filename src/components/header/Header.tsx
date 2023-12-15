@@ -13,8 +13,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
-import InboxIcon from '@mui/icons-material/Inbox';
-import DraftsIcon from '@mui/icons-material/Drafts';
 import { motion } from "framer-motion";
 import Paper from '@mui/material/Paper';
 import QrCode2Icon from '@mui/icons-material/QrCode2';
@@ -24,6 +22,7 @@ import MessageRoundedIcon from '@mui/icons-material/MessageRounded';
 import PaymentRoundedIcon from '@mui/icons-material/PaymentRounded';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import BrandingWatermarkRoundedIcon from '@mui/icons-material/BrandingWatermarkRounded';
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -36,7 +35,7 @@ export const Header = () => {
     const [qrcode,setQrcode]=useState(true)
 
 
-  
+    const { t, i18n } = useTranslation();
 
 
 
@@ -87,9 +86,9 @@ export const Header = () => {
 
   return (
     <div >
-        <Box sx={{bgcolor:'#424242',height:'120px',display:'flex',alignItems:'center',justifyContent:'space-around'}} >
+        <Box dir="auto" sx={{bgcolor:'#424242',height:'120px',display:'flex',alignItems:'center',justifyContent:'space-around'}} >
         <Typography sx={{fontWeight:'700',fontFamily:'fantasy',color:'white'}} variant="h4" gutterBottom>
-        Khademn i
+        {t('khademni')}
       </Typography>
       <Search>
             <SearchIconWrapper>
@@ -103,24 +102,23 @@ export const Header = () => {
 
 
           <div style={{height:'100%',display:'flex',alignItems:'center'}}   onMouseEnter={ ()=> setQrcode(false)} onMouseLeave={()=> setQrcode(true)} >
-            <Box sx={{display:'flex'}} >
+            <Box sx={{display:'flex',width:'210px'}} >
              <QrCode2Icon sx={{fontSize:'40px',color:'white',mr:1}} />
              <Typography sx={{color:'white',fontWeight:'400',textAlign:'left'}} variant="subtitle2" gutterBottom>
-       Télécharger l'Application <br/>
-       Ali Express
+             {t('Télécharger l\'Application Ali Express')}
       </Typography>
 
             </Box>
 
-            { !qrcode ?  <div style={{position:'absolute',zIndex:1 ,top:'120px' ,left:'1330px',backgroundColor:'red',width:'100%',borderRadius:'20px',maxWidth:560}} >
-         <Paper elevation={12} sx={{ bgcolor: 'background.paper',display:'flex' }}>
+            { !qrcode ?  <div dir="auto" style={{position:'absolute',zIndex:1 ,top:'120px' ,left:'1330px',backgroundColor:'red',width:'100%',borderRadius:'20px',maxWidth:560}} >
+         <Paper  elevation={12} sx={{ bgcolor: 'background.paper',display:'flex' }}>
          <QrCode2Icon sx={{fontSize:'125px'}} />
          <Box>
          <Typography sx={{fontWeight:'800',textAlign:'left',mt:2}} variant="h6" gutterBottom>
        Télécharger l'Application Ali Express
       </Typography>
       <Typography sx={{fontWeight:'200',textAlign:'left',mt:1}} variant="subtitle2" gutterBottom>
-      Scannez le code QR pour télécharger
+      {t('Scannez le code QR pour télécharger')}
       </Typography>
       </Box>
          </Paper>
@@ -130,16 +128,16 @@ export const Header = () => {
           </div>
 
 
-          <motion.div style={{height:'100%',display:'flex',alignItems:'center'}}   onMouseEnter={ ()=> setAccord(false)} onMouseLeave={()=> setAccord(true)} >
-          <Box  sx={{display:'flex'}} >
+          <motion.div dir="auto" style={{height:'100%',display:'flex',alignItems:'center'}}   onMouseEnter={ ()=> setAccord(false)} onMouseLeave={()=> setAccord(true)} >
+          <Box dir="auto"  sx={{display:'flex'}} >
           <PersonOutlineIcon sx={{fontSize:'50px',color:'white'}} />
           <Box  >
-          <Typography sx={{color:'white',fontWeight:'400',textAlign:'left'}} variant="subtitle2" gutterBottom>
-        bienvenu
+          <Typography dir="auto" sx={{color:'white',fontWeight:'400',textAlign:'left'}} variant="subtitle2" gutterBottom>
+        {t('bienvenu')}
       </Typography>
       <Box sx={{display:'flex',alignItems:'center'}} >
       <Typography sx={{color:'white',fontWeight:'800',textAlign:'left'}} variant="subtitle2" gutterBottom>
-        Se Connecter/S'inscrire
+        {t('Se Connecter/S\'inscrire')}
       </Typography>
       { accord ? <ExpandMoreIcon sx={{fontSize:'20px',color:'white'}} /> : <ExpandLessIcon sx={{fontSize:'20px',color:'white'}} /> }
       </Box>
@@ -149,7 +147,7 @@ export const Header = () => {
           </Box>
 
 
-          { !accord ? <motion.div style={{position:'absolute',zIndex:1 ,top:'120px' ,left:'1530px',width:'100%',borderRadius:'20px',maxWidth:360}} >
+          { !accord ? <motion.div dir="auto" style={{position:'absolute',zIndex:1 ,top:'120px' ,left:'1530px',width:'100%',borderRadius:'20px',maxWidth:360}} >
             <Paper elevation={12} sx={{ bgcolor: 'background.paper' , borderRadius:'16px' }}>
            <nav  aria-label="main mailbox folders">
          <List  >

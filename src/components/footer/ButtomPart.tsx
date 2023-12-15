@@ -2,7 +2,12 @@ import React from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import {  Link  } from 'react-router-dom'
+import { useTranslation } from 'react-i18next';
+import { Button } from '@mui/material';
 export const ButtomPart = () => {
+
+   const { t, i18n } = useTranslation();
+
   return (
     <div>
         <Box sx={{bgcolor:'#e0e0e0',display:'flex',justifyContent:'center',alignItems:'center'}} >
@@ -191,9 +196,10 @@ export const ButtomPart = () => {
              <Link to={`/`} style={{color:'#757575',textDecorationLine:'none'}}  > Pусский</Link>,
              <Link to={`/`} style={{color:'#757575',textDecorationLine:'none'}}  >  Español</Link>,
              <Link to={`/`} style={{color:'#757575',textDecorationLine:'none'}}  > Français</Link>,
-             <Link to={`/`} style={{color:'#757575',textDecorationLine:'none'}}  >  اللغة العربي</Link>,
+             <Link to={''} style={{color:'#757575',textDecorationLine:'none'}}  > اللغة العربي</Link>,
              <Link to={`/`} style={{color:'#757575',textDecorationLine:'none'}}  >  Polish</Link>,<br/>
              <Link to={`/`} style={{color:'#757575',textDecorationLine:'none'}}  > עברית</Link>
+           <Button variant='text'  onClick={() => i18n.changeLanguage('ar')}  >arabic</Button> 
              </Typography>
 
              </Box>
