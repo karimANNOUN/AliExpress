@@ -87,7 +87,7 @@ export const Header = () => {
   return (
     <div >
         <Box dir="auto" sx={{bgcolor:'#424242',height:'120px',display:'flex',alignItems:'center',justifyContent:'space-around'}} >
-        <Typography sx={{fontWeight:'700',fontFamily:'fantasy',color:'white'}} variant="h4" gutterBottom>
+        <Typography sx={{fontFamily:'fantasy',color:'white',textShadow:'0px 0px 40px window'}} variant="h4" gutterBottom>
         {t('khademni')}
       </Typography>
       <Search>

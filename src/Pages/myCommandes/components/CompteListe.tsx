@@ -9,12 +9,18 @@ import Divider from '@mui/material/Divider';
 import InboxIcon from '@mui/icons-material/Inbox';
 import DraftsIcon from '@mui/icons-material/Drafts';
 import ListSubheader from '@mui/material/ListSubheader';
+import Typography from '@mui/material/Typography';
+import QrCode2Icon from '@mui/icons-material/QrCode2';
+import {  IconButton } from '@mui/material';
+import Link from '@mui/material/Link';
 export const CompteListe = () => {
  
     const [active,setActive]=useState(0)
 
 
   return (
+    <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'23%',my:2}} >
+                <Box sx={{width:'100%'}} >
     <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
     <nav aria-label="main mailbox folders">
       <List
@@ -141,5 +147,26 @@ subheader={
     </nav>
   
   </Box>
+  </Box>
+                <Box sx={{width:'100%',display:'flex',flexDirection:'column',alignItems:'center',bgcolor:'Window',py:2,mt:2}} >
+                <Typography sx={{fontWeight:'600'}}  variant='body2' gutterBottom>
+                Application mobile AliExpress
+</Typography>
+
+<Typography sx={{fontWeight:'300',color:'#9e9e9e'}}  variant='caption' gutterBottom>
+Explorez n'importe où, n'importe quand !
+</Typography>
+
+<IconButton sx={{bgcolor:'Window',":hover":{bgcolor:'Window'}}} >
+    <QrCode2Icon sx={{fontSize:'120px'}} />
+</IconButton>
+
+<Link variant='caption' sx={{color:'#9e9e9e',":hover":{color:'#f44336'}}} href="#" underline="none">
+Scannez le code ou cliquez ici pour télécharger
+</Link>
+
+
+                </Box>
+           </Box>
   )
 }

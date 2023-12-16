@@ -8,6 +8,7 @@ import { AvisVendeur } from '../Pages/storeShop/Components/avisvendeur/AvisVende
 import { HomeStore } from '../Pages/ProductStore/Homestore/HomeStore'
 import { PaymentStores } from '../Pages/ProductStore/PaymentStore/PaymentStores'
 import { HomeCommandes } from '../Pages/myCommandes/HomeCommandes'
+import { Commande } from '../Pages/myCommandes/commandes/Commande'
 
 
 export default function AllRoutes() {
@@ -23,7 +24,12 @@ export default function AllRoutes() {
           <Route path='productuser' element={<HomeStore/>} />
           <Route path='payment' element={<PaymentStores/>} />
         </Route>
-        <Route path='/p/commandes' element={<HomeCommandes/>} />
+        <Route path='/home/commandes' element={<HomeCommandes/>} />
+
+        <Route path='/p'  >
+        <Route path='orders' element={<Commande/>} />
+          </Route>
+
       
         </Routes> 
     </>
