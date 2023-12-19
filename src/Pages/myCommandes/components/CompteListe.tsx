@@ -92,12 +92,12 @@ subheader={
         }
 
 { active === 4 ?   <ListItem sx={{ borderLeft: '3px solid #f44336' }} disablePadding>
-          <ListItemButton onClick={()=>setActive(4)} >
+          <ListItemButton onClick={(()=>(setActive(4),navigate("/avis/feedback")))} >
             <ListItemText primary="Avis" />
           </ListItemButton>
         </ListItem> :
         <ListItem disablePadding>
-        <ListItemButton onClick={()=>setActive(4)} >
+        <ListItemButton onClick={(()=>(setActive(4),navigate("/avis/feedback")))} >
           <ListItemText primary="Avis" />
         </ListItemButton>
       </ListItem>
@@ -117,12 +117,12 @@ subheader={
         }
 
 { active === 6 ?    <ListItem sx={{ borderLeft: '3px solid #f44336' }} disablePadding>
-          <ListItemButton onClick={()=>setActive(6)} >
+          <ListItemButton onClick={()=>(setActive(6),navigate("/adress/livraison"))} >
             <ListItemText primary="Adresse de livraison" />
           </ListItemButton>
         </ListItem> :
          <ListItem  disablePadding>
-         <ListItemButton onClick={()=>setActive(6)} >
+         <ListItemButton  onClick={()=>(setActive(6),navigate("/adress/livraison"))} >
            <ListItemText primary="Adresse de livraison" />
          </ListItemButton>
        </ListItem> 

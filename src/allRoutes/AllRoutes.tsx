@@ -11,6 +11,8 @@ import { HomeCommandes } from '../Pages/myCommandes/HomeCommandes'
 import { Commande } from '../Pages/myCommandes/commandes/Commande'
 import { Paiments } from '../Pages/myCommandes/paiments/Paiments'
 import { Remboursement } from '../Pages/myCommandes/romborsement/Remboursement'
+import { FeedBack } from '../Pages/myCommandes/feedback/FeedBack'
+import { AdressLivraison } from '../Pages/myCommandes/adresslivraison/AdressLivraison'
 
 
 export default function AllRoutes() {
@@ -32,8 +34,10 @@ export default function AllRoutes() {
         <Route path='orders' element={<Commande/>} />
         <Route path='paiments' element={<Paiments/>} />
         < Route path='refund-dispute' element={<Remboursement/>} />
-
           </Route>
+
+          <Route path='/avis/feedback' element={<FeedBack/>} />
+          <Route path='/adress/livraison' element={<AdressLivraison/>} />
 
       
         </Routes> 
