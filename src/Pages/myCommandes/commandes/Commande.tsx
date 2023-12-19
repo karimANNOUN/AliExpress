@@ -2,28 +2,33 @@ import React,{useState} from 'react'
 import Box from '@mui/material/Box';
 import { CompteListe } from '../components/CompteListe';
 import Typography from '@mui/material/Typography';
-import { Divider, IconButton } from '@mui/material';
+import { IconButton, InputAdornment } from '@mui/material';
 import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import Person4OutlinedIcon from '@mui/icons-material/Person4Outlined';
-import HistoryToggleOffOutlinedIcon from '@mui/icons-material/HistoryToggleOffOutlined';
-import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
-import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
-import PaymentsIcon from '@mui/icons-material/Payments';
-import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
-import SummarizeIcon from '@mui/icons-material/Summarize';
-import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
+
 import { ProductAimiez } from '../components/ProductAimiez';
 import DeleteIcon from '@mui/icons-material/Delete';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import SearchIcon from '@mui/icons-material/Search';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import CheckIcon from '@mui/icons-material/Check';
 
 
 
 export const Commande = () => {
 
+    
+
     const [active,setActive]=useState(0)
+
+    const options = ['Commandes', 'Suivre'];
+
+    const topOption = ['Tous', 'Le dernier 6 mois', 'Depuis 1 ans','Depuis 2 ans'];
+
+    const [show,setShow]=useState(false)
+
+    const commandes=[]
 
   return (
     <div style={{display:'flex',justifyContent:'center',backgroundColor:'#eeeeee'}} >
@@ -57,89 +62,104 @@ export const Commande = () => {
                      }
                       </Box>
 
-                      <Box sx={{display:'flex',width:'100%',alignItems:'center',justifyContent:'space-around'}} >
-                        <IconButton sx={{display:'flex',flexDirection:'column',alignItems:'center',fontSize:'15px',":hover":{bgcolor:'Window'}}} >
-                            <FavoriteBorderIcon sx={{fontSize:'34px',mb:1}} />
-                            Mes favoris
-                        </IconButton>
-                          
-                        <IconButton sx={{display:'flex',flexDirection:'column',alignItems:'center',fontSize:'15px',":hover":{bgcolor:'Window'}}} >
-                            <Person4OutlinedIcon sx={{fontSize:'34px',mb:1}} />
-                            Abonnements
-                        </IconButton>
+                      <Box sx={{display:'flex',width:'100%',alignItems:'center',justifyContent:'space-between'}} >
 
-                        <IconButton sx={{display:'flex',flexDirection:'column',alignItems:'center',fontSize:'15px',":hover":{bgcolor:'Window'}}} >
-                            <HistoryToggleOffOutlinedIcon sx={{fontSize:'34px',mb:1}} />
-                            Vus récemment
-                        </IconButton>
+                <Box sx={{display:'flex',alignItems:'center'}} >
 
-                        <IconButton sx={{display:'flex',flexDirection:'column',alignItems:'center',fontSize:'15px',":hover":{bgcolor:'Window'}}} >
-                            <ReplyOutlinedIcon sx={{fontSize:'34px',mb:1}} />
-                            Coupons
-                        </IconButton>
 
+                <Autocomplete
+        sx={{width:'150px'}}
+          options={options}
+          size='small'
+          renderInput={(params) => (
+            <TextField {...params}  variant="outlined" />
+          )}
+        />
+    
+        <TextField
+  id="Phone"
+   sx={{width:'350px'}}
+  placeholder="commandes or product vendeur"
+  size='small'
+  InputProps={{
+    endAdornment:(
+        <InputAdornment sx={{bgcolor:'#f4511e',height:'100%',right:0,position:'absolute'}} position='end' >
+            <IconButton >
+            <SearchIcon sx={{color:'white'}} />
+            </IconButton>
+        </InputAdornment>
+    ),
+    size:'small'
+    
+  }}
+  />
+
+                </Box>
+    
+   
+
+   <Autocomplete
+      disablePortal
+      id="combo-box-demo"
+      size='small'
+      options={topOption}
+      sx={{ width: '200px' }}
+      renderInput={(params) => <TextField  {...params} />}
+    />
+       
+       
+            
+         
+     
+                      
                       </Box>
 
                    </Box>
 
+                
 
-                      <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'100%',bgcolor:'Window',p:1,mb:2}} >
-                       <Box sx={{display:'flex',width:'100%',alignItems:'center',justifyContent:'space-between'}} >
-                       <Typography sx={{fontWeight:'800',textAlign:'left'}}  variant='h6' gutterBottom>
-                       Commandes
-                    </Typography>
-                    <IconButton sx={{display:'flex',alignItems:'center',fontSize:'15px',":hover":{bgcolor:'Window'}}} >
-                        Voir Tout
-                            <ChevronRightOutlinedIcon sx={{fontSize:'18px'}} />
-                        
-                        </IconButton>
-                       </Box>
+
+        { active === 1 && <Box sx={{display:'flex',width:'100%',alignItems:'center',mb:2}} >
+       
+ { !show ?
+
+<IconButton onClick={()=>setShow(true)} sx={{width:'23px',height:'23px',ml:2,borderRadius:'50%',border:'2px solid #e0e0e0',bgcolor:'Window',":hover":{bgcolor:'Window',border:'2px solid #ff1744'},display:'flex',justifyContent:'center',alignItems:'center'}} >
+
+</IconButton>
+
+ :  <IconButton onClick={()=>setShow(false)} sx={{width:'23px',ml:2,height:'23px',borderRadius:'50%',bgcolor:'#ff1744',":hover":{bgcolor:'#ff1744'},display:'flex',justifyContent:'center',alignItems:'center'}} >
+     <CheckIcon sx={{fontSize:'17px',color:'white'}} />
+ </IconButton>
+ 
+ }
+
+
+{ commandes.length ? <Button variant='text' sx={{color:'white',ml:1,borderRadius:'12px',fontSize:'12px',fontWeight:'300'  ,bgcolor:'#ff5722',":hover":{color:'white',bgcolor:'#ff5722'} }} >
+Payer les commandes sélectionnés
+    </Button> 
+:
+
+<Button variant='text' disabled sx={{color:'white',ml:1,borderRadius:'12px',fontSize:'12px',fontWeight:'700'  ,bgcolor:'#ff5722',":hover":{color:'white',bgcolor:'#ff5722'} }} >
+Payer les commandes sélectionnés
+    </Button>
+
+}
+
+
+        </Box>   }
+
+
+
+
+                      <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',width:'100%',bgcolor:'Window',p:1,mb:2,height:'500px'}} >
                      
-                     <Divider sx={{width:'97%',my:2}} />
-                        
-                     <Box sx={{display:'flex',width:'100%',alignItems:'center',justifyContent:'space-around'}} >
-                        <IconButton sx={{display:'flex',flexDirection:'column',alignItems:'center',fontSize:'15px',":hover":{bgcolor:'Window'}}} >
-                            <PaymentsIcon sx={{fontSize:'34px',color:'#f44336',mb:1}} />
-                            Non-payées
-                        </IconButton>
-                          
-                        <IconButton sx={{display:'flex',flexDirection:'column',alignItems:'center',fontSize:'15px',":hover":{bgcolor:'Window'}}} >
-                            <HourglassBottomIcon sx={{fontSize:'34px',color:'#f44336',mb:1}} />
-                            En attente d'expédition
-                        </IconButton>
+                       <ListAltIcon sx={{fontSize:'130px',color:'#bdbdbd'}} />
 
-                        <IconButton sx={{display:'flex',flexDirection:'column',alignItems:'center',fontSize:'15px',":hover":{bgcolor:'Window'}}} >
-                            <LocalShippingIcon sx={{fontSize:'34px',color:'#f44336',mb:1}} />
-                            Expédiées
-                        </IconButton>
-
-                        <IconButton sx={{display:'flex',flexDirection:'column',alignItems:'center',fontSize:'15px',":hover":{bgcolor:'Window'}}} >
-                            <LibraryAddCheckIcon sx={{fontSize:'34px',color:'#f44336',mb:1}} />
-                            En attente d'évaluation
-                        </IconButton>
-
-                      </Box>
-
-                    
-                      <Divider sx={{width:'97%',my:2}} />
-
-                      <Box sx={{display:'flex',alignItems:'center',justifyContent:'space-between',width:'100%'}} >
-                      <IconButton sx={{display:'flex',alignItems:'center',fontSize:'15px',":hover":{bgcolor:'Window'}}} >
-                            <SummarizeIcon sx={{fontSize:'20px',mr:1}} />
-                            Réclamations
-                        </IconButton>
-                        <ChevronRightOutlinedIcon sx={{fontSize:'18px'}} />
-                      </Box>
-
-                      <Divider sx={{width:'97%',my:2}} />
-
-                      <Box sx={{display:'flex',alignItems:'center',justifyContent:'space-between',width:'100%'}} >
-                      <IconButton sx={{display:'flex',alignItems:'center',fontSize:'15px',":hover":{bgcolor:'Window'}}} >
-                            <PaidOutlinedIcon sx={{fontSize:'20px',mr:1}} />
-                            Remboursements et retours
-                        </IconButton>
-                        <ChevronRightOutlinedIcon sx={{fontSize:'18px'}} />
-                      </Box>
+                       <Typography sx={{color:'#bdbdbd'}}  variant='body1' gutterBottom>
+                       Aucune commande S'il vous plaît <Link href="#" sx={{color:'#616161',":hover":{color:'#616161'}}} underline="none">
+                       Connectez-vous
+      </Link>  ou <Link sx={{color:'#616161',":hover":{color:'#616161'}}} href="#" underline="none"> Ajoutez une suggestion </Link>
+                        </Typography>
 
                       </Box>
 

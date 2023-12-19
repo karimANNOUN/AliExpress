@@ -9,6 +9,8 @@ import { HomeStore } from '../Pages/ProductStore/Homestore/HomeStore'
 import { PaymentStores } from '../Pages/ProductStore/PaymentStore/PaymentStores'
 import { HomeCommandes } from '../Pages/myCommandes/HomeCommandes'
 import { Commande } from '../Pages/myCommandes/commandes/Commande'
+import { Paiments } from '../Pages/myCommandes/paiments/Paiments'
+import { Remboursement } from '../Pages/myCommandes/romborsement/Remboursement'
 
 
 export default function AllRoutes() {
@@ -28,6 +30,9 @@ export default function AllRoutes() {
 
         <Route path='/p'  >
         <Route path='orders' element={<Commande/>} />
+        <Route path='paiments' element={<Paiments/>} />
+        < Route path='refund-dispute' element={<Remboursement/>} />
+
           </Route>
 
       

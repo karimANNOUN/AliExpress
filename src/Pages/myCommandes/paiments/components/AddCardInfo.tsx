@@ -13,7 +13,7 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { Divider } from '@mui/material';
 
 
-export const AddCard = ({setShow,show}:any) => {
+export const AddCardInfo = ({setShow,show}:any) => {
 
     const handleClose = () => setShow(false);
      
@@ -266,7 +266,7 @@ export const AddCard = ({setShow,show}:any) => {
        <Divider sx={{my:4,width:'100%'}} />
 
        <Button variant='contained' sx={{color:'white',width:'70%',bgcolor:'#d32f2f',borderRadius:'12px',mb:4 ,":hover":{color:'white',bgcolor:'#d32f2f'} }} >
-        Confirmer
+        Ajouter une card
     </Button>
 
         </Box>

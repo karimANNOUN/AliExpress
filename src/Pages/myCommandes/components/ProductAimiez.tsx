@@ -6,6 +6,7 @@ import {  IconButton } from '@mui/material';
 import Link from '@mui/material/Link';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { useNavigate } from 'react-router-dom';
 
 export const ProductAimiez = () => {
 
@@ -21,7 +22,7 @@ export const ProductAimiez = () => {
       setCurrentIndex((prevIndex) => (prevIndex - 6 + products.length) % products.length);
     };
 
-
+const navigate=useNavigate()
 
   return (
     <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',bgcolor:'Window',width:'100%',p:1,mb:2}} >
@@ -32,9 +33,9 @@ export const ProductAimiez = () => {
                             </Box>
                             <Box sx={{display:'flex',alignItems:'center',width:'100%',overflow:'clip',position:'relative'}} >
                             {products.slice(currentIndex, currentIndex + 5).map( prod => <Box key={prod.id} sx={{width:'20%',mr:1,display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',p:1 }}>
-    <img src='https://i.pinimg.com/564x/6a/f3/fb/6af3fb0201c1f22c8281c5519faf5d44.jpg' alt='hhtr' style={{width:'95%',height:'200px'}} />
+    <img src='https://i.pinimg.com/564x/6a/f3/fb/6af3fb0201c1f22c8281c5519faf5d44.jpg' onClick={()=>navigate("/1")} alt='hhtr' style={{width:'95%',height:'200px'}} />
     <Box sx={{width:'95%',display:'flex',flexDirection:'column'}} >
-    <Link variant='caption' sx={{color:'#9e9e9e',textAlign:'left',":hover":{color:'#9e9e9e'}}} href="#" underline="none">
+    <Link variant='caption' sx={{color:'#9e9e9e',textAlign:'left',":hover":{color:'#9e9e9e'}}} href="/1" underline="none">
 Scannez le code ou clique..
 </Link>
 

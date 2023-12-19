@@ -13,10 +13,12 @@ import Typography from '@mui/material/Typography';
 import QrCode2Icon from '@mui/icons-material/QrCode2';
 import {  IconButton } from '@mui/material';
 import Link from '@mui/material/Link';
+import { useNavigate } from 'react-router-dom';
 export const CompteListe = () => {
  
     const [active,setActive]=useState(0)
 
+    const navigate=useNavigate()
 
   return (
     <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'23%',my:2}} >
@@ -34,7 +36,7 @@ subheader={
 >
       
         { active === 0 ? <ListItem sx={{ borderLeft: '3px solid #f44336' }} disablePadding>
-          <ListItemButton onClick={()=>setActive(0)} >
+          <ListItemButton onClick={()=>(setActive(0) , navigate("/home/commandes") )} >
             <ListItemText  primary="Aperçu général" />
           </ListItemButton>
         </ListItem> :
@@ -42,7 +44,7 @@ subheader={
       
 
          <ListItem  disablePadding>
-        <ListItemButton onClick={()=>setActive(0)} >
+        <ListItemButton onClick={()=>(setActive(0) , navigate("/home/commandes") )}  >
           <ListItemText  primary="Aperçu général" />
         </ListItemButton>
       </ListItem> }
@@ -51,14 +53,14 @@ subheader={
 
    { active === 1 ?    <ListItem sx={{ borderLeft: '3px solid #f44336' }} disablePadding> 
 
-          <ListItemButton onClick={()=>setActive(1)} >
+          <ListItemButton onClick={()=>(setActive(1) , navigate("/p/orders") )}  >
             <ListItemText primary="Commandes" />
           </ListItemButton>
         </ListItem> : 
         
         <ListItem disablePadding> 
 
-        <ListItemButton onClick={()=>setActive(1)} >
+        <ListItemButton onClick={()=>(setActive(1) , navigate("/p/orders") )}  >
           <ListItemText primary="Commandes" />
         </ListItemButton>
       </ListItem>
@@ -66,24 +68,24 @@ subheader={
         }
  
  { active === 2 ?   <ListItem sx={{ borderLeft: '3px solid #f44336' }} disablePadding>
-          <ListItemButton onClick={()=>setActive(2)} >
+          <ListItemButton onClick={()=>(setActive(2),navigate("/p/paiments"))} >
             <ListItemText primary="Paiement" />
           </ListItemButton>
         </ListItem> : 
         <ListItem disablePadding>
-        <ListItemButton onClick={()=>setActive(2)} >
+        <ListItemButton onClick={()=>(setActive(2),navigate("/p/paiments"))}>
           <ListItemText primary="Paiement" />
         </ListItemButton>
       </ListItem>}
 
 
       { active === 3 ?  <ListItem sx={{ borderLeft: '3px solid #f44336' }} disablePadding>
-          <ListItemButton onClick={()=>setActive(3)} >
+          <ListItemButton onClick={()=>(setActive(3),navigate("/p/refund-dispute"))} >
             <ListItemText primary="Remboursements et retours" />
           </ListItemButton>
         </ListItem> :
          <ListItem disablePadding>
-         <ListItemButton onClick={()=>setActive(3)} >
+         <ListItemButton onClick={()=>(setActive(3),navigate("/p/refund-dispute"))} >
            <ListItemText primary="Remboursements et retours" />
          </ListItemButton>
        </ListItem>
