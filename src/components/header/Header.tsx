@@ -23,6 +23,7 @@ import PaymentRoundedIcon from '@mui/icons-material/PaymentRounded';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import BrandingWatermarkRoundedIcon from '@mui/icons-material/BrandingWatermarkRounded';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -37,7 +38,7 @@ export const Header = () => {
 
     const { t, i18n } = useTranslation();
 
-
+const navigate=useNavigate()
 
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
@@ -168,7 +169,7 @@ export const Header = () => {
       <nav aria-label="secondary mailbox folders">
         <List>
           <ListItem disablePadding>
-            <ListItemButton sx={{":hover":{color:'#ef6c00'}}} >
+            <ListItemButton onClick={()=>navigate("/home/commandes")} sx={{":hover":{color:'#ef6c00'}}} >
                 <ListItemIcon>
                     <BallotIcon/>
                 </ListItemIcon>
@@ -176,7 +177,7 @@ export const Header = () => {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton sx={{":hover":{color:'#ef6c00'}}} >
+            <ListItemButton  sx={{":hover":{color:'#ef6c00'}}} >
             <ListItemIcon>
                     <GpsFixedIcon/>
                 </ListItemIcon>
@@ -192,7 +193,7 @@ export const Header = () => {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton sx={{":hover":{color:'#ef6c00'}}}>
+            <ListItemButton onClick={()=>navigate("/p/paiments")} sx={{":hover":{color:'#ef6c00'}}}>
             <ListItemIcon>
                     <PaymentRoundedIcon/>
                 </ListItemIcon>
@@ -200,21 +201,14 @@ export const Header = () => {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton sx={{":hover":{color:'#ef6c00'}}}>
+            <ListItemButton onClick={()=>navigate("/favorite")} sx={{":hover":{color:'#ef6c00'}}}>
             <ListItemIcon>
                     <FavoriteBorderRoundedIcon/>
                 </ListItemIcon>
               <ListItemText primary="Mes Favoris" />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton sx={{":hover":{color:'#ef6c00'}}}>
-            <ListItemIcon>
-                    <BrandingWatermarkRoundedIcon/>
-                </ListItemIcon>
-              <ListItemText primary="My Coupons" />
-            </ListItemButton>
-          </ListItem>
+         
            
           <Divider sx={{width:'90%',mx:'auto'}} />
 
@@ -225,14 +219,10 @@ export const Header = () => {
           </ListItem>
 
 
-          <ListItem disablePadding>
-            <ListItemButton sx={{":hover":{color:'#ef6c00'}}}>
-              <ListItemText primary="Protection de l'Achteur" />
-            </ListItemButton>
-          </ListItem>
+        
 
           <ListItem disablePadding>
-            <ListItemButton sx={{":hover":{color:'#ef6c00'}}}>
+            <ListItemButton onClick={()=>navigate("serviceclient")} sx={{":hover":{color:'#ef6c00'}}}>
               <ListItemText primary="Service Client" />
             </ListItemButton>
           </ListItem>

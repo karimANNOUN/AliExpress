@@ -10,8 +10,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { DetailVendeur } from './components/DetailVendeur';
 import { CategoryCard } from './components/CategoryCard';
 import {useNavigate,useLocation} from 'react-router-dom'
-import path from 'path';
-import { execFile } from 'child_process';
+
 
 
 export const Header = () => {

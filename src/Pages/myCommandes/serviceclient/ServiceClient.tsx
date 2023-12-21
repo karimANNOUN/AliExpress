@@ -36,7 +36,7 @@ export const ServiceClient = () => {
 
 
   return (
-    <div style={{display:'flex',alignItems:'center',flexDirection:'column', background: 'linear-gradient(to bottom, #ffe0b2 0% , #ffff8d 20%, #eeeeee 100%)'}} >
+    <div style={{display:'flex',alignItems:'center',flexDirection:'column', background: 'linear-gradient(to bottom, #ffe0b2 0%, #ffff8d 10% , #eeeeee 20%)'}} >
         <Box sx={{width:'100%',display:'flex',justifyContent:'center'}} >
               <Box sx={{width:'70%',display:'flex',alignItems:'center',justifyContent:'space-between',p:2}} >
                  <Box sx={{display:'flex',flexDirection:'column',justifyContent:'center',width:'50%'}} >
@@ -133,7 +133,7 @@ export const ServiceClient = () => {
                       </Box>
 
                       <Box sx={{width:'100%',display:'flex',flexWrap:'wrap',alignItems:'flex-start',justifyContent:'space-between'}} >
-               { textBtn.map( tex=>  <Button key={tex.id} variant='text' sx={{color:'#9e9e9e',width:'48%',alignItems:'center',textTransform:'lowercase' ,":hover":{color:'#ff5722',fontWeight:'800'} }} >
+               { textBtn.map( tex=>  <Button key={tex.id} variant='text'  sx={{color:'#9e9e9e',width:'48%',alignItems:'center',textTransform:'lowercase' ,":hover":{color:'#ff5722',fontWeight:'800'} }} >
                          . Je n'ai pas reçu ma commande. Que puis-je faire ?
                       </Button> )}
                </Box>

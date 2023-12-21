@@ -14,6 +14,7 @@ import { Remboursement } from '../Pages/myCommandes/romborsement/Remboursement'
 import { FeedBack } from '../Pages/myCommandes/feedback/FeedBack'
 import { AdressLivraison } from '../Pages/myCommandes/adresslivraison/AdressLivraison'
 import { ServiceClient } from '../Pages/myCommandes/serviceclient/ServiceClient'
+import { Favorite } from '../Pages/myCommandes/favorite/Favorite'
 
 
 export default function AllRoutes() {
@@ -40,6 +41,7 @@ export default function AllRoutes() {
           <Route path='/avis/feedback' element={<FeedBack/>} />
           <Route path='/adress/livraison' element={<AdressLivraison/>} />
           <Route path='/serviceclient' element={<ServiceClient/>} />
+          <Route path='/favorite' element={<Favorite/>} />
 
       
         </Routes> 
