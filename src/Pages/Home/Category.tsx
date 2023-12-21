@@ -55,7 +55,7 @@ export const Category = () => {
         Explorez par catégories
       </Typography>
       
-      <Box sx={{height:'45%',display:'flex',justifyContent:'space-around',alignItems:'center',overflow:'hidden',transition:'transform 0.5s ease-in-out'}} >
+      <Box sx={{height:'45%',display:'flex',justifyContent:'space-around',alignItems:'center',overflow:'hidden'}} >
 
 
         { catergories.slice(currentIndex, currentIndex + 6).map(category=> 
