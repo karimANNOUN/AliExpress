@@ -16,6 +16,9 @@ import { AdressLivraison } from '../Pages/myCommandes/adresslivraison/AdressLivr
 import { ServiceClient } from '../Pages/myCommandes/serviceclient/ServiceClient'
 import { Favorite } from '../Pages/myCommandes/favorite/Favorite'
 import { Piece } from '../Pages/mespiece/Piece'
+import { Setting } from '../Pages/myCommandes/settings/Setting'
+import { UploadImage } from '../Pages/myCommandes/settings/components/UploadImage'
+import { ModifierProfil } from '../Pages/myCommandes/settings/components/ModifierProfil'
 
 
 export default function AllRoutes() {
@@ -44,6 +47,9 @@ export default function AllRoutes() {
           <Route path='/serviceclient' element={<ServiceClient/>} />
           <Route path='/favorite' element={<Favorite/>} />
           <Route path='/mespiece' element={<Piece/>} />
+          <Route path='/settings' element={<Setting/>} />
+          <Route path='/Uploadimage' element={<UploadImage/>} />
+          <Route path='/UpdateProfil' element={<ModifierProfil/>} />
 
       
         </Routes> 

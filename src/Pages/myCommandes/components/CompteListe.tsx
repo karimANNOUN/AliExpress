@@ -24,7 +24,9 @@ const location=useLocation()
            return 3
        }if (location.pathname == '/avis/feedback') {
         return 4
-    }if (location.pathname == '/adress/livraison') {
+    }if (location.pathname == '/settings') {
+      return 5
+  }if (location.pathname == '/adress/livraison') {
       return 6
   }if (location.pathname == '/serviceclient') {
     return 7
@@ -121,13 +123,13 @@ subheader={
         }
 
 { hovers === 5 ?     <ListItem sx={{ borderLeft: '3px solid #f44336' }} disablePadding>
-          <ListItemButton onClick={()=>setHovers(5)} >
+          <ListItemButton onClick={()=>(setHovers(5),navigate("/settings"))} >
             <ListItemText primary="Paramètres" />
           </ListItemButton  >
         </ListItem> 
         : 
         <ListItem disablePadding>
-          <ListItemButton onClick={()=>setHovers(5)} >
+          <ListItemButton onClick={()=>(setHovers(5),navigate("/settings"))} >
             <ListItemText primary="Paramètres" />
           </ListItemButton>
         </ListItem> 

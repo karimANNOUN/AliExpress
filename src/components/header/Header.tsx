@@ -185,11 +185,11 @@ const navigate=useNavigate()
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton sx={{":hover":{color:'#ef6c00'}}}>
+            <ListItemButton onClick={()=>navigate("/settings")} sx={{":hover":{color:'#ef6c00'}}}>
             <ListItemIcon>
                     <MessageRoundedIcon/>
                 </ListItemIcon>
-              <ListItemText primary="Centre de Messagerie" />
+              <ListItemText primary="Parametres" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
