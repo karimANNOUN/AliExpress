@@ -177,7 +177,7 @@ const navigate=useNavigate()
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton  sx={{":hover":{color:'#ef6c00'}}} >
+            <ListItemButton onClick={()=>navigate("/mespiece")} sx={{":hover":{color:'#ef6c00'}}} >
             <ListItemIcon>
                     <GpsFixedIcon/>
                 </ListItemIcon>

@@ -15,6 +15,7 @@ import { FeedBack } from '../Pages/myCommandes/feedback/FeedBack'
 import { AdressLivraison } from '../Pages/myCommandes/adresslivraison/AdressLivraison'
 import { ServiceClient } from '../Pages/myCommandes/serviceclient/ServiceClient'
 import { Favorite } from '../Pages/myCommandes/favorite/Favorite'
+import { Piece } from '../Pages/mespiece/Piece'
 
 
 export default function AllRoutes() {
@@ -42,6 +43,7 @@ export default function AllRoutes() {
           <Route path='/adress/livraison' element={<AdressLivraison/>} />
           <Route path='/serviceclient' element={<ServiceClient/>} />
           <Route path='/favorite' element={<Favorite/>} />
+          <Route path='/mespiece' element={<Piece/>} />
 
       
         </Routes> 

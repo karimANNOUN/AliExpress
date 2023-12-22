@@ -7,11 +7,15 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useNavigate } from 'react-router-dom';
 export const Header = () => {
+
+        const navigate=useNavigate()
+
   return (
     <div>
     <Box sx={{width:'100%',height:'80px',bgcolor:'#424242',display:'flex',alignItems:'center',justifyContent:'space-around'}} >
-              <Box sx={{display:'flex',alignItems:'center'}} >
+              <Box component='div' onClick={()=>navigate("/store/:storeId")} sx={{display:'flex',alignItems:'center'}} >
               <Avatar
            alt="Remy Sharp"
                src="https://i.pinimg.com/564x/a0/c6/36/a0c636a27031d0529580ea41bbb7e4f3.jpg"
