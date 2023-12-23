@@ -19,6 +19,13 @@ import { Piece } from '../Pages/mespiece/Piece'
 import { Setting } from '../Pages/myCommandes/settings/Setting'
 import { UploadImage } from '../Pages/myCommandes/settings/components/UploadImage'
 import { ModifierProfil } from '../Pages/myCommandes/settings/components/ModifierProfil'
+import { Contry } from '../Pages/myCommandes/settings/components/Contry'
+import { EmailUpdate } from '../Pages/myCommandes/settings/components/EmailUpdate'
+import { PasswordUpdate } from '../Pages/myCommandes/settings/components/PasswordUpdate'
+import { NotificationEmail } from '../Pages/myCommandes/settings/components/NotificationEmail'
+import { Login } from '../Pages/login/Login'
+import { LoginVendeur } from '../Pages/login/loginbayer/LoginVendeur'
+import { VendeurBoutique } from '../Pages/login/loginbayer/component/VendeurBoutique'
 
 
 export default function AllRoutes() {
@@ -50,6 +57,13 @@ export default function AllRoutes() {
           <Route path='/settings' element={<Setting/>} />
           <Route path='/Uploadimage' element={<UploadImage/>} />
           <Route path='/UpdateProfil' element={<ModifierProfil/>} />
+          <Route path='/contryUpdates' element={<Contry/>} />
+          <Route path='/emailUpdates' element={<EmailUpdate/>} />
+          <Route path='/passwordUpdates' element={<PasswordUpdate/>} />
+          <Route path='/emailnotification' element={<NotificationEmail/>} />
+          <Route path='/login' element={<Login/>} />
+          <Route path='/loginvendeur' element={<LoginVendeur/>} />
+          <Route path='/loginvendeurboutique' element={<VendeurBoutique/>} />
 
       
         </Routes> 

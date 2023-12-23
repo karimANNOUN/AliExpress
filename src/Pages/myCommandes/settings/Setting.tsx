@@ -34,7 +34,7 @@ export const Setting = () => {
                         <Link sx={{mr:3 , ":hover":{color:'#f4511e'} }} target="_blank" href="/UpdateProfil" underline="none">
                         Modifier le profil
                            </Link>
-                      <Link sx={{ ":hover":{color:'#f4511e'} }} target="_blank" href="#" underline="none">
+                      <Link sx={{ ":hover":{color:'#f4511e'} }} target="_blank" href="/contryUpdates" underline="none">
                       Country/region
                         </Link>
                      </Box>
@@ -44,15 +44,12 @@ export const Setting = () => {
                          Informations de sécurité
                      </Typography>
                      <Box sx={{display:'flex',alignItems:'center'}} >
-                     <Link sx={{mr:3 , ":hover":{color:'#f4511e'} }} target="_blank" href="#" underline="none">
+                     <Link sx={{mr:3 , ":hover":{color:'#f4511e'} }} target="_blank" href="/emailUpdates" underline="none">
                      Changer l'adresse e-mail
                         </Link>  
-                        <Link sx={{mr:3 , ":hover":{color:'#f4511e'} }} target="_blank"  href="#" underline="none">
+                        <Link sx={{mr:3 , ":hover":{color:'#f4511e'} }} target="_blank"  href="/passwordUpdates" underline="none">
                         Changer le mot de passe
                            </Link>
-                      <Link sx={{ ":hover":{color:'#f4511e'} }} target="_blank" href="#" underline="none">
-                      Configurer la question de sécurité
-                        </Link>
                          </Box>    
                          </Box>
                          <Box sx={{display:'flex',flexDirection:'column',width:'100%'}} >
@@ -60,7 +57,7 @@ export const Setting = () => {
                          Activer les notifications par e-mail
                      </Typography>
                      <Box sx={{display:'flex',alignItems:'center'}} >
-                     <Link sx={{ ":hover":{color:'#f4511e'} }} target="_blank" href="#" underline="none">
+                     <Link sx={{ ":hover":{color:'#f4511e'} }} target="_blank" href="/emailnotification" underline="none">
                      Activer
                         </Link>  
                          </Box>
