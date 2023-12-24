@@ -3,15 +3,21 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import Header from '../Home/Header';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import { useNavigate } from 'react-router-dom';
-export const Login = () => {
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import { ModalPasswordOblie } from './components/ModalPasswordOblie';
+export const MotpassOublie = () => {
 
     const options =["arabic","english"]
+    const [password,setPassword]=useState(1)
 
-    const navigate=useNavigate()
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
 
   return (
     <div style={{display:'flex',flexDirection:'column',alignItems:'center',height:'100vh'}} >
@@ -25,6 +31,7 @@ export const Login = () => {
 Seller center
         </Typography>
 
+
         <Autocomplete
       id="grouped-demo"
       options={options}
@@ -37,37 +44,46 @@ Seller center
         </Box>
         <Box sx={{width:'23%',display:'flex',flexDirection:'column',alignItems:'flex-start',p:2}} >
         <Typography  sx={{textAlign:'left',fontWeight:'700'}}  variant='body1' gutterBottom>
-        Veuillez vous connecter en utilisant le compte vendeur AliExpress (n'utilisez pas le compte acheteur)
+        Réinitialisez votre mot de passe
         </Typography>
            
-        <Typography  sx={{textAlign:'left',fontWeight:'300',color:'#9e9e9e'}}  variant='caption' gutterBottom>
-        No account yet?<Link href="/loginvendeur" underline="none" >Join now for free</Link>
+        <Typography  sx={{textAlign:'left',fontWeight:'300',color:'#9e9e9e'}}  variant='subtitle2' gutterBottom>
+        Saisissez votre e-mail, votre ID membre ou votre numéro de téléphone pour vous reconnecter à votre compte.
         </Typography>
+   
+        <FormControl sx={{my:2}} >
+      <RadioGroup
+        aria-labelledby="demo-radio-buttons-group-label"
+        defaultValue="female"
+        name="radio-buttons-group"
+      >
+        <FormControlLabel value="female" control={<Radio color='error' onClick={()=>setPassword(1)} />} label="Email/ID de membre" />
+        <FormControlLabel value="male" control={<Radio color='error' onClick={()=>setPassword(2)}  />} label="Numéro de téléphone" />
+      </RadioGroup>
+    </FormControl>
+          
 
-        <TextField
+        { password === 1 && <TextField
   id="nameAdress"
-  sx={{ width: '100%' ,mt:1}}
+  sx={{ width: '100%' ,my:2}}
   placeholder="Enter your email "
   size='small'
   
-    />
+    />  }
 
-<TextField
+{ password === 2 && <TextField
   id="nameAdress"
   sx={{ width: '100%' ,my:2 }}
-  placeholder="Enter your password "
+  placeholder="Numéro de téléphone"
   size='small'
-    />
-
-<Button onClick={()=>navigate("/login/motpassoublie")} variant='text' sx={{color:'#2196f3',mb:2,textTransform:'lowercase' ,":hover":{color:'#2196f3'} }} >
-       Mot de pass oublié ?
-    </Button>
-
+    />}
 
  
-    <Button variant='contained' sx={{color:'white',width:'100%',textTransform:'lowercase',bgcolor:'#d32f2f',borderRadius:'12px' ,":hover":{color:'white',bgcolor:'#d32f2f'} }} >
-      connexion
+    <Button variant='contained' onClick={handleOpen} sx={{color:'white',width:'100%',textTransform:'lowercase',bgcolor:'#d32f2f',borderRadius:'12px' ,":hover":{color:'white',bgcolor:'#d32f2f'} }} >
+      Continuer
     </Button>
+
+       <ModalPasswordOblie open={open} setOpen={setOpen} />
 
         </Box>
         <Box sx={{width:'100%',display:'flex',justifyContent:'center',alignItems:'center',py:1,bgcolor:'#f5f5f5',position:'fixed',bottom:0,left:0,right:0}} >

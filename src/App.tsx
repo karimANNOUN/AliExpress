@@ -9,11 +9,15 @@ function App() {
 
   const location=useLocation()
 
+  const links= [{id:1,url:'/login'},{id:2,url:'/loginvendeur'},{id:3,url:'/loginvendeurboutique'},
+  {id:4,url:'/loginvendeurboutique'},{id:5,url:'/login/motpassoublie'},
+  {id:6,url:'/login/motpassoublie/redirect'},{id:7,url:'/decisionvendeurboutique'}]
+
   return (
     <div className="App">
-      { location.pathname == '/login' || location.pathname == '/loginvendeur' || location.pathname == '/loginvendeurboutique' ? "" : <Header/>}
+      { links.find(link=> link.url == location.pathname ) ? "" : <Header/>}
     <AllRoutes/>
-    { location.pathname == '/login' || location.pathname == '/loginvendeur' || location.pathname == '/loginvendeurboutique' ? "" : <ButtomPart/>}
+    { links.find(link=> link.url == location.pathname ) ? "" : <ButtomPart/>}
     </div>
   );
 }

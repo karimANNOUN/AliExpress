@@ -3,11 +3,14 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 import Button from '@mui/material/Button';
-import {  Link  } from 'react-router-dom';
+import {  Link, useNavigate  } from 'react-router-dom';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import {CardModalProduct} from '../CardProducts/CardModalProduct'
 export const CardProduct = () => {
+
+
+  const navigate=useNavigate()
 
   const [over, setOver] = useState(false);
   const handleFermer = () => {
@@ -56,7 +59,7 @@ const article = [
         Vous aimerez aussi
       </Typography>
       <Box sx={{display:'flex',justifyContent:'space-around',alignItems:'center',flexWrap:'wrap',my:3}}  >
-        {article.map( art=> <Box key={art.id} sx={{width:'340px',height:'530px',borderRadius:'20px',mb:2,display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',borderColor:'#eeeeee',borderStyle:'solid' }}>
+        {article.map( art=> <Box key={art.id} component='div' onClick={()=>navigate('/1')} sx={{width:'340px',height:'530px',borderRadius:'20px',mb:2,display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',borderColor:'#eeeeee',borderStyle:'solid' }}>
           <img src='https://i.pinimg.com/564x/6a/f3/fb/6af3fb0201c1f22c8281c5519faf5d44.jpg' alt='hhtr' style={{width:'90%',height:'60%',borderRadius:'20px'}} />
           <Box sx={{width:'90%',display:'flex',flexDirection:'column'}} >
           <Typography sx={{my:1,textAlign:'left'}}  variant='body1' gutterBottom>

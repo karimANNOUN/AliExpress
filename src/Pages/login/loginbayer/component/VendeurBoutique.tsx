@@ -1,11 +1,9 @@
 import {useState} from 'react'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
@@ -18,14 +16,15 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MapsHomeWorkOutlinedIcon from '@mui/icons-material/MapsHomeWorkOutlined';
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined';
-import { styled } from '@mui/material/styles';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { styled } from '@mui/material/styles'; 
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
+import { useNavigate } from 'react-router-dom';
 
 
 
 export const VendeurBoutique = () => {
 
+    const navigate=useNavigate()
 
     const options2 =["adrar","chlef","annaba","el taref","alger","guelma"]
 
@@ -448,7 +447,7 @@ Pièce d'identité (recto-verso et en couleur)
       Enregistrer
     </Button>
 
-    <Button variant='contained' color='primary'  sx={{color:'white',width:'47%',textTransform:'lowercase',borderRadius:'12px' ,":hover":{color:'white'} }} >
+    <Button onClick={()=>navigate("/decisionvendeurboutique")} variant='contained' color='primary'  sx={{color:'white',width:'47%',textTransform:'lowercase',borderRadius:'12px' ,":hover":{color:'white'} }} >
       Soumettre une demmande
     </Button>
                 

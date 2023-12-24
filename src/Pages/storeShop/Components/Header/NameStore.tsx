@@ -5,12 +5,14 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
+import { EmptyCardStore } from './EmptyCardStore';
+import { EmptyMeilleurProduct } from './EmptyMeilleurProduct';
 export const NameStore = () => {
 
     
  
-    const newOffre=[
-        {id:1,name:'kimou'},{id:2,name:'kimou'},{id:3,name:'kimou'}
+    const newOffre : any[] =[
+      
     ]
 
     const newProducts=[
@@ -52,7 +54,7 @@ export const NameStore = () => {
        </Typography>
          </Box>
          <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'center',width:'70%',position:'absolute',top:'20%',right:'15%'}} >
-            { newOffre.map( offre=> <Box key={offre.id} sx={{width:'30%',height:'200px',display:'flex',bgcolor:'Window',justifyContent:'space-around',alignItems:'center',borderWidth:'2px',borderRadius:'6px',borderStyle:'solid',borderColor:'#ffd600'}} >
+            { !newOffre.length ? <EmptyCardStore/>  :  newOffre.map( offre=> <Box key={offre.id} sx={{width:'30%',height:'200px',display:'flex',bgcolor:'Window',justifyContent:'space-around',alignItems:'center',borderWidth:'2px',borderRadius:'6px',borderStyle:'solid',borderColor:'#ffd600'}} >
                <img src='https://i.pinimg.com/236x/6d/dd/1d/6ddd1d05c52e656575df0d89a5149c38.jpg'style={{width:'40%',height:'90%',borderRadius:'8px'}} />
                <Box sx={{display:'flex',flexDirection:'column',justifyContent:'center',height:'90%',width:'50%'}} >
                <Link variant='caption' sx={{color:'#9e9e9e',textAlign:'left',mb:2,textDecorationLine:'none',":hover":{color:'#9e9e9e',textDecorationLine:'underline'}}} href="#">
@@ -72,7 +74,7 @@ export const NameStore = () => {
        Les meilleures offres par catégorie
        </Typography>
        <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'center',width:'70%'}} >
-            { newOffre.map( offre=> <Box key={offre.id} sx={{width:'30%',height:'200px',display:'flex',bgcolor:'Window',justifyContent:'space-around',alignItems:'center',borderWidth:'2px',borderRadius:'6px',borderStyle:'solid',borderColor:'#f5f5f5'}} >
+            { !newOffre.length ? <EmptyMeilleurProduct/> : newOffre.map( offre=> <Box key={offre.id} sx={{width:'30%',height:'200px',display:'flex',bgcolor:'Window',justifyContent:'space-around',alignItems:'center',border:'2px solid #f5f5f5',borderRadius:'6px'}} >
                <img src='https://i.pinimg.com/236x/5e/fc/61/5efc6136a54b8b127a253b57eca987bf.jpg'style={{width:'40%',height:'90%',borderRadius:'8px'}} />
                <Box sx={{display:'flex',flexDirection:'column',justifyContent:'center',height:'90%',width:'50%'}} >
                <Link variant='h6' sx={{color:'#9e9e9e',textAlign:'left',mb:2,textDecorationLine:'none',":hover":{color:'#9e9e9e',textDecorationLine:'underline'}}} href="#">

@@ -26,6 +26,10 @@ import { NotificationEmail } from '../Pages/myCommandes/settings/components/Noti
 import { Login } from '../Pages/login/Login'
 import { LoginVendeur } from '../Pages/login/loginbayer/LoginVendeur'
 import { VendeurBoutique } from '../Pages/login/loginbayer/component/VendeurBoutique'
+import { ReviewDecision } from '../Pages/login/loginbayer/component/ReviewDecision'
+import { MotpassOublie } from '../Pages/login/loginbayer/component/passwordoublie/MotpassOublie'
+import { ConfermationPassword } from '../Pages/login/loginbayer/component/passwordoublie/ConfermationPassword'
+import { VendeurPage } from '../Pages/vendeurcontrol/VendeurPage'
 
 
 export default function AllRoutes() {
@@ -62,8 +66,12 @@ export default function AllRoutes() {
           <Route path='/passwordUpdates' element={<PasswordUpdate/>} />
           <Route path='/emailnotification' element={<NotificationEmail/>} />
           <Route path='/login' element={<Login/>} />
+          <Route path='/login/motpassoublie' element={<MotpassOublie/>} />
+          <Route path='/login/motpassoublie/redirect' element={<ConfermationPassword/>} />
           <Route path='/loginvendeur' element={<LoginVendeur/>} />
           <Route path='/loginvendeurboutique' element={<VendeurBoutique/>} />
+          <Route path='/decisionvendeurboutique' element={<ReviewDecision/>} />
+          <Route path='/vendeurcompte' element={<VendeurPage/>} />
 
       
         </Routes> 
