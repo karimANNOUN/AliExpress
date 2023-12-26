@@ -14,10 +14,51 @@ import { ModalPasswordOblie } from './components/ModalPasswordOblie';
 export const MotpassOublie = () => {
 
     const options =["arabic","english"]
-    const [password,setPassword]=useState(1)
+    const [email,setEmail]=useState('')
+    const [message,setMessage]=useState('')
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
+
+
+
+    const handlePassword = async () => {
+      try {
+       
+        const response = await fetch(`http://localhost:8000/passwordoblie`,{
+          method: 'POST',
+          credentials:"include",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email }),
+         
+        });
+
+       
+
+        const data = await response.json()
+       console.log(data)
+       
+      if (data.success == false) {
+          setMessage(data.message)
+      }if (data.success == true) {
+        setEmail(data.existingUser.email)
+        setOpen(true) 
+      }
+      //  console.log('User registered successfully.');
+     
+      } catch (error) {
+        console.error('opération failed.');
+        setMessage('opération failed , please try again')
+      }
+    };
+
+
+
+
+
+
 
   return (
     <div style={{display:'flex',flexDirection:'column',alignItems:'center',height:'100vh'}} >
@@ -57,33 +98,30 @@ Seller center
         defaultValue="female"
         name="radio-buttons-group"
       >
-        <FormControlLabel value="female" control={<Radio color='error' onClick={()=>setPassword(1)} />} label="Email/ID de membre" />
-        <FormControlLabel value="male" control={<Radio color='error' onClick={()=>setPassword(2)}  />} label="Numéro de téléphone" />
+        <FormControlLabel value="female" control={<Radio color='error' />} label="Email/ID de membre" />
       </RadioGroup>
     </FormControl>
           
 
-        { password === 1 && <TextField
+    <TextField
   id="nameAdress"
   sx={{ width: '100%' ,my:2}}
   placeholder="Enter your email "
+  type='email'
+  onChange={(e)=>setEmail(e.target.value)}
   size='small'
   
-    />  }
+    />  
 
-{ password === 2 && <TextField
-  id="nameAdress"
-  sx={{ width: '100%' ,my:2 }}
-  placeholder="Numéro de téléphone"
-  size='small'
-    />}
-
+<Typography  sx={{textAlign:'left',fontWeight:'300',color:'#d50000'}}  variant='subtitle2' gutterBottom>
+        {message}
+        </Typography>
  
-    <Button variant='contained' onClick={handleOpen} sx={{color:'white',width:'100%',textTransform:'lowercase',bgcolor:'#d32f2f',borderRadius:'12px' ,":hover":{color:'white',bgcolor:'#d32f2f'} }} >
+    <Button variant='contained' onClick={handlePassword} sx={{color:'white',width:'100%',textTransform:'lowercase',bgcolor:'#d32f2f',borderRadius:'12px' ,":hover":{color:'white',bgcolor:'#d32f2f'} }} >
       Continuer
     </Button>
 
-       <ModalPasswordOblie open={open} setOpen={setOpen} />
+       <ModalPasswordOblie open={open} setOpen={setOpen} email={email} message={message} setMessage={setMessage} />
 
         </Box>
         <Box sx={{width:'100%',display:'flex',justifyContent:'center',alignItems:'center',py:1,bgcolor:'#f5f5f5',position:'fixed',bottom:0,left:0,right:0}} >

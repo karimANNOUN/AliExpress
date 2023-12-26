@@ -30,6 +30,7 @@ import { ReviewDecision } from '../Pages/login/loginbayer/component/ReviewDecisi
 import { MotpassOublie } from '../Pages/login/loginbayer/component/passwordoublie/MotpassOublie'
 import { ConfermationPassword } from '../Pages/login/loginbayer/component/passwordoublie/ConfermationPassword'
 import { VendeurPage } from '../Pages/vendeurcontrol/VendeurPage'
+import { Register } from '../Pages/login/register/Register'
 
 
 export default function AllRoutes() {
@@ -72,6 +73,7 @@ export default function AllRoutes() {
           <Route path='/loginvendeurboutique' element={<VendeurBoutique/>} />
           <Route path='/decisionvendeurboutique' element={<ReviewDecision/>} />
           <Route path='/vendeurcompte' element={<VendeurPage/>} />
+          <Route path='/register' element={<Register/>} />
 
       
         </Routes> 

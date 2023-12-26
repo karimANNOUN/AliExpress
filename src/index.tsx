@@ -5,18 +5,27 @@ import App from './App';
 import './i18n/config'
 import { BrowserRouter as Router }  from 'react-router-dom';
 import YourThemeProvider from './components/directionLanguage/YourThemeProvider';
+import { Provider } from 'react-redux'; 
+import { store } from './storeRedux/Store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
 
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+let persistor=persistStore(store)
 root.render(
   <React.StrictMode>
+    <Provider store={store} > 
+    <PersistGate persistor={persistor} >
 <Router>
 <YourThemeProvider>
     <App />
     </YourThemeProvider>
     </Router>
+    </PersistGate>
+    </Provider>
 
   </React.StrictMode>
 );

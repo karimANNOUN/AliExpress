@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useState} from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -7,8 +7,10 @@ import { IconButton,InputAdornment } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { setUserValid } from '../../../../../../storeRedux/CartSlice';
 
-export const ModalPasswordOblie = ({open,setOpen}:any) => {
+export const ModalPasswordOblie = ({open,setOpen,email,message,setMessage}:any) => {
 
     const style = {
         position: 'absolute' as 'absolute',
@@ -25,9 +27,54 @@ export const ModalPasswordOblie = ({open,setOpen}:any) => {
         
       };
 
+      const dispatch=useDispatch()
+
       const handleClose = () => setOpen(false);
 
    const navigate=useNavigate()
+
+     const [code,setCode]=useState('')
+
+   const  handelConfirmPassword = async () => {
+ 
+    try {
+       
+      const response = await fetch(`http://localhost:8000/confirmpassword`,{
+        method: 'POST',
+        credentials:"include",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, code }),
+       
+      })
+
+      const data = await response.json()
+      console.log(data)
+      if (data.success == false) {
+          setMessage(data.message)
+      }if (data.success == true) {
+        navigate("/login/motpassoublie/redirect")
+        dispatch(setUserValid(data.user))
+           
+      }
+
+    } catch (error) {
+      
+      console.error(error);
+    }}
+    
+
+
+
+
+
+
+
+
+
+
+
     
   return (
     <div>
@@ -56,7 +103,7 @@ export const ModalPasswordOblie = ({open,setOpen}:any) => {
 id="email"
 sx={{ width: '100%' ,my:1}}
 size='small'
-value="announkarim23@gmail.com"
+value={email}
 disabled
 />
 
@@ -67,25 +114,20 @@ disabled
   id="password"
   sx={{ width: '100%' ,mt:1}}
   placeholder="Enter your Code de vérification "
-  size='small'
-  InputProps={{
-    endAdornment:(
-        <InputAdornment sx={{height:'100%',right:0,position:'absolute'}} position='end' >
-            <Button variant='text' sx={{color:'#2196f3',textTransform:'lowercase' ,":hover":{color:'#2196f3'} }} >
-    Renvoyer
-</Button>
-        </InputAdornment>
-    )}}
-  
+  onChange={(e)=>setCode(e.target.value)}
+  size='small'  
     />
   <Typography  sx={{textAlign:'left',color:'#bdbdbd'}}  variant='caption' gutterBottom>
   Le code de vérification a été envoyé à votre email, veuillez le vérifier.
     </Typography>
 
+    <Typography  sx={{textAlign:'left',fontWeight:'300',color:'#d50000'}}  variant='subtitle2' gutterBottom>
+        {message}
+        </Typography>
 
     </Box>
         
-    <Button onClick={()=>navigate("/login/motpassoublie/redirect")} variant='contained' sx={{color:'white',textTransform:'lowercase',my:2,bgcolor:'#2196f3',borderRadius:'12px' ,":hover":{color:'white',bgcolor:'#2196f3'} }} >
+    <Button onClick={handelConfirmPassword} variant='contained' sx={{color:'white',textTransform:'lowercase',my:2,bgcolor:'#2196f3',borderRadius:'12px' ,":hover":{color:'white',bgcolor:'#2196f3'} }} >
   confirmation
 </Button>
 

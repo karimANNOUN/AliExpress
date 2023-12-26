@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import Header from '../Home/Header';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +11,45 @@ export const Login = () => {
     const options =["arabic","english"]
 
     const navigate=useNavigate()
+
+const [email,setEmail]=useState('')
+const [password,setPassword]=useState('')
+const [message,setMessage]=useState('')
+
+    const handleLogin = async () => {
+      try {
+       
+        const response = await fetch(`${process.env.REACT_APP_HOST}/login`,{
+          method: 'POST',
+          credentials:"include", 
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email , password }),
+         
+        });
+
+        const data = await response.json()
+
+        console.log(data)
+        if (data.success == false) {
+            setMessage(data.message)
+        }if (data.success == true) {
+            navigate("/")
+             
+        }
+
+   //     const data = await response.json()
+     //   console.log(data)
+
+      //  console.log('User registered successfully.');
+      } catch (error) {
+        console.error('login failed.');
+      }
+    };
+
+
+
 
   return (
     <div style={{display:'flex',flexDirection:'column',alignItems:'center',height:'100vh'}} >
@@ -48,16 +86,24 @@ Seller center
   id="nameAdress"
   sx={{ width: '100%' ,mt:1}}
   placeholder="Enter your email "
+  type='email'
   size='small'
+  onChange={(e)=>setEmail(e.target.value)}
   
     />
 
 <TextField
-  id="nameAdress"
+  id="nameAd"
   sx={{ width: '100%' ,my:2 }}
   placeholder="Enter your password "
+  type='password'
+  onChange={(e)=>setPassword(e.target.value)}
   size='small'
     />
+
+<Typography  sx={{textAlign:'left',fontWeight:'300',color:'#d50000'}}  variant='subtitle2' gutterBottom>
+        {message}
+        </Typography>
 
 <Button onClick={()=>navigate("/login/motpassoublie")} variant='text' sx={{color:'#2196f3',mb:2,textTransform:'lowercase' ,":hover":{color:'#2196f3'} }} >
        Mot de pass oublié ?
@@ -65,7 +111,7 @@ Seller center
 
 
  
-    <Button variant='contained' sx={{color:'white',width:'100%',textTransform:'lowercase',bgcolor:'#d32f2f',borderRadius:'12px' ,":hover":{color:'white',bgcolor:'#d32f2f'} }} >
+    <Button onClick={handleLogin} variant='contained' sx={{color:'white',width:'100%',textTransform:'lowercase',bgcolor:'#d32f2f',borderRadius:'12px' ,":hover":{color:'white',bgcolor:'#d32f2f'} }} >
       connexion
     </Button>
 
