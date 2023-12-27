@@ -28,7 +28,7 @@ export const Register = () => {
     const handleRegister = async () => {
         try {
          
-          const response = await fetch(`${process.env.REACT_APP_HOST_REACT}/register`,{
+          const response = await fetch(`http://localhost:8000/register`,{
             method: 'POST',
             credentials:"include",
             headers: {
@@ -62,7 +62,7 @@ export const Register = () => {
  
       try {
          
-        const response = await fetch(`${process.env.REACT_APP_HOST_REACT}/confirm`,{
+        const response = await fetch(`http://localhost:8000/confirm`,{
           method: 'POST',
           credentials:"include",
           headers: {

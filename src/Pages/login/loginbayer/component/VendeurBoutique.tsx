@@ -26,7 +26,142 @@ export const VendeurBoutique = () => {
 
     const navigate=useNavigate()
 
-    const options2 =["adrar","chlef","annaba","el taref","alger","guelma"]
+    const [status,setStatus]=useState('')
+    const [imageStatus,setImageStatus]=useState('')
+    const [statusType,setStatusType]=useState('')
+    const [raisonSocial,setRaisonSocial]=useState('')
+    const [numberSirene,setNumberSirene]=useState('')
+    const [certificatEntreprise,setCertificatEntreprise]=useState('')
+    const [tva,setTva]=useState('')
+    const [pays,setPays]=useState('')
+    const [stateEntreprise,setStateEntreprise]=useState('')
+    const [commune,setCommune]=useState('')
+    const [postalCode,setPostalCode]=useState('')
+    const [rueNumber,setRueNumber]=useState('')
+    const [industryType,setIndustryType]=useState('')
+    const [businessManager,setBusinessManager]=useState('')
+    const [certificatType,setCertificatType]=useState('')
+    const [certificatNumber,setCertificatNumber]=useState('')
+    const [societéPhone,setSocietéPhone]=useState('')
+
+    const [completeName,setCompleteName]=useState('')
+    const [nationality,setNationality]=useState('')
+    const [nativeContry,setNativeContry]=useState('')
+    const [birthday,setBirthday]=useState('')
+    const [paysLegal,setPaysLegal]=useState('')
+    const [state,setState]=useState('')
+    const [communeLegal,setCommuneLegal]=useState('')
+    const [postalCodeLegal,setPostalCodeLegal]=useState('')
+    const [certificatResidance,setCertificatResidance]=useState('')
+    const [reprisentativePhone,setReprisentativePhone]=useState('')
+
+    const [identityType,setIdentityType]=useState('')
+    const [identityNumber,setIdentityNumber]=useState('')
+    const [expire,setExpire]=useState('')
+    const [imageone,setImageone]=useState('')
+    const [imagetow,setImagetow]=useState('')
+
+
+
+    const wilayas =[
+      'Adrar',
+      'Chlef',
+      'Laghouat',
+      'Oum El Bouaghi',
+      'Batna',
+      'Béjaïa',
+      'Biskra',
+      'Béchar',
+      'Blida',
+      'Bouira',
+      'Tamanrasset',
+      'Tébessa',
+      'Tlemcen',
+      'Tiaret',
+      'Tizi Ouzou',
+      'Alger',
+      'Djelfa',
+      'Jijel',
+      'Sétif',
+      'Saïda',
+      'Skikda',
+      'Sidi Bel Abbès',
+      'Annaba',
+      'Guelma',
+      'Constantine',
+      'Médéa',
+      'Mostaganem',
+      'MSila',
+      'Mascara',
+      'Ouargla',
+      'Oran',
+      'El Bayadh',
+      'Illizi',
+      'Bordj Bou Arréridj',
+      'Boumerdès',
+      'El Tarf',
+      'Tindouf',
+      'Tissemsilt',
+      'El Oued',
+      'Khenchela',
+      'Souk Ahras',
+      'Tipaza',
+      'Mila',
+      'Aïn Defla',
+      'Naâma',
+      'Aïn Témouchent',
+      'Ghardaïa',
+      'Relizane'
+    ];
+
+
+    const entrepriseType=[
+      "entreprise publique",
+      "Societé coté en bourse",
+      "Societé privé",
+      "Societé individuelle"
+    ]
+
+
+    const ecommerceIndustryTypes = [
+      'Mode et Vêtements',
+      'Électronique et High-Tech',
+      'Maison et Jardin',
+      'Beauté et Cosmétiques',
+      'Santé et Bien-être',
+      'Sports et Loisirs',
+      'Alimentation et Boissons',
+      'Art et Culture',
+      'Auto et Moto',
+      'Bébé et Enfants',
+      'Animaux',
+      'Bijoux et Montres',
+      'Informatique et Logiciels',
+      'Livres, Musique et Films',
+      'Mobilier et Décoration',
+      'Épicerie Fine',
+      'Fournitures de Bureau',
+      'Cadeaux et Gadgets',
+      'Événements et Billetterie',
+      'Services en Ligne',
+      'Produits Écologiques',
+      'Produits Artisanaux',
+      'Produits Locaux',
+      'Produits Importés',
+      'Autre'
+    ];
+    
+  const certificatTypes=[
+    "identifiant certificat",
+    "passport"
+  ]
+
+
+  const identityTypeLegal=[
+    "identifiant certificat",
+    "passport"
+  ]
+
 
     const steps = [
         'Créer un compte',
@@ -146,11 +281,13 @@ export const VendeurBoutique = () => {
             <label htmlFor='entreprise' style={{textAlign:'left'}} > Type d'entreprise </label>
             <Autocomplete
       id="entreprise"
-      options={options2}
+      options={entrepriseType}
       sx={{ width: '100%',my:1 }}
       size="small"
       placeholder='choose your state'
-      renderInput={(params) => <TextField {...params} placeholder='veuillez sélectioner'  />}
+      value={statusType}
+      onChange={(e,newValue:any)=>setStatusType(newValue)}
+      renderInput={(params) => <TextField required {...params} placeholder='veuillez sélectioner'  />}
     />
          
        
@@ -161,6 +298,8 @@ export const VendeurBoutique = () => {
   sx={{ width: '100%' ,my:1}}
   placeholder="veuillez sélectioner le nom complet de votre entreprise "
   size='small'
+  required
+  onChange={(e)=>setRaisonSocial(e.target.value)}
     />
 
 
@@ -172,6 +311,8 @@ export const VendeurBoutique = () => {
       sx={{ width: '100%' ,my:1}}
       placeholder="Entre Number SRN "
       size='small'
+      required
+      onChange={(e)=>setNumberSirene(e.target.value)}
         />
 
 
@@ -205,6 +346,20 @@ licence/certificat d’entreprise
       sx={{ width: '100%' ,my:1}}
       placeholder="Entre your TVA NUMBER "
       size='small'
+      required
+      onChange={(e)=>setTva(e.target.value)}
+        />
+
+<label htmlFor='tva' style={{textAlign:'left'}} > Societé Phone Number </label>
+     
+
+     <TextField
+      id="tva"
+      sx={{ width: '100%' ,my:1}}
+      placeholder="Entre your TVA NUMBER "
+      size='small'
+      required
+      onChange={(e)=>setSocietéPhone(e.target.value)}
         />
 
 
@@ -216,24 +371,32 @@ licence/certificat d’entreprise
       sx={{ width: '45%'  ,my:1}}
       placeholder="Pays "
       size='small'
+      required
+      onChange={(e)=>setPays(e.target.value)}
         />
          <TextField
       id="adresse"
       sx={{ width: '45%' ,my:1}}
       placeholder="wilaya"
       size='small'
+      required
+      onChange={(e)=>setStateEntreprise(e.target.value)}
         />
          <TextField
       id="adresses"
       sx={{ width: '45%'  ,my:1}}
       placeholder="commune"
       size='small'
+      required
+      onChange={(e)=>setCommune(e.target.value)}
         />
          <TextField
       id="adressees"
       sx={{ width: '45%' ,my:1}}
       placeholder="code postale "
       size='small'
+      required
+      onChange={(e)=>setPostalCode(e.target.value)}
         />
      </Box>
     
@@ -242,16 +405,19 @@ licence/certificat d’entreprise
       sx={{ width: '100%' ,my:1}}
       placeholder="Name & Number  Rue "
       size='medium'
+      required
+      onChange={(e)=>setRueNumber(e.target.value)}
         />
          
          <label htmlFor='industrie' style={{textAlign:'left'}} > Type d’industrie </label>
          <Autocomplete
       id="industrie"
-      options={options2}
+      options={ecommerceIndustryTypes}
       sx={{ width: '100%',my:1 }}
       size="small"
+      onChange={(e,newValue:any)=>setIndustryType(newValue)}
       placeholder='choose your state'
-      renderInput={(params) => <TextField {...params} placeholder='veuillez sélectioner'  />}
+      renderInput={(params) => <TextField required {...params} placeholder='veuillez sélectioner'  />}
     />
 
 
@@ -264,16 +430,19 @@ licence/certificat d’entreprise
       sx={{ width: '100%' ,my:1}}
       placeholder="Nom complet de gérant de boutique / entreprise "
       size='small'
+      required
+      onChange={(e)=>setBusinessManager(e.target.value)}
         />
 
 <label htmlFor='crt' style={{textAlign:'left'}} > Type de certificat</label>
          <Autocomplete
       id="crt"
-      options={options2}
+      options={certificatTypes}
       sx={{ width: '100%',my:1 }}
       size="small"
-      placeholder='choose your state'
-      renderInput={(params) => <TextField {...params} placeholder='veuillez sélectioner'  />}
+      placeholder='choose your type'
+      onChange={(e,newValue:any)=>setCertificatType(newValue)}
+      renderInput={(params) => <TextField required {...params} placeholder='veuillez sélectioner'  />}
     />
          
         
@@ -285,6 +454,8 @@ licence/certificat d’entreprise
       sx={{ width: '100%' ,my:1}}
       placeholder="Nom complet de gérant de boutique / entreprise "
       size='small'
+      required
+      onChange={(e)=>setCertificatNumber(e.target.value)}
         />
 
 
@@ -302,6 +473,8 @@ Informations du représentant légal
       sx={{ width: '100%' ,my:1}}
       placeholder="Nom complet de Représentant légal "
       size='small'
+      required
+      onChange={(e)=>setCompleteName(e.target.value)}
         />
         
         <label htmlFor='Nationalité' style={{textAlign:'left'}} > Nationalité</label>
@@ -312,6 +485,21 @@ Informations du représentant légal
       sx={{ width: '100%' ,my:1}}
       placeholder="entrer Nationalité "
       size='small'
+      required
+      onChange={(e)=>setNationality(e.target.value)}
+        />
+
+        
+<label htmlFor='rptlgl' style={{textAlign:'left'}} > Phone Number</label>
+     
+
+     <TextField
+      id="rptlgl"
+      sx={{ width: '100%' ,my:1}}
+      placeholder="Nom complet de Représentant légal "
+      size='small'
+      required
+      onChange={(e)=>setReprisentativePhone(e.target.value)}
         />
 
 
@@ -323,6 +511,8 @@ Informations du représentant légal
       sx={{ width: '100%' ,my:1}}
       placeholder="entrer Pays de naissance "
       size='small'
+      required
+      onChange={(e)=>setNativeContry(e.target.value)}
         />
 
 
@@ -335,6 +525,8 @@ Informations du représentant légal
       placeholder="Sélectionnez date "
       size='small'
       type='date'
+      required
+      onChange={(e)=>setBirthday(e.target.value)}
         />
 
 
@@ -342,11 +534,12 @@ Informations du représentant légal
 <label htmlFor='idt' style={{textAlign:'left'}} > Type de pièce d'identité</label>
          <Autocomplete
       id="idt"
-      options={options2}
+      options={identityTypeLegal}
       sx={{ width: '100%',my:1 }}
       size="small"
-      placeholder='choose your state'
-      renderInput={(params) => <TextField {...params} placeholder='veuillez sélectioner'  />}
+      placeholder='choose your identity pièce'
+      onChange={(e,newValue:any)=>setIdentityType(newValue)}
+      renderInput={(params) => <TextField required {...params} placeholder='veuillez sélectioner'  />}
     />
 
      
@@ -358,6 +551,8 @@ Informations du représentant légal
       sx={{ width: '100%' ,my:1}}
       placeholder="Carte d'identité de représentant légal NMR"
       size='small'
+      required
+      onChange={(e)=>setIdentityNumber(e.target.value)}
         />
 
 <label htmlFor='ncs' style={{textAlign:'left'}} > Date d’expiration</label>
@@ -369,6 +564,8 @@ Informations du représentant légal
       placeholder="Sélectionnez date "
       size='small'
       type='date'
+      required
+      onChange={(e)=>setExpire(e.target.value)}
         />
 
     
@@ -399,26 +596,34 @@ Pièce d'identité (recto-verso et en couleur)
       sx={{ width: '45%'  ,my:1}}
       placeholder="Pays "
       size='small'
+      required
+      onChange={(e)=>setPaysLegal(e.target.value)}
         />
          <TextField
       id="adresse"
       sx={{ width: '45%' ,my:1}}
       placeholder="wilaya"
       size='small'
+      required
+      onChange={(e)=>setState(e.target.value)}
         />
          <TextField
       id="adresses"
       sx={{ width: '45%'  ,my:1}}
       placeholder="commune"
       size='small'
+      required
+      onChange={(e)=>setCommuneLegal(e.target.value)}
         />
          <TextField
       id="adressees"
       sx={{ width: '45%' ,my:1}}
       placeholder="code postale "
       size='small'
+      required
+      onChange={(e)=>setPostalCodeLegal(e.target.value)}
         />
-     </Box>^
+     </Box>
 
       
      <Typography variant='subtitle2' sx={{textAlign:'left',fontWeight:'700',mt:2}} >

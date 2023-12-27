@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux'
+import Cookies from 'js-cookie';
 
 export const ConfermationPassword = () => {
 
@@ -17,12 +18,12 @@ export const ConfermationPassword = () => {
 
     const [password,setPassword]=useState('')
     const [newPassword,setNewPassword]=useState('')
-    const [email,setEmail]=useState('')
     const [message,setMessage]=useState('')
 
+    const Token=Cookies.get('token')
 
     const  handelUpdatePassword = async () => {
-       setEmail(user.email)
+    
       try {
          
         const response = await fetch(`http://localhost:8000/updatepassword`,{
@@ -30,8 +31,9 @@ export const ConfermationPassword = () => {
           credentials:"include",
           headers: {
             'Content-Type': 'application/json',
+             authorization:`${Token}`
           },
-          body: JSON.stringify({ email ,password }),
+          body: JSON.stringify({ password }),
          
         })
 

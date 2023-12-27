@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useState} from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -7,7 +7,40 @@ import { IconButton,InputAdornment } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
-export const ModalEmailConfirmation = ({open,setOpen}:any) => {
+export const ModalEmailConfirmation = ({open,setOpen,email}:any) => {
+
+ const navigate=useNavigate()
+
+  const [code,setCode]=useState('')
+  const [message,setMessage]=useState('')
+
+  const  handelConfirmSeller = async () => {
+ 
+    try {
+       
+      const response = await fetch(`http://localhost:8000/confirmseller`,{
+        method: 'POST',
+        credentials:"include",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, code }),
+       
+      })
+
+      const data = await response.json()
+      console.log(data)
+      if (data.success == false) {
+          setMessage(data.message)
+      }if (data.success == true) {
+        navigate("/loginvendeurboutique")
+           
+      }
+
+    } catch (error) {
+      
+      console.error(error);
+    }}
 
 
     const style = {
@@ -27,7 +60,7 @@ export const ModalEmailConfirmation = ({open,setOpen}:any) => {
 
       const handleClose = () => setOpen(false);
 
-   const navigate=useNavigate()
+   
 
   return (
     <div>
@@ -56,7 +89,7 @@ export const ModalEmailConfirmation = ({open,setOpen}:any) => {
   id="email"
   sx={{ width: '100%' ,my:1}}
   size='small'
-  value="announkarim23@gmail.com"
+  value={email}
   disabled
     />
 
@@ -68,14 +101,7 @@ export const ModalEmailConfirmation = ({open,setOpen}:any) => {
       sx={{ width: '100%' ,mt:1}}
       placeholder="Enter your Code de vérification "
       size='small'
-      InputProps={{
-        endAdornment:(
-            <InputAdornment sx={{height:'100%',right:0,position:'absolute'}} position='end' >
-                <Button variant='text' sx={{color:'#2196f3',textTransform:'lowercase' ,":hover":{color:'#2196f3'} }} >
-        Renvoyer
-    </Button>
-            </InputAdornment>
-        )}}
+      onChange={(e)=>setCode(e.target.value)}
       
         />
       <Typography  sx={{textAlign:'left',color:'#bdbdbd'}}  variant='caption' gutterBottom>
@@ -84,8 +110,12 @@ export const ModalEmailConfirmation = ({open,setOpen}:any) => {
 
 
         </Box>
+
+        <Typography  sx={{textAlign:'left',fontWeight:'300',color:'#d50000'}}  variant='subtitle2' gutterBottom>
+        {message}
+        </Typography>
             
-        <Button onClick={()=>navigate("/loginvendeurboutique")} variant='contained' sx={{color:'white',textTransform:'lowercase',my:2,bgcolor:'#2196f3',borderRadius:'12px' ,":hover":{color:'white',bgcolor:'#2196f3'} }} >
+        <Button onClick={handelConfirmSeller} variant='contained' sx={{color:'white',textTransform:'lowercase',my:2,bgcolor:'#2196f3',borderRadius:'12px' ,":hover":{color:'white',bgcolor:'#2196f3'} }} >
       Soumettre
     </Button>
 

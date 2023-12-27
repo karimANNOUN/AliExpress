@@ -12,14 +12,22 @@ import StepLabel from '@mui/material/StepLabel';
 import { ModalEmailConfirmation } from './component/ModalEmailConfirmation';
 import { Header } from './component/Header';
 import { Footer } from './component/Footer';
+import { useNavigate } from 'react-router-dom';
 
 export const LoginVendeur = () => {
 
+   
+
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
-
+      
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [name,setName]=useState('')
+    const [state,setState]=useState('')
+    const [message, setMessage] = useState('');
     
-
   
 
     const options2 =["adrar","chlef","annaba","el taref","alger","guelma"]
@@ -29,6 +37,50 @@ export const LoginVendeur = () => {
         'Renseignements sur l’entreprise',
         'Examen de la demande',
       ];
+
+
+      const handleRegisterSeller = async () => {
+        try {
+         
+          const response = await fetch(`http://localhost:8000/registerseller`,{
+            method: 'POST',
+            credentials:"include",
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, state ,password ,name }),
+           
+          });
+
+         
+  
+          const data = await response.json()
+         console.log(data)
+         setEmail(data.newUser.email)
+        if (data.success == false) {
+            setMessage(data.message)
+        }if (data.success == true) {
+            setOpen(true)     
+        }
+        //  console.log('User registered successfully.');
+       
+        } catch (error) {
+          console.error('Registration failed.');
+          setMessage('Registration failed , please try again')
+        }
+      };
+
+
+      const handleChange = (event:any, newValue :any) => {
+        setState(newValue);
+        // Perform additional actions based on the selected value
+      };
+
+
+
+     
+       
+
 
   return (
     <div style={{display:'flex',flexDirection:'column',alignItems:'center',backgroundColor:'#eeeeee'}} >
@@ -62,7 +114,9 @@ export const LoginVendeur = () => {
       sx={{ width: '100%',my:1 }}
       size="small"
       placeholder='choose your state'
-      renderInput={(params) => <TextField {...params} placeholder='choose your state'  />}
+      value={state}
+      onChange={handleChange}
+      renderInput={(params) => <TextField required  {...params} placeholder='choose your state'  />}
     />
 
           
@@ -74,8 +128,23 @@ export const LoginVendeur = () => {
   sx={{ width: '100%' ,my:1}}
   placeholder="Enter your email "
   size='small'
-  
+  type='email'
+  onChange={(e)=>setEmail(e.target.value)}
+  required
     />
+
+<label htmlFor='name' style={{textAlign:'left'}} > Name </label>
+     
+
+     <TextField
+      id="name"
+      sx={{ width: '100%' ,my:1}}
+      placeholder="Enter your name "
+      size='small'
+      type='text'
+      onChange={(e)=>setName(e.target.value)}
+        required
+        />
 
 <label htmlFor='password' style={{textAlign:'left'}} > Password </label>
      
@@ -84,6 +153,9 @@ export const LoginVendeur = () => {
       id="password"
       sx={{ width: '100%' ,my:1}}
       placeholder="Enter your password "
+      onChange={(e)=>setPassword(e.target.value)}
+      type='password'
+      required
       size='small'
       
         />
@@ -96,6 +168,9 @@ export const LoginVendeur = () => {
       id="Confirm Password"
       sx={{ width: '100%' ,mt:1}}
       placeholder="Confirm Password "
+      onChange={(e)=>setConfirmPassword(e.target.value)}
+      type='password'
+      required
       size='small'
       
         />
@@ -103,15 +178,21 @@ export const LoginVendeur = () => {
 
         </Box>
 
-
- 
-    <Button variant='contained' onClick={handleOpen} sx={{color:'white',textTransform:'lowercase',my:2,bgcolor:'#d32f2f',borderRadius:'12px' ,":hover":{color:'white',bgcolor:'#d32f2f'} }} >
+        <Typography  sx={{textAlign:'left',fontWeight:'300',color:'#d50000'}}  variant='subtitle2' gutterBottom>
+        {message}
+        </Typography>
+ {password == confirmPassword && password !== "" && confirmPassword !== "" ?
+    <Button variant='contained' onClick={handleRegisterSeller} sx={{color:'white',textTransform:'lowercase',my:2,bgcolor:'#d32f2f',borderRadius:'12px' ,":hover":{color:'white',bgcolor:'#d32f2f'} }} >
       S'inscrire
-    </Button>
+    </Button> : 
+     <Button variant='contained' disabled  sx={{color:'white',textTransform:'lowercase',my:2,bgcolor:'#d32f2f',borderRadius:'12px' ,":hover":{color:'white',bgcolor:'#d32f2f'} }} >
+     S'inscrire
+   </Button>
+    }
     </Box>
         </Box>
 
-      <ModalEmailConfirmation open={open} setOpen={setOpen} />
+      <ModalEmailConfirmation open={open} setOpen={setOpen} email={email} />
 
        <Footer/>
     </div>

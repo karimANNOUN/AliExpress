@@ -1,3 +1,4 @@
+//@ts-nocheck
 import {useState} from 'react'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -6,9 +7,15 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../storeRedux/CartSlice';
+import Cookies from 'js-cookie';
+
 export const Login = () => {
 
     const options =["arabic","english"]
+
+    const dispatch=useDispatch()
 
     const navigate=useNavigate()
 
@@ -19,7 +26,7 @@ const [message,setMessage]=useState('')
     const handleLogin = async () => {
       try {
        
-        const response = await fetch(`${process.env.REACT_APP_HOST}/login`,{
+        const response = await fetch(`http://localhost:8000/login`,{
           method: 'POST',
           credentials:"include", 
           headers: {
@@ -34,9 +41,19 @@ const [message,setMessage]=useState('')
         console.log(data)
         if (data.success == false) {
             setMessage(data.message)
-        }if (data.success == true) {
-            navigate("/")
-             
+        }if (data.success == true && data.user.role =="simple"  ) {
+          Cookies.set('token', data.token, { expires: 7 });
+          dispatch(setUser(data.token))
+            navigate("/")   
+        }if (data.success == true && data.user.role =="seller attente1" ) {
+          dispatch(setUser(data.token))
+           navigate("/loginvendeurboutique")
+        }if (data.success == true && data.user.role =="seller attente2") {
+          dispatch(setUser(data.token))
+          navigate("/decisionvendeurboutique")
+        }if (data.success == true && data.user.role =="seller") {
+          dispatch(setUser(data.token))
+          navigate("/") 
         }
 
    //     const data = await response.json()
