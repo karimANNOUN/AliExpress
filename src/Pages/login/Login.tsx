@@ -35,26 +35,46 @@ const [message,setMessage]=useState('')
           body: JSON.stringify({ email , password }),
          
         });
-
+      
         const data = await response.json()
 
-        console.log(data)
-        if (data.success == false) {
-            setMessage(data.message)
-        }if (data.success == true && data.user.role =="simple"  ) {
-          Cookies.set('token', data.token, { expires: 7 });
-          dispatch(setUser(data.token))
-            navigate("/")   
-        }if (data.success == true && data.user.role =="seller attente1" ) {
-          dispatch(setUser(data.token))
-           navigate("/loginvendeurboutique")
-        }if (data.success == true && data.user.role =="seller attente2") {
-          dispatch(setUser(data.token))
-          navigate("/decisionvendeurboutique")
-        }if (data.success == true && data.user.role =="seller") {
-          dispatch(setUser(data.token))
-          navigate("/") 
+    //    Cookies.set('token', data.token, { expires: 7 });
+        
+    //    const Token=Cookies.get('token')
+       
+        const response2 = await fetch(`http://localhost:8000/user`,{
+          method: 'GET',
+          credentials:"include", 
+          headers: {
+            'Content-Type': 'application/json',
+            authorization:`${data.token}`
+          }
+        })
+
+        const user = await response2.json()
+        console.log(user)
+     
+        if (user.sucess == true) {
+         
+          console.log(data)
+          if (data.success == false) {
+              setMessage(data.message)
+          }if (data.success == true && user.user.user.role =="simple"  ) {
+            Cookies.set('token', data.token, { expires: 7 });
+              navigate("/")   
+          }if (data.success == true && user.user.user.role =="seller attente1" ) {
+            Cookies.set('token', data.token, { expires: 7 });
+             navigate("/loginvendeurboutique")
+          }if (data.success == true && user.user.user.role =="seller attente2") {
+            Cookies.set('token', data.token, { expires: 7 });
+            navigate("/decisionvendeurboutique")
+          }if (data.success == true && user.user.user.role =="seller") {
+            Cookies.set('token', data.token, { expires: 7 });
+            navigate("/") 
+          }
+          
         }
+       
 
    //     const data = await response.json()
      //   console.log(data)

@@ -19,19 +19,20 @@ import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined';
 import { styled } from '@mui/material/styles'; 
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 
 
 export const VendeurBoutique = () => {
-
+  const Token=Cookies.get('token')
     const navigate=useNavigate()
 
-    const [status,setStatus]=useState('')
-    const [imageStatus,setImageStatus]=useState('')
+    const [imageStatus,setImageStatus]=useState<File | null>()
     const [statusType,setStatusType]=useState('')
     const [raisonSocial,setRaisonSocial]=useState('')
     const [numberSirene,setNumberSirene]=useState('')
-    const [certificatEntreprise,setCertificatEntreprise]=useState('')
+    const [certificatEntreprise,setCertificatEntreprise]=useState<File | null>()
     const [tva,setTva]=useState('')
     const [pays,setPays]=useState('')
     const [stateEntreprise,setStateEntreprise]=useState('')
@@ -52,14 +53,65 @@ export const VendeurBoutique = () => {
     const [state,setState]=useState('')
     const [communeLegal,setCommuneLegal]=useState('')
     const [postalCodeLegal,setPostalCodeLegal]=useState('')
-    const [certificatResidance,setCertificatResidance]=useState('')
+    const [certificatResidance,setCertificatResidance]=useState<File | null>()
     const [reprisentativePhone,setReprisentativePhone]=useState('')
 
     const [identityType,setIdentityType]=useState('')
     const [identityNumber,setIdentityNumber]=useState('')
     const [expire,setExpire]=useState('')
-    const [imageone,setImageone]=useState('')
-    const [imagetow,setImagetow]=useState('')
+    const [imageIdentity,setImageIdentity]=useState<File | null>()
+
+
+    const handleChangeImageStatus = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setImageStatus(e.target.files?.[0] || null )
+    };
+
+    const handleChangecertificatEntreprise = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setCertificatEntreprise(e.target.files?.[0] || null )
+    };
+
+    const handleChangeCertificatResidence = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setCertificatResidance(e.target.files?.[0] || null )
+    };
+
+    const handleChangeImageIdentity = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setImageIdentity(e.target.files?.[0] || null )
+    };
+
+    
+
+    const handelProduct=async()=>{
+      const formData : any = new FormData();
+        formData.append('file', imageStatus);
+       
+
+
+
+    
+
+
+
+        try{
+       //   if (file !== null && category !== "" && name !== "" && price !== "" && quantity !== "" ) {
+          axios.post(`http://localhost:8000/sellerstep`,formData, {
+            withCredentials:true,
+            headers:{authorization:`${Token}`}
+            
+            
+          }) 
+          .then(res=> console.log(res.data) )
+          .catch(err=>console.log(err)) 
+       // }
+         
+        }catch(error){
+          console.log(error)
+        }
+  
+       
+      
+     }
+  
+    
 
 
 
@@ -264,12 +316,12 @@ export const VendeurBoutique = () => {
 
                     </Typography>
 
-        <Button variant="outlined" component="label" sx={{width:'120px',height:'140px',color:'black',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',borderRadius:'6px',border:'1px dashed #bdbdbd',my:1,":hover":{border:'1px dashed #bdbdbd',color:'black'}}} >
+        <Button variant="outlined"  component='label' sx={{width:'120px',height:'140px',color:'black',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',borderRadius:'6px',border:'1px dashed #bdbdbd',my:1,":hover":{border:'1px dashed #bdbdbd',color:'black'}}} >
           <InsertPhotoOutlinedIcon/>
           <Typography variant='caption' sx={{mt:1}} >  
           Upload
         </Typography>
-        <VisuallyHiddenInput type="file" />
+        <VisuallyHiddenInput onChange={handleChangeImageStatus} type="file" />
         </Button>
        
        
@@ -321,12 +373,12 @@ licence/certificat d’entreprise
 
                     </Typography>
 
-        <Button variant="outlined" component="label" sx={{width:'120px',height:'140px',color:'black',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',borderRadius:'6px',border:'1px dashed #bdbdbd',my:1,":hover":{border:'1px dashed #bdbdbd',color:'black'}}} >
+        <Button variant="outlined" component='label'  sx={{width:'120px',height:'140px',color:'black',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',borderRadius:'6px',border:'1px dashed #bdbdbd',my:1,":hover":{border:'1px dashed #bdbdbd',color:'black'}}} >
           <InsertPhotoOutlinedIcon/>
           <Typography variant='caption' sx={{mt:1}} >  
           Upload
         </Typography>
-        <VisuallyHiddenInput type="file" />
+        <VisuallyHiddenInput onChange={handleChangecertificatEntreprise} type="file" />
         </Button>
        
        
@@ -441,6 +493,7 @@ licence/certificat d’entreprise
       sx={{ width: '100%',my:1 }}
       size="small"
       placeholder='choose your type'
+      value={certificatType}
       onChange={(e,newValue:any)=>setCertificatType(newValue)}
       renderInput={(params) => <TextField required {...params} placeholder='veuillez sélectioner'  />}
     />
@@ -538,6 +591,7 @@ Informations du représentant légal
       sx={{ width: '100%',my:1 }}
       size="small"
       placeholder='choose your identity pièce'
+      value={identityType}
       onChange={(e,newValue:any)=>setIdentityType(newValue)}
       renderInput={(params) => <TextField required {...params} placeholder='veuillez sélectioner'  />}
     />
@@ -574,12 +628,12 @@ Pièce d'identité (recto-verso et en couleur)
 
                     </Typography>
 
-        <Button variant="outlined" component="label" sx={{width:'120px',height:'140px',color:'black',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',borderRadius:'6px',border:'1px dashed #bdbdbd',my:1,":hover":{border:'1px dashed #bdbdbd',color:'black'}}} >
+        <Button variant="outlined" component='label'  sx={{width:'120px',height:'140px',color:'black',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',borderRadius:'6px',border:'1px dashed #bdbdbd',my:1,":hover":{border:'1px dashed #bdbdbd',color:'black'}}} >
           <InsertPhotoOutlinedIcon/>
           <Typography variant='caption' sx={{mt:1}} >  
           Upload
         </Typography>
-        <VisuallyHiddenInput type="file" />
+        <VisuallyHiddenInput onChange={handleChangeImageIdentity} type="file" />
         </Button>
        
        
@@ -631,12 +685,12 @@ Pièce d'identité (recto-verso et en couleur)
 
                     </Typography>
 
-        <Button variant="outlined" component="label" sx={{width:'120px',height:'140px',color:'black',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',borderRadius:'6px',border:'1px dashed #bdbdbd',my:1,":hover":{border:'1px dashed #bdbdbd',color:'black'}}} >
+        <Button variant="outlined" component='label'  sx={{width:'120px',height:'140px',color:'black',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',borderRadius:'6px',border:'1px dashed #bdbdbd',my:1,":hover":{border:'1px dashed #bdbdbd',color:'black'}}} >
           <InsertPhotoOutlinedIcon/>
           <Typography variant='caption' sx={{mt:1}} >  
           Upload
         </Typography>
-        <VisuallyHiddenInput type="file" />
+        <VisuallyHiddenInput onChange={handleChangeCertificatResidence} type="file" />
         </Button>
        
        
@@ -652,7 +706,7 @@ Pièce d'identité (recto-verso et en couleur)
       Enregistrer
     </Button>
 
-    <Button onClick={()=>navigate("/decisionvendeurboutique")} variant='contained' color='primary'  sx={{color:'white',width:'47%',textTransform:'lowercase',borderRadius:'12px' ,":hover":{color:'white'} }} >
+    <Button onClick={handelProduct} variant='contained' color='primary'  sx={{color:'white',width:'47%',textTransform:'lowercase',borderRadius:'12px' ,":hover":{color:'white'} }} >
       Soumettre une demmande
     </Button>
                 
