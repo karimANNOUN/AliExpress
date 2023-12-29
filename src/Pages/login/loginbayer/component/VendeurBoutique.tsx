@@ -21,12 +21,19 @@ import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { LinearProgress } from '@mui/material';
 
 
 
 export const VendeurBoutique = () => {
   const Token=Cookies.get('token')
     const navigate=useNavigate()
+
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [uploadProgress1, setUploadProgress1] = useState(0);
+    const [uploadProgress2, setUploadProgress2] = useState(0);
+    const [uploadProgress3, setUploadProgress3] = useState(0);
+
 
     const [imageStatus,setImageStatus]=useState<File | null>()
     const [statusType,setStatusType]=useState('')
@@ -60,58 +67,173 @@ export const VendeurBoutique = () => {
     const [identityNumber,setIdentityNumber]=useState('')
     const [expire,setExpire]=useState('')
     const [imageIdentity,setImageIdentity]=useState<File | null>()
+    const [image, setImage] = useState<string | null | any >(null);
+    const [image1, setImage1] = useState<string | null | any >(null);
+    const [image2, setImage2] = useState<string | null | any >(null);
+    const [image3, setImage3] = useState<string | null | any >(null);
+    const [data,setData]=useState< {} | null | any >(null)
 
 
     const handleChangeImageStatus = (e: React.ChangeEvent<HTMLInputElement>) => {
       setImageStatus(e.target.files?.[0] || null )
+
+      
+ 
+     const file =e.target.files?.[0] 
+
+      if (file) {
+        const reader = new FileReader();
+  
+        reader.onload = (e) => {
+          if (e.target && e.target.result) {
+            const progress = Math.round((e.loaded / e.total ) * 100);
+            setUploadProgress(progress)
+            setImage(e.target.result as string);
+           
+          }
+        };
+  
+        // Read the image file as a data URL
+        reader.readAsDataURL( file);
+      }
+
     };
 
     const handleChangecertificatEntreprise = (e: React.ChangeEvent<HTMLInputElement>) => {
       setCertificatEntreprise(e.target.files?.[0] || null )
+
+       
+      const file =e.target.files?.[0] 
+
+      if (file) {
+        const reader = new FileReader();
+  
+        reader.onload = (e) => {
+          if (e.target && e.target.result) {
+            const progress = Math.round((e.loaded / e.total ) * 100);
+            setUploadProgress1(progress)
+            setImage1(e.target.result as string);
+           
+          }
+        };
+  
+        // Read the image file as a data URL
+        reader.readAsDataURL( file);
+      }
+ 
+
+    };
+
+
+    const handleChangeImageIdentity = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setImageIdentity(e.target.files?.[0] || null )
+      const file =e.target.files?.[0] 
+
+      if (file) {
+        const reader = new FileReader();
+  
+        reader.onload = (e) => {
+          if (e.target && e.target.result) {
+            const progress = Math.round((e.loaded / e.total ) * 100);
+            setUploadProgress2(progress)
+            setImage2(e.target.result as string);
+           
+          }
+        };
+  
+        // Read the image file as a data URL
+        reader.readAsDataURL( file);
+      }
     };
 
     const handleChangeCertificatResidence = (e: React.ChangeEvent<HTMLInputElement>) => {
       setCertificatResidance(e.target.files?.[0] || null )
+      const file =e.target.files?.[0] 
+
+      if (file) {
+        const reader = new FileReader();
+  
+        reader.onload = (e) => {
+          if (e.target && e.target.result) {
+            const progress = Math.round((e.loaded / e.total ) * 100);
+            setUploadProgress3(progress)
+            setImage3(e.target.result as string);
+           
+          }
+        };
+  
+        // Read the image file as a data URL
+        reader.readAsDataURL( file);
+      }
     };
 
-    const handleChangeImageIdentity = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setImageIdentity(e.target.files?.[0] || null )
-    };
+  
 
+   
     
 
     const handelProduct=async()=>{
-      const formData : any = new FormData();
+     
+
+       try{
+
+        const formData : any = new FormData();
+      
         formData.append('file', imageStatus);
-       
+        formData.append('file', certificatEntreprise);
+        formData.append('file', certificatResidance);
+        formData.append('file', imageIdentity);
+
+        formData.append('raisonSocial', raisonSocial);
+        formData.append('statusType', statusType);
+        formData.append('numberSirene', numberSirene);
+        formData.append('tva', tva);
+        formData.append('pays', pays);
+        formData.append('stateEntreprise', stateEntreprise);
+        formData.append('commune', commune);
+        formData.append('postalCode', postalCode);
+        formData.append('rueNumber', rueNumber);
+        formData.append('industryType', industryType);
+        formData.append('businessManager', businessManager);
+        formData.append('certificatNumber', certificatNumber);
+        formData.append('societePhone', societéPhone);
+        formData.append('certificatType', certificatType);
 
 
 
-    
+        formData.append('completeName', completeName);
+        formData.append('nationality', nationality);
+        formData.append('nativeContry', nativeContry);
+        formData.append('birthday', birthday);
+        formData.append('paysLegal', paysLegal);
+        formData.append('state', state);
+        formData.append('communeLegal', communeLegal);
+        formData.append('postalCodeLegal', postalCodeLegal);
+        formData.append('reprisentativePhone', reprisentativePhone);
+        formData.append('identityNumber', identityNumber);
+        formData.append('identityType', identityType);
+        formData.append('expire', expire);
 
-
-
-        try{
        //   if (file !== null && category !== "" && name !== "" && price !== "" && quantity !== "" ) {
           axios.post(`http://localhost:8000/sellerstep`,formData, {
             withCredentials:true,
-            headers:{authorization:`${Token}`}
-            
-            
+            headers:{authorization:`${Token}`},
           }) 
-          .then(res=> console.log(res.data) )
+          .then(res=>setData(res.data) )
           .catch(err=>console.log(err)) 
        // }
-         
+
+       if (data.success == true) {
+         navigate("/decisionvendeurboutique")
+       }
+           
+             
         }catch(error){
           console.log(error)
         }
   
-       
       
      }
-  
-    
 
 
 
@@ -321,14 +443,20 @@ export const VendeurBoutique = () => {
           <Typography variant='caption' sx={{mt:1}} >  
           Upload
         </Typography>
-        <VisuallyHiddenInput onChange={handleChangeImageStatus} type="file" />
+        <VisuallyHiddenInput  onChange={handleChangeImageStatus} type="file" />
         </Button>
-       
+
+        {uploadProgress && <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px'}} >
+        <img src={image} style={{height:'140px',width:'100%'}} />
+         <LinearProgress sx={{my:1,width:'100%'}} variant="determinate" value={uploadProgress} />
+         </Box> }
+         
        
       <Typography variant='caption' sx={{textAlign:'left',color:'#bdbdbd',mb:2}} >
                     
       Fichiers pris en charge : PDF, JPG, PNG, max 50MB.
                     </Typography>
+
        
             <label htmlFor='entreprise' style={{textAlign:'left'}} > Type d'entreprise </label>
             <Autocomplete
@@ -380,6 +508,11 @@ licence/certificat d’entreprise
         </Typography>
         <VisuallyHiddenInput onChange={handleChangecertificatEntreprise} type="file" />
         </Button>
+
+        {uploadProgress1 && <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px'}} >
+         <img src={image1} style={{height:'140px',width:'100%'}} />
+         <LinearProgress sx={{my:1,width:'100%'}} variant="determinate" value={uploadProgress} />
+         </Box> }
        
        
       <Typography variant='caption' sx={{textAlign:'left',color:'#bdbdbd',mb:2}} >
@@ -635,6 +768,11 @@ Pièce d'identité (recto-verso et en couleur)
         </Typography>
         <VisuallyHiddenInput onChange={handleChangeImageIdentity} type="file" />
         </Button>
+
+        {uploadProgress2 && <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px'}} >
+         <img src={image2} style={{height:'140px',width:'100%'}} />
+         <LinearProgress sx={{my:1,width:'100%'}} variant="determinate" value={uploadProgress} />
+         </Box> }
        
        
       <Typography variant='caption' sx={{textAlign:'left',color:'#bdbdbd',mb:2}} >
@@ -682,7 +820,6 @@ Pièce d'identité (recto-verso et en couleur)
       
      <Typography variant='subtitle2' sx={{textAlign:'left',fontWeight:'700',mt:2}} >
      Justificatif de domicile du représentant légal
-
                     </Typography>
 
         <Button variant="outlined" component='label'  sx={{width:'120px',height:'140px',color:'black',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',borderRadius:'6px',border:'1px dashed #bdbdbd',my:1,":hover":{border:'1px dashed #bdbdbd',color:'black'}}} >
@@ -692,6 +829,11 @@ Pièce d'identité (recto-verso et en couleur)
         </Typography>
         <VisuallyHiddenInput onChange={handleChangeCertificatResidence} type="file" />
         </Button>
+
+        {uploadProgress3 && <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px'}} >
+         <img src={image3} style={{height:'140px',width:'100%'}} />
+         <LinearProgress sx={{my:1,width:'100%'}} variant="determinate" value={uploadProgress} />
+         </Box> }
        
        
       <Typography variant='caption' sx={{textAlign:'left',color:'#bdbdbd',mb:2}} >

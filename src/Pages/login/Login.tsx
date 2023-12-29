@@ -52,11 +52,9 @@ const [message,setMessage]=useState('')
         })
 
         const user = await response2.json()
-        console.log(user)
      
         if (user.sucess == true) {
          
-          console.log(data)
           if (data.success == false) {
               setMessage(data.message)
           }if (data.success == true && user.user.user.role =="simple"  ) {

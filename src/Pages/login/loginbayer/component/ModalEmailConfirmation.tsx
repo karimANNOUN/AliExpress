@@ -7,6 +7,7 @@ import { IconButton,InputAdornment } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 export const ModalEmailConfirmation = ({open,setOpen,email}:any) => {
 
  const navigate=useNavigate()
@@ -33,6 +34,7 @@ export const ModalEmailConfirmation = ({open,setOpen,email}:any) => {
       if (data.success == false) {
           setMessage(data.message)
       }if (data.success == true) {
+        Cookies.set('token', data.token, { expires: 7 });
         navigate("/loginvendeurboutique")
            
       }
