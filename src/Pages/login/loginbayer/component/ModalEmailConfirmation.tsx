@@ -27,7 +27,7 @@ export const ModalEmailConfirmation = ({open,setOpen,email}:any) => {
         },
         body: JSON.stringify({ email, code }),
        
-      })
+      }) 
 
       const data = await response.json()
       console.log(data)

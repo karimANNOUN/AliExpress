@@ -145,6 +145,10 @@ Seller center
     </Button>
 
 
+    <Button onClick={()=>navigate("/register")} variant='text' sx={{color:'#2196f3',mb:2,textTransform:'lowercase' ,":hover":{color:'#2196f3'} }} >
+      Register open compte achteur
+    </Button>
+
  
     <Button onClick={handleLogin} variant='contained' sx={{color:'white',width:'100%',textTransform:'lowercase',bgcolor:'#d32f2f',borderRadius:'12px' ,":hover":{color:'white',bgcolor:'#d32f2f'} }} >
       connexion

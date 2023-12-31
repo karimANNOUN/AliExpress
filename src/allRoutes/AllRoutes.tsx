@@ -31,6 +31,7 @@ import { MotpassOublie } from '../Pages/login/loginbayer/component/passwordoubli
 import { ConfermationPassword } from '../Pages/login/loginbayer/component/passwordoublie/ConfermationPassword'
 import { VendeurPage } from '../Pages/vendeurcontrol/VendeurPage'
 import { Register } from '../Pages/login/register/Register'
+import { AddNewProduct } from '../Pages/addproductpagevendeur/AddNewProduct'
 
 
 export default function AllRoutes() {
@@ -74,6 +75,7 @@ export default function AllRoutes() {
           <Route path='/decisionvendeurboutique' element={<ReviewDecision/>} />
           <Route path='/vendeurcompte' element={<VendeurPage/>} />
           <Route path='/register' element={<Register/>} />
+          <Route path='/addproduct' element={<AddNewProduct/>} />
 
       
         </Routes> 
