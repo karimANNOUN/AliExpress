@@ -22,6 +22,11 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { LinearProgress } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import Collapse from '@mui/material/Collapse';
+import CloseIcon from '@mui/icons-material/Close';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 
 
@@ -29,6 +34,7 @@ export const VendeurBoutique = () => {
   const Token=Cookies.get('token')
     const navigate=useNavigate()
 
+    const [open, setOpen] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
     const [uploadProgress1, setUploadProgress1] = useState(0);
     const [uploadProgress2, setUploadProgress2] = useState(0);
@@ -62,6 +68,7 @@ export const VendeurBoutique = () => {
     const [postalCodeLegal,setPostalCodeLegal]=useState('')
     const [certificatResidance,setCertificatResidance]=useState<File | null>()
     const [reprisentativePhone,setReprisentativePhone]=useState('')
+    const [message,setMessage]=useState< "" | any >()
 
     const [identityType,setIdentityType]=useState('')
     const [identityNumber,setIdentityNumber]=useState('')
@@ -71,8 +78,9 @@ export const VendeurBoutique = () => {
     const [image1, setImage1] = useState<string | null | any >(null);
     const [image2, setImage2] = useState<string | null | any >(null);
     const [image3, setImage3] = useState<string | null | any >(null);
-    const [data,setData]=useState< {} | null | any >(null)
-
+    
+    const [newData,setNewData]=useState< any >(null)
+    //hello
 
     const handleChangeImageStatus = (e: React.ChangeEvent<HTMLInputElement>) => {
       setImageStatus(e.target.files?.[0] || null )
@@ -214,22 +222,33 @@ export const VendeurBoutique = () => {
         formData.append('identityType', identityType);
         formData.append('expire', expire);
 
-       //   if (file !== null && category !== "" && name !== "" && price !== "" && quantity !== "" ) {
-          axios.post(`http://localhost:8000/sellerstep`,formData, {
-            withCredentials:true,
-            headers:{authorization:`${Token}`},
+      
+
+          const response = await fetch(`http://localhost:8000/sellerstep`,{
+            method: 'POST',
+            credentials:"include",
+            headers: {
+              authorization:`${Token}`
+            },
+            body: formData ,
+           
           }) 
-          .then(res=>setData(res.data) )
-          .catch(err=>console.log(err)) 
-       // }
+
+          const data = await response.json()
+          setNewData(data)
+          console.log(data)
 
        if (data.success == true) {
-         navigate("/decisionvendeurboutique")
+        navigate("/decisionvendeurboutique")
+       }if (data.success == false) {
+         setMessage(data.message)
+         setOpen(true)
        }
            
              
         }catch(error){
           console.log(error)
+          setOpen(true)
         }
   
       
@@ -366,6 +385,30 @@ export const VendeurBoutique = () => {
     <div style={{display:'flex',flexDirection:'column',alignItems:'center',backgroundColor:'#eeeeee'}} >
         
         <Header/>
+
+        { open &&  <Alert sx={{width:'70%',position:'relative'}} severity="error">
+        <AlertTitle>Error</AlertTitle>
+        {message}
+
+        <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              sx={{position:'absolute',top:'20%',right:'2%'}}
+              onClick={() => {
+                setOpen(false);
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+
+
+      </Alert>
+         
+
+       
+
+     }
 
         <Box sx={{ width: '50%' ,my:2 ,p:2  }}>
       <Stepper activeStep={1} alternativeLabel>
