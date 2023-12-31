@@ -73,6 +73,7 @@ export const VendeurBoutique = () => {
     const [image3, setImage3] = useState<string | null | any >(null);
     const [data,setData]=useState< {} | null | any >(null)
 
+    //hello all brother this is me
 
     const handleChangeImageStatus = (e: React.ChangeEvent<HTMLInputElement>) => {
       setImageStatus(e.target.files?.[0] || null )
