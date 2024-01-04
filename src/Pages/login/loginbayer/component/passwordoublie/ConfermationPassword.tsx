@@ -27,7 +27,7 @@ export const ConfermationPassword = () => {
       try {
          
         const response = await fetch(`http://localhost:8000/updatepassword`,{
-          method: 'POST',
+          method: 'POST', 
           credentials:"include",
           headers: {
             'Content-Type': 'application/json',

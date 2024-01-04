@@ -447,10 +447,10 @@ export const VendeurBoutique = () => {
         <VisuallyHiddenInput  onChange={handleChangeImageStatus} type="file" />
         </Button>
 
-        {uploadProgress && <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px'}} >
+        {uploadProgress !== 0 ? <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px'}} >
         <img src={image} style={{height:'140px',width:'100%'}} />
          <LinearProgress sx={{my:1,width:'100%'}} variant="determinate" value={uploadProgress} />
-         </Box> }
+         </Box> : "" }
          
        
       <Typography variant='caption' sx={{textAlign:'left',color:'#bdbdbd',mb:2}} >
@@ -510,10 +510,10 @@ licence/certificat d’entreprise
         <VisuallyHiddenInput onChange={handleChangecertificatEntreprise} type="file" />
         </Button>
 
-        {uploadProgress1 && <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px'}} >
+        {uploadProgress1 !== 0 ? <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px'}} >
          <img src={image1} style={{height:'140px',width:'100%'}} />
          <LinearProgress sx={{my:1,width:'100%'}} variant="determinate" value={uploadProgress} />
-         </Box> }
+         </Box> : '' }
        
        
       <Typography variant='caption' sx={{textAlign:'left',color:'#bdbdbd',mb:2}} >
@@ -770,10 +770,10 @@ Pièce d'identité (recto-verso et en couleur)
         <VisuallyHiddenInput onChange={handleChangeImageIdentity} type="file" />
         </Button>
 
-        {uploadProgress2 && <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px'}} >
+        {uploadProgress2 !== 0 ? <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px'}} >
          <img src={image2} style={{height:'140px',width:'100%'}} />
          <LinearProgress sx={{my:1,width:'100%'}} variant="determinate" value={uploadProgress} />
-         </Box> }
+         </Box> : "" }
        
        
       <Typography variant='caption' sx={{textAlign:'left',color:'#bdbdbd',mb:2}} >
@@ -831,10 +831,10 @@ Pièce d'identité (recto-verso et en couleur)
         <VisuallyHiddenInput onChange={handleChangeCertificatResidence} type="file" />
         </Button>
 
-        {uploadProgress3 && <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px'}} >
+        {uploadProgress3 !== 0 ? <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px'}} >
          <img src={image3} style={{height:'140px',width:'100%'}} />
          <LinearProgress sx={{my:1,width:'100%'}} variant="determinate" value={uploadProgress} />
-         </Box> }
+         </Box> : "" }
        
        
       <Typography variant='caption' sx={{textAlign:'left',color:'#bdbdbd',mb:2}} >

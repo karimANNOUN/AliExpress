@@ -47,7 +47,7 @@ const [message,setMessage]=useState('')
           credentials:"include", 
           headers: {
             'Content-Type': 'application/json',
-            authorization:`${data.token}`
+            authorization:`${data.token}` 
           }
         })
 
