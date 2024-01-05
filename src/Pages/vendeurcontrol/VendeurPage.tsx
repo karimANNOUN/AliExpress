@@ -10,6 +10,9 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { alpha } from '@mui/material/styles';
 import { CloseOutlined } from '@mui/icons-material';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 export const VendeurPage = () => {
 
@@ -25,6 +28,8 @@ export const VendeurPage = () => {
     width: 1,
   });
 
+  const Token=Cookies.get('token')
+  const navigate=useNavigate()
 
   const ecommerceIndustryTypes = [
     'Mode et Vêtements',
@@ -55,17 +60,32 @@ export const VendeurPage = () => {
   ];
 
 
-  const [productImage,setProductImage]=useState<File | null>()
+  const [productColorImage1,setProductColorImage1]=useState<File | null>()
+  const [productColorImage2,setProductColorImage2]=useState<File | null>()
+  const [productColorImage3,setProductColorImage3]=useState<File | null>()
+  const [productColorImage4,setProductColorImage4]=useState<File | null>()
+  const [productColorImage5,setProductColorImage5]=useState<File | null>()
+  const [productDescriptionImage,setProductDescriptionImage]=useState<File | null>()
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadProgress1, setUploadProgress1] = useState(0);
+  const [uploadProgress2, setUploadProgress2] = useState(0);
+  const [uploadProgress3, setUploadProgress3] = useState(0);
+  const [uploadProgress4, setUploadProgress4] = useState(0);
+  const [uploadProgress5, setUploadProgress5] = useState(0);
   const [image, setImage] = useState<string | null | any >(null);
+  const [image2, setImage2] = useState<string | null | any >(null);
+  const [image3, setImage3] = useState<string | null | any >(null);
+  const [image4, setImage4] = useState<string | null | any >(null);
+  const [image5, setImage5] = useState<string | null | any >(null);
   const [imageDescription, setImageDescription] = useState<string | null | any >(null);
+  const [manyImages, setManyImages] = useState<FileList | [] | null | any >(null);
   const [price, setPrice] = useState(Number);
   const [description, setDescription] = useState('');
   const [solde,setSolde]=useState(0)
   const [properties,setProperties]=useState('')
   const [quantity,setQuantity]=useState(Number)
   const [livraison,setLivraison]=useState(Number)
+  const [livraisonTime,setLivraisonTime]=useState(Number)
   const [categoryType,setCategoryType]=useState('')
   const [firstTitle,setFirstTitle]=useState('')
   const [secondTitle,setSecondTitle]=useState('')
@@ -74,12 +94,23 @@ export const VendeurPage = () => {
   const [firstDescription,setFirstDescription]=useState('')
   const [secondDescription,setSecondDescription]=useState('')
   const [thirdDescription,setThirdDescription]=useState('')
+
+  const [color1,setColor1]=useState('')
+  const [color2,setColor2]=useState('')
+  const [color3,setColor3]=useState('')
+  const [color4,setColor4]=useState('')
+  const [color5,setColor5]=useState('')
   
  const [hiden,setHiden]=useState(false)
+ const [hiden1,setHiden1]=useState(false)
+ const [hiden2,setHiden2]=useState(false)
+ const [hiden3,setHiden3]=useState(false)
+ const [hiden4,setHiden4]=useState(false)
+ const [hiden5,setHiden5]=useState(false)
 
 
   const handleChangeImageProduct = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProductImage(e.target.files?.[0] || null )
+    setProductColorImage1(e.target.files?.[0] || null )
 
     
 
@@ -93,6 +124,7 @@ export const VendeurPage = () => {
           const progress = Math.round((e.loaded / e.total ) * 100);
           setUploadProgress(progress)
           setImage(e.target.result as string);
+          setHiden1(true)
          
         }
       };
@@ -103,8 +135,120 @@ export const VendeurPage = () => {
 
   };
 
+ 
+  const handleChangeImageProduct2 = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProductColorImage2(e.target.files?.[0] || null )
+
+    
+
+   const file =e.target.files?.[0] 
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        if (e.target && e.target.result) {
+          const progress = Math.round((e.loaded / e.total ) * 100);
+          setUploadProgress2(progress)
+          setImage2(e.target.result as string);
+          setHiden2(true)
+         
+        }
+      };
+
+      // Read the image file as a data URL
+      reader.readAsDataURL( file);
+    }
+
+  };
+
+
+
+  const handleChangeImageProduct3 = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProductColorImage3(e.target.files?.[0] || null )
+
+    
+
+   const file =e.target.files?.[0] 
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        if (e.target && e.target.result) {
+          const progress = Math.round((e.loaded / e.total ) * 100);
+          setUploadProgress3(progress)
+          setImage3(e.target.result as string);
+          setHiden3(true)
+         
+        }
+      };
+
+      // Read the image file as a data URL
+      reader.readAsDataURL( file);
+    }
+
+  };
+
+
+
+  const handleChangeImageProduct4 = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProductColorImage4(e.target.files?.[0] || null )
+
+    
+
+   const file =e.target.files?.[0] 
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        if (e.target && e.target.result) {
+          const progress = Math.round((e.loaded / e.total ) * 100);
+          setUploadProgress4(progress)
+          setImage4(e.target.result as string);
+          setHiden4(true)
+         
+        }
+      };
+
+      // Read the image file as a data URL
+      reader.readAsDataURL( file);
+    }
+
+  };
+
+  const handleChangeImageProduct5 = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProductColorImage5(e.target.files?.[0] || null )
+
+    
+
+   const file =e.target.files?.[0] 
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        if (e.target && e.target.result) {
+          const progress = Math.round((e.loaded / e.total ) * 100);
+          setUploadProgress5(progress)
+          setImage5(e.target.result as string);
+          setHiden5(true)
+        }
+      };
+
+      // Read the image file as a data URL
+      reader.readAsDataURL( file);
+    }
+
+  };
+
+
+
+
+
   const handleChangeImageDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProductImage(e.target.files?.[0] || null )
+    setProductDescriptionImage(e.target.files?.[0] || null )
 
     
 
@@ -128,6 +272,83 @@ export const VendeurPage = () => {
     }
 
   };
+
+
+  const handleManyImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedImages = e.target.files;
+    setManyImages(selectedImages);
+  };
+
+
+
+   const handelPostProductInformation= async ()=>{
+
+    try{
+
+      const formData : any = new FormData();
+    
+      formData.append(`${color1}`, productColorImage1);
+      formData.append(`${color2}`, productColorImage2);
+      formData.append(`${color3}`, productColorImage3);
+      formData.append(`${color4}`, productColorImage4);
+      formData.append(`${color5}`, productColorImage5);
+      formData.append('imageDescription', productDescriptionImage);
+    //  formData.append('manyImages', manyImages);
+
+
+    if (!manyImages || manyImages.length === 0) {
+      console.error('No images selected.');
+      return;
+    }
+
+
+      for (let i = 0; i < manyImages.length; i++) {
+        formData.append('manyImages', manyImages[i]);
+      }
+
+
+
+      formData.append('price', price);
+      formData.append('properties', properties);
+      formData.append('description', description);
+      formData.append('livraison', livraison);
+      formData.append('livraisonTime', livraisonTime);
+      formData.append('quantity', quantity);
+      formData.append('categoryType', categoryType);
+      formData.append('solde', solde);
+
+      formData.append('firstTitle', firstTitle);
+      formData.append('secondTitle', secondTitle);
+      formData.append('thirdTitle', thirdTitle);
+
+      formData.append('firstDescription', firstDescription);
+      formData.append('secondDescription', secondDescription);
+      formData.append('thirdDescription', thirdDescription);
+
+      
+
+     //   if (file !== null && category !== "" && name !== "" && price !== "" && quantity !== "" ) {
+        axios.post(`http://localhost:8000/product`,formData, {
+          withCredentials:true,
+          headers:{authorization:`${Token}`},
+        }) 
+        .then(res=>console.log(res.data) )
+        .catch(err=>console.log(err)) 
+     // }
+
+//     if (data.success == true) {
+   //    navigate("/decisionvendeurboutique")
+  //   }
+         
+           
+      }catch(error){
+        console.log(error)
+      }
+
+
+   }
+
+
 
 
 
@@ -165,31 +386,193 @@ export const VendeurPage = () => {
          Add Your Product Info
         </Typography>
 
-           <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'center',width:'100%',bgcolor:'white'}} >
+           <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'center',width:'100%'}} >
             <Box>
-           <Button variant="outlined"  component='label' sx={{width:'120px',height:'140px',color:'black',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',borderRadius:'6px',border:'1px dashed #bdbdbd',my:1,":hover":{border:'1px dashed #bdbdbd',color:'black'}}} >
+            <TextField
+  id="color1"
+  sx={{ width: '120px',mt:1 ,bgcolor:'white'}}
+  placeholder="color1"
+  size='medium'
+  label='color 1'
+  required
+  onChange={(e:any)=>setColor1(e.target.value)}
+    />
+
+            { hiden1 == false ?  <Button variant="outlined"  component='label' sx={{width:'120px',height:'140px',color:'black',bgcolor:'white',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',borderRadius:'6px',border:'1px dashed #bdbdbd',my:1,":hover":{border:'1px dashed #bdbdbd',color:'white'}}} >
           <InsertPhotoOutlinedIcon/>
           <Typography variant='caption' sx={{mt:1}} >  
           Upload
         </Typography>
-        <VisuallyHiddenInput  onChange={handleChangeImageProduct} type="file" />
-        </Button>
-        {uploadProgress !== 0 ?  <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px'}} >
+        <VisuallyHiddenInput  onChange={handleChangeImageProduct} type="file" name='colorImage1' />
+        </Button> : "" }
+        {uploadProgress !== 0 ?  <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px',position:'relative'}} >
         <img src={image} style={{height:'140px',width:'100%'}} />
          <LinearProgress sx={{my:1,width:'100%'}} variant="determinate" value={uploadProgress} />
+         <IconButton onClick={()=>(setHiden1(false),setUploadProgress(0))} sx={{":hover":{bgcolor:'#e0e0e0'},position:'absolute',top:'2%',right:'3%'}} >
+          <CloseOutlined sx={{fontSize:'8px'}} />
+         </IconButton>
          </Box> : "" }
          </Box>
 
-    
+         <Box>
+
          <TextField
-  id="price"
+  id="color2"
+  sx={{ width: '120px',mt:1 ,bgcolor:'white'}}
+  placeholder="color2"
+  size='medium'
+  label='color 2'
+  required
+  onChange={(e:any)=>setColor2(e.target.value)}
+    />
+
+         { hiden2 == false ?  <Button variant="outlined"  component='label' sx={{width:'120px',height:'140px',color:'black',bgcolor:'white',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',borderRadius:'6px',border:'1px dashed #bdbdbd',my:1,":hover":{border:'1px dashed #bdbdbd',color:'white'}}} >
+          <InsertPhotoOutlinedIcon/>
+          <Typography variant='caption' sx={{mt:1}} >  
+          Upload
+        </Typography>
+        <VisuallyHiddenInput onChange={handleChangeImageProduct2} type="file" name='colorImage2' />
+        </Button>: "" }
+        {uploadProgress2 !== 0 ?  <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px',position:'relative'}} >
+        <img src={image2} style={{height:'140px',width:'100%'}} />
+         <LinearProgress sx={{my:1,width:'100%'}} variant="determinate" value={uploadProgress2} />
+         <IconButton onClick={()=>(setHiden2(false),setUploadProgress2(0))} sx={{":hover":{bgcolor:'#e0e0e0'},position:'absolute',top:'2%',right:'3%'}} >
+          <CloseOutlined sx={{fontSize:'8px'}} />
+         </IconButton>
+         </Box> : "" }
+         </Box>
+
+         <Box>
+
+         <TextField
+  id="color3"
+  sx={{ width: '120px',mt:1 ,bgcolor:'white'}}
+  placeholder="color3"
+  size='medium'
+  label='color 3'
+  required
+  onChange={(e:any)=>setColor3(e.target.value)}
+    />
+
+
+         { hiden3 == false ? <Button variant="outlined"  component='label' sx={{width:'120px',height:'140px',color:'black',bgcolor:'white',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',borderRadius:'6px',border:'1px dashed #bdbdbd',my:1,":hover":{border:'1px dashed #bdbdbd',color:'white'}}} >
+          <InsertPhotoOutlinedIcon/>
+          <Typography variant='caption' sx={{mt:1}} >  
+          Upload
+        </Typography>
+        <VisuallyHiddenInput  onChange={handleChangeImageProduct3} type="file" name='colorImage3' />
+        </Button>: "" }
+        {uploadProgress3 !== 0 ?  <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px',position:'relative'}} >
+        <img src={image3} style={{height:'140px',width:'100%'}} />
+         <LinearProgress sx={{my:1,width:'100%'}} variant="determinate" value={uploadProgress3} />
+         <IconButton onClick={()=>(setHiden3(false),setUploadProgress3(0))} sx={{":hover":{bgcolor:'#e0e0e0'},position:'absolute',top:'2%',right:'3%'}} >
+          <CloseOutlined sx={{fontSize:'8px'}} />
+         </IconButton>
+         </Box> : "" }
+         </Box>
+
+         <Box>
+
+         <TextField
+  id="color4"
+  sx={{ width: '120px',mt:1 ,bgcolor:'white'}}
+  placeholder="color4"
+  size='medium'
+  label='color 4'
+  required
+  onChange={(e:any)=>setColor4(e.target.value)}
+    />
+
+         { hiden4 == false ?  <Button variant="outlined"  component='label' sx={{width:'120px',height:'140px',color:'black',bgcolor:'white',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',borderRadius:'6px',border:'1px dashed #bdbdbd',my:1,":hover":{border:'1px dashed #bdbdbd',color:'white'}}} >
+          <InsertPhotoOutlinedIcon/>
+          <Typography variant='caption' sx={{mt:1}} >  
+          Upload
+        </Typography>
+        <VisuallyHiddenInput  onChange={handleChangeImageProduct4} type="file" name='colorImage4' />
+        </Button>: "" }
+        {uploadProgress4 !== 0 ?  <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px',position:'relative'}} >
+        <img src={image4} style={{height:'140px',width:'100%'}} />
+         <LinearProgress sx={{my:1,width:'100%'}} variant="determinate" value={uploadProgress4} />
+         <IconButton onClick={()=>(setHiden4(false),setUploadProgress4(0))} sx={{":hover":{bgcolor:'#e0e0e0'},position:'absolute',top:'2%',right:'3%'}} >
+          <CloseOutlined sx={{fontSize:'8px'}} />
+         </IconButton>
+         </Box> : "" }
+         </Box>
+
+         <Box>
+
+
+         <TextField
+  id="color5"
+  sx={{ width: '120px',mt:1 ,bgcolor:'white'}}
+  placeholder="color5"
+  size='medium'
+  label='color 5'
+  required
+  onChange={(e:any)=>setColor5(e.target.value)}
+    />
+
+         { hiden5 == false ?   <Button variant="outlined"  component='label' sx={{width:'120px',height:'140px',color:'black',bgcolor:'white',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',borderRadius:'6px',border:'1px dashed #bdbdbd',my:1,":hover":{border:'1px dashed #bdbdbd',color:'white'}}} >
+          <InsertPhotoOutlinedIcon/>
+          <Typography variant='caption' sx={{mt:1}} >  
+          Upload
+        </Typography>
+        <VisuallyHiddenInput  onChange={handleChangeImageProduct5} type="file" name='colorImage5' />
+        </Button> : "" }
+        {uploadProgress5 !== 0 ?  <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px',position:'relative'}} >
+        <img src={image5} style={{height:'140px',width:'100%'}} />
+         <LinearProgress sx={{my:1,width:'100%'}} variant="determinate" value={uploadProgress5} />
+         <IconButton onClick={()=>(setHiden5(false),setUploadProgress5(0))} sx={{":hover":{bgcolor:'#e0e0e0'},position:'absolute',top:'2%',right:'3%'}} >
+          <CloseOutlined sx={{fontSize:'8px'}} />
+         </IconButton>
+         </Box> : "" }
+         </Box>
+
+         <Box>
+
+
+<label htmlFor='otherimages' style={{color:'white'}} > add other images </label>
+
+  <Button variant="outlined"  component='label' sx={{width:'120px',height:'140px',color:'black',bgcolor:'white',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',borderRadius:'6px',border:'1px dashed #bdbdbd',my:1,":hover":{border:'1px dashed #bdbdbd',color:'white'}}} >
+ <InsertPhotoOutlinedIcon/>
+ <Typography variant='caption' sx={{mt:1}} >  
+ Upload
+</Typography>
+<VisuallyHiddenInput id='otherimages' onChange={handleManyImageChange} type="file" name='colorImage5' multiple />
+</Button> 
+
+</Box>
+
+
+
+          
+
+           </Box>
+
+
+<Box sx={{my:1,display:'flex',justifyContent:'space-between',alignItems:'center',width:'100%'}} >
+
+<TextField
+  id="taille"
   sx={{ width: '30%', bgcolor:"white"}}
   placeholder="taille or other properties"
   size='small'
-  type='number'
   label='properties'
   required
   onChange={(e:any)=>setProperties(e.target.value)}
+    />
+
+<TextField
+  id="solde"
+  sx={{ width: '30%', bgcolor:"white"}}
+  placeholder="% solde"
+  size='small'
+  type='number'
+  label='solde %'
+  maxRows={100}
+  minRows={0}
+  required
+  onChange={(e:any)=>setSolde(e.target.value)}
     />
 
 
@@ -204,10 +587,10 @@ export const VendeurPage = () => {
   required
   onChange={(e:any)=>setPrice(e.target.value)}
     />
-            
+
+</Box>
 
 
-           </Box>
 
            <TextField
   id="description"
@@ -224,7 +607,7 @@ export const VendeurPage = () => {
   <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'center',width:'100%',my:1}} >
   <TextField
   id="livraison"
-  sx={{ width: '30%' ,bgcolor:'white'}}
+  sx={{ width: '20%' ,bgcolor:'white'}}
   placeholder="livraison prix"
   size='small'
   label='prix livraison'
@@ -234,8 +617,19 @@ export const VendeurPage = () => {
     />
 
 <TextField
+  id="livraison time"
+  sx={{ width: '20%' ,bgcolor:'white'}}
+  placeholder="livraison days"
+  size='small'
+  label='temps livraison'
+  type='number'
+  required
+  onChange={(e:any)=>setLivraisonTime(e.target.value)}
+    />
+
+<TextField
   id="quantity"
-  sx={{ width: '30%' ,bgcolor:'white'}}
+  sx={{ width: '20%' ,bgcolor:'white'}}
   placeholder="Quantity"
   size='small'
   label='Quantité'
@@ -247,7 +641,7 @@ export const VendeurPage = () => {
 <Autocomplete
       id="category"
       options={ecommerceIndustryTypes}
-      sx={{ width: '30%' }}
+      sx={{ width: '20%' }}
       size="small"
       onChange={(e,newValue:any)=>setCategoryType(newValue)}
       placeholder='choose your state'
@@ -259,6 +653,10 @@ export const VendeurPage = () => {
   </Box>
  
   <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'100%',my:1}} >
+
+  <Typography  sx={{fontWeight:'700',color:'white',my:2}}  variant='h6' gutterBottom>
+          Add your Product Details
+        </Typography>
      
   <TextField
   id="destitle"
@@ -326,9 +724,9 @@ export const VendeurPage = () => {
 
 <Box sx={{display:'flex',flexDirection:'column',alignItems:'flex-start'}} >
 
-<label htmlFor='description' > Image Description </label>
+<label htmlFor='description' style={{color:'white'}} > Image Description </label>
 
-           { hiden == false ? <Button variant="outlined"  component='label' sx={{width:'120px',height:'140px',color:'black',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',borderRadius:'6px',border:'1px dashed #bdbdbd',my:1,":hover":{border:'1px dashed #bdbdbd',color:'black'}}} >
+           { hiden == false ? <Button variant="outlined"  component='label' sx={{width:'120px',height:'140px',color:'black',bgcolor:'white',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',borderRadius:'6px',border:'1px dashed #bdbdbd',my:1,":hover":{border:'1px dashed #bdbdbd',color:'white'}}} >
           <InsertPhotoOutlinedIcon/>
           <Typography variant='caption' sx={{mt:1}} >  
           Upload
@@ -337,7 +735,7 @@ export const VendeurPage = () => {
         </Button> : "" }
         {uploadProgress1 !== 0 ? <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px',my:1,position:'relative'}} >
         <img src={imageDescription} style={{height:'140px',width:'100%'}} />
-         <LinearProgress sx={{my:1,width:'100%'}} variant="determinate" value={uploadProgress} />
+         <LinearProgress sx={{my:1,width:'100%'}} variant="determinate" value={uploadProgress1} />
          <IconButton onClick={()=>(setHiden(false),setUploadProgress1(0))} sx={{":hover":{bgcolor:'#e0e0e0'},position:'absolute',top:'2%',right:'3%'}} >
           <CloseOutlined sx={{fontSize:'8px'}} />
          </IconButton>
@@ -348,7 +746,9 @@ export const VendeurPage = () => {
 
   </Box>
 
-
+  <Button onClick={handelPostProductInformation} variant='contained' color='primary'  sx={{color:'white',width:'47%',textTransform:'lowercase',borderRadius:'12px' ,":hover":{color:'white'} }} >
+      Ajouter Votre Produit
+    </Button>
 
          </Box>
 
