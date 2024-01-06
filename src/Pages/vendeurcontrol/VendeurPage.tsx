@@ -78,12 +78,11 @@ export const VendeurPage = () => {
   const [image4, setImage4] = useState<string | null | any >(null);
   const [image5, setImage5] = useState<string | null | any >(null);
   const [imageDescription, setImageDescription] = useState<string | null | any >(null);
-  const [manyImages, setManyImages] = useState<FileList | [] | null | any >(null);
+  const [manyImages, setManyImages] = useState<FileList | null | [] | any >(null);
   const [price, setPrice] = useState(Number);
   const [description, setDescription] = useState('');
-  const [solde,setSolde]=useState(0)
+  const [solde,setSolde]=useState(Number)
   const [properties,setProperties]=useState('')
-  const [quantity,setQuantity]=useState(Number)
   const [livraison,setLivraison]=useState(Number)
   const [livraisonTime,setLivraisonTime]=useState(Number)
   const [categoryType,setCategoryType]=useState('')
@@ -107,6 +106,20 @@ export const VendeurPage = () => {
  const [hiden3,setHiden3]=useState(false)
  const [hiden4,setHiden4]=useState(false)
  const [hiden5,setHiden5]=useState(false)
+
+
+
+const [events, setEvents] = useState('');
+const [values, setValues] = useState <any | {} > ([]);
+const [quantityPro,setQuantityPro]=useState(Number)
+const [count,setCount]=useState(0)
+
+const handleAddEvent = () => {
+  setCount(count + 1)
+  setValues([...values,{id:count,propertyDetail:events,quantityDetail:quantityPro}])
+};
+
+
 
 
   const handleChangeImageProduct = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -237,7 +250,7 @@ export const VendeurPage = () => {
         }
       };
 
-      // Read the image file as a data URL
+    
       reader.readAsDataURL( file);
     }
 
@@ -267,7 +280,7 @@ export const VendeurPage = () => {
         }
       };
 
-      // Read the image file as a data URL
+    
       reader.readAsDataURL( file);
     }
 
@@ -276,7 +289,9 @@ export const VendeurPage = () => {
 
   const handleManyImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedImages = e.target.files;
+   
     setManyImages(selectedImages);
+    
   };
 
 
@@ -293,7 +308,7 @@ export const VendeurPage = () => {
       formData.append(`${color4}`, productColorImage4);
       formData.append(`${color5}`, productColorImage5);
       formData.append('imageDescription', productDescriptionImage);
-    //  formData.append('manyImages', manyImages);
+      formData.append('manyImages', manyImages);
 
 
     if (!manyImages || manyImages.length === 0) {
@@ -306,14 +321,13 @@ export const VendeurPage = () => {
         formData.append('manyImages', manyImages[i]);
       }
 
-
+      formData.append('propertiesDetails', JSON.stringify(values));
 
       formData.append('price', price);
       formData.append('properties', properties);
       formData.append('description', description);
       formData.append('livraison', livraison);
       formData.append('livraisonTime', livraisonTime);
-      formData.append('quantity', quantity);
       formData.append('categoryType', categoryType);
       formData.append('solde', solde);
 
@@ -569,8 +583,6 @@ export const VendeurPage = () => {
   size='small'
   type='number'
   label='solde %'
-  maxRows={100}
-  minRows={0}
   required
   onChange={(e:any)=>setSolde(e.target.value)}
     />
@@ -602,12 +614,55 @@ export const VendeurPage = () => {
   onChange={(e)=>setDescription(e.target.value)}
     />
 
+<Typography  sx={{fontWeight:'700',color:'white',textAlign:'center',my:1}}  variant='h6' gutterBottom>
+         Add Your Prpperties details 
+        </Typography>
+
+<Box sx={{display:'flex',alignItems:'center',justifyContent:'space-between',width:'100%',my:2}} >
+
+       
+    
+
+      <TextField
+        label="Propertie details"
+        sx={{bgcolor:'white',width:'30%'}}
+        margin="normal"
+        size='small'
+        onChange={(e)=>setEvents(e.target.value)}
+      />
+
+<TextField
+        label="quantity détails"
+        sx={{bgcolor:'white',width:'30%'}}
+        size='small'
+        type='number'
+        margin="normal"
+        onChange={(e:any)=>setQuantityPro(e.target.value)} 
+      />
+
+
+      <Button variant="contained" color="primary" onClick={handleAddEvent}>
+        Add Properties details 
+      </Button>
+
+
+    
+    </Box>
+
+{ values.length == 0 ? "" : <Box sx={{width:'100%',display:'flex',flexWrap:'wrap',my:1,borderRadius:'6px',border:'1px dashed #bdbdbd',p:2}} >
+ { values.map((val:any)=><Box key={val.id} sx={{borderRadius:'8px',mr:2,mb:1,bgcolor:'#e1bee7',py:1,px:3,position:'relative'}} >
+   {val.propertyDetail}
+   <IconButton onClick={()=>(values.splice(val.id, 1))} sx={{position:'absolute',":hover":{bgcolor:'#eeeeee'}, top:'2%',right:'1%'}} >
+      <CloseOutlined sx={{fontSize:'5px'}} /> 
+   </IconButton>
+ </Box>)}  
+</Box>}
 
   
   <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'center',width:'100%',my:1}} >
   <TextField
   id="livraison"
-  sx={{ width: '20%' ,bgcolor:'white'}}
+  sx={{ width: '30%' ,bgcolor:'white'}}
   placeholder="livraison prix"
   size='small'
   label='prix livraison'
@@ -618,7 +673,7 @@ export const VendeurPage = () => {
 
 <TextField
   id="livraison time"
-  sx={{ width: '20%' ,bgcolor:'white'}}
+  sx={{ width: '30%' ,bgcolor:'white'}}
   placeholder="livraison days"
   size='small'
   label='temps livraison'
@@ -627,21 +682,12 @@ export const VendeurPage = () => {
   onChange={(e:any)=>setLivraisonTime(e.target.value)}
     />
 
-<TextField
-  id="quantity"
-  sx={{ width: '20%' ,bgcolor:'white'}}
-  placeholder="Quantity"
-  size='small'
-  label='Quantité'
-  type='number'
-  required
-  onChange={(e:any)=>setQuantity(e.target.value)}
-    />
+
 
 <Autocomplete
       id="category"
       options={ecommerceIndustryTypes}
-      sx={{ width: '20%' }}
+      sx={{ width: '30%' }}
       size="small"
       onChange={(e,newValue:any)=>setCategoryType(newValue)}
       placeholder='choose your state'
