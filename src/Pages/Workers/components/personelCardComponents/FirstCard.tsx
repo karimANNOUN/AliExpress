@@ -7,15 +7,17 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import IconButton from '@mui/material/IconButton';
 import Rating from '@mui/material/Rating';
 import Divider from '@mui/material/Divider';
+import { useSelector } from 'react-redux';
 
-export const FirstCard = ({sizes,catergories}:any) => {
+export const FirstCard = ({activeSize,setActiveSize,catergories}:any) => {
 
+  const product=useSelector((state:any)=>state.app.product)
 
-    const [index,setIndex]=useState(0)
+    const [indexs,setIndexs]=useState(0)
 
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    const [activeSize,setActiveSize]=useState(0)
+    
 
 
     const handleClickRight = () => {
@@ -31,13 +33,13 @@ export const FirstCard = ({sizes,catergories}:any) => {
     <Box sx={{display:'flex'}} >
     <Box sx={{display:'flex',flexDirection:'column',width:'500px',height:'600px',mr:4}} >
       
-     <img src={catergories[index].image} style={{width:'500px',height:'500px',borderRadius:'8px'}}  />
+     <img src={product.images[indexs].imageUrl} style={{width:'500px',height:'500px',borderRadius:'8px'}}  />
    
      <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'center',width:'100%',height:'100px',overflow:'hidden',position:'relative'}} >
 
-     { catergories.slice(currentIndex, currentIndex + 6).map((category:any)=> 
-     <Box key={category.id} onMouseEnter={ ()=> setIndex(category.id - 1) } sx={{height:'70px',width:'70px',borderRadius:'12px'}} >
-       {category.id -1 === index  ?  <img onClick={()=> setIndex(category.id - 1)} src={category.image} style={{height:'100%',width:'100%',borderRadius:'8px',borderStyle:'solid',borderColor:'#424242'}} /> : <img onClick={()=> setIndex(category.id - 1)} src={category.image} style={{height:'100%',width:'100%',borderRadius:'8px'}} /> }
+     { product.images.slice(currentIndex, currentIndex + 6).map((category:any,index:any)=> 
+     <Box key={index} onMouseEnter={ ()=> setIndexs(index) } sx={{height:'70px',width:'70px',borderRadius:'12px'}} >
+       {index === indexs  ?  <img onClick={()=> setIndexs(index)} src={category.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px',borderStyle:'solid',borderColor:'#424242'}} /> : <img onClick={()=> setIndexs(index)} src={category.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px'}} /> }
       </Box>
       )}
 
@@ -59,20 +61,18 @@ export const FirstCard = ({sizes,catergories}:any) => {
      DA
      </Typography>
      <Typography sx={{fontWeight:'800',color:'#ff3d00'}} variant="h4" gutterBottom>
-     483.18
+     {product.price - (product.solde*product.price/100)}
      </Typography>
      <Typography sx={{fontWeight:'500',textDecorationLine:'line-through',mx:2}}  variant='body1' gutterBottom>
-     DA1,380.53
+     DA{product.price}
      </Typography>
      <Typography sx={{fontWeight:'100',color:'#ff3d00'}}  variant='body1' gutterBottom>
-     -65%
+     -{product.solde}%
      </Typography>
     </Box>
      
     <Typography sx={{fontWeight:'800',textAlign:'left',my:2}} variant='body1' gutterBottom>
-    Baskets légères en cuir PU pour hommes, chaussures de sport décontractées,<br/>
-     chaussures respirantes, chaussures plates blanches, chaussures de tennis pour<br/>
-      hommes, Zapatillas zones bre
+    {product.description}
      </Typography>
 
     <Box sx={{display:'flex',alignItems:'center'}} >
@@ -101,29 +101,29 @@ export const FirstCard = ({sizes,catergories}:any) => {
      </Typography>
     </Box>
     <Typography sx={{fontWeight:'800',textAlign:'left'}}  variant='body1' gutterBottom>
-    Couleur: white grey
+    Couleur: {product.images.length == 0 ? "" :  product.images.slice(0,5)[indexs].color}
      </Typography>
 
       <Box sx={{display:'flex',alignItems:'center',width:'80%',my:2}} >
-       {catergories.slice(0, 5).map((categ:any)=>
+       { product.images.length == 0 ? "" : product.images.slice(0,5).map((categ:any,index:any)=>
        
-       <Box key={categ.id} sx={{height:'50px',width:'50px',borderRadius:'12px',mx:2}} >
-         {categ.id -1 === index  ?  <img onClick={()=> setIndex(categ.id - 1)} src={categ.image} style={{height:'100%',width:'100%',borderRadius:'8px',borderStyle:'solid',borderColor:'#424242'}} /> : <img onClick={()=> setIndex(categ.id - 1)} src={categ.image} style={{height:'100%',width:'100%',borderRadius:'8px'}} /> }
+       <Box key={index} sx={{height:'50px',width:'50px',borderRadius:'12px',mx:2}} >
+         {index === indexs  ?  <img onClick={()=> setIndexs(index)} src={categ.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px',borderStyle:'solid',borderColor:'#424242'}} /> : <img onClick={()=> setIndexs(index)} src={categ.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px'}} /> }
        </Box>
        )}
       </Box>
 
       <Typography sx={{fontWeight:'800',textAlign:'left'}}  variant='body1' gutterBottom>
-      Taille de chaussure: 47
+      {product.properties} : { product.property.length == 0 ? "" : product.property[activeSize].detailsName}
      </Typography>
      <Box sx={{display:'flex',width:'100%',alignItems:'center',flexWrap:'wrap'}} >
-       {sizes.map((size:any)=>
-       <Box key={size.id} sx={{mx:1,my:1}} >
-        { size.id - 1 === activeSize ? <div onClick={()=>setActiveSize(size.id - 1)}  style={{height:'30px',width:'70px',borderStyle:'solid',borderColor:'#424242',display:'flex',justifyContent:'center',alignItems:'center',borderRadius:'8px'}} >
-        {size.number}
+       { product.property.length == 0 ? "" : product.property.map((prop:any,index:any)=>
+       <Box key={index} sx={{mx:1,my:1}} >
+        { index === activeSize ? <div onClick={()=>setActiveSize(index)}  style={{height:'30px',borderStyle:'solid',borderColor:'#424242',display:'flex',justifyContent:'center',alignItems:'center',padding:2,borderRadius:'8px'}} >
+        {prop.detailsName}
      </div> : 
-     <div  onClick={()=>setActiveSize(size.id - 1)} style={{height:'30px',width:'70px',borderStyle:'solid',borderColor:'#e0e0e0',display:'flex',justifyContent:'center',alignItems:'center',borderRadius:'8px'}} >
-     {size.number}
+     <div  onClick={()=>setActiveSize(index)} style={{height:'30px',borderStyle:'solid',borderColor:'#e0e0e0',display:'flex',justifyContent:'center',alignItems:'center',padding:2,borderRadius:'8px'}} >
+     {prop.detailsName}
      </div>
      }
 

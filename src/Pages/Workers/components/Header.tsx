@@ -8,10 +8,12 @@ import AddIcon from '@mui/icons-material/Add';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 export const Header = () => {
 
         const navigate=useNavigate()
 
+        const product=useSelector((state:any)=>state.app.product)
   return (
     <div>
     <Box sx={{width:'100%',height:'80px',bgcolor:'#424242',display:'flex',alignItems:'center',justifyContent:'space-around'}} >
@@ -23,7 +25,7 @@ export const Header = () => {
               />
               <Box sx={{display:'flex',flexDirection:'column',alignItems:'flex-start',justifyContent:'center',mx:1}} >
               <Typography sx={{fontWeight:'800',color:'white'}} variant="subtitle2" gutterBottom>
-              Karim Announ
+              {product.user.name}
       </Typography>
       <Box>
       <Typography sx={{color:'#2196f3',bgcolor:'white',textAlign:'left'}} variant="caption" gutterBottom>

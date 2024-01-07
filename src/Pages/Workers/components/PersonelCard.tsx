@@ -1,6 +1,6 @@
 
 import Box from '@mui/material/Box';
-
+import { useState } from 'react';
 import { ImageCard } from './personelCardComponents/ImageCard';
 import { FirstCard } from './personelCardComponents/FirstCard';
 import Divider from '@mui/material/Divider';
@@ -8,7 +8,7 @@ import { CompletedCard } from './personelCardComponents/CompletedCard';
 import { Description } from './personelCardComponents/Description';
 import { Reviews } from './personelCardComponents/Reviews';
 import { ProductLikely } from './personelCardComponents/ProductLikely';
-export const PersonelCard = () => {
+export const PersonelCard = ({product}:any) => {
 
    
     
@@ -34,7 +34,7 @@ export const PersonelCard = () => {
     ]
 
     
-
+    const [activeSize,setActiveSize]=useState(0)
   
 
 
@@ -43,7 +43,7 @@ export const PersonelCard = () => {
 
 
      <Box sx={{display:'flex',flexDirection:'column'}} >
-     <FirstCard sizes={sizes} catergories={catergories}  />
+     <FirstCard activeSize={activeSize} setActiveSize={setActiveSize} catergories={catergories} />
      <Divider sx={{my:2}} />
      <CompletedCard/>
      <Divider sx={{my:2}} />
@@ -58,7 +58,7 @@ export const PersonelCard = () => {
 
 
      <Box sx={{width:'350px',height:'600px',borderRadius:'10px',borderStyle:'solid',borderColor:'#eeeeee',display:'flex',justifyContent:'center',alignItems:'center',position:'sticky',top:'2%',right:0}} >
-        <ImageCard/>
+        <ImageCard activeSize={activeSize} setActiveSize={setActiveSize} />
      </Box>
     
     </Box>

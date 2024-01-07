@@ -7,7 +7,7 @@ import {  Link, useNavigate  } from 'react-router-dom';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import {CardModalProduct} from '../CardProducts/CardModalProduct'
-export const CardProduct = () => {
+export const CardProduct = ({products}:any) => {
 
 
   const navigate=useNavigate()
@@ -59,11 +59,11 @@ const article = [
         Vous aimerez aussi
       </Typography>
       <Box sx={{display:'flex',justifyContent:'space-around',alignItems:'center',flexWrap:'wrap',my:3}}  >
-        {article.map( art=> <Box key={art.id} component='div' onClick={()=>navigate('/1')} sx={{width:'340px',height:'530px',borderRadius:'20px',mb:2,display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',borderColor:'#eeeeee',borderStyle:'solid' }}>
+        { products.length === 0 ? "" : products.map( (art:any)=> <Box key={art.id} component='div' onClick={()=>navigate(`/${art.id}`)} sx={{width:'340px',height:'530px',borderRadius:'20px',mb:2,display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',borderColor:'#eeeeee',borderStyle:'solid' }}>
           <img src='https://i.pinimg.com/564x/6a/f3/fb/6af3fb0201c1f22c8281c5519faf5d44.jpg' alt='hhtr' style={{width:'90%',height:'60%',borderRadius:'20px'}} />
           <Box sx={{width:'90%',display:'flex',flexDirection:'column'}} >
           <Typography sx={{my:1,textAlign:'left'}}  variant='body1' gutterBottom>
-        sac a dos de voyage
+        {art.title}
       </Typography>
        <Box sx={{display:'flex',mb:1}} >
        <Rating name="read-only" value={2} readOnly size="small" sx={{color:'black',mr:1}} />
@@ -76,21 +76,21 @@ const article = [
         DA
       </Typography>
       <Typography sx={{textAlign:'left',fontWeight:'700',mr:2}}  variant='body1' gutterBottom>
-        725
+        {art.price-(art.solde*art.price/100)}
       </Typography>
       <Typography sx={{textAlign:'left',fontWeight:'5',textDecorationLine:'line-through',color: '#bdbdbd'}}  variant='caption' gutterBottom>
-        DA1.741,2
+        DA{art.price}
       </Typography>
        </Box>
 
-       <Box sx={{display:'flex',alignItems:'center'}} >
+       { art.solde !== 0 ?  <Box sx={{display:'flex',alignItems:'center'}} >
        <Typography sx={{textAlign:'left',color:'Window',bgcolor:'#ff5722',mr:1}}  variant='caption' gutterBottom>
         Offre Bienvenue 
       </Typography>
       <Typography sx={{textAlign:'left',fontWeight:'700',color:'#ff5722'}}  variant='caption' gutterBottom>
-        . -DA572.23 tous les articles 
-      </Typography>
-       </Box>
+         -DA{art.solde*art.price/100} tous les articles 
+      </Typography> 
+       </Box>: "" }
 
        <Button onClick={handleOpen} variant="contained" sx={{bgcolor:'black',color:'Window',width:'100%',my:1,borderRadius:'20px',":hover":{bgcolor:'black',color:'Window'}}} >Apercu</Button> 
 

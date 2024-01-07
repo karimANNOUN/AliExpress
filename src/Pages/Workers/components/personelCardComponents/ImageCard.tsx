@@ -12,7 +12,14 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import Button from '@mui/material/Button';
 import ReplyIcon from '@mui/icons-material/Reply';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-export const ImageCard = () => {
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
+export const ImageCard = ({activeSize,setActiveSize}:any) => {
+  const product=useSelector((state:any)=>state.app.product)
+
+
+   const [count,setCount]=useState(1)
+
   return (
     <Box sx={{width:'95%',height:'95%',display:'flex',flexDirection:'column'}} >
 
@@ -44,10 +51,10 @@ export const ImageCard = () => {
        </IconButton>
     </Box>
     <Typography sx={{fontWeight:'700',textAlign:'left'}}  variant='subtitle1' gutterBottom>
-    Shipping: DA18,497.19 
+    Shipping: DA{product.prixlivraison}
 </Typography>
 <Typography sx={{textAlign:'left'}}  variant='subtitle2' gutterBottom>
-Temps estimé pour la livraison: 7-15 jours 
+Temps estimé pour la livraison: {product.templivraison} jours 
 </Typography>
     </Box>
 
@@ -76,19 +83,23 @@ Protection acheteur
 </Typography>
        
 <Box sx={{display:'flex',alignItems:'center'}} >
-<IconButton sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
+{ count === 1 ? <IconButton disabled sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
 <RemoveIcon sx={{fontSize:'10px'}} />
-</IconButton>
+</IconButton> : <IconButton onClick={()=>setCount(count - 1)} sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
+<RemoveIcon sx={{fontSize:'10px'}} />
+</IconButton>}
 <Typography sx={{fontWeight:'700',textAlign:'left',mx:1}}  variant='body1' gutterBottom>
-    5
+    {count}
 </Typography>
-<IconButton sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
+{ count === product.property[activeSize].quantity ? <IconButton disabled sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
 <AddIcon sx={{fontSize:'10px'}} />
-</IconButton>
+</IconButton> : <IconButton onClick={()=>setCount(count + 1)}  sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
+<AddIcon sx={{fontSize:'10px',fontWeight:'800'}} />
+</IconButton>}
 </Box>
 
 <Typography sx={{fontWeight:'100',color:'#757575',textAlign:'left'}}  variant='subtitle2' gutterBottom>
-759 unités disponibles
+{product.property[activeSize].quantity} unités disponibles
 </Typography>
 
 <Button sx={{width:'100%',height:'40px',my:2,borderRadius:'20px',color:'white',bgcolor:'#e64a19',":hover":{bgcolor:'#e64a19'}}} variant="contained">Acheter Maintenant</Button>
