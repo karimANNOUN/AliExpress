@@ -6,9 +6,9 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import IconButton from '@mui/material/IconButton';
 import Rating from '@mui/material/Rating';
 import Divider from '@mui/material/Divider';
-export const FirstCardModal = ({art,activeSize,setActiveSize}:any) => {
+export const FirstCardModal = ({art,activeSize,setActiveSize,indexs,setIndexs}:any) => {
 
-    const [indexs,setIndexs]=useState(0)
+   
 
     const [currentIndex, setCurrentIndex] = useState(0);
 

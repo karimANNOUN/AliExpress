@@ -7,7 +7,7 @@ import { FirstCardModal } from './FirstCardModal';
 import { ImageCardModal } from './ImageCardModal';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
-export const CardModalProduct = ({setOpen,open,art}:any) => {
+export const CardModalProduct = ({setOpen,open,art,toggleDrawer}:any) => {
 
     const style = {
         position: 'absolute' as 'absolute',
@@ -26,6 +26,7 @@ export const CardModalProduct = ({setOpen,open,art}:any) => {
       const handleClose = () => setOpen(false);
 
       const [activeSize,setActiveSize]=useState(0)
+      const [indexs,setIndexs]=useState(0)
 
 
   return (
@@ -41,7 +42,7 @@ export const CardModalProduct = ({setOpen,open,art}:any) => {
 
 
 <Box sx={{display:'flex',flexDirection:'column'}} >
-<FirstCardModal activeSize={activeSize} setActiveSize={setActiveSize} art={art} />
+<FirstCardModal activeSize={activeSize} setActiveSize={setActiveSize} art={art} indexs={indexs} setIndexs={setIndexs} />
 
 
 </Box>
@@ -50,7 +51,7 @@ export const CardModalProduct = ({setOpen,open,art}:any) => {
 
 
 <Box sx={{width:'300px',height:'530px',borderRadius:'10px',borderStyle:'solid',borderColor:'#eeeeee',display:'flex',justifyContent:'center',alignItems:'center'}} >
-   <ImageCardModal activeSize={activeSize} setActiveSize={setActiveSize}  setOpen={setOpen} art={art} />
+   <ImageCardModal activeSize={activeSize} setActiveSize={setActiveSize} toggleDrawer={toggleDrawer}  setOpen={setOpen} art={art} indexs={indexs} setIndexs={setIndexs}  />
 </Box>
 
 </Box>

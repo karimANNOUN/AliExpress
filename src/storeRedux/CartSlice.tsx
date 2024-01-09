@@ -6,7 +6,8 @@ const cartSlice= createSlice({
     initialState:{
         userValid:{},
         user:{},
-        product:{}
+        product:{},
+        productStore:[]
       
         
       
@@ -21,10 +22,13 @@ const cartSlice= createSlice({
        },
        setProduct:(state,action)=>{
         state.product=action.payload
+       },
+       setProductStore:(state,action)=>{
+        state.productStore=action.payload
        }
 
     }
 })
 
-export const {setUserValid,setUser,setProduct }=cartSlice.actions;
+export const {setUserValid,setUser,setProduct ,setProductStore }=cartSlice.actions;
 export const cartReducer = cartSlice.reducer;

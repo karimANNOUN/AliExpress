@@ -7,7 +7,7 @@ import {  Link, useNavigate  } from 'react-router-dom';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import {CardModalProduct} from '../CardProducts/CardModalProduct'
-export const CardProduct = ({products}:any) => {
+export const CardProduct = ({products , toggleDrawer }:any) => {
 
 
   const navigate=useNavigate()
@@ -77,7 +77,7 @@ export const CardProduct = ({products}:any) => {
 
           </Box>
 
-          <CardModalProduct open={open} setOpen={setOpen} art={art} />
+          <CardModalProduct open={open} toggleDrawer={toggleDrawer} setOpen={setOpen} art={art} />
         <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={over}

@@ -8,6 +8,7 @@ import CheckIcon from '@mui/icons-material/Check';
 
 export const CardStoreProduct = () => {
     const [show,setShow]=useState(false)
+    const [count,setCount]=useState(1)
   return (
     <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',my:1}} >
 
@@ -18,7 +19,7 @@ export const CardStoreProduct = () => {
        <Box sx={{width:'70px',height:'70px',position:'relative'}} >
          <img src='https://i.pinimg.com/236x/b7/5c/e2/b75ce23ce1bec2a6585aff0db4cea102.jpg' style={{width:'100%',height:'100%',borderRadius:'8px'}} />
          <Box sx={{clipPath:'circle(50% at 50% 50%)',height:'20px',width:'20px',bgcolor:'Window',position:'absolute',top:'9%',left:'5%',display:'flex',justifyContent:'center',alignItems:'center'}} >
-           { show ?
+           {!show ?
  
  <IconButton onClick={()=>setShow(true)} sx={{width:'23px',height:'23px',borderRadius:'50%',bgcolor:'Window',":hover":{bgcolor:'Window'},display:'flex',justifyContent:'center',alignItems:'center'}} >
  
@@ -36,13 +37,13 @@ export const CardStoreProduct = () => {
  </Typography>
  
  <Box sx={{display:'flex',alignItems:'center'}} >
- <IconButton sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
+ <IconButton onClick={()=>setCount(count-1)} sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
  <RemoveIcon sx={{fontSize:'10px'}} />
  </IconButton>
  <Typography sx={{fontWeight:'700',textAlign:'left',mx:1}}  variant='body1' gutterBottom>
-     5
+     {count}
  </Typography>
- <IconButton sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
+ <IconButton onClick={()=>setCount(count+1)}  sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
  <AddIcon sx={{fontSize:'10px'}} />
  </IconButton>
  </Box>
