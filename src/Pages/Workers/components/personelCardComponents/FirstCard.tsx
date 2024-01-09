@@ -9,7 +9,7 @@ import Rating from '@mui/material/Rating';
 import Divider from '@mui/material/Divider';
 import { useSelector } from 'react-redux';
 
-export const FirstCard = ({activeSize,setActiveSize,catergories}:any) => {
+export const FirstCard = ({activeSize,setActiveSize}:any) => {
 
   const product=useSelector((state:any)=>state.app.product)
 
@@ -18,14 +18,14 @@ export const FirstCard = ({activeSize,setActiveSize,catergories}:any) => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     
-
+ 
 
     const handleClickRight = () => {
-        setCurrentIndex((prevIndex) => (prevIndex + 6) % catergories.length);
+        setCurrentIndex((prevIndex) => (prevIndex + 6) % product.images.filter((img:any)=> img.color !== 'imageDescription').length);
       };
     
       const handleClickLeft = () => {
-        setCurrentIndex((prevIndex) => (prevIndex - 6 + catergories.length) % catergories.length);
+        setCurrentIndex((prevIndex) => (prevIndex - 6 + product.images.filter((img:any)=> img.color !== 'imageDescription').length) % product.images.filter((img:any)=> img.color !== 'imageDescription').length);
       };
 
 
@@ -33,11 +33,11 @@ export const FirstCard = ({activeSize,setActiveSize,catergories}:any) => {
     <Box sx={{display:'flex'}} >
     <Box sx={{display:'flex',flexDirection:'column',width:'500px',height:'600px',mr:4}} >
       
-     <img src={product.images[indexs].imageUrl} style={{width:'500px',height:'500px',borderRadius:'8px'}}  />
+     <img src={product.images.filter((img:any)=>  img.color !== 'imageDescription')[indexs].imageUrl} style={{width:'500px',height:'500px',borderRadius:'8px'}}  />
    
      <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'center',width:'100%',height:'100px',overflow:'hidden',position:'relative'}} >
 
-     { product.images.slice(currentIndex, currentIndex + 6).map((category:any,index:any)=> 
+     { product.images.filter((img:any)=> img.color !== 'imageDescription').slice(currentIndex, currentIndex + 6).map((category:any,index:any)=> 
      <Box key={index} onMouseEnter={ ()=> setIndexs(index) } sx={{height:'70px',width:'70px',borderRadius:'12px'}} >
        {index === indexs  ?  <img onClick={()=> setIndexs(index)} src={category.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px',borderStyle:'solid',borderColor:'#424242'}} /> : <img onClick={()=> setIndexs(index)} src={category.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px'}} /> }
       </Box>
@@ -101,11 +101,11 @@ export const FirstCard = ({activeSize,setActiveSize,catergories}:any) => {
      </Typography>
     </Box>
     <Typography sx={{fontWeight:'800',textAlign:'left'}}  variant='body1' gutterBottom>
-    Couleur: {product.images.length == 0 ? "" :  product.images.slice(0,5)[indexs].color}
+    Couleur: { product.images.length == 0 ? "" :   ( indexs>=5 ? "other color" : product.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) )[indexs].color) }
      </Typography>
 
       <Box sx={{display:'flex',alignItems:'center',width:'80%',my:2}} >
-       { product.images.length == 0 ? "" : product.images.slice(0,5).map((categ:any,index:any)=>
+       { product.images.length == 0 ? "" : product.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) ).map((categ:any,index:any)=>
        
        <Box key={index} sx={{height:'50px',width:'50px',borderRadius:'12px',mx:2}} >
          {index === indexs  ?  <img onClick={()=> setIndexs(index)} src={categ.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px',borderStyle:'solid',borderColor:'#424242'}} /> : <img onClick={()=> setIndexs(index)} src={categ.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px'}} /> }

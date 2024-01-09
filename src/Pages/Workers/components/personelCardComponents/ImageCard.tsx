@@ -14,7 +14,7 @@ import ReplyIcon from '@mui/icons-material/Reply';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
-export const ImageCard = ({activeSize,setActiveSize}:any) => {
+export const ImageCard = ({activeSize}:any) => {
   const product=useSelector((state:any)=>state.app.product)
 
 

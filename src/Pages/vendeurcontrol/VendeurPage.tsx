@@ -82,6 +82,7 @@ export const VendeurPage = () => {
   const [price, setPrice] = useState(Number);
   const [description, setDescription] = useState('');
   const [solde,setSolde]=useState(Number)
+  const [title,setTitle]=useState('')
   const [properties,setProperties]=useState('')
   const [livraison,setLivraison]=useState(Number)
   const [livraisonTime,setLivraisonTime]=useState(Number)
@@ -324,6 +325,7 @@ const handleAddEvent = () => {
       formData.append('propertiesDetails', JSON.stringify(values));
 
       formData.append('price', price);
+      formData.append('title', title);
       formData.append('properties', properties);
       formData.append('description', description);
       formData.append('livraison', livraison);
@@ -566,9 +568,21 @@ const handleAddEvent = () => {
 
 <Box sx={{my:1,display:'flex',justifyContent:'space-between',alignItems:'center',width:'100%'}} >
 
+
+<TextField
+  id="title"
+  sx={{ width: '20%', bgcolor:"white"}}
+  placeholder="titre de votre article"
+  size='small'
+  label='Title'
+  required
+  onChange={(e:any)=>setTitle(e.target.value)}
+    />
+
+
 <TextField
   id="taille"
-  sx={{ width: '30%', bgcolor:"white"}}
+  sx={{ width: '20%', bgcolor:"white"}}
   placeholder="taille or other properties"
   size='small'
   label='properties'
@@ -578,7 +592,7 @@ const handleAddEvent = () => {
 
 <TextField
   id="solde"
-  sx={{ width: '30%', bgcolor:"white"}}
+  sx={{ width: '20%', bgcolor:"white"}}
   placeholder="% solde"
   size='small'
   type='number'
@@ -591,7 +605,7 @@ const handleAddEvent = () => {
 
          <TextField
   id="price"
-  sx={{ width: '30%', bgcolor:"white"}}
+  sx={{ width: '20%', bgcolor:"white"}}
   placeholder="Price"
   size='small'
   type='number'

@@ -12,6 +12,8 @@ export const Worker = () => {
 
   const dispatch = useDispatch()
 
+  const [loading,setLoading]=useState(false)
+
    useEffect( ()=>{
        const getOneProduct =async()=>{
          const response=await fetch(`http://localhost:8000/getproduct/${params.id}`, {
@@ -22,9 +24,15 @@ export const Worker = () => {
           },
         })
         const data = await response.json()
-        console.log(data)
+        if (!data) {
+          setLoading(true)
+        }
       if (data.success == true) {
-        dispatch(setProduct(data.product))
+       
+          setLoading(false)
+          dispatch(setProduct(data.product))   
+       
+       
       }
         
       }
@@ -36,8 +44,8 @@ export const Worker = () => {
   return (
     <div>
         <Box sx={{}} >
-          <Header/>
-          <PersonelCard  />
+          <Header loading={loading} />
+          <PersonelCard loading={loading}  />
         </Box>
     </div>
   )

@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
@@ -18,8 +18,9 @@ import { ProductStoreShop } from '../ProductStore/ProductStoreShop';
 
 type Anchor = 'right';
 
-export const ImageCardModal = ({setOpen}:any) => {
+export const ImageCardModal = ({setOpen,art,activeSize}:any) => {
 
+  const [count,setCount]=useState(1)
 
     const [state, setState] = React.useState({
         right: false
@@ -37,6 +38,7 @@ export const ImageCardModal = ({setOpen}:any) => {
           }
     
           setState({ ...state, [anchor]: ovrir });
+          
         };
 
         const handelOpen=()=>{
@@ -79,10 +81,10 @@ export const ImageCardModal = ({setOpen}:any) => {
        </IconButton>
     </Box>
     <Typography sx={{fontWeight:'700',textAlign:'left'}}  variant='subtitle1' gutterBottom>
-    Shipping: DA18,497.19 
+    Shipping: DA1{art.prixlivraison} 
 </Typography>
 <Typography sx={{textAlign:'left'}}  variant='subtitle2' gutterBottom>
-Temps estimé pour la livraison: 7-15 jours 
+Temps estimé pour la livraison: {art.templivraison} jours 
 </Typography>
     </Box>
 
@@ -111,19 +113,23 @@ Protection acheteur
 </Typography>
        
 <Box sx={{display:'flex',alignItems:'center'}} >
-<IconButton sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
+{ count === 1 ? <IconButton disabled sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
 <RemoveIcon sx={{fontSize:'10px'}} />
-</IconButton>
+</IconButton> : <IconButton onClick={()=>setCount(count - 1)} sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
+<RemoveIcon sx={{fontSize:'10px'}} />
+</IconButton>}
 <Typography sx={{fontWeight:'700',textAlign:'left',mx:1}}  variant='body1' gutterBottom>
-    5
+    {count}
 </Typography>
-<IconButton sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
+{ count === art.property[activeSize].quantity ? <IconButton disabled sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
 <AddIcon sx={{fontSize:'10px'}} />
-</IconButton>
+</IconButton> : <IconButton onClick={()=>setCount(count + 1)}  sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
+<AddIcon sx={{fontSize:'10px',fontWeight:'800'}} />
+</IconButton>}
 </Box>
 
 <Typography sx={{fontWeight:'100',color:'#757575',textAlign:'left'}}  variant='subtitle2' gutterBottom>
-759 unités disponibles
+{art.property[activeSize].quantity} unités disponibles
 </Typography>
 
 <Button onClick={ toggleDrawer('right', true)} sx={{width:'100%',height:'40px',my:2,borderRadius:'20px',color:'white',bgcolor:'#e64a19',":hover":{bgcolor:'#e64a19'}}} variant="contained">Ajouter au Panier</Button>

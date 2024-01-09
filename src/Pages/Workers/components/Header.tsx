@@ -9,14 +9,23 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-export const Header = () => {
+import Skeleton from '@mui/material/Skeleton';
+export const Header = ({loading}:any) => {
 
         const navigate=useNavigate()
 
         const product=useSelector((state:any)=>state.app.product)
   return (
+      
     <div>
-    <Box sx={{width:'100%',height:'80px',bgcolor:'#424242',display:'flex',alignItems:'center',justifyContent:'space-around'}} >
+        {loading == true ? 
+        
+        <Box sx={{width:'100%',bgcolor:'#424242',display:'flex',alignItems:'center'}} >
+        <Skeleton variant="circular" width={40} height={40} />
+         <Skeleton variant="rectangular" width={210} height={60} />
+        </Box>
+     
+     : <Box sx={{width:'100%',height:'80px',bgcolor:'#424242',display:'flex',alignItems:'center',justifyContent:'space-around'}} >
               <Box component='div' onClick={()=>navigate("/store/:storeId")} sx={{display:'flex',alignItems:'center'}} >
               <Avatar
            alt="Remy Sharp"
@@ -47,8 +56,14 @@ export const Header = () => {
       <Button sx={{bgcolor:'white',color:'black',":hover":{bgcolor:'white',color:'black'},mr:2,borderRadius:'25px'}} variant="contained"> <ChatBubbleOutlineIcon  /> Messages</Button>
 
               </Box>
-          </Box>
-          <Box sx={{height:'60px',width:'100%',bgcolor:'#eeeeee',display:'flex',justifyContent:'center'}} >
+          </Box>}
+          {loading == true ? 
+        
+        <Box sx={{width:'100%',bgcolor:'#424242',display:'flex',alignItems:'center'}} >
+         <Skeleton variant="rectangular" width={210} height='60px' />
+        </Box>
+     
+     : <Box sx={{height:'60px',width:'100%',bgcolor:'#eeeeee',display:'flex',justifyContent:'center'}} >
           
           <Box sx={{display:'flex',alignItems:'center',height:'100%',width:'70%'}} >
       <Button sx={{color:'#424242',height:'100%',":hover":{borderBottomStyle:'solid',borderBottomWidth:'3px',borderBottomColor:'#ff5722'}}}  variant="text">Page d'Acceille</Button>
@@ -59,7 +74,10 @@ export const Header = () => {
      
       </Box>
       
-          </Box>
+          </Box>}
+          
+    
           </div>
+        
   )
 }

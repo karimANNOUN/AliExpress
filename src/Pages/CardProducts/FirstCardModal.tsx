@@ -6,33 +6,33 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import IconButton from '@mui/material/IconButton';
 import Rating from '@mui/material/Rating';
 import Divider from '@mui/material/Divider';
-export const FirstCardModal = ({sizes,catergories}:any) => {
+export const FirstCardModal = ({art,activeSize,setActiveSize}:any) => {
 
-    const [index,setIndex]=useState(0)
+    const [indexs,setIndexs]=useState(0)
 
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    const [activeSize,setActiveSize]=useState(0)
+    
 
     const handleClickRight = () => {
-        setCurrentIndex((prevIndex) => (prevIndex + 6) % catergories.length);
+        setCurrentIndex((prevIndex) => (prevIndex + 6) % art.images.filter((img:any)=> img.color !== 'imageDescription').length);
       };
     
       const handleClickLeft = () => {
-        setCurrentIndex((prevIndex) => (prevIndex - 6 + catergories.length) % catergories.length);
+        setCurrentIndex((prevIndex) => (prevIndex - 6 + art.images.filter((img:any)=> img.color !== 'imageDescription').length) % art.images.filter((img:any)=> img.color !== 'imageDescription').length);
       };
 
   return (
     <Box sx={{display:'flex',overflowY: 'auto',}} >
     <Box sx={{display:'flex',flexDirection:'column',width:'400px',height:'500px',mr:4}} >
       
-     <img src={catergories[index].image} style={{width:'400px',height:'400px',borderRadius:'8px'}}  />
+     <img src={art.images.filter((img:any)=>  img.color !== 'imageDescription')[indexs].imageUrl} style={{width:'400px',height:'400px',borderRadius:'8px'}}  />
    
      <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'center',width:'100%',height:'100px',overflow:'hidden',position:'relative'}} >
 
-     { catergories.slice(currentIndex, currentIndex + 6).map((category:any)=> 
-     <Box key={category.id} onMouseEnter={ ()=> setIndex(category.id - 1) } sx={{height:'60px',width:'60px',borderRadius:'12px'}} >
-       {category.id -1 === index  ?  <img onClick={()=> setIndex(category.id - 1)} src={category.image} style={{height:'100%',width:'100%',borderRadius:'8px',borderStyle:'solid',borderColor:'#424242'}} /> : <img onClick={()=> setIndex(category.id - 1)} src={category.image} style={{height:'100%',width:'100%',borderRadius:'8px'}} /> }
+     { art.images.filter((img:any)=> img.color !== 'imageDescription').slice(currentIndex, currentIndex + 6).map((category:any,index:any)=> 
+     <Box key={index} onMouseEnter={ ()=> setIndexs(index) } sx={{height:'60px',width:'60px',borderRadius:'12px'}} >
+       {index === indexs  ?  <img onClick={()=> setIndexs(index)} src={category.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px',borderStyle:'solid',borderColor:'#424242'}} /> : <img onClick={()=> setIndexs(index)} src={category.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px'}} /> }
       </Box>
       )}
 
@@ -54,20 +54,18 @@ export const FirstCardModal = ({sizes,catergories}:any) => {
      DA
      </Typography>
      <Typography sx={{fontWeight:'800',color:'#ff3d00'}} variant="h4" gutterBottom>
-     483.18
+     {art.price - (art.solde*art.price/100)}
      </Typography>
      <Typography sx={{fontWeight:'500',textDecorationLine:'line-through',mx:2}}  variant='body1' gutterBottom>
-     DA1,380.53
+     DA{art.price}
      </Typography>
      <Typography sx={{fontWeight:'100',color:'#ff3d00'}}  variant='body1' gutterBottom>
-     -65%
+     -{art.solde}%
      </Typography>
     </Box>
      
     <Typography sx={{fontWeight:'800',textAlign:'left',my:2}} variant='body1' gutterBottom>
-    Baskets légères en cuir PU pour hommes, chaussures de sport décontractées,
-     chaussures respirantes, chaussures plates blanches, chaussures de tennis pour
-      hommes, Zapatillas zones bre
+    {art.description}
      </Typography>
 
     <Box sx={{display:'flex',alignItems:'center'}} >
@@ -96,29 +94,29 @@ export const FirstCardModal = ({sizes,catergories}:any) => {
      </Typography>
     </Box>
     <Typography sx={{fontWeight:'800',textAlign:'left'}}  variant='body1' gutterBottom>
-    Couleur: white grey
+    Couleur: { art.images.length == 0 ? "" :   ( indexs>=5 ? "other color" : art.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) )[indexs].color) }
      </Typography>
 
       <Box sx={{display:'flex',alignItems:'center',width:'80%',my:2}} >
-       {catergories.slice(0, 5).map((categ:any)=>
+       { art.images.length == 0 ? "" : art.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) ).slice(0, 5).map((categ:any,index:any)=>
        
-       <Box key={categ.id} sx={{height:'50px',width:'50px',borderRadius:'12px',mx:2}} >
-         {categ.id -1 === index  ?  <img onClick={()=> setIndex(categ.id - 1)} src={categ.image} style={{height:'100%',width:'100%',borderRadius:'8px',borderStyle:'solid',borderColor:'#424242'}} /> : <img onClick={()=> setIndex(categ.id - 1)} src={categ.image} style={{height:'100%',width:'100%',borderRadius:'8px'}} /> }
+       <Box key={index} sx={{height:'50px',width:'50px',borderRadius:'12px',mx:2}} >
+         {index === indexs  ?  <img onClick={()=> setIndexs(index)} src={categ.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px',borderStyle:'solid',borderColor:'#424242'}} /> : <img onClick={()=> setIndexs(index)} src={categ.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px'}} /> }
        </Box>
        )}
       </Box>
 
       <Typography sx={{fontWeight:'800',textAlign:'left'}}  variant='body1' gutterBottom>
-      Taille de chaussure: 47
+      {art.properties} : { art.property.length == 0 ? "" : art.property[activeSize].detailsName}
      </Typography>
      <Box sx={{display:'flex',width:'100%',alignItems:'center',flexWrap:'wrap'}} >
-       {sizes.map((size:any)=>
-       <Box key={size.id} sx={{mx:1,my:1}} >
-        { size.id - 1 === activeSize ? <div onClick={()=>setActiveSize(size.id - 1)}  style={{height:'30px',width:'70px',borderStyle:'solid',borderColor:'#424242',display:'flex',justifyContent:'center',alignItems:'center',borderRadius:'8px'}} >
-        {size.number}
+       {art.property.length == 0 ? "" : art.property.map((size:any,index:any)=>
+       <Box key={index} sx={{mx:1,my:1}} >
+        { index === activeSize ? <div onClick={()=>setActiveSize(index)}  style={{height:'30px',padding:2,borderStyle:'solid',borderColor:'#424242',display:'flex',justifyContent:'center',alignItems:'center',borderRadius:'8px'}} >
+        {size.detailsName}
      </div> : 
-     <div  onClick={()=>setActiveSize(size.id - 1)} style={{height:'30px',width:'70px',borderStyle:'solid',borderColor:'#e0e0e0',display:'flex',justifyContent:'center',alignItems:'center',borderRadius:'8px'}} >
-     {size.number}
+     <div  onClick={()=>setActiveSize(index)} style={{height:'30px',padding:2,borderStyle:'solid',borderColor:'#e0e0e0',display:'flex',justifyContent:'center',alignItems:'center',borderRadius:'8px'}} >
+     {size.detailsName}
      </div>
      }
 

@@ -31,26 +31,7 @@ export const CardProduct = ({products}:any) => {
   
   }
 
-const article = [
-    {id:1,name:'zarbia',prix:'2.568'},
-    {id:2,name:'zarbia',prix:'2.568'},
-    {id:3,name:'zarbia',prix:'2.568'},
-    {id:4,name:'zarbia',prix:'2.568'},
-    {id:5,name:'zarbia',prix:'2.568'},
-    {id:6,name:'zarbia',prix:'2.568'},
-    {id:7,name:'zarbia',prix:'2.568'},
-    {id:8,name:'zarbia',prix:'2.568'},
-    {id:9,name:'zarbia',prix:'2.568'},
-    {id:10,name:'zarbia',prix:'2.568'},
-    {id:11,name:'zarbia',prix:'2.568'},
-    {id:12,name:'zarbia',prix:'2.568'},
-    {id:13,name:'zarbia',prix:'2.568'},
-    {id:14,name:'zarbia',prix:'2.568'},
-    {id:15,name:'zarbia',prix:'2.568'},
-    {id:16,name:'zarbia',prix:'2.568'},
-    {id:17,name:'zarbia',prix:'2.568'},
-    {id:18,name:'zarbia',prix:'2.568'},
-]
+
 
   return (
     <div>
@@ -59,8 +40,8 @@ const article = [
         Vous aimerez aussi
       </Typography>
       <Box sx={{display:'flex',justifyContent:'space-around',alignItems:'center',flexWrap:'wrap',my:3}}  >
-        { products.length === 0 ? "" : products.map( (art:any)=> <Box key={art.id} component='div' onClick={()=>navigate(`/${art.id}`)} sx={{width:'340px',height:'530px',borderRadius:'20px',mb:2,display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',borderColor:'#eeeeee',borderStyle:'solid' }}>
-          <img src='https://i.pinimg.com/564x/6a/f3/fb/6af3fb0201c1f22c8281c5519faf5d44.jpg' alt='hhtr' style={{width:'90%',height:'60%',borderRadius:'20px'}} />
+        { products.length === 0 ? "" : products.map( (art:any)=> <Box key={art.id} component='div'  sx={{width:'340px',height:'530px',borderRadius:'20px',mb:2,display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',borderColor:'#eeeeee',borderStyle:'solid' }}>
+          <img onClick={()=>navigate(`/${art.id}`)} src={`${art.images.filter((img:any)=> img.color !== 'imageDescription')[0].imageUrl}`} alt='hhtr' style={{width:'90%',height:'60%',borderRadius:'20px'}} />
           <Box sx={{width:'90%',display:'flex',flexDirection:'column'}} >
           <Typography sx={{my:1,textAlign:'left'}}  variant='body1' gutterBottom>
         {art.title}
@@ -80,7 +61,7 @@ const article = [
       </Typography>
       <Typography sx={{textAlign:'left',fontWeight:'5',textDecorationLine:'line-through',color: '#bdbdbd'}}  variant='caption' gutterBottom>
         DA{art.price}
-      </Typography>
+      </Typography> 
        </Box>
 
        { art.solde !== 0 ?  <Box sx={{display:'flex',alignItems:'center'}} >
@@ -95,8 +76,8 @@ const article = [
        <Button onClick={handleOpen} variant="contained" sx={{bgcolor:'black',color:'Window',width:'100%',my:1,borderRadius:'20px',":hover":{bgcolor:'black',color:'Window'}}} >Apercu</Button> 
 
           </Box>
-        </Box>)} 
-        <CardModalProduct open={open} setOpen={setOpen} />
+
+          <CardModalProduct open={open} setOpen={setOpen} art={art} />
         <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={over}
@@ -104,8 +85,11 @@ const article = [
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      </Box>
 
+        </Box> )} 
+       
+      </Box>
+     
 
      <Box sx={{display:'flex',justifyContent:'center',alignItems:'center' , my:2}} >
      <Box sx={{display:'flex'}} >

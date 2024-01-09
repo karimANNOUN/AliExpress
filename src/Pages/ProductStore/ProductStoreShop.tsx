@@ -4,9 +4,7 @@ import Typography from '@mui/material/Typography';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
-import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 import { CardStoreProduct } from './components/CardStoreProduct';
 type Anchor = 'right';
 
@@ -15,17 +13,22 @@ export const ProductStoreShop = ({toggleDrawer,state}:any) => {
 
   const [show,setShow]=useState(false)
     
+  const handleClose = (anchor:any) =>{
+    toggleDrawer(anchor, false)
+  };
      
 
 
   return (
     <div>
+      
        {([ 'right'] as const).map((anchor) => (
         <React.Fragment key={anchor}>
           <Drawer
             anchor={anchor}
             open={state[anchor]}
-            onClose={toggleDrawer(anchor, false)}
+           sx={{position:'relative'}}
+           onClose={toggleDrawer(anchor, false)}
           >
             <Box
           sx={{ width: '300px',display:'flex',flexDirection:'column',alignItems:'center',overflow:'auto',py:2 }}
@@ -62,6 +65,10 @@ Expédié par des vendeurs internationaux
   <CardStoreProduct/>
 
         </Box>
+
+
+        <IconButton onClick={handleClose} sx={{bgcolor:'#424242',":hover":{bgcolor:'#424242'},position:'absolute',top:'-2%',left:'-1%'}} > <CloseIcon sx={{fontSize:'15px',color:'white'}} /> </IconButton>
+
           </Drawer>
         </React.Fragment>
       ))}
