@@ -15,16 +15,34 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
 import { setProductStore } from '../../storeRedux/CartSlice';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
-
-
-
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export const ImageCardModal = ({setOpen,art,activeSize,toggleDrawer,indexs}:any) => {
+
+  const [openAlert, setOpenAlert] = useState(false);
+
+
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenAlert(false);
+  };
 
   const [count,setCount]=useState(1)
 
   const [loading,setLoading]=useState(false)
+
+  const [message,setMessage]=useState("")
 
   const dispatch = useDispatch()
 
@@ -59,11 +77,15 @@ export const ImageCardModal = ({setOpen,art,activeSize,toggleDrawer,indexs}:any)
 
       if (!data) {
         setLoading(true)
-      }if (data.success == true) {
+      }if (data.success == false) {
+        setMessage(data.message)
+        setOpenAlert(true)
+      }
+      if (data.success == true) {
         dispatch(setProductStore(data.storeProductUser))
         setLoading(false)
         setOpen(false)
-        toggleDrawer('right', true)
+        
 
       } 
      
@@ -84,6 +106,12 @@ export const ImageCardModal = ({setOpen,art,activeSize,toggleDrawer,indexs}:any)
 
   return (
     <Box sx={{width:'95%',height:'95%',mb:1,display:'flex',flexDirection:'column'}} >
+
+<Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          {message}
+        </Alert>
+      </Snackbar>
 
     <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'center'}} >
     <Typography sx={{fontWeight:'500',textAlign:'left'}}  variant='body1' gutterBottom>
@@ -164,7 +192,7 @@ Protection acheteur
 {   art.property[activeSize].quantity} unités disponibles
 </Typography>
 
-<Button onClick={ handleStoreProducts} sx={{width:'100%',height:'40px',my:2,borderRadius:'20px',color:'white',bgcolor:'#e64a19',":hover":{bgcolor:'#e64a19'}}} variant="contained">Ajouter au Panier</Button>
+<Button onClick={ toggleDrawer('right', true)} sx={{width:'100%',height:'40px',my:2,borderRadius:'20px',color:'white',bgcolor:'#e64a19',":hover":{bgcolor:'#e64a19'}}} variant="contained">Ajouter au Panier</Button>
 <Box sx={{display:'flex',width:'100%',alignItems:'center',justifyContent:'space-between'}} >
 <Button sx={{width:'45%',height:'40px',my:2,borderRadius:'20px',color:'black',":hover":{color:'black'}}} color='inherit' variant="outlined">
  <ReplyIcon/>

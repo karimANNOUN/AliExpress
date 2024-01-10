@@ -6,18 +6,18 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import CheckIcon from '@mui/icons-material/Check';
 
-export const CardStoreProduct = () => {
+export const CardStoreProduct = ({product}:any) => {
     const [show,setShow]=useState(false)
     const [count,setCount]=useState(1)
   return (
     <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',my:1}} >
 
     <Typography sx={{fontWeight:'800',textAlign:'center'}}  variant='body2' gutterBottom>
- Shop1103199137 Store
+ {product.product.user.name} store
  </Typography>
  
        <Box sx={{width:'70px',height:'70px',position:'relative'}} >
-         <img src='https://i.pinimg.com/236x/b7/5c/e2/b75ce23ce1bec2a6585aff0db4cea102.jpg' style={{width:'100%',height:'100%',borderRadius:'8px'}} />
+         <img src={product.imageUrl} style={{width:'100%',height:'100%',borderRadius:'8px'}} />
          <Box sx={{clipPath:'circle(50% at 50% 50%)',height:'20px',width:'20px',bgcolor:'Window',position:'absolute',top:'9%',left:'5%',display:'flex',justifyContent:'center',alignItems:'center'}} >
            {!show ?
  
@@ -33,7 +33,7 @@ export const CardStoreProduct = () => {
          </Box>
        </Box>
        <Typography sx={{fontWeight:'800',textAlign:'center',my:1}}  variant='body2' gutterBottom>
-       US $7.45
+       US ${product.product.price*product.product.solde/100}
  </Typography>
  
  <Box sx={{display:'flex',alignItems:'center'}} >
