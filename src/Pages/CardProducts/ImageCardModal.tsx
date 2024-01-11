@@ -1,4 +1,5 @@
-import React,{useState} from 'react'
+// @ts-nocheck
+import React,{useEffect, useState} from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
@@ -13,8 +14,8 @@ import Button from '@mui/material/Button';
 import ReplyIcon from '@mui/icons-material/Reply';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import Cookies from 'js-cookie';
-import { useDispatch } from 'react-redux';
-import { setProductStore } from '../../storeRedux/CartSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setProductStore, setProducts } from '../../storeRedux/CartSlice';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
@@ -23,12 +24,15 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   ref,
 ) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+
+  
 });
 
 export const ImageCardModal = ({setOpen,art,activeSize,toggleDrawer,indexs}:any) => {
 
   const [openAlert, setOpenAlert] = useState(false);
 
+  
 
   const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
@@ -38,7 +42,14 @@ export const ImageCardModal = ({setOpen,art,activeSize,toggleDrawer,indexs}:any)
     setOpenAlert(false);
   };
 
+
+
+
+
+
   const [count,setCount]=useState(1)
+
+  const [favorit,setFavorit]=useState(false)
 
   const [loading,setLoading]=useState(false)
 
@@ -73,7 +84,7 @@ export const ImageCardModal = ({setOpen,art,activeSize,toggleDrawer,indexs}:any)
       });
     
       const data = await response.json()
-      console.log(data)
+      
 
       if (!data) {
         setLoading(true)
@@ -94,8 +105,47 @@ export const ImageCardModal = ({setOpen,art,activeSize,toggleDrawer,indexs}:any)
       console.error('operation failed.');
     }
   };
+
+  const handelFavoritProduct=async()=>{
+    const response = await fetch(`http://localhost:8000/favoritproduct`,{
+      method: 'POST',
+      credentials:"include", 
+      headers: {
+        'Content-Type': 'application/json',
+         authorization:`${token}`
+      },
+      body: JSON.stringify({ art }),
+     
+    });
+    const data = await response.json()
+    if (!data) {
+      setLoading(true)
+    }if (data.success == true) {
+      dispatch(setProducts(data.products))
+      setLoading(false) 
+    } 
+   
+  }
   
-      
+  const user=useSelector((state:any)=>state.app.user)
+
+ 
+
+  useEffect(()=>{
+  
+    const existUser = art.favoritList.find(fav=> fav.userId === user.id ) 
+    
+    if (existUser) {
+      setFavorit(true)
+  }else{
+      setFavorit(false)
+  }
+  },[])
+
+  
+
+
+
 
 
         if (count > art.property[activeSize].quantity) {
@@ -193,15 +243,23 @@ Protection acheteur
 </Typography>
 
 <Button onClick={ toggleDrawer('right', true)} sx={{width:'100%',height:'40px',my:2,borderRadius:'20px',color:'white',bgcolor:'#e64a19',":hover":{bgcolor:'#e64a19'}}} variant="contained">Ajouter au Panier</Button>
-<Box sx={{display:'flex',width:'100%',alignItems:'center',justifyContent:'space-between'}} >
+<Box  sx={{display:'flex',width:'100%',alignItems:'center',justifyContent:'space-between'}} >
 <Button sx={{width:'45%',height:'40px',my:2,borderRadius:'20px',color:'black',":hover":{color:'black'}}} color='inherit' variant="outlined">
  <ReplyIcon/>
  Détails
  </Button>
- <Button sx={{width:'45%',height:'40px',my:1,borderRadius:'20px',color:'black',":hover":{color:'black'}}} color='inherit' variant="outlined">
+
+ { !user  ? {} : 
+ (  favorit == true   ? (<Button  sx={{width:'45%',height:'40px',my:1,borderRadius:'20px',color:'#e64a19',":hover":{color:'#e64a19'}}} color='inherit' variant="outlined">
  <FavoriteBorderOutlinedIcon/>
- 10.9K
- </Button>
+ {art.favoritList.length == 0 ? 0  : art.favoritList.length }
+ </Button>) : 
+ (<Button sx={{width:'45%',height:'40px',my:1,borderRadius:'20px',color:'black',":hover":{color:'black'}}} color='inherit' variant="outlined">
+ <FavoriteBorderOutlinedIcon/>
+ {art.favoritList.length == 0 ? 0  : art.favoritList.length }
+ </Button>))
+  }
+
 </Box>
     </Box>
  

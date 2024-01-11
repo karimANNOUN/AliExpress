@@ -7,10 +7,16 @@ import {  Link, useNavigate  } from 'react-router-dom';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import {CardModalProduct} from '../CardProducts/CardModalProduct'
-export const CardProduct = ({products , toggleDrawer }:any) => {
+import { useSelector } from 'react-redux';
+import Skeleton from '@mui/material/Skeleton';
+import Stack from '@mui/material/Stack';
+export const CardProduct = ({ toggleDrawer,loading }:any) => {
 
 
   const navigate=useNavigate()
+
+  
+ 
 
   const [over, setOver] = useState(false);
   const handleFermer = () => {
@@ -31,16 +37,29 @@ export const CardProduct = ({products , toggleDrawer }:any) => {
   
   }
 
+  const products=useSelector((state:any)=>state.app.products)
 
 
   return (
     <div>
+         {loading == true ?
+         <Stack spacing={1}>
+  
+         <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+   
+   
+         <Skeleton variant="circular" width={40} height={40} />
+         <Skeleton variant="rectangular" width={210} height={60} />
+         <Skeleton variant="rounded" width={210} height={60} />
+       </Stack>
+   
+        : 
         <Box sx={{width:'100%',display:'flex',flexDirection:'column'}} >
         <Typography sx={{my:2,pl:3,textAlign:'left',fontWeight:'700'}}  variant='h5' gutterBottom>
         Vous aimerez aussi
       </Typography>
       <Box sx={{display:'flex',justifyContent:'space-around',alignItems:'center',flexWrap:'wrap',my:3}}  >
-        { products.length === 0 ? "" : products.map( (art:any)=> <Box key={art.id} component='div'  sx={{width:'340px',height:'530px',borderRadius:'20px',mb:2,display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',borderColor:'#eeeeee',borderStyle:'solid' }}>
+        { !products   ? [] : products.map( (art:any)=> <Box key={art.id} component='div'  sx={{width:'340px',height:'530px',borderRadius:'20px',mb:2,display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',borderColor:'#eeeeee',borderStyle:'solid' }}>
           <img onClick={()=>navigate(`/${art.id}`)} src={`${art.images.filter((img:any)=> img.color !== 'imageDescription')[0].imageUrl}`} alt='hhtr' style={{width:'90%',height:'60%',borderRadius:'20px'}} />
           <Box sx={{width:'90%',display:'flex',flexDirection:'column'}} >
           <Typography sx={{my:1,textAlign:'left'}}  variant='body1' gutterBottom>
@@ -76,15 +95,18 @@ export const CardProduct = ({products , toggleDrawer }:any) => {
        <Button onClick={handleOpen} variant="contained" sx={{bgcolor:'black',color:'Window',width:'100%',my:1,borderRadius:'20px',":hover":{bgcolor:'black',color:'Window'}}} >Apercu</Button> 
 
           </Box>
+     
 
-          <CardModalProduct open={open} toggleDrawer={toggleDrawer} setOpen={setOpen} art={art} />
-        <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={over}
-        onClick={handleFermer}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
+             <CardModalProduct open={open} toggleDrawer={toggleDrawer} setOpen={setOpen} art={art} />
+         <Backdrop
+         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+         open={over}
+         onClick={handleFermer}
+       >
+         <CircularProgress color="inherit" />
+       </Backdrop>
+      
+         
 
         </Box> )} 
        
@@ -101,7 +123,7 @@ export const CardProduct = ({products , toggleDrawer }:any) => {
 
 
 
-        </Box>
+        </Box>}
     </div>
   )
 }

@@ -18,6 +18,8 @@ export const ProductStoreShop = ({toggleDrawer,state}:any) => {
 
   const token = Cookies.get('token');
 
+  
+
   const dispatch=useDispatch()
   const [loading,setLoading]=useState(false)
 
@@ -55,7 +57,11 @@ export const ProductStoreShop = ({toggleDrawer,state}:any) => {
 
      const productStore= useSelector((state :any) =>state.app.productStore)
 
-     console.log(productStore)
+  //   console.log(productStore)
+
+// const totalPrice=productStore.map((prod:any)=> prod.product.price * count )
+
+// console.log(totalPrice)
 
   return (
     <div>

@@ -9,15 +9,25 @@ import { useEffect,useState } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 import { Box } from "@mui/material";
 import { ProductStoreShop } from "../ProductStore/ProductStoreShop";
+import { useDispatch, useSelector } from "react-redux";
+import { setProducts, setUser } from "../../storeRedux/CartSlice";
+import Cookies from 'js-cookie';
 
 type Anchor = 'right';
 
 export default function Home() {
 
+  const dispatch=useDispatch()
 
-  const [products,setProducts]=useState([])
+ 
+
+//  const [products,setProducts]=useState([])
 
   const [loading,setLoading]=useState(false)
+
+  const token = Cookies.get('token');
+
+ 
 
   const [state, setState] = useState({
     right: false
@@ -52,12 +62,47 @@ export default function Home() {
       setLoading(true)
      }
     if (data.success == true) {
+      
       setLoading(false)
-      setProducts(data. products)
+      dispatch(setProducts(data.products))
+    //  setProducts(data.products)
+  //    console.log(useSelector((state:any)=>state.app.products))
     }
     }
     getProduct()
+   
+    if (token !== "" ) {
+      const getUser=async()=>{
+        const response=await fetch('http://localhost:8000/user', {
+         method: 'GET',
+         credentials: 'include', 
+         headers: {
+           'Content-Type': 'application/json', 
+            authorization:`${token}`
+         },
+       })
+       const data = await response.json()
+       
+       if (!data) {
+        setLoading(true)
+       }
+      if (data.success == true) {
+        setLoading(false)
+        dispatch(setUser(data.user.user))
+   
+      }
+      
+      }
+      getUser()   
+    }
+   
+
+    
 },[])
+
+
+
+
 
   return (
     <div>
@@ -70,8 +115,14 @@ export default function Home() {
              <Box sx={{width:'100%',bgcolor:'#424242',display:'flex',alignItems:'center'}} >
              <Skeleton variant="rectangular" width={210} height='60px' />
             </Box>
-            : <CardProduct products={products} toggleDrawer={toggleDrawer} />}
-            <ProductStoreShop toggleDrawer={toggleDrawer} state={state} />
+            : <CardProduct  toggleDrawer={toggleDrawer} />}
+
+{loading == true ?
+             <Box sx={{width:'100%',bgcolor:'#424242',display:'flex',alignItems:'center'}} >
+             <Skeleton variant="rectangular" width={210} height='60px' />
+            </Box>
+           : <ProductStoreShop toggleDrawer={toggleDrawer} state={state} loading={loading} />}
+
            
         
 
