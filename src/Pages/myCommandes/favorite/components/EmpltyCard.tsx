@@ -2,7 +2,11 @@ import React from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 export const EmpltyCard = () => {
+
+  const navigate=useNavigate()
+
   return (
     <Box sx={{display:'flex',justifyContent:'center',flexDirection:'column',alignItems:'center',width:'100%',height:'400px'}} >
                                     
@@ -12,7 +16,7 @@ export const EmpltyCard = () => {
 It is empty here.
 </Typography>   
 
-<Button variant='outlined' sx={{color:'black',borderColor:'black',borderRadius:'14px',textTransform:'lowercase' ,":hover":{color:'#ff5722',borderColor:'#ff5722'} }} >
+<Button onClick={()=>navigate('/')} variant='outlined' sx={{color:'black',borderColor:'black',borderRadius:'14px',textTransform:'lowercase' ,":hover":{color:'#ff5722',borderColor:'#ff5722'} }} >
 start Shopping
 </Button>
 </Box>

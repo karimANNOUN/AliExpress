@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setProductStore, setProducts } from '../../storeRedux/CartSlice';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import { use } from 'i18next';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -107,6 +108,8 @@ export const ImageCardModal = ({setOpen,art,activeSize,toggleDrawer,indexs}:any)
   };
 
   const handelFavoritProduct=async()=>{
+    try {
+     
     const response = await fetch(`http://localhost:8000/favoritproduct`,{
       method: 'POST',
       credentials:"include", 
@@ -124,17 +127,54 @@ export const ImageCardModal = ({setOpen,art,activeSize,toggleDrawer,indexs}:any)
       dispatch(setProducts(data.products))
       setLoading(false) 
     } 
+
+  } catch (error) {
+    console.error('operation failed.');
+  }
    
   }
+
+
+  const handelDeleteFavoritProduct=async()=>{
+    try{
+    const response = await fetch(`http://localhost:8000/deletefavoritproduct`,{
+      method: 'DELETE',
+      credentials:"include", 
+      headers: {
+        'Content-Type': 'application/json',
+         authorization:`${token}`
+      },
+      body: JSON.stringify({ art }),
+     
+    });
+    const data = await response.json()
+    if (!data) {
+      setLoading(true)
+    }if (data.success == true) {
+      dispatch(setProducts(data.products))
+      setLoading(false) 
+    }if (data.success == false) {
+      setMessage(data.message)
+      setOpenAlert(true)
+    }  
+  } catch (error) {
+    console.error('operation failed.');
+  }
+   
+  }
+
+
   
+
+
   const user=useSelector((state:any)=>state.app.user)
 
- 
-
   useEffect(()=>{
+
+    
   
     const existUser = art.favoritList.find(fav=> fav.userId === user.id ) 
-    
+    console.log(existUser)
     if (existUser) {
       setFavorit(true)
   }else{
@@ -250,11 +290,11 @@ Protection acheteur
  </Button>
 
  { !user  ? {} : 
- (  favorit == true   ? (<Button  sx={{width:'45%',height:'40px',my:1,borderRadius:'20px',color:'#e64a19',":hover":{color:'#e64a19'}}} color='inherit' variant="outlined">
+ (  favorit == true   ? (<Button onClick={handelDeleteFavoritProduct} sx={{width:'45%',height:'40px',my:1,borderRadius:'20px',color:'#e64a19',":hover":{color:'#e64a19'}}} color='inherit' variant="outlined">
  <FavoriteBorderOutlinedIcon/>
  {art.favoritList.length == 0 ? 0  : art.favoritList.length }
  </Button>) : 
- (<Button sx={{width:'45%',height:'40px',my:1,borderRadius:'20px',color:'black',":hover":{color:'black'}}} color='inherit' variant="outlined">
+ (<Button onClick={handelFavoritProduct} sx={{width:'45%',height:'40px',my:1,borderRadius:'20px',color:'black',":hover":{color:'black'}}} color='inherit' variant="outlined">
  <FavoriteBorderOutlinedIcon/>
  {art.favoritList.length == 0 ? 0  : art.favoritList.length }
  </Button>))
