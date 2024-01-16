@@ -48,6 +48,7 @@ export const ImageCardModal = ({setOpen,art,activeSize,toggleDrawer,indexs}:any)
 
 
 
+
   const [count,setCount]=useState(1)
 
   const [favorit,setFavorit]=useState(false)
@@ -67,6 +68,8 @@ export const ImageCardModal = ({setOpen,art,activeSize,toggleDrawer,indexs}:any)
    const favoritColor=art.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) )[indexs].color;
 
    const favoriteImage=art.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) )[indexs].imageUrl;
+
+   console.log(favoriteImage)
 
  //  toggleDrawer('right', true)
 
@@ -174,7 +177,7 @@ export const ImageCardModal = ({setOpen,art,activeSize,toggleDrawer,indexs}:any)
     
   
     const existUser = art.favoritList.find(fav=> fav.userId === user.id ) 
-    console.log(existUser)
+   
     if (existUser) {
       setFavorit(true)
   }else{
@@ -282,7 +285,7 @@ Protection acheteur
 {   art.property[activeSize].quantity} unités disponibles
 </Typography>
 
-<Button onClick={ toggleDrawer('right', true)} sx={{width:'100%',height:'40px',my:2,borderRadius:'20px',color:'white',bgcolor:'#e64a19',":hover":{bgcolor:'#e64a19'}}} variant="contained">Ajouter au Panier</Button>
+<Button onClick={handleStoreProducts} sx={{width:'100%',height:'40px',my:2,borderRadius:'20px',color:'white',bgcolor:'#e64a19',":hover":{bgcolor:'#e64a19'}}} variant="contained">Ajouter au Panier</Button>
 <Box  sx={{display:'flex',width:'100%',alignItems:'center',justifyContent:'space-between'}} >
 <Button sx={{width:'45%',height:'40px',my:2,borderRadius:'20px',color:'black',":hover":{color:'black'}}} color='inherit' variant="outlined">
  <ReplyIcon/>

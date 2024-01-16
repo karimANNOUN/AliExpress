@@ -75,7 +75,7 @@ export const Favorite = () => {
 
                       <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',width:'100%',bgcolor:'Window',p:1,mb:2}} >
                         
-                            { favoritLists.length === 0  ?  
+                            { !favoritLists   ?  
                                  
                                  <EmpltyCard/>
 

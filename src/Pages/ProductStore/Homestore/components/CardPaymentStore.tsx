@@ -11,24 +11,31 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Divider from '@mui/material/Divider';
 import { Button } from '@mui/material';
 import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
-
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useNavigate } from 'react-router-dom';
+import { CardStoreElement } from './components/CardStoreElement';
 
 
-export const CardPaymentStore = () => {
+export const CardPaymentStore = ({productsStore}:any) => {
 
   const navigate=useNavigate()
 
     const [show,setShow]=useState(false)
+
+    const [count,setCount]=useState(1)
+
+
+
+
+  
+
+  
 
   return (
     <Box sx={{width:'70%',display:'flex',justifyContent:'space-between',my:2}} >
     <Box sx={{display:'flex',flexDirection:'column',width:'60%',alignItems:'center'}} >
         <Box sx={{display:'flex',flexDirection:'column',justifyContent:'space-around',width:'100%',height:'100px',borderRadius:'8px',bgcolor:'Window',border:'2px solid #f5f5f5'}} >
         <Typography sx={{fontWeight:'800',textAlign:'left',ml:2}} variant="h5" gutterBottom>
-        Panier (2)
+        Panier ({productsStore.length})
         </Typography>
         <Box sx={{display:'flex',alignItems:'center'}} >
        
@@ -84,94 +91,7 @@ Expédié par des vendeurs internationaux
           <Divider sx={{width:'90%',mb:1}} />
 
 
-    <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'100%'}} >
-
-    <Box sx={{display:'flex',alignItems:'center',width:'100%',my:2}} >
-       
-       { !show ?
-
-<IconButton onClick={()=>setShow(true)} sx={{width:'23px',height:'23px',ml:2,borderRadius:'50%',border:'2px solid #e0e0e0',bgcolor:'Window',":hover":{bgcolor:'Window',border:'2px solid #ff1744'},display:'flex',justifyContent:'center',alignItems:'center'}} >
-
-</IconButton>
-
-       :  <IconButton onClick={()=>setShow(false)} sx={{width:'23px',ml:2,height:'23px',borderRadius:'50%',bgcolor:'#ff1744',":hover":{bgcolor:'#ff1744'},display:'flex',justifyContent:'center',alignItems:'center'}} >
-           <CheckIcon sx={{fontSize:'17px',color:'white'}} />
-       </IconButton>
-       
-       }
-
-     <Link variant='body2' sx={{color:'black',fontWeight:'700',fontSize:'12px',textAlign:'left',ml:1,":hover":{color:'#ff5722'}}} href="#" underline="none">
-     
-    Line hair boutique Store
-  </Link>
-
-                </Box>
-    
-                <Box sx={{display:'flex',alignItems:'center',width:'100%'}} >
-       
-       { !show ?
-
-<IconButton onClick={()=>setShow(true)} sx={{width:'23px',height:'23px',mx:2,borderRadius:'50%',border:'2px solid #e0e0e0',bgcolor:'Window',":hover":{bgcolor:'Window',border:'2px solid #ff1744'},display:'flex',justifyContent:'center',alignItems:'center'}} >
-
-</IconButton>
-
-       :  <IconButton onClick={()=>setShow(false)} sx={{width:'23px',mx:2,height:'23px',borderRadius:'50%',bgcolor:'#ff1744',":hover":{bgcolor:'#ff1744'},display:'flex',justifyContent:'center',alignItems:'center'}} >
-           <CheckIcon sx={{fontSize:'17px',color:'white'}} />
-       </IconButton>
-       
-       }
-
-    <img src='https://i.pinimg.com/236x/40/ce/53/40ce539348cea23368e65d1a42cdc797.jpg' style={{width:'110px',height:'130px',borderRadius:'8px'}} />
-    <Box sx={{display:'flex',flexDirection:'column',height:'100%',width:'100%',px:2}} >
-      <Box sx={{display:'flex',alignItems:'center',width:'100%',justifyContent:'space-between'}} >
-      <Link variant='body1' sx={{color:'black',fontWeight:'700',fontSize:'12px',textAlign:'left',ml:1,":hover":{color:'#ff5722'}}} href="#" underline="none">
-       
-Perruque Lace Front Wig 360 Brésilienne Naturelle, Cheveux Lisses...
-
-   </Link>
-   <Box sx={{display:'flex',alignItems:'center'}} >
-   <IconButton><FavoriteBorderIcon sx={{fontSize:'18px',":hover":{color:'#ff5722'}}} /></IconButton>
-     <IconButton><DeleteIcon sx={{fontSize:'18px',":hover":{color:'#ff5722'}}} /></IconButton>
-     </Box>
-      </Box>
-
-    <Button variant='outlined' sx={{border:'1px solid #f5f5f5 ',width:'250px',color:'black',fontSize:'8px',fontWeight:'700' ,borderRadius:'14px' ,bgcolor:'#e0e0e0',":hover":{color:'black',border:'1px solid #f5f5f5 ',bgcolor:'#e0e0e0'} }} >
-        size of your contained
-    </Button>
-
-    <Box sx={{width:'100%',display:'flex',alignItems:'center',justifyContent:'space-between',my:1}} >
-    <Typography variant='body1' sx={{color:'black',fontWeight:'700',fontSize:'12px',textAlign:'left',ml:1,":hover":{color:'black'}}} >
-       
-    US $101.42
-       
-                    </Typography>
-          <Box sx={{display:'flex',alignItems:'center'}} >
-          <IconButton sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
-<RemoveIcon sx={{fontSize:'10px'}} />
-</IconButton>
-<Typography sx={{fontWeight:'700',textAlign:'left',mx:1}}  variant='caption' gutterBottom>
-5
-</Typography>
-<IconButton sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
-<AddIcon sx={{fontSize:'13px'}} />
-</IconButton>
-          </Box>
-
-         
-
-    </Box>
-   <Box sx={{width:'100%',display:'flex'}} >
-    <Button variant='text' sx={{color:'#bdbdbd',fontSize:'14px',fontWeight:'100' ,":hover":{color:'#bdbdbd'} }} >
-          Livraison gratuite
-    </Button>
-    </Box>
-    </Box>
-
-                </Box>
-
-         
-
-    </Box>
+    { productsStore.map((prod:any)=> <CardStoreElement key={prod.id} prod={prod} /> )}
 
 
 
