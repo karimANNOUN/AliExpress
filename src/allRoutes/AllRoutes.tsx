@@ -31,7 +31,7 @@ import { MotpassOublie } from '../Pages/login/loginbayer/component/passwordoubli
 import { ConfermationPassword } from '../Pages/login/loginbayer/component/passwordoublie/ConfermationPassword'
 import { VendeurPage } from '../Pages/vendeurcontrol/VendeurPage'
 import { Register } from '../Pages/login/register/Register'
-
+import { ProtectedRoutes } from './ProtectedRoutes'
 
 
 export default function AllRoutes() {
@@ -44,27 +44,27 @@ export default function AllRoutes() {
         <Route path='/store/:storeId/:categories' element={<CategoriesType/>} />
         <Route path='/store/:storeId/avis' element={<AvisVendeur/>} />
         <Route path='/stores'  >
-          <Route path='productuser' element={<HomeStore/>} />
-          <Route path='payment' element={<PaymentStores/>} />
+          <Route path='productuser' element={<ProtectedRoutes><HomeStore/></ProtectedRoutes>} />
+          <Route path='payment' element={<ProtectedRoutes><PaymentStores/></ProtectedRoutes>} />
         </Route>
-        <Route path='/home/commandes' element={<HomeCommandes/>} />
+        <Route path='/home/commandes' element={<ProtectedRoutes><HomeCommandes/></ProtectedRoutes>} />
 
         <Route path='/p'  >
-        <Route path='orders' element={<Commande/>} />
-        <Route path='paiments' element={<Paiments/>} />
-        < Route path='refund-dispute' element={<Remboursement/>} />
+        <Route path='orders' element={<ProtectedRoutes><Commande/></ProtectedRoutes>} />
+        <Route path='paiments' element={<ProtectedRoutes><Paiments/></ProtectedRoutes>} />
+        < Route path='refund-dispute' element={<ProtectedRoutes><Remboursement/></ProtectedRoutes>} />
           </Route>
 
-          <Route path='/avis/feedback' element={<FeedBack/>} />
-          <Route path='/adress/livraison' element={<AdressLivraison/>} />
-          <Route path='/serviceclient' element={<ServiceClient/>} />
-          <Route path='/favorite' element={<Favorite/>} />
-          <Route path='/mespiece' element={<Piece/>} />
-          <Route path='/settings' element={<Setting/>} />
-          <Route path='/Uploadimage' element={<UploadImage/>} />
-          <Route path='/UpdateProfil' element={<ModifierProfil/>} />
-          <Route path='/contryUpdates' element={<Contry/>} />
-          <Route path='/emailUpdates' element={<EmailUpdate/>} />
+          <Route path='/avis/feedback' element={<ProtectedRoutes><FeedBack/></ProtectedRoutes>} />
+          <Route path='/adress/livraison' element={<ProtectedRoutes><AdressLivraison/></ProtectedRoutes>} />
+          <Route path='/serviceclient' element={<ProtectedRoutes><ServiceClient/></ProtectedRoutes>} />
+          <Route path='/favorite' element={<ProtectedRoutes><Favorite/></ProtectedRoutes>} />
+          <Route path='/mespiece' element={<ProtectedRoutes><Piece/></ProtectedRoutes>} />
+          <Route path='/settings' element={<ProtectedRoutes><Setting/></ProtectedRoutes>} />
+          <Route path='/Uploadimage' element={<ProtectedRoutes><UploadImage/></ProtectedRoutes>} />
+          <Route path='/UpdateProfil' element={<ProtectedRoutes><ModifierProfil/></ProtectedRoutes>} />
+          <Route path='/contryUpdates' element={<ProtectedRoutes><Contry/></ProtectedRoutes>} />
+          <Route path='/emailUpdates' element={<ProtectedRoutes><EmailUpdate/></ProtectedRoutes>} />
           <Route path='/passwordUpdates' element={<PasswordUpdate/>} />
           <Route path='/emailnotification' element={<NotificationEmail/>} />
           <Route path='/login' element={<Login/>} />

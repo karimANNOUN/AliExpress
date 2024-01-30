@@ -1,18 +1,20 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
-import { setFavoritProducts } from '../../../../storeRedux/CartSlice';
+import { setFavoritProducts, setProductStore } from '../../../../storeRedux/CartSlice';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 export const CardFavorit = ({favorit}:any) => {
 
     const navigate=useNavigate()
     const dispatch = useDispatch()
 
     const [loading,setLoading]=useState(false)
+    const [findStore,setFindStore]=useState(false)
   
      const token = Cookies.get('token');
 
@@ -32,7 +34,7 @@ export const CardFavorit = ({favorit}:any) => {
       if (!data) {
         setLoading(true)
       }if (data.success == true) {
-        dispatch(setFavoritProducts(data.products))
+        dispatch(setFavoritProducts(data.favoritProducts))
         setLoading(false) 
       }
 
@@ -41,6 +43,65 @@ export const CardFavorit = ({favorit}:any) => {
     }
      
     }
+
+
+
+    const handleDeleteStoreProducts = async () => {
+
+      const prod=favorit
+
+      try {
+       
+        const response = await fetch(`http://localhost:8000/deletestoreproduct`,{
+          method: 'DELETE',
+          credentials:"include", 
+          headers: {
+            'Content-Type': 'application/json',
+             authorization:`${token}`
+          },
+          body: JSON.stringify({ prod }),
+         
+        });
+      
+        const data = await response.json()
+     
+  
+        if (!data) {
+          setLoading(true)
+        }if (data.success == false) {
+          setLoading(true)
+        }
+        if (data.success == true) {
+          dispatch(setProductStore(data.storeProductUser))
+          setLoading(false)    
+        } 
+       
+      } catch (error) {
+        console.error('operation failed.');
+      }
+    };
+
+    const productStore= useSelector((state :any) =>state.app.productStore)
+
+    
+  
+    const favoritLists=useSelector((state:any)=>state.app.favoritProducts)
+  
+
+
+    const findStoreProduct = productStore.find((str:any)=> str.productstoreId === favorit.product.id)
+
+
+    useEffect(()=>{
+
+
+      if (findStoreProduct) {
+        setFindStore(true)
+    }if (!findStoreProduct) {
+        setFindStore(false)
+    }
+
+    },[findStoreProduct,productStore])
 
   return (
     <Box sx={{display:'flex',alignItems:'center',justifyContent:'space-between',p:1,width:'100%'}} >
@@ -81,10 +142,14 @@ export const CardFavorit = ({favorit}:any) => {
                                    
                                   
                                   <Box sx={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',width:'40%',ml:2}} >
-                                    
-                                  <Button  variant='outlined' sx={{color:'black',width:'100%',mb:2,borderRadius:'30px',border:'2px solid black' ,textTransform:'lowercase' ,":hover":{color:'#f4511e',border:'2px solid #f4511e'} }} >
+                                  {findStore == false ?  
+                                  <Button onClick={()=>navigate(`/${favorit.product.id}`)} variant='outlined' sx={{color:'black',width:'100%',mb:2,borderRadius:'30px',border:'2px solid black' ,textTransform:'lowercase' ,":hover":{color:'#f4511e',border:'2px solid #f4511e'} }} >
                         Ajouter Au Panier
-                       </Button>
+                       </Button>:
+                                <Button onClick={handleDeleteStoreProducts} variant='contained' sx={{color:'white',bgcolor:'#ff5722',width:'100%',mb:2,borderRadius:'30px' ,textTransform:'lowercase' ,":hover":{color:'white',bgcolor:'#ff5722'} }} >
+                              <DeleteOutlinedIcon/>  Delete from Store
+                               </Button>
+                                  }
 
                         <Box sx={{display:'flex',alignItems:'center',width:'100%',justifyContent:'space-between'}} >
                         <Button onClick={()=>navigate("/")} variant='text' sx={{color:'black',width:'48%',borderRadius:'30px',border:'2px solid black' ,textTransform:'lowercase' ,":hover":{color:'#f4511e',border:'2px solid #f4511e'}}} >

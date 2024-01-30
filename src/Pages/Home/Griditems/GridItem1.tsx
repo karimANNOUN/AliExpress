@@ -5,12 +5,17 @@ import Typography from '@mui/material/Typography';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
 import IconButton from '@mui/material/IconButton';
+import { useNavigate } from 'react-router-dom';
 export const GridItem1 = () => {
+
+
+  const navigate=useNavigate()
+
   return (
     <Box sx={{height:'33%',mb:2,borderRadius:'20px',display:'flex',flexDirection:'column',justifyContent:'center',bgcolor:'#eeeeee'}} >
           <Box sx={{display:'flex',justifyContent:'space-around',alignItems:'center'}} >
-         <Button sx={{width:'40%',height:'50px',borderRadius:'24px',bgcolor:'black',fontWeight:'600',color:'white',":hover":{bgcolor:'black'}}} variant="contained">S'inscrire</Button>
-         <Button sx={{width:'40%',height:'50px',borderRadius:'24px',bgcolor:'window',fontWeight:'600',color:'black',":hover":{bgcolor:'window'}}} variant="contained">Connexion</Button>
+         <Button onClick={()=>navigate('/register')} sx={{width:'40%',height:'50px',borderRadius:'24px',bgcolor:'black',fontWeight:'600',color:'white',":hover":{bgcolor:'black'}}} variant="contained">S'inscrire</Button>
+         <Button onClick={()=>navigate('/login')} sx={{width:'40%',height:'50px',borderRadius:'24px',bgcolor:'window',fontWeight:'600',color:'black',":hover":{bgcolor:'window'}}} variant="contained">Connexion</Button>
          </Box>
 
          <Typography sx={{textAlign:'center',my:3}}  variant='caption' gutterBottom>

@@ -15,9 +15,12 @@ export const HomeStore = () => {
 
   const [show,setShow]=useState(false)
 
-  const products=[
-    {id:1,name:'kimou'},{id:2,name:'8'},{id:3,name:'7'},{id:4,name:'4'},{id:5,name:'kimou'},{id:6,name:'kimou'},{id:7,name:'kimou'},{id:8,name:'kimou'},{id:9,name:'kimou'},{id:10,name:'kimou'},{id:11,name:'kimou'}
-  ]
+ // const products=[
+//{id:1,name:'kimou'},{id:2,name:'8'},{id:3,name:'7'},{id:4,name:'4'},{id:5,name:'kimou'},{id:6,name:'kimou'},{id:7,name:'kimou'},{id:8,name:'kimou'},{id:9,name:'kimou'},{id:10,name:'kimou'},{id:11,name:'kimou'}
+  //]
+
+  const products=useSelector((state:any)=>state.app.products)
+
 
 
   const token = Cookies.get('token');
@@ -89,15 +92,16 @@ export const HomeStore = () => {
    Vous aimerez aussi
                      </Typography>
     <Box sx={{width:'100%',bgcolor:'Window',display:'flex',justifyContent:'center',alignItems:'center',overflow:'hidden',mb:2,position:'relative'}} >
-       {products.slice(currentIndex, currentIndex + 6).map(product=><ProductAimerais key={product.id} product={product} />)}
+       { products.length <= 5 ? products.map((product:any)=><ProductAimerais key={product.id} product={product}/>) :
+       products.slice(currentIndex, currentIndex + 6).map((product:any)=><ProductAimerais key={product.id} product={product} />)}
 
 
-       <IconButton onClick={handleClickLeft}  sx={{position:'absolute',width:'40px',top:'45%',left:6,bgcolor:'#bdbdbd',":hover":{bgcolor:'#bdbdbd'}}} >
+{products.length <= 5 ? "" : <IconButton onClick={handleClickLeft}  sx={{position:'absolute',width:'40px',top:'45%',left:6,bgcolor:'#bdbdbd',":hover":{bgcolor:'#bdbdbd'}}} >
         <ChevronLeftIcon sx={{fontSize:'40px',fontWeight:'800',color:'#f5f5f5'}} />
-        </IconButton>
-          <IconButton onClick={handleClickRight} sx={{position:'absolute',top:'45%',width:'40px',right:6,bgcolor:'#bdbdbd',":hover":{bgcolor:'#bdbdbd'}}} >
+        </IconButton>}
+        {products.length <= 5 ? "" :   <IconButton onClick={handleClickRight} sx={{position:'absolute',top:'45%',width:'40px',right:6,bgcolor:'#bdbdbd',":hover":{bgcolor:'#bdbdbd'}}} >
         <ChevronRightIcon sx={{fontSize:'40px',fontWeight:'800',color:'#f5f5f5'}} />
-        </IconButton> 
+        </IconButton> }
 
 
     </Box>

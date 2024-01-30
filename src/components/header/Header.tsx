@@ -24,6 +24,7 @@ import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded
 import BrandingWatermarkRoundedIcon from '@mui/icons-material/BrandingWatermarkRounded';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 
 
@@ -39,6 +40,8 @@ export const Header = () => {
     const { t, i18n } = useTranslation();
 
 const navigate=useNavigate()
+
+const Token=Cookies.get('token')
 
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
@@ -151,19 +154,26 @@ const navigate=useNavigate()
           { !accord ? <motion.div dir="auto" style={{position:'absolute',zIndex:1 ,top:'120px' ,left:'1530px',width:'100%',borderRadius:'20px',maxWidth:360}} >
             <Paper elevation={12} sx={{ bgcolor: 'background.paper' , borderRadius:'16px' }}>
            <nav  aria-label="main mailbox folders">
-         <List  >
+         { Token !== undefined ? 
+          <List  >
           <ListItem sx={{width:'80%',mx:'auto'}} disablePadding>
-            <ListItemButton sx={{bgcolor:'black',borderRadius:'20px',display:'flex',justifyContent:'center',":hover":{bgcolor:'black'}}} >
+            <ListItemButton  sx={{bgcolor:'black',borderRadius:'20px',display:'flex',justifyContent:'center',":hover":{bgcolor:'black'}}} >
+              <ListItemText primary="déconnexion" sx={{color:'white',textAlign:'center'}} />
+            </ListItemButton>
+          </ListItem>
+        </List>
+         : <List  >
+          <ListItem sx={{width:'80%',mx:'auto'}} disablePadding>
+            <ListItemButton onClick={()=>navigate('/login')} sx={{bgcolor:'black',borderRadius:'20px',display:'flex',justifyContent:'center',":hover":{bgcolor:'black'}}} >
               <ListItemText primary="Se Connecter" sx={{color:'white',textAlign:'center'}} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
-
+            <ListItemButton onClick={()=>navigate('/register')} >
               <ListItemText sx={{textAlign:'center'}} primary="S'inscrire" />
             </ListItemButton>
           </ListItem>
-        </List>
+        </List>}
       </nav>
       <Divider sx={{width:'90%',mx:'auto'}} />
       <nav aria-label="secondary mailbox folders">

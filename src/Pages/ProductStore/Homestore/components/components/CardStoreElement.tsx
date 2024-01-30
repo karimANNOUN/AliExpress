@@ -26,6 +26,8 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 export const CardStoreElement = ({prod}:any) => {
 
+    console.log(prod)
+
     const [show,setShow]=useState(false)
 
     const [count,setCount]=useState(1)
@@ -67,7 +69,7 @@ export const CardStoreElement = ({prod}:any) => {
           });
         
           const data = await response.json()
-          
+       
     
           if (!data) {
             setLoading(true)
@@ -85,6 +87,7 @@ export const CardStoreElement = ({prod}:any) => {
           console.error('operation failed.');
         }
       };
+
 
 
       const handelFavoritProduct=async()=>{
@@ -115,7 +118,8 @@ export const CardStoreElement = ({prod}:any) => {
        
       }
 
-
+ 
+      const productStore=useSelector((state:any)=>state.app.productStore)
 
       
     useEffect(()=>{
@@ -129,6 +133,7 @@ export const CardStoreElement = ({prod}:any) => {
             },  
           });
           const data = await response.json()
+          
        
           if (!data) {
             setLoading(true)
@@ -140,7 +145,7 @@ export const CardStoreElement = ({prod}:any) => {
   
       handelgetFavoritProduct()
   
-      },[])
+      },[productStore])
   
   
       const favoritLists=useSelector((state:any)=>state.app.favoritProducts)
@@ -159,7 +164,7 @@ export const CardStoreElement = ({prod}:any) => {
             setFav(false)
         }
 
-      },[])
+      },[productStore,favoritLists])
 
 
       const handelDeleteFavoritProduct=async()=>{
@@ -176,6 +181,7 @@ export const CardStoreElement = ({prod}:any) => {
          
         });
         const data = await response.json()
+      
         if (!data) {
           setLoading(true)
         }if (data.success == true) {
@@ -246,7 +252,7 @@ export const CardStoreElement = ({prod}:any) => {
    </Link>
    <Box sx={{display:'flex',alignItems:'center'}} >
     {fav == false ? 
-    <IconButton  onClick={handelFavoritProduct} ><FavoriteBorderIcon sx={{fontSize:'18px',":hover":{color:'#ff5722'}}} /></IconButton>
+    <IconButton  onClick={handelFavoritProduct} ><FavoriteBorderIcon sx={{fontSize:'18px',color:'black',":hover":{color:'#ff5722'}}} /></IconButton>
     : <IconButton onClick={handelDeleteFavoritProduct} ><FavoriteBorderIcon sx={{fontSize:'18px',color:'#ff5722',":hover":{color:'#ff5722'}}} /></IconButton> }
    
      <IconButton onClick={handleDeleteStoreProducts} ><DeleteIcon sx={{fontSize:'18px',":hover":{color:'#ff5722'}}} /></IconButton>

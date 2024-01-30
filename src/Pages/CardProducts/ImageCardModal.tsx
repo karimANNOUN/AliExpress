@@ -69,7 +69,7 @@ export const ImageCardModal = ({setOpen,art,activeSize,toggleDrawer,indexs}:any)
 
    const favoriteImage=art.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) )[indexs].imageUrl;
 
-   console.log(favoriteImage)
+
 
  //  toggleDrawer('right', true)
 
@@ -166,7 +166,7 @@ export const ImageCardModal = ({setOpen,art,activeSize,toggleDrawer,indexs}:any)
    
   }
 
-
+console.log()
   
 
 

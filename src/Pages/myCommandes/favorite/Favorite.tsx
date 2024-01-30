@@ -44,7 +44,7 @@ export const Favorite = () => {
 
 
     const favoritLists=useSelector((state:any)=>state.app.favoritProducts)
-    console.log(favoritLists)
+  
    
 
   return (
