@@ -166,7 +166,6 @@ export const ImageCardModal = ({setOpen,art,activeSize,toggleDrawer,indexs}:any)
    
   }
 
-console.log()
   
 
 

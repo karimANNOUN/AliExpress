@@ -1,13 +1,42 @@
 import {useState} from 'react'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { IconButton, LinearProgress } from '@mui/material';
+import { CloseOutlined } from '@mui/icons-material';
+import Cookies from 'js-cookie';
+import CircularProgress from '@mui/material/CircularProgress';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+
+type dataType = {
+    success:boolean,
+    message:string
+}
+
 export const UploadImage = () => {
 
+    const Token=Cookies.get('token')
+
+    const [datas,setDatas]=useState<dataType | null>()
+
+    const [loading,setLoading]=useState(false)
+    const [message,setMessage]=useState("")
+
+    const [open, setOpen] = useState(false);
+
+  
+  
+    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpen(false);
+    };
 
     const VisuallyHiddenInput = styled('input')({
         clip: 'rect(0 0 0 0)',
@@ -21,9 +50,97 @@ export const UploadImage = () => {
         width: 1,
       });
 
+      const [updateImage,setUpdateImage]=useState<File | null>()
+      const [uploadProgress, setUploadProgress] = useState(0);
+      const [hiden,setHiden]=useState(false)
+      const [image, setImage] = useState<string | null | any >(null);
+
+      const handleChangeImageProduct = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setUpdateImage(e.target.files?.[0] || null )
+    
+        
+    
+       const file =e.target.files?.[0] 
+    
+        if (file) {
+          const reader = new FileReader();
+    
+          reader.onload = (e) => {
+            if (e.target && e.target.result) {
+              const progress = Math.round((e.loaded / e.total ) * 100);
+              setUploadProgress(progress)
+              setImage(e.target.result as string);
+              setHiden(true)
+             
+            }
+          };
+    
+          // Read the image file as a data URL
+          reader.readAsDataURL( file);
+        }
+    
+      };
+
+
+      const handelUpdateImage= async ()=>{
+
+        try{
+    
+          const formData : any = new FormData();
+        
+          formData.append(`file`, updateImage);
+         
+          const response = await fetch(`http://localhost:8000/updatedImages`,{
+            method: 'PATCH',
+            credentials:"include", 
+            headers: {
+               authorization:`${Token}`
+            },
+            body: formData,
+           
+          });
+          const data = await response.json()
+
+     
+
+          if (!data) {
+            setLoading(true)
+        }if (data.success == true) {
+         setLoading(false)
+         setMessage(data.message)
+         setDatas(data)
+         setOpen(true)
+         
+        }if (data.success==false) {
+            setMessage(data.message)
+            setOpen(true)
+        }
+    
+        
+               
+          }catch(error){
+            console.log(error)
+          }
+    
+    
+       }
+
+
 
   return (
     <div style={{display:'flex',justifyContent:'center'}} >
+
+<Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        <Alert
+          onClose={handleClose}
+          severity={datas?.success == true ? "success" : "error" }
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
+
         <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'70%',p:2}} >
             <Box sx={{display:'flex',alignItems:'center',width:'100%',borderBottom:'2px solid #e0e0e0',p:1}} >
             <Typography  sx={{textAlign:'left',fontWeight:'700'}}  variant='h6' gutterBottom>
@@ -39,12 +156,31 @@ export const UploadImage = () => {
             </Box>
        <Box sx={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',width:'100%'}} >
 
+        
+       
+       
+
         <Box sx={{display:'flex',flexDirection:'column',width:'70%',borderRadius:'6px',border:'1px dashed #e0e0e0',p:2}} >
-            <img src='https://is.alicdn.com/images/eng/style/css_images/myalibaba/mempic_nophoto.gif' style={{width:'150px',height:'200px',borderRadius:'8px'}} />
-            <Button sx={{width:'200px',mt:2,bgcolor:'#f4511e',":hover":{bgcolor:'#f4511e'}}} component="label" variant="contained" startIcon={<CloudUploadIcon />}>
+       {uploadProgress !== 0 ? 
+       <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'150px',position:'relative'}} >
+       <img src={image} style={{height:'140px',width:'100%'}} />
+        <LinearProgress sx={{my:1,width:'100%'}} variant="determinate" value={uploadProgress} />
+        <IconButton onClick={()=>(setHiden(false),setUploadProgress(0))} sx={{":hover":{bgcolor:'#e0e0e0'},position:'absolute',top:'2%',right:'3%'}} >
+         <CloseOutlined sx={{fontSize:'8px'}} />
+        </IconButton>
+        { loading == true ?  <CircularProgress /> : <Button onClick={handelUpdateImage} sx={{mt:2,bgcolor:'#7e57c2',":hover":{bgcolor:'#7e57c2'}}}  variant="contained">
+      Update image
+    </Button>}
+        </Box>
+       :
+       <Box sx={{display:'flex',flexDirection:'column'}} > 
+       <img src='https://is.alicdn.com/images/eng/style/css_images/myalibaba/mempic_nophoto.gif' style={{width:'150px',height:'200px',borderRadius:'8px'}} />
+            <Button  sx={{width:'200px',mt:2,bgcolor:'#f4511e',":hover":{bgcolor:'#f4511e'}}} component="label" variant="contained" startIcon={<CloudUploadIcon />}>
       Upload Photo
-      <VisuallyHiddenInput type="file" />
+      <VisuallyHiddenInput onChange={handleChangeImageProduct} type="file" />
     </Button>
+    </Box>
+    }
         </Box>
 
         <Box sx={{display:'flex',flexDirection:'column',width:'20%',borderRadius:'6px',border:'1px dashed #e0e0e0',position:'relative',p:2}} >

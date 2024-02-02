@@ -7,11 +7,16 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { ModalProfilUpdate } from './ModalProfilUpdate';
+import { useSelector } from 'react-redux';
 
 export const ModifierProfil = () => {
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
+
+    const user=useSelector((state:any)=>state.app.user)
+
+    console.log(user)
 
   return (
     <div style={{display:'flex',justifyContent:'center',backgroundColor:'#eeeeee'}} >

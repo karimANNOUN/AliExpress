@@ -5,12 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../storeRedux/CartSlice';
 
 
-  
-
-
-
-export const ProtectedRoutes  = ({children}:any) => {
-
+export const ProtectedRoutesSeller = ({children}:any) => {
     const [loading,setLoading]=useState(false)
 
     const dispatch=useDispatch()
@@ -46,11 +41,11 @@ export const ProtectedRoutes  = ({children}:any) => {
 
     const user=useSelector((state:any)=>state.app.user)
 
-    console.log(user)
+   
    
    
 
     
    
-    return (token !== undefined && user !== undefined  ) ? children : <Navigate to="/login"/>
+    return (token !== undefined && user !== undefined && user.role == "seller" ) ? children : <Navigate to="/loginvendeur"/>
 }

@@ -4,15 +4,8 @@ import Cookies from 'js-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../storeRedux/CartSlice';
 
-
-  
-
-
-
-export const ProtectedRoutes  = ({children}:any) => {
-
+export const ProtectedSeller2 = ({children}:any) => {
     const [loading,setLoading]=useState(false)
-
     const dispatch=useDispatch()
 
     const token=Cookies.get('token')
@@ -46,11 +39,11 @@ export const ProtectedRoutes  = ({children}:any) => {
 
     const user=useSelector((state:any)=>state.app.user)
 
-    console.log(user)
+
    
    
 
     
    
-    return (token !== undefined && user !== undefined  ) ? children : <Navigate to="/login"/>
+    return (token !== undefined && user !== undefined && user.role == "seller attente2" ) ? children : <Navigate to="/loginvendeur"/>
 }

@@ -43,6 +43,11 @@ const navigate=useNavigate()
 
 const Token=Cookies.get('token')
 
+const handelDeconnect=()=>{
+  Cookies.remove('token')
+  navigate('/')
+}
+
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
         
@@ -157,7 +162,7 @@ const Token=Cookies.get('token')
          { Token !== undefined ? 
           <List  >
           <ListItem sx={{width:'80%',mx:'auto'}} disablePadding>
-            <ListItemButton  sx={{bgcolor:'black',borderRadius:'20px',display:'flex',justifyContent:'center',":hover":{bgcolor:'black'}}} >
+            <ListItemButton onClick={handelDeconnect} sx={{bgcolor:'black',borderRadius:'20px',display:'flex',justifyContent:'center',":hover":{bgcolor:'black'}}} >
               <ListItemText primary="déconnexion" sx={{color:'white',textAlign:'center'}} />
             </ListItemButton>
           </ListItem>

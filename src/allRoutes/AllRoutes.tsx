@@ -32,6 +32,9 @@ import { ConfermationPassword } from '../Pages/login/loginbayer/component/passwo
 import { VendeurPage } from '../Pages/vendeurcontrol/VendeurPage'
 import { Register } from '../Pages/login/register/Register'
 import { ProtectedRoutes } from './ProtectedRoutes'
+import { ProtectedRoutesSeller } from './ProtectedRoutesSeller'
+import { ProtectedSeller1 } from './ProtectedSeller1'
+import { ProtectedSeller2 } from './ProtectedSeller2'
 
 
 export default function AllRoutes() {
@@ -65,17 +68,16 @@ export default function AllRoutes() {
           <Route path='/UpdateProfil' element={<ProtectedRoutes><ModifierProfil/></ProtectedRoutes>} />
           <Route path='/contryUpdates' element={<ProtectedRoutes><Contry/></ProtectedRoutes>} />
           <Route path='/emailUpdates' element={<ProtectedRoutes><EmailUpdate/></ProtectedRoutes>} />
-          <Route path='/passwordUpdates' element={<PasswordUpdate/>} />
-          <Route path='/emailnotification' element={<NotificationEmail/>} />
+          <Route path='/passwordUpdates' element={<ProtectedRoutes><PasswordUpdate/></ProtectedRoutes>} />
+          <Route path='/emailnotification' element={<ProtectedRoutes><NotificationEmail/></ProtectedRoutes>} />
           <Route path='/login' element={<Login/>} />
           <Route path='/login/motpassoublie' element={<MotpassOublie/>} />
           <Route path='/login/motpassoublie/redirect' element={<ConfermationPassword/>} />
           <Route path='/loginvendeur' element={<LoginVendeur/>} />
-          <Route path='/loginvendeurboutique' element={<VendeurBoutique/>} />
-          <Route path='/decisionvendeurboutique' element={<ReviewDecision/>} />
-          <Route path='/vendeurcompte' element={<VendeurPage/>} />
+          <Route path='/loginvendeurboutique' element={<ProtectedSeller1><VendeurBoutique/></ProtectedSeller1>} />
+          <Route path='/decisionvendeurboutique' element={<ProtectedSeller2><ReviewDecision/></ProtectedSeller2>} />
           <Route path='/register' element={<Register/>} />
-          <Route path='/addproduct' element={<VendeurPage/>} />
+          <Route path='/addproduct' element={<ProtectedRoutesSeller><VendeurPage/></ProtectedRoutesSeller>} />
 
       
         </Routes> 
