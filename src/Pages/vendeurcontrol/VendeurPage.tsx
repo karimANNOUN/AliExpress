@@ -2,12 +2,13 @@ import {useState} from 'react'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import product from '../../assets/prductnew.png'
+import product from '../../assets/solde.png'
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 import { styled } from '@mui/material/styles'; 
 import { IconButton, LinearProgress } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import { alpha } from '@mui/material/styles';
 import { CloseOutlined } from '@mui/icons-material';
 import axios from 'axios';
 import Cookies from 'js-cookie';

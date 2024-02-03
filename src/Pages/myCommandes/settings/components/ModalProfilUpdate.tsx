@@ -11,13 +11,33 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Cookies from 'js-cookie';
+import { setUserInfo } from '../../../../storeRedux/CartSlice';
+import { useDispatch } from 'react-redux';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import SaveIcon from '@mui/icons-material/Save';
+import CircularProgress from '@mui/material/CircularProgress';
+import { LoadingButton } from '@mui/lab';
+
 export const ModalProfilUpdate = ({open,setOpen}:any) => {
+
+  const [opens, setOpens] = useState(false);
+  
+  const handleCloses = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpens(false);
+  };
 
     const handleClose = () => setOpen(false);
 
     const token = Cookies.get('token');
 
     const [loading,setLoading]=useState(false)
+    const [message,setMessage]=useState('')
+
 
     const [wilaya,setWilaya]=useState('')
     const [country,setCountry]=useState('')
@@ -28,6 +48,7 @@ export const ModalProfilUpdate = ({open,setOpen}:any) => {
     const [postalCode,setPostalCode]=useState('')
     const [phoneNumber,setPhoneNumber]=useState('')
 
+    const dispatch=useDispatch()
 
     const handelUpdateProfileInfo=async()=>{
       try{
@@ -42,16 +63,16 @@ export const ModalProfilUpdate = ({open,setOpen}:any) => {
        
       });
       const data = await response.json()
-      console.log(data)
-    //  if (!data) {
-    //    setLoading(true)
-    //  }if (data.success == true) {
-    //    dispatch(setProducts(data.products))
-    //    setLoading(false) 
-   //   }if (data.success == false) {
-     //   setMessage(data.message)
-   //     setOpenAlert(true)
-   //   }  
+      if (!data) {
+        setLoading(true)
+      }if (data.success == true) {
+        dispatch(setUserInfo(data.userInfo))
+        setLoading(false) 
+        setOpen(false)
+      }if (data.success == false) {
+        setMessage(data.message)
+        setOpens(true)
+      }  
     } catch (error) {
       console.error('operation failed.');
     }
@@ -93,6 +114,17 @@ export const ModalProfilUpdate = ({open,setOpen}:any) => {
       onChange={e=>setName(e.target.value)}
       
         />
+         <Snackbar open={opens} autoHideDuration={3000} onClose={handleCloses}>
+        <Alert
+          onClose={handleCloses}
+          severity="error"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
+
          <label style={{fontWeight:'700'}} htmlFor='wilaya'  > Wilaya </label>
          <TextField
           id="wilaya"
@@ -186,7 +218,16 @@ export const ModalProfilUpdate = ({open,setOpen}:any) => {
 
           
            <Box sx={{width:'100%',px:2,mt:2,display:'flex',alignItems:'center',justifyContent:'center'}} >
-           <Button onClick={handelUpdateProfileInfo} variant="contained">Update</Button>
+           <LoadingButton
+          color="secondary"
+          onClick={handelUpdateProfileInfo}
+          loading={loading}
+          loadingPosition="start"
+          startIcon={<SaveIcon />}
+          variant="contained"
+        >
+          <span>Update</span>
+        </LoadingButton>
            </Box>
           
         
