@@ -5,7 +5,13 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserInfo } from '../../../../storeRedux/CartSlice';
+import { LoadingButton } from '@mui/lab';
 interface CountryType {
     code: string;
     label: string;
@@ -14,7 +20,62 @@ interface CountryType {
   }
 
 
+
 export const Contry = () => {
+
+  const [opens, setOpens] = useState(false);
+  
+  const handleCloses = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpens(false);
+  };
+
+  const navigate=useNavigate()
+  const dispatch=useDispatch()
+
+  const [loading,setLoading]=useState(false)
+  const [message,setMessage]=useState('')
+
+
+  const [country,setCountry]=useState('')
+  const token = Cookies.get('token');
+
+  const userInfo=useSelector((state:any)=>state.app.userInfo)
+
+
+  const handelUpdateCountry=async()=>{
+    try{
+    const response = await fetch(`http://localhost:8000/updatecountry`,{
+      method:'PATCH',
+      credentials:"include", 
+      headers: {
+        'Content-Type': 'application/json',
+         authorization:`${token}`
+      },
+      body: JSON.stringify({ country }),
+     
+    });
+    const data = await response.json()
+    if (!data) {
+      setLoading(true)
+    }if (data.success == true) {
+      setLoading(false) 
+      dispatch(setUserInfo(data.userInfo))
+      
+   //   navigate('/UpdateProfil')
+   //   setOpen(false)
+    }if (data.success == false) {
+      setMessage(data.message)
+      setOpens(true)
+    }  
+  } catch (error) {
+    console.error('operation failed.');
+  }
+   
+  }
 
 
     const countries: readonly CountryType[] = [
@@ -453,10 +514,20 @@ export const Contry = () => {
 
   return (
     <div style={{display:'flex',justifyContent:'center'}} >
+        <Snackbar open={opens} autoHideDuration={3000} onClose={handleCloses}>
+        <Alert
+          onClose={handleCloses}
+          severity="error"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
         <Box sx={{width:'20%',display:'flex',flexDirection:'column',alignItems:'center',p:2,my:3}} >
             <Box sx={{display:'flex',flexDirection:'column',width:'100%'}} >
             <Typography  sx={{textAlign:'left',fontWeight:'700'}}  variant='h6' gutterBottom>
-        Votre lieu d'inscription :Algeria
+        Votre lieu d'inscription :{!userInfo.locationUser.country ? "no country" : userInfo.locationUser.country }
         </Typography>
         <Typography  sx={{textAlign:'left',fontWeight:'200'}}  variant='body1' gutterBottom>
         Il s'agit du pays/région que vous avez renseigné lors de votre inscription. Si nécessaire, vous pouvez le changer une fois tous les 180 jours .
@@ -473,6 +544,7 @@ export const Contry = () => {
   options={countries}
   autoHighlight
   size='small'
+  onChange={(e,newValue:any)=>setCountry(newValue)}
   getOptionLabel={(option) => option.label}
   renderOption={(props, option) => (
     <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
@@ -489,7 +561,6 @@ export const Contry = () => {
   renderInput={(params) => (
     <TextField
       {...params}
-     
       inputProps={{
         ...params.inputProps,
         autoComplete: 'new-password', // disable autocomplete and autofill
@@ -500,10 +571,16 @@ export const Contry = () => {
 
 
       </Box>
-
-      <Button variant='contained' sx={{color:'white',width:'100%',bgcolor:'#d32f2f',borderRadius:'12px',my:2 ,":hover":{color:'white',bgcolor:'#d32f2f'} }} >
-        Confirmer
-    </Button>
+    <LoadingButton
+          color="secondary"
+          onClick={handelUpdateCountry}
+          loading={loading}
+          loadingPosition="start"
+          sx={{color:'white',width:'100%',bgcolor:'#d32f2f',borderRadius:'12px',my:2 ,":hover":{color:'white',bgcolor:'#d32f2f'} }}
+          variant="contained"
+        >
+          <span>confirmer</span>
+        </LoadingButton>
     <Typography  sx={{textAlign:'left',fontWeight:'200',color:'#bdbdbd'}}  variant='caption' gutterBottom>
     En continuant, vous acceptez les Accord d'adhésion gratuite à AliExpress et Politique de confidentialité d'AliExpress.
         </Typography>

@@ -119,19 +119,19 @@ useEffect(()=>{
 <b>ID de membre:</b>	{ !userInfo ? "" :  userInfo.id}
 </Typography>
 <Typography  sx={{}}  variant='subtitle2' gutterBottom>
-<b>Adresse de contact:</b> {!userInfo ? "" : ( !userInfo.locationUser.length ? "no Location" : userInfo.locationUser[0].rueAdress) }
+<b>Adresse de contact:</b> {!userInfo ? "" : ( !userInfo.locationUser ? "no Location" : userInfo.locationUser.rueAdress) }
 </Typography>
 <Typography  sx={{}}  variant='subtitle2' gutterBottom>
 <b>Wilaya:</b> {!userInfo ? ""  : userInfo.state }
 </Typography>
 <Typography  sx={{}}  variant='subtitle2' gutterBottom>
-<b>Country:</b> {!userInfo ? "" : ( !userInfo.locationUser.length ? "no Country" : userInfo.locationUser[0].country) }
+<b>Country:</b> {!userInfo ? "" : ( !userInfo.locationUser ? "no Country" : userInfo.locationUser.country) }
 </Typography>
 <Typography  sx={{}}  variant='subtitle2' gutterBottom>
-<b>Code postal:</b>	{!userInfo ? "" : ( !userInfo.locationUser.length ? "no Postal Code" : userInfo.locationUser[0].postalCode) }
+<b>Code postal:</b>	{!userInfo ? "" : ( !userInfo.locationUser ? "no Postal Code" : userInfo.locationUser.postalCode) }
 </Typography>
 <Typography  sx={{}}  variant='subtitle2' gutterBottom>
-<b>Téléphone:</b> {!userInfo ? "" : ( !userInfo.locationUser.length ? "no phone number" : userInfo.locationUser[0].phoneNumber) }
+<b>Téléphone:</b> {!userInfo ? "" : ( !userInfo.locationUser ? "no phone number" : userInfo.locationUser.phoneNumber) }
 </Typography>
 <Box sx={{width:'100%',bgcolor:'Window',height:'60px',display:'flex',alignItems:'center',justifyContent:'center'}} >
 <Button onClick={()=>handleOpen()} variant='contained' sx={{color:'black',background:'linear-gradient(to right, #ffd54f 0%, #ffb300 40% , #ff6f00 70%)',textTransform:'lowercase', borderRadius: '8px' ,":hover":{color:'black',background:'linear-gradient(to right, #ffd54f 0%, #ffb300 40% , #ff6f00 70%)'} }} >
