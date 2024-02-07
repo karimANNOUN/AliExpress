@@ -289,7 +289,7 @@ export const EmailUpdate = () => {
 <TextField
   id="livraison time"
   sx={{ width: '100%' ,bgcolor:'white'}}
-  placeholder="New Email"
+  
   size='medium'
   label='New Email'
   type='email'

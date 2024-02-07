@@ -2,12 +2,17 @@ import React,{useState} from 'react'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-
+import { useDispatch, useSelector } from 'react-redux';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+import { setUserInfo } from '../../../../storeRedux/CartSlice';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import { LoadingButton } from '@mui/lab';
 interface CountryType {
     code: string;
     label: string;
@@ -20,45 +25,99 @@ export const UpdateLocation = ({setShowLocation}:any) => {
  
 
 
-    const [fullName, setFullName] = useState('');
+ 
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [adress, setAdress] = useState('');
-    const [province, setProvince] = useState('');
-    const [city, setcity] = useState('');
-    const [postal, setPostal] = useState('');
+    const [rueAdress, setRueAdress] = useState('');
+    const [wilaya, setWilaya] = useState('');
+    const [commune, setCommune] = useState('');
+    const [postalCode, setPostalCode] = useState('');
+    const [country,setCountry]=useState('')
   
-    const handleFullNameChange = (event:any) => {
-      setFullName(event.target.value);
-    };
+
   
     const handlePhoneNumberChange = (event:any) => {
       setPhoneNumber(event.target.value);
     };
   
     const handleAdress = (event:any) => {
-        setAdress(event.target.value);
+        setRueAdress(event.target.value);
       };
     
       const handleProvince = (event:any) => {
-        setProvince(event.target.value);
+        setWilaya(event.target.value);
       };
 
       const handleCity = (event:any) => {
-        setcity(event.target.value);
+        setCommune(event.target.value);
       };
     
       const handlePostal = (event:any) => {
-        setPostal(event.target.value);
+        setPostalCode(event.target.value);
       };
 
-    const isFullNameValid = fullName.trim() !== '';
+   
+
+
     const isPhoneNumberValid = phoneNumber.trim() !== '';
-    const isAdressValid = adress.trim() !== '';
-    const isProvinceValid = province.trim() !== '';
-    const isCityValid = city.trim() !== '';
-    const isPostalValid = postal.trim() !== '';
+    const isAdressValid = rueAdress.trim() !== '';
+    const isProvinceValid = wilaya.trim() !== '';
+    const isCityValid = commune.trim() !== '';
+    const isPostalValid = postalCode.trim() !== '';
    
   
+ //   const userInfo=useSelector((state:any)=>state.app.userInfo)
+
+   // console.log(userInfo)
+
+    const [opens, setOpens] = useState(false);
+  
+    const handleCloses = (event?: React.SyntheticEvent | Event, reason?: string) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpens(false);
+    };
+
+    const [loading,setLoading]=useState(false)
+    const [message,setMessage]=useState('')
+
+    const dispatch=useDispatch()
+    const navigate=useNavigate()
+
+    const token = Cookies.get('token');
+
+
+    const handelUpdateLocation = async()=>{
+      try{
+          const response = await fetch(`http://localhost:8000/updatelocationuser`,{
+            method:'PUT',
+            credentials:"include", 
+            headers: {
+              'Content-Type': 'application/json',
+               authorization:`${token}`
+            },
+            body: JSON.stringify({ phoneNumber,rueAdress,postalCode,commune,wilaya,country }),
+          });
+          
+          const data = await response.json()
+        
+         if (!data) {
+            setLoading(true)
+          }if (data.success == true) {
+            dispatch(setUserInfo(data.userInfo))
+            setLoading(false) 
+            setShowLocation(false)
+          }if (data.success == false) {
+            setMessage(data.message)
+            setOpens(true)
+          }  
+        } catch (error) {
+          console.error('operation failed.');
+        }
+  }
+
+
 
 
     const style = {
@@ -505,8 +564,20 @@ export const UpdateLocation = ({setShowLocation}:any) => {
 
 
 
+
   return (
     <div>
+
+<Snackbar open={opens} autoHideDuration={3000} onClose={handleCloses}>
+        <Alert
+          onClose={handleCloses}
+          severity="error"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
         
         <Box sx={style}>
            
@@ -528,6 +599,7 @@ export const UpdateLocation = ({setShowLocation}:any) => {
       sx={{ width: 300 ,mt:1,height:'50px' }}
       options={countries}
       autoHighlight
+      onChange={(e,newValue:any)=>setCountry(newValue)}
       getOptionLabel={(option) => option.label}
       renderOption={(props, option) => (
         <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
@@ -561,25 +633,15 @@ export const UpdateLocation = ({setShowLocation}:any) => {
 
             <Box sx={{display:'flex',alignItems:'center',justifyContent:'space-between'}} >
         
-            <TextField
-      id="name"
-      sx={{ width: '47%' ,mt:1,height:'50px' }}
-      placeholder="Enter your full name"
-      
-      value={fullName}
-        onChange={handleFullNameChange}
-        required
-        error={!isFullNameValid}
-        helperText={isFullNameValid ? '' : 'Full Name is required'}
-      
-        />
+           
       
       <TextField
       id="Phone"
       sx={{ width: '47%' ,mt:1,height:'50px' }}
-      placeholder="+213 add your number"
+      label="add your number"
       value={phoneNumber}
         onChange={handlePhoneNumberChange}
+        type='tel'
         required
         error={!isPhoneNumberValid}
         helperText={isPhoneNumberValid ? '' : 'Phone Number is required'}
@@ -602,44 +664,40 @@ export const UpdateLocation = ({setShowLocation}:any) => {
             <TextField
       id="nameAdress"
       sx={{ width: '47%' ,mt:1,height:'50px' }}
-      placeholder="Enter your adress "
+      label="Enter your adress"
       helperText={isAdressValid ? '' : 'Adress is required'}
-      value={adress}
+      value={rueAdress}
         onChange={handleAdress}
         required
         error={!isAdressValid}
       
         />
-      
-      <TextField
-      id="Phone"
-      sx={{ width: '47%' ,mt:1,height:'50px' }}
-      placeholder="Home Optional"
-        />
+
+<TextField
+  id="nameAdress"
+  sx={{ width: '47%' ,mt:1,height:'50px' }}
+  label="Enter your wilaya"
+  helperText={isProvinceValid ? '' : 'Wilaya is required'}
+  value={wilaya}
+    onChange={handleProvince}
+    required
+    error={!isProvinceValid}
+  
+    />
       
     
             </Box>
 
             <Box sx={{display:'flex',alignItems:'center',justifyContent:'space-between',mt:4}} >
         
-        <TextField
-  id="nameAdress"
-  sx={{ width: '31%' ,mt:1,height:'50px' }}
-  placeholder="Enter your province "
-  helperText={isProvinceValid ? '' : 'Province is required'}
-  value={province}
-    onChange={handleProvince}
-    required
-    error={!isProvinceValid}
-  
-    />
+       
   
   <TextField
   id="nameAdress"
-  sx={{ width: '31%' ,mt:1,height:'50px' }}
-  placeholder="Enter your city "
-  helperText={isCityValid ? '' : 'city is required'}
-  value={city}
+  sx={{ width: '47%' ,mt:1,height:'50px' }}
+  label="Enter your commune"
+  helperText={isCityValid ? '' : 'commune is required'}
+  value={commune}
     onChange={handleCity}
     required
     error={!isCityValid}
@@ -649,10 +707,10 @@ export const UpdateLocation = ({setShowLocation}:any) => {
 
 <TextField
   id="nameAdress"
-  sx={{ width: '31%' ,mt:1,height:'50px' }}
-  placeholder="Enter your adress "
+  sx={{ width: '47%' ,mt:1,height:'50px' }}
+  label="Enter your postal code"
   helperText={isPostalValid ? '' : 'Postal code is required'}
-  value={postal}
+  value={postalCode}
     onChange={handlePostal}
     required
     error={!isPostalValid}
@@ -670,9 +728,17 @@ export const UpdateLocation = ({setShowLocation}:any) => {
             </Box>
 
       <Box sx={{width:'100%',display:'flex',alignItems:'center',mt:4}} >
-      <Button variant='contained' sx={{color:'white',bgcolor:'#d32f2f',borderRadius:'12px',mr:2 ,":hover":{color:'white',bgcolor:'#d32f2f'} }} >
-        Confirmer
-    </Button>
+     
+    <LoadingButton
+          color="secondary"
+          onClick={handelUpdateLocation}
+          loading={loading}
+          loadingPosition="start"
+          sx={{color:'white',bgcolor:'#d32f2f',borderRadius:'12px',mr:2 ,":hover":{color:'white',bgcolor:'#d32f2f'} }} 
+          variant="contained"
+        >
+          <span>confirmer</span>
+        </LoadingButton>
     <Button onClick={()=>setShowLocation(false)}  variant='outlined' sx={{color:'black',bgcolor:'Window',borderRadius:'12px',fontWeight:'100',borderColor:'#9e9e9e' ,":hover":{color:'black',borderColor:'#9e9e9e',bgcolor:'Window'} }} >
         Annuler
     </Button>
