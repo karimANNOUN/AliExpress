@@ -57,6 +57,8 @@ export const ImageCardModal = ({setOpen,art,activeSize,toggleDrawer,indexs}:any)
 
   const [message,setMessage]=useState("")
 
+  const [storeProd,setStoreProd]=useState(false)
+
   const dispatch = useDispatch()
 
    const token = Cookies.get('token');
@@ -70,8 +72,13 @@ export const ImageCardModal = ({setOpen,art,activeSize,toggleDrawer,indexs}:any)
    const favoriteImage=art.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) )[indexs].imageUrl;
 
 
+   const productsStore=useSelector((state:any)=>state.app.productStore)
+  
 
- //  toggleDrawer('right', true)
+
+ 
+
+
 
   const handleStoreProducts = async () => {
     try {
@@ -169,20 +176,31 @@ export const ImageCardModal = ({setOpen,art,activeSize,toggleDrawer,indexs}:any)
   
 
 
-  const user=useSelector((state:any)=>state.app.user)
+  const user=useSelector((state:any)=>state.app.userInfo)
+
+ 
+ 
 
   useEffect(()=>{
 
-    
-  
     const existUser = art.favoritList.find(fav=> fav.userId === user.id ) 
+
+    const existProductStore= productsStore.find((prod:any)=>(prod.colorProduct == favoritColor && prod.propertyType == optionSize )  )
    
     if (existUser) {
       setFavorit(true)
   }else{
       setFavorit(false)
   }
-  },[])
+
+
+  if (existProductStore) {
+    setStoreProd(true)
+  } else {
+    setStoreProd(false)
+  }
+
+  },[art,favoritColor,optionSize])
 
   
 
@@ -284,7 +302,9 @@ Protection acheteur
 {   art.property[activeSize].quantity} unités disponibles
 </Typography>
 
-<Button onClick={handleStoreProducts} sx={{width:'100%',height:'40px',my:2,borderRadius:'20px',color:'white',bgcolor:'#e64a19',":hover":{bgcolor:'#e64a19'}}} variant="contained">Ajouter au Panier</Button>
+{ storeProd == true ?   
+  <Button onClick={handleStoreProducts} disabled sx={{width:'100%',height:'40px',my:2,borderRadius:'20px',color:'white',bgcolor:'#e64a19',":hover":{bgcolor:'#e64a19'}}} variant="contained">Ajouter au Panier</Button>
+: <Button onClick={handleStoreProducts} sx={{width:'100%',height:'40px',my:2,borderRadius:'20px',color:'white',bgcolor:'#e64a19',":hover":{bgcolor:'#e64a19'}}} variant="contained">Ajouter au Panier</Button>}
 <Box  sx={{display:'flex',width:'100%',alignItems:'center',justifyContent:'space-between'}} >
 <Button sx={{width:'45%',height:'40px',my:2,borderRadius:'20px',color:'black',":hover":{color:'black'}}} color='inherit' variant="outlined">
  <ReplyIcon/>

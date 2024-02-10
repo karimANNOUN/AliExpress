@@ -13,6 +13,7 @@ import { Button } from '@mui/material';
 import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
 import { useNavigate } from 'react-router-dom';
 import { CardStoreElement } from './components/CardStoreElement';
+import { useSelector } from 'react-redux';
 
 
 export const CardPaymentStore = ({productsStore}:any) => {
@@ -26,9 +27,20 @@ export const CardPaymentStore = ({productsStore}:any) => {
 
 
 
+    const storePayer=useSelector((state:any)=>state.app.storePayer)
+
+   
+
+    const totalPrice = storePayer.reduce((accumulator:any, currentProduct:any) => {
+      return accumulator + (currentProduct.priceProduct * currentProduct.quantity );
+    }, 0);
+
+    const totalLivraisonPrice = storePayer.reduce((accumulator:any, currentProduct:any) => {
+      return accumulator + currentProduct.priceLivraison;
+    }, 0);
   
 
-  
+    
 
   return (
     <Box sx={{width:'70%',display:'flex',justifyContent:'space-between',my:2}} >
@@ -116,7 +128,7 @@ Expédié par des vendeurs internationaux
          Sous-total
            </Typography>
            <Typography variant='body1' sx={{color:'black',fontWeight:'500',textAlign:'left',":hover":{color:'black'}}} >
-           US $213.82
+           US ${!storePayer ? 0 : totalPrice}
            </Typography>
          </Box>
 
@@ -125,7 +137,7 @@ Expédié par des vendeurs internationaux
          Frais de livraison
            </Typography>
            <Typography variant='body1' sx={{color:'black',fontWeight:'500',textAlign:'left',":hover":{color:'black'}}} >
-           US $8.74
+           US ${!storePayer ? 0 : totalLivraisonPrice}
            </Typography>
          </Box>
 
@@ -135,16 +147,16 @@ Expédié par des vendeurs internationaux
          Total:
            </Typography>
            <Typography variant='h6' sx={{color:'black',fontWeight:'700',textAlign:'left',":hover":{color:'black'}}} >
-           US $8.74
+           US ${!storePayer ? 0 : totalPrice+totalLivraisonPrice}
            </Typography>
          </Box>
           <Box sx={{width:'100%',alignItems:'center'}} >
          <Typography variant='body2' sx={{color:'#9e9e9e',fontWeight:'300',my:2,textAlign:'right',":hover":{color:'#9e9e9e'}}} >
-         (≈DA29,972.11)
+         (≈DA{!storePayer ? 0 : (totalPrice+totalLivraisonPrice)*140 })
            </Typography>
            </Box>
            <Button onClick={()=>navigate("/stores/payment")} variant='contained' sx={{bgcolor:'#ff1744',color:'white',mb:2,width:'100%',borderRadius:'16px' ,":hover":{color:'white',bgcolor:'#ff1744'} }} >
-          Payer(2)
+          Payer({!storePayer ? 0 : storePayer.length})
     </Button>
           </Box>
           </Box>

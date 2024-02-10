@@ -15,9 +15,6 @@ export const HomeStore = () => {
 
   const [show,setShow]=useState(false)
 
- // const products=[
-//{id:1,name:'kimou'},{id:2,name:'8'},{id:3,name:'7'},{id:4,name:'4'},{id:5,name:'kimou'},{id:6,name:'kimou'},{id:7,name:'kimou'},{id:8,name:'kimou'},{id:9,name:'kimou'},{id:10,name:'kimou'},{id:11,name:'kimou'}
-  //]
 
   const products=useSelector((state:any)=>state.app.products)
 

@@ -10,7 +10,7 @@ export const CardStoreProduct = ({product}:any) => {
     const [show,setShow]=useState(false)
     const [count,setCount]=useState(1)
 
-    const pricePiece= count*(product.product.price*product.product.solde/100)
+    
 
    
 

@@ -11,9 +11,11 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Button } from '@mui/material';
 import Cookies from 'js-cookie';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFavoritProducts, setProductStore, setProducts } from '../../../../../storeRedux/CartSlice';
+import { setFavoritProducts, setProductStore, setProducts, setStorePayer } from '../../../../../storeRedux/CartSlice';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -26,7 +28,6 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 export const CardStoreElement = ({prod}:any) => {
 
-    console.log(prod)
 
     const [show,setShow]=useState(false)
 
@@ -146,6 +147,37 @@ export const CardStoreElement = ({prod}:any) => {
       handelgetFavoritProduct()
   
       },[productStore])
+
+
+      useEffect(()=>{
+        const handelgetStorePayerProduct=async()=>{
+          const response = await fetch(`http://localhost:8000/getstorepayer`,{
+            method: 'GET',
+            credentials:"include", 
+            headers: {
+              'Content-Type': 'application/json',
+               authorization:`${token}`
+            },  
+          });
+          const data = await response.json()
+          
+       
+          if (!data) {
+            setLoading(true)
+          }if (data.success == true) {
+            dispatch(setFavoritProducts(data.findStorPayer))
+            setLoading(false) 
+          }if (data.success == false) {
+            setMessage(data.message)
+            setOpenAlert(true)
+          }  
+         }
+  
+      handelgetStorePayerProduct()
+  
+      },[])
+
+
   
   
       const favoritLists=useSelector((state:any)=>state.app.favoritProducts)
@@ -166,6 +198,8 @@ export const CardStoreElement = ({prod}:any) => {
 
       },[productStore,favoritLists])
 
+
+      
 
       const handelDeleteFavoritProduct=async()=>{
         const art=prod.product
@@ -198,8 +232,67 @@ export const CardStoreElement = ({prod}:any) => {
       }
 
 
+
+
+      const handelCreatPayerProduct=async()=>{
+        try{
+        const response = await fetch(`http://localhost:8000/creatpayerproduct`,{
+          method: 'POST',
+          credentials:"include", 
+          headers: {
+            'Content-Type': 'application/json',
+             authorization:`${token}`
+          },
+          body: JSON.stringify({ prod ,count }),
+         
+        });
+        const data = await response.json()
+       console.log(data)
+        
+        if (!data) {
+          setLoading(true)
+        }if (data.success == true) {
+         dispatch(setStorePayer(data.findStorPayer))
+          setLoading(false) 
+          setShow(true)
+        }if (data.success == false) {
+          setMessage(data.message)
+          setOpenAlert(true)
+        }  
+      } catch (error) {
+        console.error('operation failed.');
+      }
+       
+      }
+
+      const storePayer=useSelector((state:any)=>state.app.storePayer)
+
+      
+
+      useEffect(()=>{
+
+        const checkedProduct = storePayer.find((fav:any)=> fav.productstoreId === prod.product.id ) 
+        if (checkedProduct) {
+          setShow(true)
+        }else{
+          setShow(false)
+        } 
+ 
+      },[storePayer])
+
+
+
+
   return (
     <Box  sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'100%'}} >
+
+      {
+       loading == true ?
+       <CircularProgress color="inherit" /> :
+
+       ""
+    
+        }
 
 <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
@@ -211,11 +304,11 @@ export const CardStoreElement = ({prod}:any) => {
        
        { !show ?
 
-<IconButton onClick={()=>setShow(true)} sx={{width:'23px',height:'23px',ml:2,borderRadius:'50%',border:'2px solid #e0e0e0',bgcolor:'Window',":hover":{bgcolor:'Window',border:'2px solid #ff1744'},display:'flex',justifyContent:'center',alignItems:'center'}} >
+<IconButton onClick={handelCreatPayerProduct} sx={{width:'23px',height:'23px',ml:2,borderRadius:'50%',border:'2px solid #e0e0e0',bgcolor:'Window',":hover":{bgcolor:'Window',border:'2px solid #ff1744'},display:'flex',justifyContent:'center',alignItems:'center'}} >
 
 </IconButton>
 
-       :  <IconButton onClick={()=>setShow(false)} sx={{width:'23px',ml:2,height:'23px',borderRadius:'50%',bgcolor:'#ff1744',":hover":{bgcolor:'#ff1744'},display:'flex',justifyContent:'center',alignItems:'center'}} >
+       :  <IconButton onClick={handelCreatPayerProduct} sx={{width:'23px',ml:2,height:'23px',borderRadius:'50%',bgcolor:'#ff1744',":hover":{bgcolor:'#ff1744'},display:'flex',justifyContent:'center',alignItems:'center'}} >
            <CheckIcon sx={{fontSize:'17px',color:'white'}} />
        </IconButton>
        

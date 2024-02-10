@@ -21,12 +21,13 @@ import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import MessageRoundedIcon from '@mui/icons-material/MessageRounded';
 import PaymentRoundedIcon from '@mui/icons-material/PaymentRounded';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
-import BrandingWatermarkRoundedIcon from '@mui/icons-material/BrandingWatermarkRounded';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-
-
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import { IconButton } from '@mui/material';
+import Badge from '@mui/material/Badge';
+import { useSelector } from 'react-redux';
 
 
 
@@ -42,6 +43,9 @@ export const Header = () => {
 const navigate=useNavigate()
 
 const Token=Cookies.get('token')
+
+
+const productsStore=useSelector((state:any)=>state.app.productStore)
 
 const handelDeconnect=()=>{
   Cookies.remove('token')
@@ -135,6 +139,16 @@ const handelDeconnect=()=>{
 
 
           </div>
+
+
+
+          <Box sx={{display:'flex',justifyContent:'center',alignItems:'center'}} >
+            <IconButton onClick={()=>navigate('/stores/productuser')} >
+            <Badge badgeContent={productsStore == null ? 0 : productsStore.length } color='error' >
+              <ShoppingCartOutlinedIcon sx={{color:'white',fontSize:'40px'}} />
+              </Badge>
+            </IconButton>
+          </Box>
 
 
           <motion.div dir="auto" style={{height:'100%',display:'flex',alignItems:'center'}}   onMouseEnter={ ()=> setAccord(false)} onMouseLeave={()=> setAccord(true)} >
