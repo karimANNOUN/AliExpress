@@ -41,6 +41,8 @@ export const CardStoreElement = ({prod}:any) => {
 
     const [fav,setFav]=useState(false)
 
+    const [quantity,setQuantity]=useState(1)
+
    const token = Cookies.get('token');
 
    const [openAlert, setOpenAlert] = useState(false);
@@ -184,11 +186,13 @@ export const CardStoreElement = ({prod}:any) => {
   
 
 
-      const findProductFavorit = favoritLists.find((fav:any)=> fav.productfavoritId === prod.productstoreId)
+   
 
    
 
       useEffect(()=>{
+
+        const findProductFavorit = favoritLists.find((fav:any)=> fav.productfavoritId === prod.productstoreId)
        
         if (findProductFavorit) {
             setFav(true)
@@ -269,17 +273,140 @@ export const CardStoreElement = ({prod}:any) => {
 
       
 
+      
+
+      
+
+      const checkedProduct = storePayer.find((fav:any)=> fav.productstoreId === prod.product.id ) 
+
+      
+
       useEffect(()=>{
 
-        const checkedProduct = storePayer.find((fav:any)=> fav.productstoreId === prod.product.id ) 
         if (checkedProduct) {
           setShow(true)
+          const quantityStorePayerProduct=storePayer.find((quantity:any)=>quantity.productstoreId === prod.product.id)
+          setQuantity(quantityStorePayerProduct.quantity)
         }else{
           setShow(false)
         } 
+
+        
+
+    
  
       },[storePayer])
 
+
+
+   const handelUpdateAddNewQuantity=async()=>{
+
+    if (checkedProduct) {
+      const handelAddQuantity=async()=>{
+        try{
+          const response = await fetch(`http://localhost:8000/updateaddquantity`,{
+            method: 'PATCH',
+            credentials:"include", 
+            headers: {
+              'Content-Type': 'application/json',
+               authorization:`${token}`
+            },
+            body: JSON.stringify({ quantity ,prod }),
+           
+          });
+          const data = await response.json()
+
+          if (!data) {
+            setLoading(true)
+          }if (data.success == true) {
+           dispatch(setStorePayer(data.findStorPayer))
+            setLoading(false) 
+            setShow(true)
+          }if (data.success == false) {
+            setMessage(data.message)
+            setOpenAlert(true)
+          }  
+        } catch (error) {
+          console.error('operation failed.');
+        }
+      }
+      handelAddQuantity()
+    }else{
+      setQuantity(quantity+1)
+    }
+   }
+     
+
+   const handelUpdateMoinNewQuantity=async()=>{
+
+    if (checkedProduct) {
+      const handelAddQuantity=async()=>{
+        try{
+          const response = await fetch(`http://localhost:8000/updatemoinquantity`,{
+            method: 'PATCH',
+            credentials:"include", 
+            headers: {
+              'Content-Type': 'application/json',
+               authorization:`${token}`
+            },
+            body: JSON.stringify({ quantity ,prod }),
+           
+          });
+          const data = await response.json()
+
+          if (!data) {
+            setLoading(true)
+          }if (data.success == true) {
+           dispatch(setStorePayer(data.findStorPayer))
+            setLoading(false) 
+            setShow(true)
+          }if (data.success == false) {
+            setMessage(data.message)
+            setOpenAlert(true)
+          }  
+        } catch (error) {
+          console.error('operation failed.');
+        }
+      }
+      handelAddQuantity()
+    }else{
+      setQuantity(quantity-1)
+    }
+   }
+
+
+
+
+  
+      const handelDeleteStorePayer=async()=>{
+        try{
+          const response = await fetch(`http://localhost:8000/deletestorepayer`,{
+            method: 'DELETE',
+            credentials:"include", 
+            headers: {
+              'Content-Type': 'application/json',
+               authorization:`${token}`
+            },
+            body: JSON.stringify({ prod }),
+           
+          });
+          const data = await response.json()
+
+          if (!data) {
+            setLoading(true)
+          }if (data.success == true) {
+           dispatch(setStorePayer(data.findStorPayer))
+            setLoading(false) 
+            setShow(true)
+          }if (data.success == false) {
+            setMessage(data.message)
+            setOpenAlert(true)
+          }  
+        } catch (error) {
+          console.error('operation failed.');
+        }
+      }
+   
 
 
 
@@ -308,7 +435,7 @@ export const CardStoreElement = ({prod}:any) => {
 
 </IconButton>
 
-       :  <IconButton onClick={handelCreatPayerProduct} sx={{width:'23px',ml:2,height:'23px',borderRadius:'50%',bgcolor:'#ff1744',":hover":{bgcolor:'#ff1744'},display:'flex',justifyContent:'center',alignItems:'center'}} >
+       :  <IconButton onClick={handelDeleteStorePayer} sx={{width:'23px',ml:2,height:'23px',borderRadius:'50%',bgcolor:'#ff1744',":hover":{bgcolor:'#ff1744'},display:'flex',justifyContent:'center',alignItems:'center'}} >
            <CheckIcon sx={{fontSize:'17px',color:'white'}} />
        </IconButton>
        
@@ -325,11 +452,11 @@ export const CardStoreElement = ({prod}:any) => {
        
        { !show ?
 
-<IconButton onClick={()=>setShow(true)} sx={{width:'23px',height:'23px',mx:2,borderRadius:'50%',border:'2px solid #e0e0e0',bgcolor:'Window',":hover":{bgcolor:'Window',border:'2px solid #ff1744'},display:'flex',justifyContent:'center',alignItems:'center'}} >
+<IconButton onClick={handelCreatPayerProduct} sx={{width:'23px',height:'23px',mx:2,borderRadius:'50%',border:'2px solid #e0e0e0',bgcolor:'Window',":hover":{bgcolor:'Window',border:'2px solid #ff1744'},display:'flex',justifyContent:'center',alignItems:'center'}} >
 
 </IconButton>
 
-       :  <IconButton onClick={()=>setShow(false)} sx={{width:'23px',mx:2,height:'23px',borderRadius:'50%',bgcolor:'#ff1744',":hover":{bgcolor:'#ff1744'},display:'flex',justifyContent:'center',alignItems:'center'}} >
+       :  <IconButton onClick={handelDeleteStorePayer} sx={{width:'23px',mx:2,height:'23px',borderRadius:'50%',bgcolor:'#ff1744',":hover":{bgcolor:'#ff1744'},display:'flex',justifyContent:'center',alignItems:'center'}} >
            <CheckIcon sx={{fontSize:'17px',color:'white'}} />
        </IconButton>
        
@@ -363,18 +490,18 @@ export const CardStoreElement = ({prod}:any) => {
        
                     </Typography>
           <Box sx={{display:'flex',alignItems:'center'}} >
-       {count <=  0 ?  <IconButton onClick={()=>setCount(count-1)} disabled sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
+       {quantity <=  0 ?  <IconButton onClick={()=>setCount(count-1)} disabled sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
 <RemoveIcon sx={{fontSize:'10px'}} />
-</IconButton>  : <IconButton onClick={()=>setCount(count-1)} sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
+</IconButton>  : <IconButton onClick={handelUpdateMoinNewQuantity} sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
 <RemoveIcon sx={{fontSize:'10px'}} />
 </IconButton> } 
 <Typography sx={{fontWeight:'700',textAlign:'left',mx:1}}  variant='caption' gutterBottom>
-{count}
+{quantity}
 </Typography>
- {count === prod.quantity ?  <IconButton onClick={()=>setCount(count+1)} disabled sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}}>
+ {quantity === prod.quantity ?  <IconButton onClick={()=>setCount(count+1)} disabled sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}}>
 <AddIcon sx={{fontSize:'13px'}} />
 </IconButton> :
-<IconButton onClick={()=>setCount(count+1)} sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}}>
+<IconButton onClick={handelUpdateAddNewQuantity} sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}}>
 <AddIcon sx={{fontSize:'13px'}} />
 </IconButton>
 }

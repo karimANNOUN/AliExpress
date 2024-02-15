@@ -9,11 +9,11 @@ import Rating from '@mui/material/Rating';
 import Divider from '@mui/material/Divider';
 import { useSelector } from 'react-redux';
 
-export const FirstCard = ({activeSize,setActiveSize}:any) => {
+export const FirstCard = ({activeSize,setActiveSize,indexs,setIndexs}:any) => {
 
   const product=useSelector((state:any)=>state.app.product)
 
-    const [indexs,setIndexs]=useState(0)
+    
 
     const [currentIndex, setCurrentIndex] = useState(0);
 

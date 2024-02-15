@@ -39,7 +39,7 @@ export const HomeStore = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 6 + products.length) % products.length);
   };
 
-
+  const storePayer=useSelector((state:any)=>state.app.storePayer)
 
   useEffect(()=>{
     const handleStoreProducts = async () => {
@@ -71,7 +71,7 @@ export const HomeStore = () => {
         } }
         handleStoreProducts()
 
-   },[])
+   },[storePayer])
 
    const productsStore=useSelector((state:any)=>state.app.productStore)
 

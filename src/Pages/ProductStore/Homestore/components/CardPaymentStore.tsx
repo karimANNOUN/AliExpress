@@ -22,10 +22,6 @@ export const CardPaymentStore = ({productsStore}:any) => {
 
     const [show,setShow]=useState(false)
 
-    const [count,setCount]=useState(1)
-
-
-
 
     const storePayer=useSelector((state:any)=>state.app.storePayer)
 
