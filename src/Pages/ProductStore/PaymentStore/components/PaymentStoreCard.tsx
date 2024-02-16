@@ -2,7 +2,6 @@ import React,{useState} from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import CheckIcon from '@mui/icons-material/Check';
 import { Button } from '@mui/material';
 import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
 import PaymentIcon from '@mui/icons-material/Payment';
@@ -11,6 +10,7 @@ import { CardElementStores } from './CardElementStores';
 import { BoxLocation } from './BoxLocation';
 import { AddCard } from './paymentInfo/AddCard';
 import { VoirInfoCard } from './paymentInfo/VoirInfoCard';
+import { useSelector } from 'react-redux';
 
 export const PaymentStoreCard = () => {
 
@@ -27,9 +27,12 @@ export const PaymentStoreCard = () => {
     const handelShowCard=()=> setShowCard(true)
 
 
-  
+    const userInfo=useSelector((state:any)=>state.app.userInfo)
 
-const infoAdress=[{id:1}]
+  
+    
+
+
 
 
   return (
@@ -43,7 +46,7 @@ const infoAdress=[{id:1}]
             Adresse de livraison
         </Typography>
           
-        { infoAdress.length ? "" : <Button onClick={handleOpen} variant='text' sx={{color:'#03a9f4',bgcolor:'Window',fontSize:'12px',fontWeight:'100' ,":hover":{color:'#03a9f4',bgcolor:'Window'} }} >
+        { userInfo.locationUser !== null ? "" : <Button onClick={handleOpen} variant='text' sx={{color:'#03a9f4',bgcolor:'Window',fontSize:'12px',fontWeight:'100' ,":hover":{color:'#03a9f4',bgcolor:'Window'} }} >
         Ajouter Votre adress
     </Button>}
 
@@ -57,30 +60,30 @@ const infoAdress=[{id:1}]
 
 
 
-        { infoAdress.length ?   
+        { userInfo.locationUser !== null ?   
         
         <Box sx={{display:'flex',width:'100%',alignItems:'center',justifyContent:'space-between',my:2,mx:2}} >
 
           <Box sx={{display:'flex',flexDirection:'column'}} >
             <Box sx={{display:'flex',alignItems:'center'}} >
             <Typography sx={{fontWeight:'300',textAlign:'left',mr:2}} variant='body1' gutterBottom>
-            Karim Announ
+            {userInfo.name}
         </Typography>
         <Typography sx={{fontWeight:'100',color:'#bdbdbd',textAlign:'left'}} variant='body1' gutterBottom>
-        +213 656256738
+        +213 {userInfo.locationUser.phoneNumber}
         </Typography>
               </Box>
 
               <Box sx={{display:'flex',alignItems:'center'}} >
 
         <Typography sx={{fontWeight:'100',color:'#bdbdbd',textAlign:'left'}} variant='body1' gutterBottom>
-        rue alwi amara
+        {userInfo.locationUser.rueAdress}
         </Typography>
               </Box>
               <Box sx={{display:'flex',alignItems:'center'}} >
 
 <Typography sx={{fontWeight:'100',color:'#bdbdbd',textAlign:'left'}} variant='body1' gutterBottom>
-Chihani, el taref, Algeria, 36014
+{userInfo.locationUser.commune}, {userInfo.state}, {userInfo.locationUser.country}, {userInfo.locationUser.postalCode}
 </Typography>
       </Box>
 

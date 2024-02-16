@@ -10,6 +10,7 @@ import { ModifierLocation } from './ModifierLocation';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import { AjouterLocation } from './AjouterLocation ';
+import { useSelector } from 'react-redux';
 
 export const BoxLocation = ({setOpen,open}:any) => {
 
@@ -34,6 +35,10 @@ export const BoxLocation = ({setOpen,open}:any) => {
        const saveLocation : {id:number}[] =[{id:1}]
 
 
+       const userInfo=useSelector((state:any)=>state.app.userInfo)
+
+  
+  
 
 
     const style = {
@@ -73,7 +78,9 @@ export const BoxLocation = ({setOpen,open}:any) => {
           Adresse de livraison
           </Typography>
           <Box sx={{display:'flex',flexDirection:'column',justifyContent:'space-between',alignItems:'center',width:'100%',height:'100%'}} >
-          {  saveLocation.length === 0 ? "" : saveLocation.map( (locat :any) =>   <Box sx={{display:'flex',alignItems:'center',width:'100%',border:'2px solid #e0e0e0' ,borderRadius:'8px',py:2}} >
+          {  userInfo.locationUser == null ? 
+          <img alt='location' src='https://img.freepik.com/premium-photo/online-shopping-concept-e-commerce-shipping-delivery-home-carton-paper-box-floor-blank-wall-empty-space-icon-pin-location-3d-rendering_20693-860.jpg' style={{width:'100%',height:'65%'}} />
+          :  <Box sx={{display:'flex',alignItems:'center',width:'100%',border:'2px solid #e0e0e0' ,borderRadius:'8px',py:2}} >
             <Radio
         checked={selectedValue === 'a'}
         onChange={handleChange}
@@ -96,10 +103,10 @@ export const BoxLocation = ({setOpen,open}:any) => {
             <Box sx={{display:'flex',alignItems:'center',justifyContent:'space-between'}} >
                 <Box sx={{display:'flex',alignItems:'center'}} >
             <Typography sx={{fontWeight:'300',textAlign:'left',mr:2}} variant='body1' gutterBottom>
-            Karim Announ
+            {userInfo.name}
         </Typography>
         <Typography sx={{fontWeight:'100',color:'#bdbdbd',textAlign:'left'}} variant='body1' gutterBottom>
-        +213 656256738
+        +213 {userInfo.locationUser.phoneNumber}
         </Typography>
         </Box>
         
@@ -112,13 +119,13 @@ export const BoxLocation = ({setOpen,open}:any) => {
               <Box sx={{display:'flex',alignItems:'center'}} >
 
         <Typography sx={{fontWeight:'100',color:'#bdbdbd',textAlign:'left'}} variant='body1' gutterBottom>
-        rue alwi amara
+        {userInfo.locationUser.rueAdress}
         </Typography>
               </Box>
               <Box sx={{display:'flex',alignItems:'center'}} >
 
 <Typography sx={{fontWeight:'100',color:'#bdbdbd',textAlign:'left'}} variant='body1' gutterBottom>
-Chihani, el taref, Algeria, 36014
+{userInfo.locationUser.commune}, {userInfo.state}, {userInfo.locationUser.country}, {userInfo.locationUser.postalCode}
 </Typography>
       </Box>
 
@@ -131,13 +138,13 @@ Chihani, el taref, Algeria, 36014
 
 
 
-            </Box>)  }
+            </Box>  }
 
 
 
-            <Button onClick={handleAddLocation} variant='contained' sx={{color:'white',width:'90%',borderRadius:'12px',my:2,bgcolor:'#e53935',fontSize:'12px',fontWeight:'100' ,":hover":{color:'white',bgcolor:'#e53935'} }} >
+            { userInfo.locationUser == null ?  <Button onClick={handleAddLocation} variant='contained' sx={{color:'white',width:'90%',borderRadius:'12px',my:2,bgcolor:'#e53935',fontSize:'12px',fontWeight:'100' ,":hover":{color:'white',bgcolor:'#e53935'} }} >
         Ajouter une nouvelle adress
-    </Button>
+    </Button> : "" }
 
 
           </Box>

@@ -151,9 +151,13 @@ Expédié par des vendeurs internationaux
          (≈DA{!storePayer ? 0 : (totalPrice+totalLivraisonPrice)*140 })
            </Typography>
            </Box>
-           <Button onClick={()=>navigate("/stores/payment")} variant='contained' sx={{bgcolor:'#ff1744',color:'white',mb:2,width:'100%',borderRadius:'16px' ,":hover":{color:'white',bgcolor:'#ff1744'} }} >
+           { totalPrice+totalLivraisonPrice == 0 ? 
+           <Button onClick={()=>navigate("/stores/payment")} disabled variant='contained' sx={{bgcolor:'#ff1744',color:'white',mb:2,width:'100%',borderRadius:'16px' ,":hover":{color:'white',bgcolor:'#ff1744'} }} >
+           Payer({!storePayer ? 0 : storePayer.length})
+     </Button>
+           : <Button onClick={()=>navigate("/stores/payment")} variant='contained' sx={{bgcolor:'#ff1744',color:'white',mb:2,width:'100%',borderRadius:'16px' ,":hover":{color:'white',bgcolor:'#ff1744'} }} >
           Payer({!storePayer ? 0 : storePayer.length})
-    </Button>
+    </Button>}
           </Box>
           </Box>
           <Box sx={{display:'flex',justifyContent:'center',alignItems:'center',width:'100%',bgcolor:'Window',mb:2}} >

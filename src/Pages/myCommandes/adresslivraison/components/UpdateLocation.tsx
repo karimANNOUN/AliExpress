@@ -65,9 +65,7 @@ export const UpdateLocation = ({setShowLocation}:any) => {
     const isPostalValid = postalCode.trim() !== '';
    
   
- //   const userInfo=useSelector((state:any)=>state.app.userInfo)
 
-   // console.log(userInfo)
 
     const [opens, setOpens] = useState(false);
   

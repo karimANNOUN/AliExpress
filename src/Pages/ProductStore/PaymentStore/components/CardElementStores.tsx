@@ -1,17 +1,12 @@
-import React from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-
 import Link from '@mui/material/Link';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-
 import { Button, Divider } from '@mui/material';
-
 import CreateIcon from '@mui/icons-material/Create';
+
 export const CardElementStores = () => {
   return (
     <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'100%'}} >
@@ -53,13 +48,13 @@ Perruque Lace Front Wig 360 Brésilienne Naturelle, Cheveux Lisses...
        
                     </Typography>
           <Box sx={{display:'flex',alignItems:'center'}} >
-          <IconButton disabled sx={{bgcolor:'#212121',":hover":{bgcolor:'#212121'}}} >
+          <IconButton  sx={{bgcolor:'#eeeeee',":hover":{bgcolor:'#eeeeee'}}} >
 <RemoveIcon sx={{fontSize:'14px'}} />
 </IconButton>
 <Typography sx={{fontWeight:'700',textAlign:'left',mx:1}}  variant='caption' gutterBottom>
 5
 </Typography>
-<IconButton disabled sx={{bgcolor:'#212121',":hover":{bgcolor:'#212121'}}} >
+<IconButton  sx={{bgcolor:'#eeeeee',":hover":{bgcolor:'#eeeeee'}}} >
 <AddIcon sx={{fontSize:'14px'}} />
 </IconButton>
           </Box>
