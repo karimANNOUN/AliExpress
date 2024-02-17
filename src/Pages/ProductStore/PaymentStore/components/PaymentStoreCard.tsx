@@ -30,7 +30,17 @@ export const PaymentStoreCard = () => {
     const userInfo=useSelector((state:any)=>state.app.userInfo)
 
   
-    
+    const storePayer=useSelector((state:any)=>state.app.storePayer)
+
+  
+
+    const totalPrice = storePayer.reduce((accumulator:any, currentProduct:any) => {
+      return accumulator + (currentProduct.priceProduct * currentProduct.quantity );
+    }, 0);
+
+    const totalLivraisonPrice = storePayer.reduce((accumulator:any, currentProduct:any) => {
+      return accumulator + currentProduct.priceLivraison;
+    }, 0);
 
 
 
@@ -166,10 +176,7 @@ export const PaymentStoreCard = () => {
          
 
    <Box sx={{width:'100%',display:'flex',flexDirection:'column',alignItems:'center'}} >
-         <CardElementStores/>
-         <CardElementStores/>
-         <CardElementStores/>
-         <CardElementStores/>
+         {!storePayer ? "" : ( storePayer == null ? "" : storePayer.map((payer:any)=> <CardElementStores key={payer.id} payer={payer} /> ))}
    </Box>
 
 
@@ -195,7 +202,7 @@ export const PaymentStoreCard = () => {
          Prix total des articles
            </Typography>
            <Typography variant='body1' sx={{color:'black',fontWeight:'500',textAlign:'left',":hover":{color:'black'}}} >
-           US $213.82
+           US ${totalPrice}
            </Typography>
          </Box>
 
@@ -204,7 +211,7 @@ export const PaymentStoreCard = () => {
          Total des frais d'envoi
            </Typography>
            <Typography variant='body1' sx={{color:'black',fontWeight:'500',textAlign:'left',":hover":{color:'black'}}} >
-           gratuit
+           {totalLivraisonPrice}
            </Typography>
          </Box>
 
@@ -214,12 +221,12 @@ export const PaymentStoreCard = () => {
          Total:
            </Typography>
            <Typography variant='h6' sx={{color:'black',fontWeight:'700',textAlign:'left',":hover":{color:'black'}}} >
-           US $8.74
+           US ${totalPrice+totalLivraisonPrice}
            </Typography>
          </Box>
           <Box sx={{width:'100%',alignItems:'center'}} >
          <Typography variant='body2' sx={{color:'#9e9e9e',fontWeight:'300',my:2,textAlign:'right',":hover":{color:'#9e9e9e'}}} >
-         (≈DA29,972.11)
+         (≈DA{(totalPrice+totalLivraisonPrice)*140})
            </Typography>
            </Box>
            <Button onClick={handelShowCard} variant='contained' sx={{bgcolor:'#ff1744',color:'white',mb:2,width:'100%',borderRadius:'16px' ,":hover":{color:'white',bgcolor:'#ff1744'} }} >

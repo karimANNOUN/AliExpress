@@ -28,6 +28,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 export const CardStoreElement = ({prod}:any) => {
 
+  
 
     const [show,setShow]=useState(false)
 
