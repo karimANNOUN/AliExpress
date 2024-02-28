@@ -5,23 +5,29 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { useSelector } from 'react-redux';
 export const DetailVendeur = ({setShow}:any) => {
+
+  const seller=useSelector((state:any)=>state.app.seller)
+
+  
+
   return (
     <Paper onMouseEnter={()=>setShow(true)} onMouseLeave={()=>setShow(false)} sx={{width:'670px',height:'250px',display:'flex',flexDirection:'column',position:'absolute',top:'170px',left:'390px',zIndex:1}} elevation={7} >
 
    <Box sx={{display:'flex',height:'75%',borderBottomStyle:'solid',borderBottomColor:'#eeeeee',width:'100%'}} >
       <Box sx={{width:'40%',height:'100%',borderRightStyle:'solid',borderRightColor:'#eeeeee',display:'flex',flexDirection:'column',pl:3}} >
       <Typography sx={{textAlign:'left',fontWeight:'300',my:1,color:'#ff5722'}} variant='caption' gutterBottom>
-      N ° du vendeur1102719490
+      N ° du vendeur{!seller ? "" : seller.id }
  </Typography>
     
  <Typography sx={{textAlign:'left',fontWeight:'300'}} variant='caption' gutterBottom>
  Ce vendeur a été ouvert en
  </Typography>
  <Typography sx={{textAlign:'left',fontWeight:'300',mb:1,color:'#c2185b'}} variant='caption' gutterBottom>
- Mar 20,2023
+ {!seller ? "" : seller.createdAt}
  </Typography>
- <Link sx={{color:'#ff5722',textAlign:'left',textDecorationLine:'none',":hover":{color:'#ff5722',textDecorationLine:'underline'}}} href="#">Licence commerciale</Link>
+ <Link sx={{color:'#ff5722',textAlign:'left',textDecorationLine:'none',":hover":{color:'#ff5722',textDecorationLine:'underline'}}} target='_blank' href="/store/lisencecommerciale">Licence commerciale</Link>
       </Box>
       <Box sx={{width:'60%',height:'100%',display:'flex',flexDirection:'column',pl:3}} >
       <Typography sx={{textAlign:'left',fontWeight:'800',my:1}} variant='caption' gutterBottom>

@@ -35,6 +35,7 @@ import { ProtectedRoutes } from './ProtectedRoutes'
 import { ProtectedRoutesSeller } from './ProtectedRoutesSeller'
 import { ProtectedSeller1 } from './ProtectedSeller1'
 import { ProtectedSeller2 } from './ProtectedSeller2'
+import { LisenceCommercial } from '../Pages/storeShop/LisenceCommercial'
 
 
 export default function AllRoutes() {
@@ -46,6 +47,8 @@ export default function AllRoutes() {
         <Route path='/store/:storeId' element={<ProfilBayer/>} />
         <Route path='/store/:storeId/:categories' element={<CategoriesType/>} />
         <Route path='/store/:storeId/avis' element={<AvisVendeur/>} />
+        <Route path='/store/lisencecommerciale' element={<LisenceCommercial/>} />
+
         <Route path='/stores'  >
           <Route path='productuser' element={<ProtectedRoutes><HomeStore/></ProtectedRoutes>} />
           <Route path='payment' element={<ProtectedRoutes><PaymentStores/></ProtectedRoutes>} />

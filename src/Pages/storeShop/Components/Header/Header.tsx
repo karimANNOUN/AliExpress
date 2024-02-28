@@ -10,6 +10,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { DetailVendeur } from './components/DetailVendeur';
 import { CategoryCard } from './components/CategoryCard';
 import {useNavigate,useLocation} from 'react-router-dom'
+import { useSelector } from 'react-redux';
 
 
 
@@ -35,14 +36,18 @@ export const Header = () => {
      }if (location.pathname == '/store/1/avis') {
          return 4
      }
-        
      }
+
+     const seller=useSelector((state:any)=>state.app.seller)
+
+  
+
      const [hovers,setHovers]=useState(active) 
 
   return (
      <Box sx={{width:'100%',display:'flex',flexDirection:'column',alignItems:'center'}} >
     <Box sx={{display:'flex',height:'70px',width:'60%',alignItems:'center'}} >
-    <Button onMouseEnter={()=>setShow(true)} onMouseLeave={()=>setShow(false)} sx={{color:'black',fontFamily:'unset',":hover":{bgcolor:'Window',fontFamily:'unset',color:'#ef6c00',textDecorationLine:'underline'}}} variant="text">ChicSoleHQ Store</Button>
+    <Button onMouseEnter={()=>setShow(true)} onMouseLeave={()=>setShow(false)} sx={{color:'black',fontFamily:'unset',":hover":{bgcolor:'Window',fontFamily:'unset',color:'#ef6c00',textDecorationLine:'underline'}}} variant="text">{!seller ? "" : seller.reprisentativeLegal.completeName} Store</Button>
  
     <div onMouseEnter={()=>setShow(true)} onMouseLeave={()=>setShow(false)} style={{width:'60px',height:'40px',backgroundColor:'#e1f5fe',display:'flex',justifyContent:'center',alignItems:'center'}} >
       <WorkspacePremiumOutlinedIcon sx={{fontSize:'18px',height:'100%',color:'#2196f3'}} />
@@ -70,7 +75,7 @@ export const Header = () => {
 
     <Box sx={{height:'60px',width:'100%'}} >
     <Typography sx={{fontWeight:'800'}} variant='h5' gutterBottom>
-    ChicSoleHQ Store
+    {!seller ? "" : seller.reprisentativeLegal.completeName} Store
  </Typography>
     </Box>
 

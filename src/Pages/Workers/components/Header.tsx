@@ -15,6 +15,8 @@ export const Header = ({loading}:any) => {
         const navigate=useNavigate()
 
         const product=useSelector((state:any)=>state.app.product)
+
+      
   return (
       
     <div>
@@ -26,10 +28,10 @@ export const Header = ({loading}:any) => {
         </Box>
      
      : <Box sx={{width:'100%',height:'80px',bgcolor:'#424242',display:'flex',alignItems:'center',justifyContent:'space-around'}} >
-              <Box component='div' onClick={()=>navigate("/store/:storeId")} sx={{display:'flex',alignItems:'center'}} >
+              <Box component='div' onClick={()=>navigate(`/store/${product.userId}`)} sx={{display:'flex',alignItems:'center'}} >
               <Avatar
            alt="Remy Sharp"
-               src="https://i.pinimg.com/564x/a0/c6/36/a0c636a27031d0529580ea41bbb7e4f3.jpg"
+               src={product.user.imageProfle == null ? "" : product.user.imageProfle }
                sx={{ width: 50, height: 50 }}
               />
               <Box sx={{display:'flex',flexDirection:'column',alignItems:'flex-start',justifyContent:'center',mx:1}} >
