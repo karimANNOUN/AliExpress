@@ -37,6 +37,8 @@ import { ProtectedSeller1 } from './ProtectedSeller1'
 import { ProtectedSeller2 } from './ProtectedSeller2'
 import { LisenceCommercial } from '../Pages/storeShop/LisenceCommercial'
 import { ControlPanelSeller } from '../Pages/vendeurcontrol/controlPanelSeller/ControlPanelSeller'
+import { Product } from '../Pages/vendeurcontrol/controlPanelSeller/components/Product'
+import { Dashbord } from '../Pages/vendeurcontrol/controlPanelSeller/components/Dashbord'
 
 
 export default function AllRoutes() {
@@ -80,7 +82,11 @@ export default function AllRoutes() {
           <Route path='/loginvendeur' element={<LoginVendeur/>} />
           <Route path='/loginvendeurboutique' element={<ProtectedSeller1><VendeurBoutique/></ProtectedSeller1>} />
           <Route path='/decisionvendeurboutique' element={<ProtectedSeller2><ReviewDecision/></ProtectedSeller2>} />
-          <Route path='/controlpanelseller' element={<ControlPanelSeller/>} />
+
+          <Route path='/controlpanelseller/dashboard' element={<ControlPanelSeller/>} />
+          <Route path='/controlpanelseller/products' element={<Product/>} />
+            
+
           <Route path='/register' element={<Register/>} />
           <Route path='/addproduct' element={<ProtectedRoutesSeller><VendeurPage/></ProtectedRoutesSeller>} />
 
