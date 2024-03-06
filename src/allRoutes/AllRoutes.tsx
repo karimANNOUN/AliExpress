@@ -39,6 +39,7 @@ import { LisenceCommercial } from '../Pages/storeShop/LisenceCommercial'
 import { ControlPanelSeller } from '../Pages/vendeurcontrol/controlPanelSeller/ControlPanelSeller'
 import { Product } from '../Pages/vendeurcontrol/controlPanelSeller/components/Product'
 import { Dashbord } from '../Pages/vendeurcontrol/controlPanelSeller/components/Dashbord'
+import { UpdateProduct } from '../Pages/vendeurcontrol/updateproduct/UpdateProduct'
 
 
 export default function AllRoutes() {
@@ -85,6 +86,7 @@ export default function AllRoutes() {
 
           <Route path='/controlpanelseller/dashboard' element={<ControlPanelSeller/>} />
           <Route path='/controlpanelseller/products' element={<Product/>} />
+          <Route path='/controlpanelseller/updateproduct' element={<UpdateProduct/>} />
             
 
           <Route path='/register' element={<Register/>} />

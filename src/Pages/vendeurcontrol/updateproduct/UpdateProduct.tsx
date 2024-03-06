@@ -1,23 +1,21 @@
-
-import Box from '@mui/material/Box';
-import { useState } from 'react';
-import { ImageCard } from './personelCardComponents/ImageCard';
-import { FirstCard } from './personelCardComponents/FirstCard';
-import Divider from '@mui/material/Divider';
-import { CompletedCard } from './personelCardComponents/CompletedCard';
-import { Description } from './personelCardComponents/Description';
-import { Reviews } from './personelCardComponents/Reviews';
-import { ProductLikely } from './personelCardComponents/ProductLikely';
+import { Box } from '@mui/material'
+import React, { useState } from 'react'
+import { Header } from '../controlPanelSeller/components/Header'
 import Skeleton from '@mui/material/Skeleton';
-export const PersonelCard = ({product,loading }:any) => {
+import Divider from '@mui/material/Divider';
+import { FirstCardSeller } from './components/FirstCardSeller';
+import { DescriptionSeller } from './components/DescriptionSeller';
+import { ImageCardSeller } from './components/ImageCardSeller';
 
+export const UpdateProduct = () => {
 
-    
+    const [loading,setLoading]=useState(false)
     const [activeSize,setActiveSize]=useState(0)
     const [indexs,setIndexs]=useState(0)
-    
 
   return (
+    <Box sx={{bgcolor:'#e0e0e0'}} >
+    <Header/>
     <Box sx={{display:'flex',justifyContent:'space-around',mt:3}} >
 
 {loading == true ? 
@@ -29,15 +27,9 @@ export const PersonelCard = ({product,loading }:any) => {
      
      : 
      <Box sx={{display:'flex',flexDirection:'column'}} >
-     <FirstCard activeSize={activeSize} setActiveSize={setActiveSize} indexs={indexs} setIndexs={setIndexs} />
+     <FirstCardSeller activeSize={activeSize} setActiveSize={setActiveSize} indexs={indexs} setIndexs={setIndexs} />
      <Divider sx={{my:2}} />
-     <CompletedCard/>
-     <Divider sx={{my:2}} />
-     <Description/>
-     <Divider sx={{my:2}} />
-     <Reviews/>
-     <Divider sx={{my:2}} />
-     <ProductLikely/>
+     <DescriptionSeller/>
      </Box> }
            
 
@@ -50,9 +42,12 @@ export const PersonelCard = ({product,loading }:any) => {
         </Box>
      : 
      <Box sx={{width:'350px',height:'600px',borderRadius:'10px',borderStyle:'solid',borderColor:'#eeeeee',display:'flex',justifyContent:'center',alignItems:'center',position:'sticky',top:'2%',right:0}} >
-        <ImageCard activeSize={activeSize} setActiveSize={setActiveSize} indexs={indexs} setIndexs={setIndexs}/>
+        <ImageCardSeller activeSize={activeSize} setActiveSize={setActiveSize} indexs={indexs} setIndexs={setIndexs}/>
      </Box>}
     
+    </Box>
+
+     
     </Box>
   )
 }
