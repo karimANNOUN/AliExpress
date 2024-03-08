@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box} from '@mui/material'
 import React, { useState } from 'react'
 import { Header } from '../controlPanelSeller/components/Header'
 import Skeleton from '@mui/material/Skeleton';
@@ -6,6 +6,7 @@ import Divider from '@mui/material/Divider';
 import { FirstCardSeller } from './components/FirstCardSeller';
 import { DescriptionSeller } from './components/DescriptionSeller';
 import { ImageCardSeller } from './components/ImageCardSeller';
+
 
 export const UpdateProduct = () => {
 

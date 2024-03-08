@@ -18,6 +18,11 @@ import Cookies from 'js-cookie';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
+import CreateIcon from '@mui/icons-material/Create';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import TextField from '@mui/material/TextField';
+
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -42,6 +47,40 @@ export const ImageCardSeller = ({activeSize,indexs,setIndexs}:any) => {
   
       setOpenAlert(false);
     };
+
+
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose0 = () => {
+      setAnchorEl(null);
+    };
+
+    const [anchorEl1, setAnchorEl1] = React.useState<null | HTMLElement>(null);
+    const open1 = Boolean(anchorEl1);
+    const handleClick1 = (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl1(event.currentTarget);
+    };
+    const handleClose1 = () => {
+      setAnchorEl1(null);
+    };
+
+    const [anchorEl2, setAnchorEl2] = React.useState<null | HTMLElement>(null);
+    const open2 = Boolean(anchorEl2);
+    const handleClick2 = (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl2(event.currentTarget);
+    };
+    const handleClose2 = () => {
+      setAnchorEl2(null);
+    };
+
+
+    const [prixLivraison,setPrixLivraison]=useState(0)
+    const [tempLivraison,setTempLivraison]=useState(0)
+    const [quantity,setQuantity]=useState(0)
+  
   
     
     const art=useSelector((state:any)=>state.app.product)
@@ -106,12 +145,87 @@ export const ImageCardSeller = ({activeSize,indexs,setIndexs}:any) => {
              <ArrowRightAltIcon sx={{fontSize:'35px',fontWeight:'800'}} />
            </IconButton>
         </Box>
+        <Box sx={{display:'flex',alignItems:'center'}} >
         <Typography sx={{fontWeight:'700',textAlign:'left'}}  variant='subtitle1' gutterBottom>
         Shipping: DA{art.prixlivraison}
     </Typography>
-    <Typography sx={{textAlign:'left'}}  variant='subtitle2' gutterBottom>
+
+        <IconButton onClick={handleClick} >
+    <CreateIcon sx={{fontSize:'20px'}} />
+  </IconButton>
+
+  <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose0}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+        sx={{width:'2150px',height:'800px',display:'flex'}}
+      >
+       
+       <Typography sx={{fontWeight:'800',mx:2,textAlign:'left'}} variant='h6' gutterBottom>
+    update prix livraison 
+  </Typography>
+
+  <TextField
+  id="livraison time"
+  sx={{ width: '80%',my:2 ,mx:2 ,bgcolor:'white'}}
+  placeholder='prix livraison'
+  size='small'
+  label='prix livraison'
+  type='number'
+  onChange={(e:any)=>setPrixLivraison(e.target.value)}
+    />
+
+    
+
+      </Menu>
+
+        </Box>
+        
+        <Box sx={{display:'flex',alignItems:'center'}} >
+       
+        <Typography sx={{textAlign:'left'}}  variant='subtitle2' gutterBottom>
     Temps estimé pour la livraison: {art.templivraison} jours 
     </Typography>
+
+        <IconButton onClick={handleClick1} >
+    <CreateIcon sx={{fontSize:'20px'}} />
+  </IconButton>
+
+  <Menu
+        id="basic-menu"
+        anchorEl={anchorEl1}
+        open={open1}
+        onClose={handleClose1}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+        sx={{width:'2150px',height:'800px',display:'flex'}}
+      >
+       
+       <Typography sx={{fontWeight:'800',mx:2,textAlign:'left'}} variant='h6' gutterBottom>
+    update temp livraison 
+  </Typography>
+
+  <TextField
+  id="livraison time"
+  sx={{ width: '80%',my:2 ,mx:2 ,bgcolor:'white'}}
+  placeholder='temp livraison'
+  size='small'
+  label='temp livraison'
+  type='number'
+  onChange={(e:any)=>setTempLivraison(e.target.value)}
+    />
+
+    
+
+      </Menu>
+
+        </Box>
+   
         </Box>
     
         <Divider sx={{my:1}} />
@@ -139,24 +253,46 @@ export const ImageCardSeller = ({activeSize,indexs,setIndexs}:any) => {
     </Typography>
            
     <Box sx={{display:'flex',alignItems:'center'}} >
-    { count === 1 ? <IconButton disabled sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
-    <RemoveIcon sx={{fontSize:'10px'}} />
-    </IconButton> : <IconButton onClick={()=>setCount(count - 1)} sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
-    <RemoveIcon sx={{fontSize:'10px'}} />
-    </IconButton>}
-    <Typography sx={{fontWeight:'700',textAlign:'left',mx:1}}  variant='body1' gutterBottom>
-        {count}
-    </Typography>
-    { count === art.property[activeSize].quantity ? <IconButton disabled sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
-    <AddIcon sx={{fontSize:'10px'}} />
-    </IconButton> : <IconButton onClick={()=>setCount(count + 1)}  sx={{bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'}}} >
-    <AddIcon sx={{fontSize:'10px',fontWeight:'800'}} />
-    </IconButton>}
-    </Box>
-    
+
     <Typography sx={{fontWeight:'100',color:'#757575',textAlign:'left'}}  variant='subtitle2' gutterBottom>
     {art.property[activeSize].quantity} unités disponibles
     </Typography>
+       
+    <IconButton onClick={handleClick2} >
+    <CreateIcon sx={{fontSize:'20px'}} />
+  </IconButton>
+
+  <Menu
+        id="basic-menu"
+        anchorEl={anchorEl2}
+        open={open2}
+        onClose={handleClose2}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+        sx={{width:'2150px',height:'800px',display:'flex'}}
+      >
+       
+       <Typography sx={{fontWeight:'800',mx:2,textAlign:'left'}} variant='h6' gutterBottom>
+    update quantity
+  </Typography>
+
+  <TextField
+  id="quantity"
+  sx={{ width: '80%',my:2 ,mx:2 ,bgcolor:'white'}}
+  placeholder='quantity'
+  size='small'
+  label='quantity'
+  type='number'
+  onChange={(e:any)=>setQuantity(e.target.value)}
+    />
+
+    
+
+      </Menu>
+
+    </Box>
+    
       
     
     
