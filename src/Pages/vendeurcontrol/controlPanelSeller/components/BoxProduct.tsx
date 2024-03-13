@@ -21,12 +21,12 @@ export const BoxProduct = ({prod}:any) => {
 
   return (
     <Box  sx={{display:'flex',border:'2px solid #e0e0e0',mb:2,borderRadius:'8px',height:'120px',width:'100%'}} >
-            <img src='https://ecommerce-admin.com/assets/images/main.webp' alt='prod' style={{width:'20%',borderRadius:'8px'}} />
+            <img src={prod.images[0].imageUrl} alt='prod' style={{width:'20%',borderRadius:'8px'}} />
             <Box sx={{width:'80%',display:'flex',flexDirection:'column'}} >
                 <Box sx={{width:'100%',display:'flex',justifyContent:'space-between',alignItems:'center'}} >
               
-                <Link href="#" underline="none" sx={{color:'#757575'}} >
-    Product Title
+                <Link href={`/controlpanelseller/updateproduct/${prod.id}`} underline="none" sx={{color:'#757575'}} >
+    {prod.title},{prod.description}
     </Link>
     
     

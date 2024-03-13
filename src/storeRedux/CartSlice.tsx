@@ -13,6 +13,7 @@ const cartSlice= createSlice({
         userInfo:{},
         storePayer:[],
         seller:{},
+        productSeller:{}
       
         
       
@@ -46,10 +47,13 @@ const cartSlice= createSlice({
        setSeller:(state,action)=>{
         state.seller=action.payload
        },
+       setProductSeller:(state,action)=>{
+        state.productSeller=action.payload
+       },
 
 
     }
 })
 
-export const {setUserValid,setUser,setProduct ,setProductStore ,setProducts ,setFavoritProducts,setUserInfo,setStorePayer,setSeller }=cartSlice.actions;
+export const {setUserValid,setUser,setProduct ,setProductStore ,setProducts ,setFavoritProducts,setUserInfo,setStorePayer,setSeller,setProductSeller }=cartSlice.actions;
 export const cartReducer = cartSlice.reducer;

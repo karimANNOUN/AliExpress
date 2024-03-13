@@ -34,7 +34,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   });
 
 
-export const ImageCardSeller = ({activeSize,indexs,setIndexs}:any) => {
+export const ImageCardSeller = ({activeSize,indexs}:any) => {
 
     const [openAlert, setOpenAlert] = useState(false);
 
@@ -48,6 +48,7 @@ export const ImageCardSeller = ({activeSize,indexs,setIndexs}:any) => {
       setOpenAlert(false);
     };
 
+    const product=useSelector((state:any)=>state.app.productSeller)
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -83,7 +84,6 @@ export const ImageCardSeller = ({activeSize,indexs,setIndexs}:any) => {
   
   
     
-    const art=useSelector((state:any)=>state.app.product)
   
     const token = Cookies.get('token');
   
@@ -95,17 +95,17 @@ export const ImageCardSeller = ({activeSize,indexs,setIndexs}:any) => {
   
     const [message,setMessage]=useState("")
   
-     const optionSize=art.property[activeSize].detailsName;
+ //    const optionSize=product.property[activeSize].detailsName;
   
-     const quantitySize=art.property[activeSize].quantity;
+ //    const quantitySize=product.property[activeSize].quantity;
   
-     const favoritColor=art.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) )[indexs].color;
+ //    const favoritColor=product.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) )[indexs].color;
   
-     const favoriteImage=art.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) )[indexs].imageUrl;
+//     const favoriteImage=product.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) )[indexs].imageUrl;
   
-     const user=useSelector((state:any)=>state.app.userInfo)
+//     const user=useSelector((state:any)=>state.app.userInfo)
   
-     const productsStore=useSelector((state:any)=>state.app.productStore)
+ //    const productsStore=useSelector((state:any)=>state.app.productStore)
 
   return (
     <Box sx={{width:'95%',height:'95%',display:'flex',flexDirection:'column'}} >
@@ -147,7 +147,7 @@ export const ImageCardSeller = ({activeSize,indexs,setIndexs}:any) => {
         </Box>
         <Box sx={{display:'flex',alignItems:'center'}} >
         <Typography sx={{fontWeight:'700',textAlign:'left'}}  variant='subtitle1' gutterBottom>
-        Shipping: DA{art.prixlivraison}
+        Shipping: DA{ !product ? "" :  product.prixlivraison}
     </Typography>
 
         <IconButton onClick={handleClick} >
@@ -179,7 +179,7 @@ export const ImageCardSeller = ({activeSize,indexs,setIndexs}:any) => {
   onChange={(e:any)=>setPrixLivraison(e.target.value)}
     />
 
-    
+<Button variant="contained" sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
 
       </Menu>
 
@@ -188,7 +188,7 @@ export const ImageCardSeller = ({activeSize,indexs,setIndexs}:any) => {
         <Box sx={{display:'flex',alignItems:'center'}} >
        
         <Typography sx={{textAlign:'left'}}  variant='subtitle2' gutterBottom>
-    Temps estimé pour la livraison: {art.templivraison} jours 
+    Temps estimé pour la livraison: { !product ? "" :  product.templivraison} jours 
     </Typography>
 
         <IconButton onClick={handleClick1} >
@@ -220,7 +220,7 @@ export const ImageCardSeller = ({activeSize,indexs,setIndexs}:any) => {
   onChange={(e:any)=>setTempLivraison(e.target.value)}
     />
 
-    
+<Button variant="contained" sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
 
       </Menu>
 
@@ -255,7 +255,7 @@ export const ImageCardSeller = ({activeSize,indexs,setIndexs}:any) => {
     <Box sx={{display:'flex',alignItems:'center'}} >
 
     <Typography sx={{fontWeight:'100',color:'#757575',textAlign:'left'}}  variant='subtitle2' gutterBottom>
-    {art.property[activeSize].quantity} unités disponibles
+    { !product ? "" :  product.property[activeSize].quantity} unités disponibles
     </Typography>
        
     <IconButton onClick={handleClick2} >
@@ -287,7 +287,7 @@ export const ImageCardSeller = ({activeSize,indexs,setIndexs}:any) => {
   onChange={(e:any)=>setQuantity(e.target.value)}
     />
 
-    
+<Button variant="contained" sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
 
       </Menu>
 

@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CreateIcon from '@mui/icons-material/Create';
 import { IconButton } from '@mui/material';
 import Menu from '@mui/material/Menu';
@@ -13,11 +13,24 @@ import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 import { styled } from '@mui/material/styles'; 
 import { LinearProgress } from '@mui/material';
 import { CloseOutlined } from '@mui/icons-material';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import Cookies from 'js-cookie';
+import { setProductSeller } from '../../../../storeRedux/CartSlice';
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+
+  
+});
 
 export const DescriptionSeller = () => {
 
     
-  const product=useSelector((state:any)=>state.app.product)
+const product=useSelector((state:any)=>state.app.productSeller)
   
   const [descripTitle1,setDescripTitle1]=useState('')
   const [descripTitle2,setDescripTitle2]=useState('')
@@ -27,6 +40,22 @@ export const DescriptionSeller = () => {
   const [descrip1,setDescrip1]=useState('')
   const [descrip2,setDescrip2]=useState('')
   const [descrip3,setDescrip3]=useState('')
+
+  const [message,setMessage]=useState('')
+  const [alert,setAlert]=useState(false)
+
+
+  const [openAlert, setOpenAlert] = useState(false);
+ 
+  const handleCloseAlert = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenAlert(false);
+  };
+
+
 
   const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -114,6 +143,8 @@ export const DescriptionSeller = () => {
   const [hiden1,setHiden1]=useState(false)
   const [quantity,setQuantity]=useState(0)
 
+  const [loading,setLoading]=useState(false)
+
 
   const handleChangeImageProduct = (e: React.ChangeEvent<HTMLInputElement>) => {
       setProductDescriptionImage(e.target.files?.[0] || null )
@@ -141,9 +172,99 @@ export const DescriptionSeller = () => {
   
     };
 
+    const token = Cookies.get('token');
+    const dispatch=useDispatch()
+
+
+    const handelUpdateDescriptionTitle1=async()=>{
+      try {
+       
+      const response = await fetch(`http://localhost:8000/updatedescriptiontitleone`,{
+        method: 'PATCH',
+        credentials:"include", 
+        headers: {
+          'Content-Type': 'application/json',
+           authorization:`${token}`
+        },
+        body:JSON.stringify({ descripTitle1,product }),
+      });
+      const data = await response.json()
+
+      
+      if (!data) {
+        setLoading(true)
+      } if (data.success == false) {
+        setOpenAlert(true)
+        setAlert(false)
+        setMessage(data.message)
+      }
+      if (data.success == true) {
+        setOpenAlert(true)
+        setAlert(true)
+        setMessage(data.message)
+        dispatch(setProductSeller(data.productSeller))
+        setLoading(false)
+        handleClose0()
+      } 
+  
+    } catch (error) {
+      console.error('operation failed.');
+    }
+     
+    }
+
+
+
+    const handelUpdateDescriptionTitle2=async()=>{
+      try {
+       
+      const response = await fetch(`http://localhost:8000/updatedescriptiontitletwo`,{
+        method: 'PATCH',
+        credentials:"include", 
+        headers: {
+          'Content-Type': 'application/json',
+           authorization:`${token}`
+        },
+        body:JSON.stringify({ descripTitle2,product }),
+      });
+      const data = await response.json()
+
+      
+      if (!data) {
+        setLoading(true)
+      } if (data.success == false) {
+        setOpenAlert(true)
+        setAlert(false)
+        setMessage(data.message)
+      }
+      if (data.success == true) {
+        setOpenAlert(true)
+        setAlert(true)
+        setMessage(data.message)
+        dispatch(setProductSeller(data.productSeller))
+        setLoading(false)
+        handleClose1()
+      } 
+  
+    } catch (error) {
+      console.error('operation failed.');
+    }
+     
+    }
+
+
+
+
 
   return (
     <Box sx={{display:'flex',flexDirection:'column'}} >
+
+<Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleCloseAlert} severity={ alert == false ? "error" : "success" } sx={{ width: '100%' }}>
+          {message}
+        </Alert>
+      </Snackbar>
+
     <Box sx={{display:'flex'}} >
     <Button variant="text" sx={{color:'black',fontWeight:'800',":hover":{color:'black'}}} > <LocationOnIcon sx={{fontSize:'20px'}} /> Présentation</Button>
     <Button variant="text"  sx={{color:'black',":hover":{color:'black'}}} >Détails</Button>
@@ -160,7 +281,7 @@ export const DescriptionSeller = () => {
         <Box sx={{display:'flex',flexDirection:'column',my:2}} >
             <Box sx={{display:'flex',alignItems:'center'}} >
             <Typography sx={{fontWeight:'800',color:'#ff3d00',textAlign:'left'}} variant='h6' gutterBottom>
-    {product.descriptiontitle1}
+    { !product ? "" :  product.descriptiontitle1}
   </Typography>
 
   <IconButton onClick={handleClick0} >
@@ -192,7 +313,7 @@ export const DescriptionSeller = () => {
   onChange={(e:any)=>setDescripTitle1(e.target.value)}
     />
 
-    
+<Button variant="contained" onClick={handelUpdateDescriptionTitle1} sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
 
       </Menu>
 
@@ -207,7 +328,7 @@ export const DescriptionSeller = () => {
 
             <Box sx={{display:'flex',alignItems:'center'}} >
   <Typography sx={{fontWeight:'800',textAlign:'left'}} variant='body1' gutterBottom>
-  {product.descriptiondetail1}
+  { !product ? "" :  product.descriptiondetail1}
   </Typography>
 
   <IconButton onClick={handleClick} >
@@ -239,7 +360,7 @@ export const DescriptionSeller = () => {
   onChange={(e:any)=>setDescrip1(e.target.value)}
     />
 
-    
+<Button variant="contained" sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
 
       </Menu>
 
@@ -253,7 +374,7 @@ export const DescriptionSeller = () => {
   <Box sx={{display:'flex',flexDirection:'column',my:2}} >
   <Box sx={{display:'flex',alignItems:'center'}} >
     <Typography sx={{fontWeight:'800',color:'#ff3d00',textAlign:'left'}} variant='h6' gutterBottom>
-    {product.descriptiontitle2}
+    { !product ? "" :  product.descriptiontitle2}
   </Typography>
 
   <IconButton onClick={handleClick1}  >
@@ -285,7 +406,7 @@ export const DescriptionSeller = () => {
   onChange={(e:any)=>setDescripTitle2(e.target.value)}
     />
 
-    
+<Button variant="contained" onClick={handelUpdateDescriptionTitle2} sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
 
       </Menu>
 
@@ -297,7 +418,7 @@ export const DescriptionSeller = () => {
 
   <Box sx={{display:'flex',alignItems:'center'}} >
   <Typography sx={{fontWeight:'800',textAlign:'left'}} variant='body1' gutterBottom>
-  {product.descriptiondetail2}
+  { !product ? "" :  product.descriptiondetail2}
   </Typography>
 
   <IconButton onClick={handleClick2} >
@@ -329,7 +450,7 @@ export const DescriptionSeller = () => {
   onChange={(e:any)=>setDescrip2(e.target.value)}
     />
 
-    
+<Button variant="contained" sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
 
       </Menu>
 
@@ -343,7 +464,7 @@ export const DescriptionSeller = () => {
   <Box sx={{display:'flex',flexDirection:'column',my:2}} >
   <Box sx={{display:'flex',alignItems:'center'}} >
     <Typography sx={{fontWeight:'800',color:'#ff3d00',textAlign:'left'}} variant='h6' gutterBottom>
-    {product.descriptiontitle3}
+    { !product ? "" :  product.descriptiontitle3}
   </Typography>
 
   <IconButton onClick={handleClick3} >
@@ -375,7 +496,7 @@ export const DescriptionSeller = () => {
   onChange={(e:any)=>setDescripTitle3(e.target.value)}
     />
 
-    
+<Button variant="contained" sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
 
       </Menu>
 
@@ -390,7 +511,7 @@ export const DescriptionSeller = () => {
 
 <Box sx={{display:'flex',alignItems:'center'}} >
   <Typography sx={{fontWeight:'800',textAlign:'left'}} variant='body1' gutterBottom>
-  {product.descriptiondetail3}
+  { !product ? "" :  product.descriptiondetail3}
   </Typography>
   <IconButton onClick={handleClick4} >
     <CreateIcon sx={{fontSize:'20px'}} />
@@ -421,7 +542,7 @@ export const DescriptionSeller = () => {
   onChange={(e:any)=>setDescrip3(e.target.value)}
     />
 
-    
+<Button variant="contained" sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
 
       </Menu>
 
@@ -439,7 +560,7 @@ export const DescriptionSeller = () => {
 
 
      <Box sx={{display:'flex',justifyContent:'center',position:'relative',width:'950px',height:'500px'}} >
-     <img src={product.images.filter((img:any)=> img.color == 'imageDescription')[0].imageUrl } style={{width:'100%',height:'100%'}} />
+     <img src={ !product ? "" :  product.images.filter((img:any)=> img.color == 'imageDescription')[0].imageUrl } style={{width:'100%',height:'100%'}} />
 
      <IconButton onClick={handleClick5} sx={{position:'absolute',top:'0',right:'0'}} >
     <CreateIcon sx={{fontSize:'20px'}} />
@@ -474,6 +595,8 @@ export const DescriptionSeller = () => {
           <CloseOutlined sx={{fontSize:'8px'}} />
          </IconButton>
          </Box> : "" }
+
+         <Button variant="contained" sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
 
       </Menu>
 

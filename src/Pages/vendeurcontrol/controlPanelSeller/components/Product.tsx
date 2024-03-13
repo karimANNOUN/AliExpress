@@ -1,5 +1,5 @@
 import { Box,IconButton,Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import { Header } from './Header';
 import { Lists } from './Lists';
@@ -13,6 +13,7 @@ import ImportExportIcon from '@mui/icons-material/ImportExport';
 import Checkbox from '@mui/material/Checkbox';
 import { BoxProduct } from './BoxProduct';
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
+import Cookies from 'js-cookie';
 
 export const Product = () => {
 
@@ -41,6 +42,44 @@ export const Product = () => {
         {id:10,title:'hello'},
     ]
 
+    const token = Cookies.get('token');
+    const [loading, setLoading]=useState(Boolean)
+    const [productsSeller,setProductsSeller]=useState([])
+
+    useEffect(()=>{
+
+      const handelGetProduct=async()=>{
+        try {
+         
+        const response = await fetch(`http://localhost:8000/seller/getprod`,{
+          method: 'GET',
+          credentials:"include", 
+          headers: {
+            'Content-Type': 'application/json',
+             authorization:`${token}`
+          }
+        });
+        const data = await response.json()
+        if (!data) {
+          setLoading(true)
+        }if (data.success == true) {
+          setProductsSeller(data.productSeller)
+          setLoading(false) 
+        } 
+    
+      } catch (error) {
+        console.error('operation failed.');
+      }
+       
+      }
+
+      handelGetProduct()
+  
+      
+    },[])
+
+
+   
 
     const [active,setActive]=useState(0)
 
@@ -100,7 +139,7 @@ export const Product = () => {
     </Box> 
 
     <Box sx={{bgcolor:'Window',display:'flex',flexDirection:'column',alignItems:'center',width:'100%',overflow:'auto',borderRadius:'6px',height:'600px',p:1}} >
-        { products.map((prod:any)=> <BoxProduct key={prod.id} prod={prod} /> )}
+        { !productsSeller ? [] :  productsSeller.map((prod:any)=> <BoxProduct key={prod.id} prod={prod} /> )}
    
     </Box>
 

@@ -1,5 +1,5 @@
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import './App.css';
 import AllRoutes from './allRoutes/AllRoutes';
 import { ButtomPart } from './components/footer/ButtomPart';
@@ -9,10 +9,13 @@ function App() {
 
   const location=useLocation()
 
+  const params=useParams()
+
   const links= [{id:1,url:'/login'},{id:2,url:'/loginvendeur'},{id:3,url:'/loginvendeurboutique'},
   {id:4,url:'/loginvendeurboutique'},{id:5,url:'/login/motpassoublie'},
   {id:6,url:'/login/motpassoublie/redirect'},{id:7,url:'/decisionvendeurboutique'},{id:8,url:'/register'},
-  {id:9,url:'/addproduct'},{id:10,url:'/controlpanelseller/dashboard'},{id:11,url:'/controlpanelseller/products'},{id:12,url:'/controlpanelseller/updateproduct'}]
+  {id:9,url:'/addproduct'},{id:10,url:'/controlpanelseller/dashboard'},{id:11,url:'/controlpanelseller/products'},
+  {id:12,url:`/controlpanelseller/updateproduct/:prodId`}]
 
   return (
     <div className="App">

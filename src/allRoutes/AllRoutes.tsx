@@ -86,7 +86,7 @@ export default function AllRoutes() {
 
           <Route path='/controlpanelseller/dashboard' element={<ControlPanelSeller/>} />
           <Route path='/controlpanelseller/products' element={<Product/>} />
-          <Route path='/controlpanelseller/updateproduct' element={<UpdateProduct/>} />
+          <Route path='/controlpanelseller/updateproduct/:prodId' element={<UpdateProduct/>} />
             
 
           <Route path='/register' element={<Register/>} />

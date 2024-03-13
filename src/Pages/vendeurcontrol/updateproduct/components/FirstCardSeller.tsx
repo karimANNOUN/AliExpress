@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -18,8 +18,21 @@ import Button from '@mui/material/Button';
 import { LinearProgress } from '@mui/material';
 import { CloseOutlined } from '@mui/icons-material';
 import CreateIcon from '@mui/icons-material/Create';
+import axios from 'axios';
+import { setProductSeller } from '../../../../storeRedux/CartSlice';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import Skeleton from '@mui/material/Skeleton';
 
 
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+
+  
+});
 
 export const FirstCardSeller = ({activeSize,setActiveSize,indexs,setIndexs}:any) => {
 
@@ -35,10 +48,22 @@ export const FirstCardSeller = ({activeSize,setActiveSize,indexs,setIndexs}:any)
         width: 1,
       });
     
+      const product=useSelector((state:any)=>state.app.productSeller)
 
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    const product=useSelector((state:any)=>state.app.product)
+    const [openAlert, setOpenAlert] = useState(false);
+    const [message,setMessage]=useState('')
+
+    const handleCloseAlert = (event?: React.SyntheticEvent | Event, reason?: string) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpenAlert(false);
+    };
+
+   
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -81,14 +106,20 @@ export const FirstCardSeller = ({activeSize,setActiveSize,indexs,setIndexs}:any)
     const [prix,setPrix]=useState(0)
     const [solde,setSolde]=useState(0)
 
+
+
     const [productColorImage1,setProductColorImage1]=useState<File | null>()
     const [uploadProgress1, setUploadProgress1] = useState(0);
     const [image1, setImage1] = useState<string | null | any >(null);
     const [color1,setColor1]=useState('')
     const [hiden1,setHiden1]=useState(false)
     const [quantity,setQuantity]=useState(0)
+    const [properties,setProperties]=useState({})
+    const [type,setType]=useState({})
+    const [loading,setLoading]=useState(false)
+    const [alert,setAlert]=useState(false)
 
-
+    const dispatch=useDispatch()
 
  
 
@@ -112,7 +143,6 @@ export const FirstCardSeller = ({activeSize,setActiveSize,indexs,setIndexs}:any)
             }
           };
     
-          // Read the image file as a data URL
           reader.readAsDataURL( file);
         }
     
@@ -135,30 +165,42 @@ export const FirstCardSeller = ({activeSize,setActiveSize,indexs,setIndexs}:any)
 
       useEffect(()=>{
         const prod = product.images.filter((img:any)=>  img.color !== 'imageDescription')[indexs]
-      //  console.log(prod)
-      },[indexs])
+        const typeSize=product.property[activeSize];
+        setProperties(prod)
+        setType(typeSize)
+      },[indexs,activeSize])
 
 
-      const handelFavoritProduct=async()=>{
+      const handelUpdateProductPrice=async()=>{
         try {
          
-        const response = await fetch(`http://localhost:8000/UpdatedImages`,{
+        const response = await fetch(`http://localhost:8000/updateprice`,{
           method: 'PATCH',
           credentials:"include", 
           headers: {
             'Content-Type': 'application/json',
              authorization:`${token}`
           },
-          body: JSON.stringify({  }),
-         
+          body:JSON.stringify({ prix , product }),
         });
         const data = await response.json()
-     //   if (!data) {
-       //   setLoading(true)
-     //   }if (data.success == true) {
-    //      dispatch(setProduct(data.product))
-        //  setLoading(false) 
-     //   } 
+
+        
+        if (!data) {
+          setLoading(true)
+        } if (data.success == false) {
+          setOpenAlert(true)
+          setAlert(false)
+          setMessage(data.message)
+        }
+        if (data.success == true) {
+          setOpenAlert(true)
+          setAlert(true)
+          setMessage(data.message)
+          dispatch(setProductSeller(data.productSeller))
+          setLoading(false)
+          handleClose2()
+        } 
     
       } catch (error) {
         console.error('operation failed.');
@@ -167,17 +209,152 @@ export const FirstCardSeller = ({activeSize,setActiveSize,indexs,setIndexs}:any)
       }
 
 
+
+      
+      const handelUpdateSolde=async()=>{
+        try {
+         
+        const response = await fetch(`http://localhost:8000/updatesolde`,{
+          method: 'PATCH',
+          credentials:"include", 
+          headers: {
+            'Content-Type': 'application/json',
+             authorization:`${token}`
+          },
+          body:JSON.stringify({ solde , product }),
+        });
+        const data = await response.json()
+
+        
+        if (!data) {
+          setLoading(true)
+        } if (data.success == false) {
+          setOpenAlert(true)
+          setAlert(false)
+          setMessage(data.message)
+        }
+        if (data.success == true) {
+          setOpenAlert(true)
+          setAlert(false)
+          setMessage(data.message)
+          dispatch(setProductSeller(data.productSeller))
+          setLoading(false)
+          handleClose3()
+        } 
+    
+      } catch (error) {
+        console.error('operation failed.');
+      }
+       
+      }
+
+
+
+
+      const handelUpdateDescription=async()=>{
+        try {
+         
+        const response = await fetch(`http://localhost:8000/updatedescription`,{
+          method: 'PATCH',
+          credentials:"include", 
+          headers: {
+            'Content-Type': 'application/json',
+             authorization:`${token}`
+          },
+          body:JSON.stringify({ description , product }),
+        });
+        const data = await response.json()
+
+        
+        if (!data) {
+          setLoading(true)
+        } if (data.success == false) {
+          setOpenAlert(true)
+          setAlert(false)
+          setMessage(data.message)
+        }
+        if (data.success == true) {
+          setOpenAlert(true)
+          setAlert(true)
+          setMessage(data.message)
+          dispatch(setProductSeller(data.productSeller))
+          setLoading(false)
+          handleClose1()
+        } 
+    
+      } catch (error) {
+        console.error('operation failed.');
+      }
+       
+      }
+
+
+
+
+
+      const handelUpdateImages=async()=>{
+        try {
+
+
+          const formData : any = new FormData();
+
+          formData.append(`file`, productColorImage1);
+          formData.append(`color`, color1);
+          formData.append('quantity',quantity);
+          formData.append('properties', JSON.stringify(properties));
+          formData.append('type', JSON.stringify(type));
+
+          axios.put(`http://localhost:8000/updatedimages`,formData, {
+            withCredentials:true,
+            headers:{authorization:`${token}`},
+          }) 
+          .then(res=> {
+            if (!res.data) {
+              setLoading(true)
+            }
+            if (res.data.success == false) {
+              setOpenAlert(true)
+              setAlert(false)
+              setMessage(res.data.message)
+            }if (res.data.success == true) {
+              setOpenAlert(true)
+              setAlert(true)
+              setMessage(res.data.message)
+              dispatch(setProductSeller(res.data.productSeller))
+              setLoading(false)
+              handleClose()
+            }
+          } )
+          .catch(err=>console.log(err)) 
+         
+    
+      } catch (error) {
+        console.error('operation failed.');
+      }
+       
+      }
+
+     
+
   return (
     <Box sx={{display:'flex'}} >
+
+<Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleCloseAlert} severity={ alert == false ? "error" : "success" } sx={{ width: '100%' }}>
+          {message}
+        </Alert>
+      </Snackbar>
+
     <Box sx={{display:'flex',flexDirection:'column',width:'500px',height:'600px',mr:4}} >
       
       <Box sx={{display:'flex',width:'500px',height:'500px',borderRadius:'8px',position:'relative'}} >
-      <img src={product.images.filter((img:any)=>  img.color !== 'imageDescription')[indexs].imageUrl} style={{width:'100%',height:'100%',borderRadius:'8px'}}  />
+      <img src={ !product ? "" : product.images.filter((img:any)=>  img.color !== 'imageDescription')[indexs].imageUrl} style={{width:'100%',height:'100%',borderRadius:'8px'}}  />
 
       <IconButton sx={{position:'absolute',top:'0',right:'0'}} onClick={handleClick} >
     <MoreHorizIcon sx={{fontSize:'20px'}} />
     </IconButton>
 
+ 
     <Menu
         id="basic-menu"
         anchorEl={anchorEl}
@@ -208,7 +385,7 @@ export const FirstCardSeller = ({activeSize,setActiveSize,indexs,setIndexs}:any)
   size='small'
   label='quantity'
   type='number'
-  onChange={(e:any)=>setColor1(e.target.value)}
+  onChange={(e:any)=>setQuantity(e.target.value)}
     />
 
 { hiden1 == false ?  <Button variant="outlined"  component='label' sx={{width:'120px',height:'140px',mx:2 ,color:'black',bgcolor:'white',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',borderRadius:'6px',border:'1px dashed #bdbdbd',my:1,":hover":{border:'1px dashed #bdbdbd',color:'white'}}} >
@@ -216,7 +393,7 @@ export const FirstCardSeller = ({activeSize,setActiveSize,indexs,setIndexs}:any)
           <Typography variant='caption' sx={{mt:1}} >  
           Upload
         </Typography>
-        <VisuallyHiddenInput  onChange={handleChangeImageProduct} type="file" name='colorImage1' />
+        <VisuallyHiddenInput  onChange={handleChangeImageProduct} type="file" name='file' />
         </Button> : "" }
         {uploadProgress1 !== 0 ?  <Box sx={{display:'flex',flexDirection:'column',mx:2 ,alignItems:'center',width:'120px',position:'relative'}} >
         <img src={image1} style={{height:'140px',width:'100%'}} />
@@ -226,8 +403,12 @@ export const FirstCardSeller = ({activeSize,setActiveSize,indexs,setIndexs}:any)
          </IconButton>
          </Box> : "" }
 
-      </Menu>
+         {loading == true  ? 
+         <Button variant="contained"  disabled sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>:
+         <Button variant="contained" onClick={handelUpdateImages} sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
+         }
 
+      </Menu>
       </Box>
     
 
@@ -235,7 +416,7 @@ export const FirstCardSeller = ({activeSize,setActiveSize,indexs,setIndexs}:any)
    
      <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'center',width:'100%',height:'100px',overflow:'hidden',position:'relative'}} >
 
-     { product.images.filter((img:any)=> img.color !== 'imageDescription').slice(currentIndex, currentIndex + 6).map((category:any,index:any)=> 
+     { !product ? "" : product.images.filter((img:any)=> img.color !== 'imageDescription').slice(currentIndex, currentIndex + 6).map((category:any,index:any)=> 
      <Box key={index} onMouseEnter={ ()=> setIndexs(index) } sx={{height:'70px',width:'70px',borderRadius:'12px'}} >
        {index === indexs  ?  <img onClick={()=> setIndexs(index)} src={category.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px',borderStyle:'solid',borderColor:'#424242'}} /> : <img onClick={()=> setIndexs(index)} src={category.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px'}} /> }
       </Box>
@@ -259,7 +440,7 @@ export const FirstCardSeller = ({activeSize,setActiveSize,indexs,setIndexs}:any)
      DA
      </Typography>
      <Typography sx={{fontWeight:'800',color:'#ff3d00'}} variant="h4" gutterBottom>
-     {product.price - (product.solde*product.price/100)}
+     { !product ? "" : (product.price - (product.solde*product.price/100))}
      </Typography>
 
      <IconButton onClick={handleClick2} >
@@ -291,17 +472,17 @@ export const FirstCardSeller = ({activeSize,setActiveSize,indexs,setIndexs}:any)
   onChange={(e:any)=>setPrix(e.target.value)}
     />
 
-    
+<Button variant="contained" onClick={handelUpdateProductPrice} sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
 
       </Menu>
 
 
-     { product.solde == 0 ? "" : <Typography sx={{fontWeight:'500',textDecorationLine:'line-through',mx:2}}  variant='body1' gutterBottom>
+     { !product ? "" : (product.solde == 0 ? "" : <Typography sx={{fontWeight:'500',textDecorationLine:'line-through',mx:2}}  variant='body1' gutterBottom>
      DA{product.price}
-     </Typography>}
-     { product.solde == 0 ? "" : <Typography sx={{fontWeight:'100',color:'#ff3d00'}}  variant='body1' gutterBottom>
+     </Typography>)}
+     { !product ? "" : (product.solde == 0 ? "" : <Typography sx={{fontWeight:'100',color:'#ff3d00'}}  variant='body1' gutterBottom>
      -{product.solde}%
-     </Typography>}
+     </Typography>)}
 
      <IconButton onClick={handleClick3} >
     <CreateIcon sx={{fontSize:'20px'}} />
@@ -332,7 +513,7 @@ export const FirstCardSeller = ({activeSize,setActiveSize,indexs,setIndexs}:any)
   onChange={(e:any)=>setSolde(e.target.value)}
     />
 
-    
+<Button variant="contained" onClick={handelUpdateSolde} sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
 
       </Menu>
 
@@ -342,7 +523,7 @@ export const FirstCardSeller = ({activeSize,setActiveSize,indexs,setIndexs}:any)
      <Box sx={{display:'flex',alignItems:'center'}} >
 
      <Typography sx={{fontWeight:'800',textAlign:'left',my:2}} variant='body1' gutterBottom>
-    {product.description}
+    { !product ? "" : product.description}
      </Typography>
          
      <IconButton onClick={handleClick1} >
@@ -374,7 +555,7 @@ export const FirstCardSeller = ({activeSize,setActiveSize,indexs,setIndexs}:any)
   onChange={(e:any)=>setDescription(e.target.value)}
     />
 
-    
+<Button variant="contained" onClick={handelUpdateDescription} sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
 
       </Menu>
 
@@ -407,23 +588,23 @@ export const FirstCardSeller = ({activeSize,setActiveSize,indexs,setIndexs}:any)
      </Typography>
     </Box>
     <Typography sx={{fontWeight:'800',textAlign:'left'}}  variant='body1' gutterBottom>
-    Couleur: { product.images.length == 0 ? "" :   ( indexs>=5 ? "other color" : product.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) )[indexs].color) }
+    Couleur: { !product ? "" : (product.images.length == 0 ? "" :   ( indexs>=5 ? "other color" : product.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) )[indexs].color)) }
      </Typography>
 
       <Box sx={{display:'flex',alignItems:'center',width:'80%',my:2}} >
-       { product.images.length == 0 ? "" : product.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) ).map((categ:any,index:any)=>
+       { !product ? "" : ( product.images.length == 0 ? "" : product.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) ).map((categ:any,index:any)=>
        
        <Box key={index} sx={{height:'50px',width:'50px',borderRadius:'12px',mx:2}} >
          {index === indexs  ?  <img onClick={()=> setIndexs(index)} src={categ.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px',borderStyle:'solid',borderColor:'#424242'}} /> : <img onClick={()=> setIndexs(index)} src={categ.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px'}} /> }
        </Box>
-       )}
+       ))}
       </Box>
 
       <Typography sx={{fontWeight:'800',textAlign:'left'}}  variant='body1' gutterBottom>
-      {product.properties} : { product.property.length == 0 ? "" : product.property[activeSize].detailsName}
+      { !product ? "" : product.properties} : { !product ? "" : (product.property.length == 0 ? "" : product.property[activeSize].detailsName)}
      </Typography>
      <Box sx={{display:'flex',width:'100%',alignItems:'center',flexWrap:'wrap'}} >
-       { product.property.length == 0 ? "" : product.property.map((prop:any,index:any)=>
+       { !product ? "" : ( product.property.length == 0 ? "" : product.property.map((prop:any,index:any)=>
        <Box key={index} sx={{mx:1,my:1}} >
         { index === activeSize ? <div onClick={()=>setActiveSize(index)}  style={{height:'30px',borderStyle:'solid',borderColor:'#424242',display:'flex',justifyContent:'center',alignItems:'center',padding:2,borderRadius:'8px'}} >
         {prop.detailsName}
@@ -435,7 +616,7 @@ export const FirstCardSeller = ({activeSize,setActiveSize,indexs,setIndexs}:any)
 
      </Box>
        
-        )}
+        ))}
      </Box>
     </Box>
     </Box>
