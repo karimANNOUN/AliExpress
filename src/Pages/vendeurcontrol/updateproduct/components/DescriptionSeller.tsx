@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -17,6 +17,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import Cookies from 'js-cookie';
 import { setProductSeller } from '../../../../storeRedux/CartSlice';
+import axios from 'axios';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -139,9 +140,10 @@ const product=useSelector((state:any)=>state.app.productSeller)
   const [productDescriptionImage,setProductDescriptionImage]=useState<File | null>()
   const [uploadProgress1, setUploadProgress1] = useState(0);
   const [image1, setImage1] = useState<string | null | any >(null);
-  const [color1,setColor1]=useState('')
   const [hiden1,setHiden1]=useState(false)
-  const [quantity,setQuantity]=useState(0)
+
+
+  const [imgDescription,setImgDescription]=useState({})
 
   const [loading,setLoading]=useState(false)
 
@@ -174,6 +176,48 @@ const product=useSelector((state:any)=>state.app.productSeller)
 
     const token = Cookies.get('token');
     const dispatch=useDispatch()
+
+
+
+    const handelUpdateImageDescription=async()=>{
+      try {
+
+
+        const formData : any = new FormData();
+
+        formData.append(`file`, productDescriptionImage);
+        formData.append('properties', JSON.stringify(imgDescription));
+        
+
+        axios.patch(`http://localhost:8000/updatedimagesdescription`,formData, {
+          withCredentials:true,
+          headers:{authorization:`${token}`},
+        }) 
+        .then(res=> {
+          if (!res.data) {
+            setLoading(true)
+          }
+          if (res.data.success == false) {
+            setOpenAlert(true)
+            setAlert(false)
+            setMessage(res.data.message)
+          }if (res.data.success == true) {
+            setOpenAlert(true)
+            setAlert(true)
+            setMessage(res.data.message)
+            dispatch(setProductSeller(res.data.productSeller))
+            setLoading(false)
+            handleClose5()
+          }
+        } )
+        .catch(err=>console.log(err)) 
+       
+  
+    } catch (error) {
+      console.error('operation failed.');
+    }
+     
+    }
 
 
     const handelUpdateDescriptionTitle1=async()=>{
@@ -252,6 +296,172 @@ const product=useSelector((state:any)=>state.app.productSeller)
      
     }
 
+
+
+    
+    const handelUpdateDescriptionTitle3=async()=>{
+      try {
+       
+      const response = await fetch(`http://localhost:8000/updatedescriptiontitlethree`,{
+        method: 'PATCH',
+        credentials:"include", 
+        headers: {
+          'Content-Type': 'application/json',
+           authorization:`${token}`
+        },
+        body:JSON.stringify({ descripTitle3,product }),
+      });
+      const data = await response.json()
+
+      
+      if (!data) {
+        setLoading(true)
+      } if (data.success == false) {
+        setOpenAlert(true)
+        setAlert(false)
+        setMessage(data.message)
+      }
+      if (data.success == true) {
+        setOpenAlert(true)
+        setAlert(true)
+        setMessage(data.message)
+        dispatch(setProductSeller(data.productSeller))
+        setLoading(false)
+        handleClose3()
+      } 
+  
+    } catch (error) {
+      console.error('operation failed.');
+    }
+     
+    }
+
+
+
+    const handelUpdateDescription1=async()=>{
+      try {
+       
+      const response = await fetch(`http://localhost:8000/updatedescriptionone`,{
+        method: 'PATCH',
+        credentials:"include", 
+        headers: {
+          'Content-Type': 'application/json',
+           authorization:`${token}`
+        },
+        body:JSON.stringify({ descrip1,product }),
+      });
+      const data = await response.json()
+
+      
+      if (!data) {
+        setLoading(true)
+      } if (data.success == false) {
+        setOpenAlert(true)
+        setAlert(false)
+        setMessage(data.message)
+      }
+      if (data.success == true) {
+        setOpenAlert(true)
+        setAlert(true)
+        setMessage(data.message)
+        dispatch(setProductSeller(data.productSeller))
+        setLoading(false)
+        handleClose()
+      } 
+  
+    } catch (error) {
+      console.error('operation failed.');
+    }
+     
+    }
+
+
+    const handelUpdateDescription2=async()=>{
+      try {
+       
+      const response = await fetch(`http://localhost:8000/updatedescriptiontwo`,{
+        method: 'PATCH',
+        credentials:"include", 
+        headers: {
+          'Content-Type': 'application/json',
+           authorization:`${token}`
+        },
+        body:JSON.stringify({ descrip2,product }),
+      });
+      const data = await response.json()
+
+      
+      if (!data) {
+        setLoading(true)
+      } if (data.success == false) {
+        setOpenAlert(true)
+        setAlert(false)
+        setMessage(data.message)
+      }
+      if (data.success == true) {
+        setOpenAlert(true)
+        setAlert(true)
+        setMessage(data.message)
+        dispatch(setProductSeller(data.productSeller))
+        setLoading(false)
+        handleClose2()
+      } 
+  
+    } catch (error) {
+      console.error('operation failed.');
+    }
+     
+    }
+
+
+
+
+
+    const handelUpdateDescription3=async()=>{
+      try {
+       
+      const response = await fetch(`http://localhost:8000/updatedescriptionthree`,{
+        method: 'PATCH',
+        credentials:"include", 
+        headers: {
+          'Content-Type': 'application/json',
+           authorization:`${token}`
+        },
+        body:JSON.stringify({ descrip3,product }),
+      });
+      const data = await response.json()
+
+      
+      if (!data) {
+        setLoading(true)
+      } if (data.success == false) {
+        setOpenAlert(true)
+        setAlert(false)
+        setMessage(data.message)
+      }
+      if (data.success == true) {
+        setOpenAlert(true)
+        setAlert(true)
+        setMessage(data.message)
+        dispatch(setProductSeller(data.productSeller))
+        setLoading(false)
+        handleClose4()
+      } 
+  
+    } catch (error) {
+      console.error('operation failed.');
+    }
+     
+    }
+
+     
+    useEffect(()=>{
+      const prod = product.images.filter((img:any)=>  img.color == 'imageDescription')[0]
+  
+      console.log(prod)
+      setImgDescription(prod)
+    
+    },[])
 
 
 
@@ -360,7 +570,7 @@ const product=useSelector((state:any)=>state.app.productSeller)
   onChange={(e:any)=>setDescrip1(e.target.value)}
     />
 
-<Button variant="contained" sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
+<Button variant="contained" onClick={handelUpdateDescription1} sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
 
       </Menu>
 
@@ -450,7 +660,7 @@ const product=useSelector((state:any)=>state.app.productSeller)
   onChange={(e:any)=>setDescrip2(e.target.value)}
     />
 
-<Button variant="contained" sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
+<Button variant="contained" onClick={handelUpdateDescription2} sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
 
       </Menu>
 
@@ -496,7 +706,7 @@ const product=useSelector((state:any)=>state.app.productSeller)
   onChange={(e:any)=>setDescripTitle3(e.target.value)}
     />
 
-<Button variant="contained" sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
+<Button variant="contained" onClick={handelUpdateDescriptionTitle3} sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
 
       </Menu>
 
@@ -542,7 +752,7 @@ const product=useSelector((state:any)=>state.app.productSeller)
   onChange={(e:any)=>setDescrip3(e.target.value)}
     />
 
-<Button variant="contained" sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
+<Button variant="contained" onClick={handelUpdateDescription3} sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
 
       </Menu>
 
@@ -596,7 +806,7 @@ const product=useSelector((state:any)=>state.app.productSeller)
          </IconButton>
          </Box> : "" }
 
-         <Button variant="contained" sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
+         <Button variant="contained" onClick={handelUpdateImageDescription} sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
 
       </Menu>
 

@@ -30,17 +30,7 @@ export const Product = () => {
       };
       
 
-    const products=[
-        {id:1,title:'hello'},
-        {id:3,title:'hello'},
-        {id:4,title:'hello'},
-        {id:5,title:'hello'},
-        {id:6,title:'hello'},
-        {id:7,title:'hello'},
-        {id:8,title:'hello'},
-        {id:9,title:'hello'},
-        {id:10,title:'hello'},
-    ]
+ 
 
     const token = Cookies.get('token');
     const [loading, setLoading]=useState(Boolean)
@@ -75,9 +65,36 @@ export const Product = () => {
 
       handelGetProduct()
   
+   
       
     },[])
 
+
+    const handelGetProductLivraison=async()=>{
+      try {
+        setActive(4)
+
+      const response = await fetch(`http://localhost:8000/livraisongratuite`,{
+        method: 'GET',
+        credentials:"include", 
+        headers: {
+          'Content-Type': 'application/json',
+           authorization:`${token}`
+        }
+      });
+      const data = await response.json()
+      if (!data) {
+        setLoading(true)
+      }if (data.success == true) {
+        setProductsSeller(data.productSeller)
+        setLoading(false) 
+      } 
+  
+    } catch (error) {
+      console.error('operation failed.');
+    }
+     
+    }
 
    
 
@@ -130,7 +147,7 @@ export const Product = () => {
              
             { active === 4 ? <Button sx={{color:'black',":hover":{bgcolor:'#eeeeee'}}} variant="text"> <Checkbox  defaultChecked  /> Livraison gratuite </Button> :
 
-          <Button sx={{color:'black',":hover":{bgcolor:'#eeeeee'}}} onClick={()=>setActive(4)}  variant="text"> <Checkbox /> Livraison gratuite </Button>
+          <Button sx={{color:'black',":hover":{bgcolor:'#eeeeee'}}} onClick={handelGetProductLivraison}   variant="text"> <Checkbox /> Livraison gratuite </Button>
             
             }
 
@@ -139,7 +156,11 @@ export const Product = () => {
     </Box> 
 
     <Box sx={{bgcolor:'Window',display:'flex',flexDirection:'column',alignItems:'center',width:'100%',overflow:'auto',borderRadius:'6px',height:'600px',p:1}} >
-        { !productsSeller ? [] :  productsSeller.map((prod:any)=> <BoxProduct key={prod.id} prod={prod} /> )}
+        { !productsSeller ? [] :  ( productsSeller.length == 0 ? 
+          <Typography sx={{fontWeight:'800',color:'#757575',textAlign:'center'}} variant='body2' gutterBottom>
+           empty store you don't have any products
+        </Typography>
+          :  productsSeller.map((prod:any)=> <BoxProduct key={prod.id} prod={prod} /> ))}
    
     </Box>
 

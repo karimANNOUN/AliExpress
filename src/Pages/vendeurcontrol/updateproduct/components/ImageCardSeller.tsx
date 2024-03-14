@@ -22,6 +22,7 @@ import CreateIcon from '@mui/icons-material/Create';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
+import { setProductSeller } from '../../../../storeRedux/CartSlice';
 
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -95,6 +96,9 @@ export const ImageCardSeller = ({activeSize,indexs}:any) => {
   
     const [message,setMessage]=useState("")
   
+    const [alert,setAlert]=useState(false)
+    const [type,setType]=useState({})
+
  //    const optionSize=product.property[activeSize].detailsName;
   
  //    const quantitySize=product.property[activeSize].quantity;
@@ -107,12 +111,134 @@ export const ImageCardSeller = ({activeSize,indexs}:any) => {
   
  //    const productsStore=useSelector((state:any)=>state.app.productStore)
 
+ useEffect(()=>{
+  const typeSize=product.property[activeSize];
+  setType(typeSize)
+},[activeSize])
+
+
+ const handelUpdatePrixLivraison=async()=>{
+  try {
+   
+  const response = await fetch(`http://localhost:8000/updateprixlivraison`,{
+    method: 'PATCH',
+    credentials:"include", 
+    headers: {
+      'Content-Type': 'application/json',
+       authorization:`${token}`
+    },
+    body:JSON.stringify({ prixLivraison , product }),
+  });
+  const data = await response.json()
+
+  
+  if (!data) {
+    setLoading(true)
+  } if (data.success == false) {
+    setOpenAlert(true)
+    setAlert(false)
+    setMessage(data.message)
+  }
+  if (data.success == true) {
+    setOpenAlert(true)
+    setAlert(true)
+    setMessage(data.message)
+    dispatch(setProductSeller(data.productSeller))
+    setLoading(false)
+    handleClose0()
+  } 
+
+} catch (error) {
+  console.error('operation failed.');
+}
+ 
+}
+
+
+const handelUpdateTempLivraison=async()=>{
+  try {
+   
+  const response = await fetch(`http://localhost:8000/updatetemplivraison`,{
+    method: 'PATCH',
+    credentials:"include", 
+    headers: {
+      'Content-Type': 'application/json',
+       authorization:`${token}`
+    },
+    body:JSON.stringify({ tempLivraison , product }),
+  });
+  const data = await response.json()
+
+  
+  if (!data) {
+    setLoading(true)
+  } if (data.success == false) {
+    setOpenAlert(true)
+    setAlert(false)
+    setMessage(data.message)
+  }
+  if (data.success == true) {
+    setOpenAlert(true)
+    setAlert(true)
+    setMessage(data.message)
+    dispatch(setProductSeller(data.productSeller))
+    setLoading(false)
+    handleClose1()
+  } 
+
+} catch (error) {
+  console.error('operation failed.');
+}
+ 
+}
+
+
+const handelUpdateQuantity=async()=>{
+  try {
+   
+  const response = await fetch(`http://localhost:8000/updatequantityunique`,{
+    method: 'PATCH',
+    credentials:"include", 
+    headers: {
+      'Content-Type': 'application/json',
+       authorization:`${token}`
+    },
+    body:JSON.stringify({ quantity , type , product }),
+  });
+  const data = await response.json()
+
+  
+  if (!data) {
+    setLoading(true)
+  } if (data.success == false) {
+    setOpenAlert(true)
+    setAlert(false)
+    setMessage(data.message)
+  }
+  if (data.success == true) {
+    setOpenAlert(true)
+    setAlert(true)
+    setMessage(data.message)
+    dispatch(setProductSeller(data.productSeller))
+    setLoading(false)
+    handleClose2()
+  } 
+
+} catch (error) {
+  console.error('operation failed.');
+}
+ 
+}
+
+
+
+
   return (
     <Box sx={{width:'95%',height:'95%',display:'flex',flexDirection:'column'}} >
 
 
     <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+            <Alert onClose={handleClose} severity={alert == false ? "error" : "success" } sx={{ width: '100%' }}>
               {message}
             </Alert>
           </Snackbar>
@@ -179,7 +305,7 @@ export const ImageCardSeller = ({activeSize,indexs}:any) => {
   onChange={(e:any)=>setPrixLivraison(e.target.value)}
     />
 
-<Button variant="contained" sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
+<Button variant="contained" onClick={handelUpdatePrixLivraison} sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
 
       </Menu>
 
@@ -220,7 +346,7 @@ export const ImageCardSeller = ({activeSize,indexs}:any) => {
   onChange={(e:any)=>setTempLivraison(e.target.value)}
     />
 
-<Button variant="contained" sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
+<Button variant="contained" onClick={handelUpdateTempLivraison} sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
 
       </Menu>
 
@@ -287,7 +413,7 @@ export const ImageCardSeller = ({activeSize,indexs}:any) => {
   onChange={(e:any)=>setQuantity(e.target.value)}
     />
 
-<Button variant="contained" sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
+<Button variant="contained" onClick={handelUpdateQuantity} sx={{mx:2,bgcolor:'#7b1fa2',color:'white',":hover":{bgcolor:'#7b1fa2',color:'white'}}} >Update</Button>
 
       </Menu>
 

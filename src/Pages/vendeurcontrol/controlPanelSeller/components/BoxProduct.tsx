@@ -18,6 +18,7 @@ export const BoxProduct = ({prod}:any) => {
       setAnchorEl(null);
     };
 
+    console.log(prod)
 
   return (
     <Box  sx={{display:'flex',border:'2px solid #e0e0e0',mb:2,borderRadius:'8px',height:'120px',width:'100%'}} >

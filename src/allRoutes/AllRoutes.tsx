@@ -38,7 +38,6 @@ import { ProtectedSeller2 } from './ProtectedSeller2'
 import { LisenceCommercial } from '../Pages/storeShop/LisenceCommercial'
 import { ControlPanelSeller } from '../Pages/vendeurcontrol/controlPanelSeller/ControlPanelSeller'
 import { Product } from '../Pages/vendeurcontrol/controlPanelSeller/components/Product'
-import { Dashbord } from '../Pages/vendeurcontrol/controlPanelSeller/components/Dashbord'
 import { UpdateProduct } from '../Pages/vendeurcontrol/updateproduct/UpdateProduct'
 
 

@@ -235,7 +235,7 @@ export const FirstCardSeller = ({activeSize,setActiveSize,indexs,setIndexs}:any)
         }
         if (data.success == true) {
           setOpenAlert(true)
-          setAlert(false)
+          setAlert(true)
           setMessage(data.message)
           dispatch(setProductSeller(data.productSeller))
           setLoading(false)
