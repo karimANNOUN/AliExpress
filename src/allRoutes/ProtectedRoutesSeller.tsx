@@ -47,5 +47,5 @@ export const ProtectedRoutesSeller = ({children}:any) => {
 
     
    
-    return (token !== undefined && user !== undefined && user.role == "seller" ) ? children : <Navigate to="/loginvendeur"/>
+    return (token !== undefined && user !== undefined  ) ? children : <Navigate to="/loginvendeur"/>
 }

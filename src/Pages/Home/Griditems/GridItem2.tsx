@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import bin from '../../../Image/bln.jpg'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import IconButton from '@mui/material/IconButton';
+import { motion } from 'framer-motion';
 export const GridItem2 = () => {
 
     const images= [
@@ -18,7 +17,7 @@ export const GridItem2 = () => {
 
     ]
 
-    const [currentIndex,setCurrentIndex]=useState(2)
+    const [currentIndex,setCurrentIndex]=useState(1)
 
     const prevSlide=()=>{
         const isFirstSlide = currentIndex === 0
@@ -40,8 +39,16 @@ export const GridItem2 = () => {
         Prix exclusive pour vous
       </Typography>
       <Box sx={{width:'350px',height:'360px',position:'relative'}} >
-        <img src={images[currentIndex].url} alt='kimou' style={{height:'100%',width:'100%',borderRadius:'30px'}} />
-        <IconButton onClick={prevSlide} sx={{position:'absolute',top:'50%',left:6,bgcolor:'#bdbdbd',":hover":{bgcolor:'#bdbdbd'}}} >
+        <motion.img 
+        src={images[currentIndex].url} 
+        alt='kimou' 
+        style={{height:'100%',width:'100%',borderRadius:'30px'}}
+        initial={{ opacity: 0, x:100 ,scale:0.5 }}
+        animate={{ opacity: 1, x:0,scale:1 }}
+        transition={{ ease:'easeIn' ,duration: 1 }}
+         />
+       
+        <IconButton  onClick={prevSlide} sx={{position:'absolute',top:'50%',left:6,bgcolor:'#bdbdbd',":hover":{bgcolor:'#bdbdbd'}}} >
         <ChevronLeftIcon sx={{fontSize:'50px',fontWeight:'800',color:'#f5f5f5'}} />
         </IconButton>
         <IconButton onClick={nextSlide} sx={{position:'absolute',top:'50%',right:6,bgcolor:'#bdbdbd',":hover":{bgcolor:'#bdbdbd'}}} >

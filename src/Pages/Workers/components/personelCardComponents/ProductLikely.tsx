@@ -1,8 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
+import { motion ,useScroll ,useMotionValueEvent   } from "framer-motion"
 export const ProductLikely = () => {
+
+
+  const [hidden,setHidden]=useState(false)
+
+  const { scrollY } = useScroll()
+  
+  useMotionValueEvent(scrollY, "change", (latest) => {
+
+    
+
+    if ( latest > 2600 ) {
+      setHidden(true)
+    }else{
+      setHidden(false)
+    }
+  })
+
 
     const card=[
         {id:1,name:'kitou'},
@@ -18,7 +36,15 @@ export const ProductLikely = () => {
     ]
 
   return (
-    <Box sx={{display:'flex',flexDirection:'column'}} >
+    <motion.div 
+     style={{display:'flex',flexDirection:'column'}}
+     variants={{
+      visible:{ x:0 ,opacity:1 , scale:1 },
+      hidden:{x:200,opacity:0.6,scale:0.5}
+    }}
+    animate={!hidden ? "hidden" : "visible" }
+    transition={{ ease:'easeInOut' ,duration:1}}
+     >
          <Typography sx={{fontWeight:'800',textAlign:'left'}} variant="h6" gutterBottom>
          Les meilleures ventes de ChicSoleHQ Store
       </Typography>
@@ -39,6 +65,6 @@ export const ProductLikely = () => {
       </Box>
         </Box> )}
     </Box>
-    </Box>
+    </motion.div>
   )
 }

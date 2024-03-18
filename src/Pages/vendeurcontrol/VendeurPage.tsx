@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import React,{useState} from 'react'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -8,11 +8,12 @@ import { styled } from '@mui/material/styles';
 import { IconButton, LinearProgress } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import { alpha } from '@mui/material/styles';
 import { CloseOutlined } from '@mui/icons-material';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 export const VendeurPage = () => {
 
@@ -108,7 +109,7 @@ export const VendeurPage = () => {
  const [hiden4,setHiden4]=useState(false)
  const [hiden5,setHiden5]=useState(false)
 
-
+const [loading,setLoading]=useState(false)
 
 const [events, setEvents] = useState('');
 const [values, setValues] = useState <any | {} > ([]);
@@ -348,13 +349,23 @@ const handleAddEvent = () => {
           withCredentials:true,
           headers:{authorization:`${Token}`},
         }) 
-        .then(res=>console.log(res.data) )
+        .then(res=>{
+          if (!res.data) {
+            setLoading(true)
+          }
+          if (res.data.success == false) {
+            setOpenAlert(true)
+            setAlert(false)
+            setMessage(res.data.message)
+          }if (res.data.success == true) {
+            setOpenAlert(true)
+            setAlert(true)
+            setMessage(res.data.message)
+            setLoading(false)
+            handleClose()
+          }
+        } )
         .catch(err=>console.log(err)) 
-     // }
-
-//     if (data.success == true) {
-   //    navigate("/decisionvendeurboutique")
-  //   }
          
            
       }catch(error){
@@ -365,12 +376,51 @@ const handleAddEvent = () => {
    }
 
 
+   const [message,setMessage]=useState('')
+   const [alert,setAlert]=useState(false)
+ 
+ 
+   const [openAlert, setOpenAlert] = useState(false);
+  
+   const handleCloseAlert = (event?: React.SyntheticEvent | Event, reason?: string) => {
+     if (reason === 'clickaway') {
+       return;
+     }
+ 
+     setOpenAlert(false);
+   };
+
+   
+   const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+    props,
+    ref,
+  ) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  
+    
+  });
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
 
 
 
   return (
     <Box sx={{background: 'linear-gradient(to right, #1a237e 0%, #4a148c 65% , #512da8 85%)' , p:4  }} >
+      
+      <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleCloseAlert} severity={ alert == false ? "error" : "success" } sx={{ width: '100%' }}>
+          {message}
+        </Alert>
+      </Snackbar>
+
          <Typography  sx={{fontWeight:'700',color:'white',textAlign:'left',my:2}}  variant='h4' gutterBottom>
           Ajouter votre produit
         </Typography>
@@ -806,9 +856,15 @@ const handleAddEvent = () => {
 
   </Box>
 
-  <Button onClick={handelPostProductInformation} variant='contained' color='primary'  sx={{color:'white',width:'47%',textTransform:'lowercase',borderRadius:'12px' ,":hover":{color:'white'} }} >
+  { loading == true ?   
+   
+   <Button disabled variant='contained' color='primary'  sx={{color:'white',width:'47%',textTransform:'lowercase',borderRadius:'12px' ,":hover":{color:'white'} }} >
       Ajouter Votre Produit
     </Button>
+
+  :<Button onClick={handelPostProductInformation} variant='contained' color='primary'  sx={{color:'white',width:'47%',textTransform:'lowercase',borderRadius:'12px' ,":hover":{color:'white'} }} >
+      Ajouter Votre Produit
+    </Button>}
 
          </Box>
 

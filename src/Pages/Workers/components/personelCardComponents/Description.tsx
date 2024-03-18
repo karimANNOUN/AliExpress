@@ -1,15 +1,45 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { useSelector } from 'react-redux';
+import { useAnimate, useInView , usePresence ,useAnimationFrame,motion ,useScroll ,useMotionValueEvent ,useSpring  } from "framer-motion"
+
 export const Description = () => {
+
+  const [isPresent, safeToRemove] = usePresence()
+  const [scope, animate] = useAnimate()
+  const isInView = useInView(scope)
+
+  const { scrollYProgress } = useScroll()
+
+  const { scrollY } = useScroll()
+
+  const [hidden,setHidden]=useState(false)
+
+useMotionValueEvent(scrollY, "change", (latest) => {
+  const previous =scrollY.getPrevious()
+  if ( latest > 620 && latest < 2450 ) {
+    setHidden(true)
+  }else{
+    setHidden(false)
+  }
+})
 
   const product=useSelector((state:any)=>state.app.product)
 
   return (
-    <Box sx={{display:'flex',flexDirection:'column'}} >
+    <motion.div  
+      style={{display:'flex',flexDirection:'column'}}
+      variants={{
+        visible:{ x:0 ,opacity:1 , scale:1 },
+        hidden:{x:200,opacity:0.6,scale:0.5}
+      }}
+      animate={!hidden ? "hidden" : "visible" }
+      transition={{ ease:'easeInOut' ,duration:1}}
+      
+      >
         <Box sx={{display:'flex'}} >
         <Button variant="text" sx={{color:'black',fontWeight:'800',":hover":{color:'black'}}} > <LocationOnIcon sx={{fontSize:'20px'}} /> Présentation</Button>
         <Button variant="text"  sx={{color:'black',":hover":{color:'black'}}} >Détails</Button>
@@ -56,6 +86,6 @@ export const Description = () => {
 
         
 
-    </Box>
+    </motion.div>
   )
 }

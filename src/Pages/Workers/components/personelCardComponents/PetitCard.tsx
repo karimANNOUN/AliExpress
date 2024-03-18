@@ -1,11 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 import Button from '@mui/material/Button';
+import { motion ,useScroll ,useMotionValueEvent   } from "framer-motion"
 export const PetitCard = () => {
+
+  const [hidden,setHidden]=useState(false)
+
+  const { scrollY } = useScroll()
+  
+  useMotionValueEvent(scrollY, "change", (latest) => {
+
+    if ( latest > 50 ) {
+      setHidden(true)
+    }else{
+      setHidden(false)
+    }
+  })
+
   return (
-    <div>
+    <motion.div 
+    variants={{
+      visible:{ x:0 ,opacity:1 , scale:1 },
+      hidden:{x:200,opacity:0.6,scale:0.5}
+    }}
+    animate={!hidden ? "hidden" : "visible" }
+    transition={{ ease:'easeInOut' ,duration:1}}
+    >
         <Box  sx={{width:'220px',height:'480px',borderRadius:'20px',mb:2,display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',borderColor:'#eeeeee',borderStyle:'solid' }}>
     <img src='https://i.pinimg.com/564x/6a/f3/fb/6af3fb0201c1f22c8281c5519faf5d44.jpg' alt='hhtr' style={{width:'90%',height:'60%',borderRadius:'20px'}} />
     <Box sx={{width:'90%',display:'flex',flexDirection:'column'}} >
@@ -42,6 +64,7 @@ export const PetitCard = () => {
  <Button variant="contained" sx={{bgcolor:'black',color:'Window',width:'100%',my:1,borderRadius:'20px',":hover":{bgcolor:'black',color:'Window'}}} >Apercu</Button> 
 
     </Box>
-  </Box></div>
+  </Box>
+  </motion.div>
   )
 }

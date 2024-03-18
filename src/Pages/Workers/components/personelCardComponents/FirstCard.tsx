@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import Rating from '@mui/material/Rating';
 import Divider from '@mui/material/Divider';
 import { useSelector } from 'react-redux';
+import { motion } from 'framer-motion';
 
 export const FirstCard = ({activeSize,setActiveSize,indexs,setIndexs}:any) => {
 
@@ -33,7 +34,13 @@ export const FirstCard = ({activeSize,setActiveSize,indexs,setIndexs}:any) => {
     <Box sx={{display:'flex'}} >
     <Box sx={{display:'flex',flexDirection:'column',width:'500px',height:'600px',mr:4}} >
       
-     <img src={product.images.filter((img:any)=>  img.color !== 'imageDescription')[indexs].imageUrl} style={{width:'500px',height:'500px',borderRadius:'8px'}}  />
+     <motion.img 
+     src={product.images.filter((img:any)=>  img.color !== 'imageDescription')[indexs].imageUrl} 
+     style={{width:'500px',height:'500px',borderRadius:'8px'}}
+     initial={{ opacity: 0,scale:0.5 }}
+     animate={{ opacity: 1,scale:1 }}
+     transition={{ ease:'easeIn' ,duration: 1 }}
+     />
    
      <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'center',width:'100%',height:'100px',overflow:'hidden',position:'relative'}} >
 
@@ -56,7 +63,13 @@ export const FirstCard = ({activeSize,setActiveSize,indexs,setIndexs}:any) => {
 
 
     <Box sx={{display:'flex',flexDirection:'column',width:'700px'}} >
-    <Box sx={{display:'flex',alignItems:'center'}} >
+
+    <motion.div 
+    style={{display:'flex',alignItems:'center'}}
+    initial={{x:400,y:-200,scale:2,opacity:0}}
+    animate={{x:0,y:0,scale:1,opacity:1}}
+    transition={{duration:0.7,ease:'easeIn'}}
+    >
     <Typography sx={{fontWeight:'800',color:'#ff3d00'}} variant="h6" gutterBottom>
      DA
      </Typography>
@@ -69,13 +82,24 @@ export const FirstCard = ({activeSize,setActiveSize,indexs,setIndexs}:any) => {
      <Typography sx={{fontWeight:'100',color:'#ff3d00'}}  variant='body1' gutterBottom>
      -{product.solde}%
      </Typography>
-    </Box>
+    </motion.div>
      
+    <motion.div 
+         initial={{x:400,y:-200,scale:2,opacity:0}}
+         animate={{x:0,y:0,scale:1,opacity:1}}
+         transition={{duration:0.7,ease:'easeIn'}}
+      >
     <Typography sx={{fontWeight:'800',textAlign:'left',my:2}} variant='body1' gutterBottom>
     {product.description}
      </Typography>
+     </motion.div>
 
-    <Box sx={{display:'flex',alignItems:'center'}} >
+    <motion.div 
+    style={{display:'flex',alignItems:'center'}}
+    initial={{x:400,y:-200,scale:2,opacity:0}}
+    animate={{x:0,y:0,scale:1,opacity:1}}
+    transition={{duration:0.7,ease:'easeIn'}}
+    >
     <Rating sx={{color:'black',height:'100%'}} size="medium"  name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
     <Typography sx={{fontWeight:'700',mx:2}}  variant='subtitle1' gutterBottom>
     4.3 
@@ -85,13 +109,27 @@ export const FirstCard = ({activeSize,setActiveSize,indexs,setIndexs}:any) => {
      591 Avis  ౹  + 5 000 Vendus
      </Typography>
 
-    </Box>
+    </motion.div>
 
     <Divider sx={{my:2}} />
 
-    <Typography sx={{fontWeight:'800',textAlign:'left'}}  variant='body1' gutterBottom>
+      <motion.div 
+         initial={{x:400,y:-200,scale:2,opacity:0}}
+         animate={{x:0,y:0,scale:1,opacity:1}}
+         transition={{duration:0.7,ease:'easeIn'}}
+      >
+      <Typography sx={{fontWeight:'800',textAlign:'left'}}  variant='body1' gutterBottom>
     Coupon & Discount
      </Typography>
+      </motion.div>
+   
+      <motion.div 
+         style={{borderRadius:'12px'}}
+         initial={{x:400,y:-200,scale:2,opacity:0}}
+         animate={{x:0,y:0,scale:1,opacity:1}}
+         transition={{duration:0.7,ease:'easeIn'}}
+      >
+     
     <Box sx={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',bgcolor:'#f5f5f5',width:'200px',height:'80px',borderRadius:'12px',my:1}} >
     <Typography sx={{fontWeight:'800',color:'#ff3d00',textAlign:'left'}}  variant='body1' gutterBottom>
     DA113.47 off
@@ -100,11 +138,21 @@ export const FirstCard = ({activeSize,setActiveSize,indexs,setIndexs}:any) => {
      dès DA113.66 d'achat
      </Typography>
     </Box>
+   
+     </motion.div>
+
     <Typography sx={{fontWeight:'800',textAlign:'left'}}  variant='body1' gutterBottom>
     Couleur: { product.images.length == 0 ? "" :   ( indexs>=5 ? "other color" : product.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) )[indexs].color) }
      </Typography>
+     
+     <motion.div
+     style={{width:'80%'}}
+     initial={{x:400,y:-200,scale:2,opacity:0}}
+     animate={{x:0,y:0,scale:1,opacity:1}}
+     transition={{duration:0.7,ease:'easeIn'}}
+     >
 
-      <Box sx={{display:'flex',alignItems:'center',width:'80%',my:2}} >
+<Box sx={{display:'flex',width:'100%',alignItems:'center',my:2}} >
        { product.images.length == 0 ? "" : product.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) ).map((categ:any,index:any)=>
        
        <Box key={index} sx={{height:'50px',width:'50px',borderRadius:'12px',mx:2}} >
@@ -113,18 +161,40 @@ export const FirstCard = ({activeSize,setActiveSize,indexs,setIndexs}:any) => {
        )}
       </Box>
 
+     </motion.div>
+
+    
+
       <Typography sx={{fontWeight:'800',textAlign:'left'}}  variant='body1' gutterBottom>
       {product.properties} : { product.property.length == 0 ? "" : product.property[activeSize].detailsName}
      </Typography>
+
      <Box sx={{display:'flex',width:'100%',alignItems:'center',flexWrap:'wrap'}} >
        { product.property.length == 0 ? "" : product.property.map((prop:any,index:any)=>
        <Box key={index} sx={{mx:1,my:1}} >
-        { index === activeSize ? <div onClick={()=>setActiveSize(index)}  style={{height:'30px',borderStyle:'solid',borderColor:'#424242',display:'flex',justifyContent:'center',alignItems:'center',padding:2,borderRadius:'8px'}} >
+        { index === activeSize ? 
+        <motion.div 
+        onClick={()=>setActiveSize(index)}  
+        style={{height:'30px',borderStyle:'solid',borderColor:'#424242',display:'flex',justifyContent:'center',alignItems:'center',padding:2,borderRadius:'8px'}}
+        initial={{x:400,y:-200,scale:2,opacity:0}}
+        animate={{x:0,y:0,scale:1,opacity:1}}
+        transition={{duration:0.7,ease:'easeIn'}}
+        >
         {prop.detailsName}
-     </div> : 
-     <div  onClick={()=>setActiveSize(index)} style={{height:'30px',borderStyle:'solid',borderColor:'#e0e0e0',display:'flex',justifyContent:'center',alignItems:'center',padding:2,borderRadius:'8px'}} >
+       </motion.div> 
+     
+     : 
+
+     <motion.div 
+      onClick={()=>setActiveSize(index)} 
+      style={{height:'30px',borderStyle:'solid',borderColor:'#e0e0e0',display:'flex',justifyContent:'center',alignItems:'center',padding:2,borderRadius:'8px'}}
+      
+      initial={{x:400,y:-200,scale:2,opacity:0}}
+      animate={{x:0,y:0,scale:1,opacity:1}}
+      transition={{duration:0.7,ease:'easeIn'}}
+      >
      {prop.detailsName}
-     </div>
+     </motion.div>
      }
 
      </Box>

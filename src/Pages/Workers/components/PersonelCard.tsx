@@ -1,6 +1,6 @@
 
 import Box from '@mui/material/Box';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ImageCard } from './personelCardComponents/ImageCard';
 import { FirstCard } from './personelCardComponents/FirstCard';
 import Divider from '@mui/material/Divider';
@@ -9,9 +9,12 @@ import { Description } from './personelCardComponents/Description';
 import { Reviews } from './personelCardComponents/Reviews';
 import { ProductLikely } from './personelCardComponents/ProductLikely';
 import Skeleton from '@mui/material/Skeleton';
+
+
 export const PersonelCard = ({product,loading }:any) => {
 
 
+  
     
     const [activeSize,setActiveSize]=useState(0)
     const [indexs,setIndexs]=useState(0)
@@ -49,7 +52,7 @@ export const PersonelCard = ({product,loading }:any) => {
          <Skeleton variant="rectangular" width={210} height={60} />
         </Box>
      : 
-     <Box sx={{width:'350px',height:'600px',borderRadius:'10px',borderStyle:'solid',borderColor:'#eeeeee',display:'flex',justifyContent:'center',alignItems:'center',position:'sticky',top:'2%',right:0}} >
+     <Box sx={{width:'350px',height:'600px',borderRadius:'10px',border:'2px solid #eeeeee',display:'flex',justifyContent:'center',alignItems:'center',position:'sticky',top:'2%',right:0}} >
         <ImageCard activeSize={activeSize} setActiveSize={setActiveSize} indexs={indexs} setIndexs={setIndexs}/>
      </Box>}
     

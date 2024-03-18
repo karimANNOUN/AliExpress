@@ -7,6 +7,8 @@ import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import IconButton from '@mui/material/IconButton';
 import { ModalComment } from './ModalComment';
+import { motion ,useScroll ,useMotionValueEvent   } from "framer-motion"
+
 export const Reviews = () => {
 
     const [show,setShow]=useState(true)
@@ -34,8 +36,28 @@ export const Reviews = () => {
         {id:1,name:'mitou',puctures:reviewImg},{id:2,name:'mitou',puctures:reviewImg},{id:3,name:'mitou',puctures:reviewImg}
     ]
 
+    const { scrollY } = useScroll()
+
+    const [hidden,setHidden]=useState(false)
+  
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if ( latest > 1450 ) {
+      setHidden(true)
+    }else{
+      setHidden(false)
+    }
+  })
+
   return (
-    <Box sx={{display:'flex',flexDirection:'column'}} >
+    <motion.div 
+      style={{display:'flex',flexDirection:'column'}}
+      variants={{
+        visible:{ x:0 ,opacity:1 , scale:1 },
+        hidden:{x:200,opacity:0.6,scale:0.5}
+      }}
+      animate={!hidden ? "hidden" : "visible" }
+      transition={{ ease:'easeInOut' ,duration:1}}
+      >
          <Typography sx={{fontWeight:'800',textAlign:'left'}} variant="h6" gutterBottom>
          Customer Reviews (591)
       </Typography>
@@ -111,7 +133,7 @@ export const Reviews = () => {
  
        <Box sx={{display:'flex',flexDirection:'column',my:2}} >
   
-    {comments.slice(0, 3).map(com=> <Box sx={{display:'flex',flexDirection:'column'}} >
+    {comments.slice(0, 3).map(com=> <Box key={com.id} sx={{display:'flex',flexDirection:'column'}} >
        <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'center'}} >
        <Rating sx={{color:'black',mb:1}} name="half-rating-read" defaultValue={4.3} precision={0.1} size='medium' readOnly />
        <Typography sx={{textAlign:'left',color:'#9e9e9e'}} variant="subtitle1" gutterBottom>
@@ -149,6 +171,6 @@ export const Reviews = () => {
      <Button onClick={handleOpen} sx={{bgcolor:'#e0e0e0',color:'black',fontWeight:'800',borderRadius:'12px',":hover":{bgcolor:'#9e9e9e'}}} variant="text">Voir Plus</Button>
      </Box>
       <ModalComment reviewsTypes={reviewsTypes} open={open} setOpen={setOpen} comments={comments} show={show} setShow={setShow} index={index} setIndex={setIndex} />
-    </Box>
+    </motion.div>
   )
 }

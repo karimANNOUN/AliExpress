@@ -14,6 +14,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { BoxProduct } from './BoxProduct';
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
 import Cookies from 'js-cookie';
+import { count } from 'console';
 
 export const Product = () => {
 
@@ -70,6 +71,60 @@ export const Product = () => {
     },[])
 
 
+    const handelGetProduct=async()=>{
+      try {
+       setActive(0)
+      const response = await fetch(`http://localhost:8000/seller/getprod`,{
+        method: 'GET',
+        credentials:"include", 
+        headers: {
+          'Content-Type': 'application/json',
+           authorization:`${token}`
+        }
+      });
+      const data = await response.json()
+      if (!data) {
+        setLoading(true)
+      }if (data.success == true) {
+        setProductsSeller(data.productSeller)
+        setLoading(false) 
+      } 
+  
+    } catch (error) {
+      console.error('operation failed.');
+    }
+     
+    }
+   
+
+    
+    const handelGetProductPrix=async()=>{
+      try {
+        setActive(3)
+      const response = await fetch(`http://localhost:8000/getpricedown`,{
+        method: 'GET',
+        credentials:"include", 
+        headers: {
+          'Content-Type': 'application/json',
+           authorization:`${token}`
+        }
+      });
+      const data = await response.json()
+      if (!data) {
+        setLoading(true)
+      }if (data.success == true) {
+        setProductsSeller(data.productSeller)
+        setLoading(false) 
+      } 
+  
+    } catch (error) {
+      console.error('operation failed.');
+    }
+     
+    }
+   
+
+
     const handelGetProductLivraison=async()=>{
       try {
         setActive(4)
@@ -118,7 +173,7 @@ export const Product = () => {
                 <Button onClick={()=>setActive(0)} sx={{color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">All Products</Button>
 
                 : 
-                <Button onClick={()=>setActive(0)} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">All Products</Button>
+                <Button onClick={handelGetProduct} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">All Products</Button>
             }
         
   
@@ -140,7 +195,7 @@ export const Product = () => {
            {active === 3 ?
         <Button onClick={()=>setActive(3)} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text"> Prix<ImportExportIcon sx={{fontSize:'14px',color:'#ff3d00'}} /></Button>
         :
-        <Button onClick={()=>setActive(3)} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text"> Prix<ImportExportIcon sx={{fontSize:'14px'}} /></Button>
+        <Button onClick={handelGetProductPrix} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text"> Prix<ImportExportIcon sx={{fontSize:'14px'}} /></Button>
         }
 
             

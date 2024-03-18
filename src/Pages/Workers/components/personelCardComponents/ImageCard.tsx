@@ -18,7 +18,7 @@ import Cookies from 'js-cookie';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { setProduct, setProductStore, setProducts } from '../../../../storeRedux/CartSlice';
-
+import { motion } from 'framer-motion';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -192,7 +192,12 @@ export const ImageCard = ({activeSize,indexs,setIndexs}:any) => {
    },[art,favoritColor,optionSize])
 
   return (
-    <Box sx={{width:'95%',height:'95%',display:'flex',flexDirection:'column'}} >
+    <motion.div 
+      style={{width:'95%',height:'95%',display:'flex',flexDirection:'column'}}
+      initial={{ opacity: 0, y:-200 ,scale:0.5 }}
+      animate={{ opacity: 1, y:0,scale:1 }}
+      transition={{ ease:'easeIn' ,duration: 1 }}
+      >
 
 
 <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>
@@ -312,6 +317,6 @@ Protection acheteur
 
     </Box>
 
-  </Box>
+  </motion.div>
   )
 }

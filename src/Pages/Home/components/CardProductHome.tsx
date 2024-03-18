@@ -7,7 +7,7 @@ import {  Link, useNavigate  } from 'react-router-dom';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { CardModalProduct } from '../../CardProducts/CardModalProduct';
-
+import { motion } from "framer-motion";
 
 export const CardProductHome = ({art,toggleDrawer}:any) => {
 
@@ -37,7 +37,17 @@ export const CardProductHome = ({art,toggleDrawer}:any) => {
     }
 
   return (
-    <Box key={art.id} component='div'  sx={{width:'340px',height:'530px',borderRadius:'20px',mb:2,display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',borderColor:'#eeeeee',borderStyle:'solid' }}>
+    <motion.div 
+    initial={{ scale: 0,opacity: 0,x:-320,y:-400 }}
+    animate={{  scale: 1,opacity: 1 ,x:0,y:0 }}
+    transition={{
+   //   type: "spring",
+  //    stiffness: 260,
+   //   damping: 20,
+      duration: 1
+    }}
+    style={{width:'340px',height:'530px'}} >
+       <Box  key={art.id} component='div'  sx={{width:'100%',height:'100%',borderRadius:'20px',mb:2,display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',borderColor:'#eeeeee',borderStyle:'solid' }}>
           <img onClick={()=>navigate(`/${art.id}`)} src={`${art.images.filter((img:any)=> img.color !== 'imageDescription')[0].imageUrl}`} alt='hhtr' style={{width:'90%',height:'60%',borderRadius:'20px'}} />
           <Box sx={{width:'90%',display:'flex',flexDirection:'column'}} >
           <Typography sx={{my:1,textAlign:'left'}}  variant='body1' gutterBottom>
@@ -87,5 +97,7 @@ export const CardProductHome = ({art,toggleDrawer}:any) => {
          
 
         </Box>
+    </motion.div>
+   
   )
 }

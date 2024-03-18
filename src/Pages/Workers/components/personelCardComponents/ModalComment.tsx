@@ -7,6 +7,8 @@ import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import Rating from '@mui/material/Rating';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
+import { motion  } from "framer-motion"
+
 export const ModalComment = ({open,setOpen,reviewsTypes,comments,show,setShow,index,setIndex}:any) => {
 
     const handleClose = () => setOpen(false);
@@ -39,7 +41,12 @@ export const ModalComment = ({open,setOpen,reviewsTypes,comments,show,setShow,in
       >
         <Box sx={style}>
         <IconButton onClick={handleClose} sx={{position:'absolute',bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'},top:'2%',right:'3%'}} ><CloseOutlinedIcon sx={{fontSize:'20px',color:'#9e9e9e'}} /></IconButton>
-        <Box sx={{display:'flex',flexDirection:'column'}} >
+        <motion.div 
+         style={{display:'flex',flexDirection:'column'}}
+         initial={{y:-200,opacity:0,scale:0.5}}
+         animate={{y:0,opacity:1,scale:1}}
+         transition={{duration:1,ease:'easeInOut',stiffness:1000,damping:10}}
+         >
          <Typography sx={{fontWeight:'800',textAlign:'left'}} variant="h6" gutterBottom>
          Customer Reviews (591)
       </Typography>
@@ -116,7 +123,7 @@ export const ModalComment = ({open,setOpen,reviewsTypes,comments,show,setShow,in
  
        <Box sx={{display:'flex',flexDirection:'column',my:2}} >
   
-    {comments.map((com:any)=> <Box sx={{display:'flex',flexDirection:'column'}} >
+    {comments.map((com:any)=> <Box key={com.id} sx={{display:'flex',flexDirection:'column'}} >
        <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'center'}} >
        <Rating sx={{color:'black',mb:1}} name="half-rating-read" defaultValue={4.3} precision={0.1} size='medium' readOnly />
        <Typography sx={{textAlign:'left',color:'#9e9e9e'}} variant="subtitle1" gutterBottom>
@@ -149,7 +156,7 @@ export const ModalComment = ({open,setOpen,reviewsTypes,comments,show,setShow,in
      
 
      </Box>
-</Box>
+</motion.div>
         </Box>
       </Modal>
     </div>
