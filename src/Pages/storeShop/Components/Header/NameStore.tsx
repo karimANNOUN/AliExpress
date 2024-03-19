@@ -155,7 +155,7 @@ export const NameStore = () => {
                <img src={product.images[0].imageUrl} style={{width:'40%',height:'90%',borderRadius:'8px'}} />
                <Box sx={{display:'flex',flexDirection:'column',justifyContent:'center',height:'90%',width:'50%'}} >
                <Link variant='caption' sx={{color:'#9e9e9e',textAlign:'left',mb:2,textDecorationLine:'none',":hover":{color:'#9e9e9e',textDecorationLine:'underline'}}} href={`/${product.id}`}>
-               {product.title},{product.description}
+               {product.title}
                </Link>
                
                <Typography sx={{fontWeight:'800',textAlign:'left'}} variant='h6' gutterBottom>
@@ -199,7 +199,7 @@ export const NameStore = () => {
                <img src={product.images[0].imageUrl} style={{width:'100%',height:'60%'}} />
                <Box sx={{display:'flex',flexDirection:'column',justifyContent:'center',height:'40%',width:'100%',pl:2}} >
                <Link variant='caption' sx={{color:'#9e9e9e',textAlign:'left',mb:2,textDecorationLine:'none',":hover":{color:'#9e9e9e',textDecorationLine:'underline'}}} href={`/${product.id}`}>
-               {product.title},{product.description}
+               {product.title}
                </Link>
                
                <Typography sx={{fontWeight:'800',textAlign:'left'}} variant='h6' gutterBottom>
@@ -225,7 +225,7 @@ export const NameStore = () => {
     
                <Box sx={{display:'flex',flexDirection:'column',justifyContent:'center',height:'40%',width:'100%',pl:2}} >
                <Link variant='caption'  sx={{color:'#9e9e9e',textAlign:'left',mb:2,textDecorationLine:'none',":hover":{color:'#9e9e9e',textDecorationLine:'underline'}}} href={`/${prod.id}`}>
-               {prod.title},{prod.description}
+               {prod.title}
                </Link>
 
                 <Typography sx={{fontWeight:'800',textAlign:'left'}} variant='h6' gutterBottom>

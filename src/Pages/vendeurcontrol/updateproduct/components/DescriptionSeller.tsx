@@ -458,7 +458,7 @@ const product=useSelector((state:any)=>state.app.productSeller)
     useEffect(()=>{
       const prod = product.images.filter((img:any)=>  img.color == 'imageDescription')[0]
   
-      console.log(prod)
+      
       setImgDescription(prod)
     
     },[])

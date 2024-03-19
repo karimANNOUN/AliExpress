@@ -40,7 +40,7 @@ export const Header = () => {
 
      const seller=useSelector((state:any)=>state.app.seller)
 
-  
+  console.log(seller)
 
      const [hovers,setHovers]=useState(active) 
 

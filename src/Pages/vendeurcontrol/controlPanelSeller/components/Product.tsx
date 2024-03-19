@@ -1,20 +1,16 @@
-import { Box,IconButton,Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom';
+import { Box,Typography } from '@mui/material'
+import  { useEffect, useState } from 'react'
+
 import { Header } from './Header';
 import { Lists } from './Lists';
 import Button from '@mui/material/Button';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Link from '@mui/material/Link';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import Checkbox from '@mui/material/Checkbox';
 import { BoxProduct } from './BoxProduct';
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
 import Cookies from 'js-cookie';
-import { count } from 'console';
+
 
 export const Product = () => {
 
@@ -215,7 +211,7 @@ export const Product = () => {
           <Typography sx={{fontWeight:'800',color:'#757575',textAlign:'center'}} variant='body2' gutterBottom>
            empty store you don't have any products
         </Typography>
-          :  productsSeller.map((prod:any)=> <BoxProduct key={prod.id} prod={prod} /> ))}
+          :  productsSeller.map((prod:any)=> <BoxProduct setProductsSeller={setProductsSeller} key={prod.id} prod={prod} /> ))}
    
     </Box>
 
