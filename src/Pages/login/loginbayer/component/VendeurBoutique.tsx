@@ -21,7 +21,8 @@ import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { LinearProgress } from '@mui/material';
+import { LinearProgress ,IconButton } from '@mui/material';
+import { CloseOutlined } from '@mui/icons-material';
 
 
 
@@ -73,6 +74,12 @@ export const VendeurBoutique = () => {
     const [image3, setImage3] = useState<string | null | any >(null);
     const [data,setData]=useState< {} | null | any >(null)
 
+    const [hiden,setHiden]=useState(false)
+    const [hiden1,setHiden1]=useState(false)
+    const [hiden2,setHiden2]=useState(false)
+    const [hiden3,setHiden3]=useState(false)
+    
+
     //hello all brother this is me
 
     const handleChangeImageStatus = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,11 +97,12 @@ export const VendeurBoutique = () => {
             const progress = Math.round((e.loaded / e.total ) * 100);
             setUploadProgress(progress)
             setImage(e.target.result as string);
+            setHiden(true)
            
           }
         };
   
-        // Read the image file as a data URL
+       
         reader.readAsDataURL( file);
       }
 
@@ -114,11 +122,12 @@ export const VendeurBoutique = () => {
             const progress = Math.round((e.loaded / e.total ) * 100);
             setUploadProgress1(progress)
             setImage1(e.target.result as string);
+            setHiden1(true)
            
           }
         };
   
-        // Read the image file as a data URL
+     
         reader.readAsDataURL( file);
       }
  
@@ -138,11 +147,11 @@ export const VendeurBoutique = () => {
             const progress = Math.round((e.loaded / e.total ) * 100);
             setUploadProgress2(progress)
             setImage2(e.target.result as string);
-           
+            setHiden2(true)
           }
         };
   
-        // Read the image file as a data URL
+       
         reader.readAsDataURL( file);
       }
     };
@@ -159,11 +168,12 @@ export const VendeurBoutique = () => {
             const progress = Math.round((e.loaded / e.total ) * 100);
             setUploadProgress3(progress)
             setImage3(e.target.result as string);
+            setHiden3(true)
            
           }
         };
   
-        // Read the image file as a data URL
+       
         reader.readAsDataURL( file);
       }
     };
@@ -438,18 +448,21 @@ export const VendeurBoutique = () => {
                   Les entrepreneurs individuels n'ont pas besoin de statuts d'entreprise.
 
                     </Typography>
-
+                    { hiden == false ? 
         <Button variant="outlined"  component='label' sx={{width:'120px',height:'140px',color:'black',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',borderRadius:'6px',border:'1px dashed #bdbdbd',my:1,":hover":{border:'1px dashed #bdbdbd',color:'black'}}} >
           <InsertPhotoOutlinedIcon/>
           <Typography variant='caption' sx={{mt:1}} >  
           Upload
         </Typography>
         <VisuallyHiddenInput  onChange={handleChangeImageStatus} type="file" />
-        </Button>
+        </Button>: "" }
 
-        {uploadProgress !== 0 ? <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px'}} >
+        {uploadProgress !== 0 ? <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px',position:'relative'}} >
         <img src={image} style={{height:'140px',width:'100%'}} />
          <LinearProgress sx={{my:1,width:'100%'}} variant="determinate" value={uploadProgress} />
+         <IconButton onClick={()=>(setHiden(false),setUploadProgress(0))} sx={{":hover":{bgcolor:'#e0e0e0'},position:'absolute',top:'2%',right:'3%'}} >
+          <CloseOutlined sx={{fontSize:'8px'}} />
+         </IconButton>
          </Box> : "" }
          
        
@@ -501,18 +514,21 @@ export const VendeurBoutique = () => {
 licence/certificat d’entreprise
 
                     </Typography>
-
+                    { hiden1 == false ? 
         <Button variant="outlined" component='label'  sx={{width:'120px',height:'140px',color:'black',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',borderRadius:'6px',border:'1px dashed #bdbdbd',my:1,":hover":{border:'1px dashed #bdbdbd',color:'black'}}} >
           <InsertPhotoOutlinedIcon/>
           <Typography variant='caption' sx={{mt:1}} >  
           Upload
         </Typography>
         <VisuallyHiddenInput onChange={handleChangecertificatEntreprise} type="file" />
-        </Button>
+        </Button> : "" }
 
-        {uploadProgress1 !== 0 ? <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px'}} >
+        {uploadProgress1 !== 0 ? <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px',position:'relative'}} >
          <img src={image1} style={{height:'140px',width:'100%'}} />
          <LinearProgress sx={{my:1,width:'100%'}} variant="determinate" value={uploadProgress} />
+         <IconButton onClick={()=>(setHiden1(false),setUploadProgress1(0))} sx={{":hover":{bgcolor:'#e0e0e0'},position:'absolute',top:'2%',right:'3%'}} >
+          <CloseOutlined sx={{fontSize:'8px'}} />
+         </IconButton>
          </Box> : '' }
        
        
@@ -761,18 +777,21 @@ Informations du représentant légal
 Pièce d'identité (recto-verso et en couleur)
 
                     </Typography>
-
+                    { hiden2 == false ? 
         <Button variant="outlined" component='label'  sx={{width:'120px',height:'140px',color:'black',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',borderRadius:'6px',border:'1px dashed #bdbdbd',my:1,":hover":{border:'1px dashed #bdbdbd',color:'black'}}} >
           <InsertPhotoOutlinedIcon/>
           <Typography variant='caption' sx={{mt:1}} >  
           Upload
         </Typography>
         <VisuallyHiddenInput onChange={handleChangeImageIdentity} type="file" />
-        </Button>
+        </Button> : "" }
 
-        {uploadProgress2 !== 0 ? <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px'}} >
+        {uploadProgress2 !== 0 ? <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px',position:'relative'}} >
          <img src={image2} style={{height:'140px',width:'100%'}} />
          <LinearProgress sx={{my:1,width:'100%'}} variant="determinate" value={uploadProgress} />
+         <IconButton onClick={()=>(setHiden2(false),setUploadProgress2(0))} sx={{":hover":{bgcolor:'#e0e0e0'},position:'absolute',top:'2%',right:'3%'}} >
+          <CloseOutlined sx={{fontSize:'8px'}} />
+         </IconButton>
          </Box> : "" }
        
        
@@ -822,18 +841,21 @@ Pièce d'identité (recto-verso et en couleur)
      <Typography variant='subtitle2' sx={{textAlign:'left',fontWeight:'700',mt:2}} >
      Justificatif de domicile du représentant légal
                     </Typography>
-
+                    { hiden3 == false ? 
         <Button variant="outlined" component='label'  sx={{width:'120px',height:'140px',color:'black',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',borderRadius:'6px',border:'1px dashed #bdbdbd',my:1,":hover":{border:'1px dashed #bdbdbd',color:'black'}}} >
           <InsertPhotoOutlinedIcon/>
           <Typography variant='caption' sx={{mt:1}} >  
           Upload
         </Typography>
         <VisuallyHiddenInput onChange={handleChangeCertificatResidence} type="file" />
-        </Button>
+        </Button> : "" }
 
-        {uploadProgress3 !== 0 ? <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px'}} >
+        {uploadProgress3 !== 0 ? <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'120px',position:'relative'}} >
          <img src={image3} style={{height:'140px',width:'100%'}} />
          <LinearProgress sx={{my:1,width:'100%'}} variant="determinate" value={uploadProgress} />
+         <IconButton onClick={()=>(setHiden3(false),setUploadProgress3(0))} sx={{":hover":{bgcolor:'#e0e0e0'},position:'absolute',top:'2%',right:'3%'}} >
+          <CloseOutlined sx={{fontSize:'8px'}} />
+         </IconButton>
          </Box> : "" }
        
        

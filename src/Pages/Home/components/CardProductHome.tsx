@@ -66,9 +66,9 @@ export const CardProductHome = ({art,toggleDrawer}:any) => {
       <Typography sx={{textAlign:'left',fontWeight:'700',mr:2}}  variant='body1' gutterBottom>
         {art.price-(art.solde*art.price/100)}
       </Typography>
-      <Typography sx={{textAlign:'left',fontWeight:'5',textDecorationLine:'line-through',color: '#bdbdbd'}}  variant='caption' gutterBottom>
+      { art.solde == 0 ? "" : <Typography sx={{textAlign:'left',fontWeight:'5',textDecorationLine:'line-through',color: '#bdbdbd'}}  variant='caption' gutterBottom>
         DA{art.price}
-      </Typography> 
+      </Typography> }
        </Box>
 
        { art.solde !== 0 ?  <Box sx={{display:'flex',alignItems:'center'}} >

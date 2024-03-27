@@ -10,8 +10,10 @@ export const ProtectedSeller1 = ({children}:any) => {
 
     const token=Cookies.get('token')
 
+    const [user,setUser]=useState <any> ({})
+
     useEffect(()=>{
-        if (token !== "" ) {
+        
             const getUser=async()=>{
               const response=await fetch('http://localhost:8000/user', {
                method: 'GET',
@@ -22,28 +24,38 @@ export const ProtectedSeller1 = ({children}:any) => {
                },
              })
              const data = await response.json()
-             
+            
              if (!data) {
               setLoading(true)
              }
             if (data.success == true) {
               setLoading(false)
-              dispatch(setUser(data.user.user))
-         
+            //  dispatch(setUser(data.user.user))
+               setUser(data.user.user)
             }
             
             }
             getUser()   
-          }
+          
     },[])
 
-    const user=useSelector((state:any)=>state.app.user)
+  //  const user=useSelector((state:any)=>state.app.user)
 
+   // console.log(user)
 
-   
-   
 
     
+    
+
+
    
-    return (token !== undefined && user !== undefined && user.role == "seller attente1" ) ? children : <Navigate to="/loginvendeur"/>
+   
+
+   if (loading == true ) {
+    return null
+   }else{
+    return (user.role == "seller attente1" ) ? children : <Navigate to="/login"/>
+   } 
+   
+  
 }

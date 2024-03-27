@@ -11,6 +11,7 @@ import { BoxLocation } from './BoxLocation';
 import { AddCard } from './paymentInfo/AddCard';
 import { VoirInfoCard } from './paymentInfo/VoirInfoCard';
 import { useSelector } from 'react-redux';
+import { PaypalButton } from './paymentInfo/PaypalButton';
 
 export const PaymentStoreCard = () => {
 
@@ -41,6 +42,9 @@ export const PaymentStoreCard = () => {
     const totalLivraisonPrice = storePayer.reduce((accumulator:any, currentProduct:any) => {
       return accumulator + currentProduct.priceLivraison;
     }, 0);
+
+
+  
 
 
 
@@ -80,7 +84,7 @@ export const PaymentStoreCard = () => {
             {userInfo.name}
         </Typography>
         <Typography sx={{fontWeight:'100',color:'#bdbdbd',textAlign:'left'}} variant='body1' gutterBottom>
-        +213 {userInfo.locationUser.phoneNumber}
+         +{userInfo.locationUser.phoneNumber}
         </Typography>
               </Box>
 
@@ -232,6 +236,9 @@ export const PaymentStoreCard = () => {
            <Button onClick={handelShowCard} variant='contained' sx={{bgcolor:'#ff1744',color:'white',mb:2,width:'100%',borderRadius:'16px' ,":hover":{color:'white',bgcolor:'#ff1744'} }} >
           Commander
     </Button>
+         
+         <PaypalButton totalPrice={totalPrice} totalLivraisonPrice={totalLivraisonPrice}  />
+
           </Box>
           </Box>
           <Box sx={{display:'flex',justifyContent:'center',alignItems:'center',width:'100%',bgcolor:'Window',mb:2}} >

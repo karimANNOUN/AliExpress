@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState,useEffect } from 'react';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -17,28 +17,77 @@ import LanguageIcon from '@mui/icons-material/Language';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import BrushIcon from '@mui/icons-material/Brush';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const Lists = () => {
+
+  const navigate=useNavigate()
+
+  const [count,setCount]=useState(0)
+
+  const location=useLocation()
+
+  useEffect(()=>{
+
+    if (location.pathname == '/controlpanelseller/dashboard') {
+      setCount(0)
+    }if (location.pathname == '/controlpanelseller/products') {
+      setCount(1)
+    } 
+
+  },[location])
+
   return (
     <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
     <nav aria-label="main mailbox folders">
       <List>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Dashbord" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
+      
+      { count == 0 ? 
+         <ListItem sx={{color:'#1976d2' ,bgcolor:'#90caf9'}} disablePadding>
+         <ListItemButton onClick={()=>navigate('/controlpanelseller/dashboard')} >
+           <ListItemIcon >
+             <DashboardIcon />
+           </ListItemIcon>
+           <ListItemText primary="Dashbord" />
+         </ListItemButton>
+       </ListItem>
+      :
+      <ListItem  disablePadding>
+      <ListItemButton onClick={()=>navigate('/controlpanelseller/dashboard')} >
+        <ListItemIcon >
+          <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText primary="Dashbord" />
+      </ListItemButton>
+    </ListItem>
+      
+      }
+       
+
+       { count == 1 ? 
+
+        <ListItem sx={{color:'#1976d2' ,bgcolor:'#90caf9'}} disablePadding>
+          <ListItemButton onClick={()=>navigate('/controlpanelseller/products')} >
             <ListItemIcon>
               <Inventory2Icon />
             </ListItemIcon>
             <ListItemText primary="Products" />
           </ListItemButton>
         </ListItem>
+
+        :
+         
+        <ListItem  disablePadding>
+        <ListItemButton onClick={()=>navigate('/controlpanelseller/products')} >
+          <ListItemIcon>
+            <Inventory2Icon />
+          </ListItemIcon>
+          <ListItemText primary="Products" />
+        </ListItemButton>
+      </ListItem>
+        
+        }
+
 
         <ListItem disablePadding>
           <ListItemButton>

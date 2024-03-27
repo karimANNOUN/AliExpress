@@ -101,7 +101,7 @@ Expédié par des vendeurs internationaux
 
 
           
-  { productStore.length ==0 ? "" : 
+  { !productStore ? "" : 
   productStore.map((product:any)=>
   <CardStoreProduct product={product} key={product.id} />)}
  

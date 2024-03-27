@@ -77,11 +77,11 @@ export default function AllRoutes() {
           <Route path='/passwordUpdates' element={<ProtectedRoutes><PasswordUpdate/></ProtectedRoutes>} />
           <Route path='/emailnotification' element={<ProtectedRoutes><NotificationEmail/></ProtectedRoutes>} />
           <Route path='/login' element={<Login/>} />
-          <Route path='/login/motpassoublie' element={<MotpassOublie/>} />
-          <Route path='/login/motpassoublie/redirect' element={<ConfermationPassword/>} />
+          <Route path='/login/motpassoublie' element={<ProtectedRoutes><MotpassOublie/></ProtectedRoutes>} />
+          <Route path='/login/motpassoublie/redirect' element={ <ProtectedRoutes><ConfermationPassword/></ProtectedRoutes> } />
           <Route path='/loginvendeur' element={<LoginVendeur/>} />
-          <Route path='/loginvendeurboutique' element={<ProtectedSeller1><VendeurBoutique/></ProtectedSeller1>} />
-          <Route path='/decisionvendeurboutique' element={<ProtectedSeller2><ReviewDecision/></ProtectedSeller2>} />
+          <Route path='/loginvendeurboutique' element={ <ProtectedRoutes><VendeurBoutique/></ProtectedRoutes> } />
+          <Route path='/decisionvendeurboutique' element={ <ProtectedRoutes><ReviewDecision/></ProtectedRoutes> } />
 
           <Route path='/controlpanelseller/dashboard' element={<ControlPanelSeller/>} />
           <Route path='/controlpanelseller/products' element={<Product/>} />
@@ -89,7 +89,7 @@ export default function AllRoutes() {
             
 
           <Route path='/register' element={<Register/>} />
-          <Route path='/addproduct' element={<ProtectedRoutesSeller><VendeurPage/></ProtectedRoutesSeller>} />
+          <Route path='/addproduct' element={<ProtectedRoutes><VendeurPage/></ProtectedRoutes>} />
 
       
         </Routes> 

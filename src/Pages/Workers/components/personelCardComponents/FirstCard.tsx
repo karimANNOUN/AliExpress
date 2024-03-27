@@ -76,12 +76,12 @@ export const FirstCard = ({activeSize,setActiveSize,indexs,setIndexs}:any) => {
      <Typography sx={{fontWeight:'800',color:'#ff3d00'}} variant="h4" gutterBottom>
      {product.price - (product.solde*product.price/100)}
      </Typography>
-     <Typography sx={{fontWeight:'500',textDecorationLine:'line-through',mx:2}}  variant='body1' gutterBottom>
+     { product.solde == 0 ? "" :   <Typography sx={{fontWeight:'500',textDecorationLine:'line-through',mx:2}}  variant='body1' gutterBottom>
      DA{product.price}
-     </Typography>
-     <Typography sx={{fontWeight:'100',color:'#ff3d00'}}  variant='body1' gutterBottom>
+     </Typography>}
+     { product.solde == 0 ? "" : <Typography sx={{fontWeight:'100',color:'#ff3d00'}}  variant='body1' gutterBottom>
      -{product.solde}%
-     </Typography>
+     </Typography>}
     </motion.div>
      
     <motion.div 

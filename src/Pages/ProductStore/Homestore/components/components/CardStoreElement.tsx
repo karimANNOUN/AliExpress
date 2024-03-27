@@ -11,10 +11,9 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Button } from '@mui/material';
 import Cookies from 'js-cookie';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFavoritProducts, setProductStore, setProducts, setStorePayer } from '../../../../../storeRedux/CartSlice';
+import { setFavoritProducts, setProductStore,setStorePayer } from '../../../../../storeRedux/CartSlice';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
-import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -252,7 +251,7 @@ export const CardStoreElement = ({prod}:any) => {
          
         });
         const data = await response.json()
-       console.log(data)
+       
         
         if (!data) {
           setLoading(true)
@@ -279,6 +278,8 @@ export const CardStoreElement = ({prod}:any) => {
       
 
       const checkedProduct = storePayer.find((fav:any)=> fav.productstoreId === prod.product.id ) 
+
+      
 
       
 
@@ -430,7 +431,7 @@ export const CardStoreElement = ({prod}:any) => {
 
     <Box sx={{display:'flex',alignItems:'center',width:'100%',my:2}} >
        
-       { !show ?
+       {  !show   ?
 
 <IconButton onClick={handelCreatPayerProduct} sx={{width:'23px',height:'23px',ml:2,borderRadius:'50%',border:'2px solid #e0e0e0',bgcolor:'Window',":hover":{bgcolor:'Window',border:'2px solid #ff1744'},display:'flex',justifyContent:'center',alignItems:'center'}} >
 
@@ -451,7 +452,7 @@ export const CardStoreElement = ({prod}:any) => {
     
                 <Box sx={{display:'flex',alignItems:'center',width:'100%'}} >
        
-       { !show ?
+       {  !show  ?
 
 <IconButton onClick={handelCreatPayerProduct} sx={{width:'23px',height:'23px',mx:2,borderRadius:'50%',border:'2px solid #e0e0e0',bgcolor:'Window',":hover":{bgcolor:'Window',border:'2px solid #ff1744'},display:'flex',justifyContent:'center',alignItems:'center'}} >
 

@@ -17,6 +17,8 @@ export const ProtectedRoutes  = ({children}:any) => {
 
     const token=Cookies.get('token')
 
+   
+
     useEffect(()=>{
         if (token !== "" ) {
             const getUser=async()=>{
@@ -36,7 +38,7 @@ export const ProtectedRoutes  = ({children}:any) => {
             if (data.success == true) {
               setLoading(false)
               dispatch(setUser(data.user.user))
-         
+              
             }
             
             }
@@ -44,13 +46,17 @@ export const ProtectedRoutes  = ({children}:any) => {
           }
     },[])
 
-    const user=useSelector((state:any)=>state.app.user)
+    
+  
 
-    console.log(user)
    
-   
+  if (loading == true ) {
+    return null
+   }else{
+    return (token !== undefined  ) ? children : <Navigate to="/login"/>
+   } 
 
     
    
-    return (token !== undefined && user !== undefined  ) ? children : <Navigate to="/login"/>
+   
 }

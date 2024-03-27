@@ -1,26 +1,44 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
 import CheckIcon from '@mui/icons-material/Check';
 import Link from '@mui/material/Link';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Divider from '@mui/material/Divider';
 import { Button } from '@mui/material';
 import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
 import { useNavigate } from 'react-router-dom';
 import { CardStoreElement } from './components/CardStoreElement';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import Cookies from 'js-cookie';
 
 
 export const CardPaymentStore = ({productsStore}:any) => {
 
   const navigate=useNavigate()
 
-    const [show,setShow]=useState(false)
+  const dispatch = useDispatch()
+
+  const [loading,setLoading]=useState(false)
+
+  const [message,setMessage]=useState('')
+    const [showAll,setShowAll]=useState(false)
+
+    const [openAlert, setOpenAlert] = useState(false);
+
+
+    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+     if (reason === 'clickaway') {
+       return;
+     }
+ 
+     setOpenAlert(false);
+   };
+ 
+
+    const token = Cookies.get('token');
+
+    
 
 
     const storePayer=useSelector((state:any)=>state.app.storePayer)
@@ -36,7 +54,14 @@ export const CardPaymentStore = ({productsStore}:any) => {
     }, 0);
   
 
+   
+     
+
+       
     
+
+
+
 
   return (
     <Box sx={{width:'70%',display:'flex',justifyContent:'space-between',my:2}} >
@@ -45,31 +70,7 @@ export const CardPaymentStore = ({productsStore}:any) => {
         <Typography sx={{fontWeight:'800',textAlign:'left',ml:2}} variant="h5" gutterBottom>
         Panier ({productsStore.length})
         </Typography>
-        <Box sx={{display:'flex',alignItems:'center'}} >
-       
- { !show ?
-
-<IconButton onClick={()=>setShow(true)} sx={{width:'23px',height:'23px',ml:2,borderRadius:'50%',border:'2px solid #e0e0e0',bgcolor:'Window',":hover":{bgcolor:'Window',border:'2px solid #ff1744'},display:'flex',justifyContent:'center',alignItems:'center'}} >
-
-</IconButton>
-
- :  <IconButton onClick={()=>setShow(false)} sx={{width:'23px',ml:2,height:'23px',borderRadius:'50%',bgcolor:'#ff1744',":hover":{bgcolor:'#ff1744'},display:'flex',justifyContent:'center',alignItems:'center'}} >
-     <CheckIcon sx={{fontSize:'17px',color:'white'}} />
- </IconButton>
- 
- }
-
-<Link variant='caption' sx={{color:'#9e9e9e',fontSize:'12px',textAlign:'left',ml:1,":hover":{color:'#9e9e9e'}}} href="#" underline="none">
-Sélectionner Tous Les articles |
-</Link> 
-
-
-<Button variant='text' sx={{color:'#03a9f4',fontSize:'12px',fontWeight:'300'  ,bgcolor:'Window',":hover":{color:'#03a9f4',bgcolor:'Window'} }} >
-Supprimer les articles sélectionnés
-    </Button>
-
-
-        </Box>
+      
           
         </Box>
 
@@ -78,20 +79,8 @@ Supprimer les articles sélectionnés
           
         <Box sx={{display:'flex',alignItems:'center',width:'100%',my:1}} >
        
- { !show ?
-
-<IconButton onClick={()=>setShow(true)} sx={{width:'23px',height:'23px',ml:2,borderRadius:'50%',border:'2px solid #e0e0e0',bgcolor:'Window',":hover":{bgcolor:'Window',border:'2px solid #ff1744'},display:'flex',justifyContent:'center',alignItems:'center'}} >
-
-</IconButton>
-
- :  <IconButton onClick={()=>setShow(false)} sx={{width:'23px',ml:2,height:'23px',borderRadius:'50%',bgcolor:'#ff1744',":hover":{bgcolor:'#ff1744'},display:'flex',justifyContent:'center',alignItems:'center'}} >
-     <CheckIcon sx={{fontSize:'17px',color:'white'}} />
- </IconButton>
- 
- }
-
-<Link variant='body2' sx={{color:'black',fontWeight:'700',fontSize:'12px',textAlign:'left',ml:1,":hover":{color:'black'}}} href="#" underline="none">
-Expédié par des vendeurs internationaux
+<Link variant='body2' sx={{color:'black',fontWeight:'700',fontSize:'12px',textAlign:'left',ml:4,":hover":{color:'black'}}} href="#" underline="none">
+Product exist in your store
 </Link>
 
           </Box>
@@ -151,6 +140,7 @@ Expédié par des vendeurs internationaux
          (≈DA{!storePayer ? 0 : (totalPrice+totalLivraisonPrice)*140 })
            </Typography>
            </Box>
+           
            { totalPrice+totalLivraisonPrice == 0 ? 
            <Button onClick={()=>navigate("/stores/payment")} disabled variant='contained' sx={{bgcolor:'#ff1744',color:'white',mb:2,width:'100%',borderRadius:'16px' ,":hover":{color:'white',bgcolor:'#ff1744'} }} >
            Payer({!storePayer ? 0 : storePayer.length})

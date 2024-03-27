@@ -11,6 +11,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { Divider } from '@mui/material';
+import Cookies from 'js-cookie';
 
 
 export const AddCard = ({setShow,show}:any) => {
@@ -22,6 +23,7 @@ export const AddCard = ({setShow,show}:any) => {
     const [cvcNumber, setCvcNumber] = useState('');
     const [month, setMonth] = useState('');
     const [year, setYear] = useState('');
+    const token = Cookies.get('token');
 
     const handleFullNameChange = (event:any) => {
         setFullName(event.target.value);
@@ -67,6 +69,29 @@ export const AddCard = ({setShow,show}:any) => {
         alignItems:'center',
         p: 1,
       };
+
+      const handelCreatePayment=async()=>{
+        try{
+          const response = await fetch(`http://localhost:8000/createpayment`,{
+            method: 'POST',
+            credentials:"include", 
+            headers: {
+              'Content-Type': 'application/json',
+              authorization:`${token}`
+            },
+            body: JSON.stringify({year,month,fullName,cardNumber,cvcNumber}),
+           
+          });
+          const data = await response.json()
+  
+          console.log(data)
+  
+         
+        } catch (error) {
+          console.error('operation failed.');
+        }
+      }
+  
 
 
 
@@ -187,6 +212,7 @@ export const AddCard = ({setShow,show}:any) => {
       id="month-select-demo"
       sx={{ width: '45%' ,height:'50px' }}
       options={mounth}
+      onChange={(e,newValue:any)=>setMonth(newValue.code)}
       autoHighlight
       getOptionLabel={(option) => option.code}
       renderOption={(props, option) => (
@@ -213,6 +239,7 @@ export const AddCard = ({setShow,show}:any) => {
       id="years-select-demo"
       sx={{ width: '45%' ,height:'50px' }}
       options={years}
+      onChange={(e,newValue:any)=>setYear(newValue.code)}
       autoHighlight
       getOptionLabel={(option) => option.code}
       renderOption={(props, option) => (
@@ -265,7 +292,7 @@ export const AddCard = ({setShow,show}:any) => {
 
        <Divider sx={{my:4,width:'100%'}} />
 
-       <Button variant='contained' sx={{color:'white',width:'70%',bgcolor:'#d32f2f',borderRadius:'12px',mb:4 ,":hover":{color:'white',bgcolor:'#d32f2f'} }} >
+       <Button variant='contained' onClick={handelCreatePayment} sx={{color:'white',width:'70%',bgcolor:'#d32f2f',borderRadius:'12px',mb:4 ,":hover":{color:'white',bgcolor:'#d32f2f'} }} >
         Confirmer
     </Button>
 

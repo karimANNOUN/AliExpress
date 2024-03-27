@@ -99,6 +99,8 @@ export const AdressLivraison = () => {
      
       const userInfo=useSelector((state:any)=>state.app.userInfo)
 
+    
+
       
 
     const [showLocation,setShowLocation]=useState(false)
@@ -143,7 +145,7 @@ export const AdressLivraison = () => {
                         </Typography> 
 
                         <Typography sx={{color:'black',display:'flex',alignItems:'center',fontWeight:'700',textAlign:'left'}}  variant='body2' gutterBottom>
-                            <Person2OutlinedIcon/>  {!userInfo ? "" : userInfo.name},+213{!userInfo ? "" : userInfo.locationUser.phoneNumber}
+                            <Person2OutlinedIcon/>  {!userInfo ? "" : userInfo.name},+{!userInfo ? "" : userInfo.locationUser.phoneNumber}
                         </Typography> 
 
                         <Typography sx={{color:'black',display:'flex',alignItems:'center',textAlign:'left'}}  variant='body2' gutterBottom>

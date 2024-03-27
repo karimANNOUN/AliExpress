@@ -97,6 +97,7 @@ export const ImageCard = ({activeSize,indexs,setIndexs}:any) => {
       }
       if (data.success == true) {
         dispatch(setProduct(data.product))
+        dispatch(setProductStore(data.storeProductUser))
         setLoading(false)
      //   setOpen(false)
         

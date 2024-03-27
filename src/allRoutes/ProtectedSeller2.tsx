@@ -22,6 +22,8 @@ export const ProtectedSeller2 = ({children}:any) => {
                },
              })
              const data = await response.json()
+
+             
              
              if (!data) {
               setLoading(true)
