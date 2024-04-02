@@ -27,7 +27,7 @@ export const Commande = () => {
 
     const [active,setActive]=useState(0)
 
-    const options = ['Commandes', 'Suivre'];
+    const options = ['Commandes','Suivre'];
 
     const topOption = ['Tous', 'Le dernier 6 mois', 'Depuis 1 ans','Depuis 2 ans'];
 
@@ -102,23 +102,147 @@ export const Commande = () => {
         });
         const data = await response.json()
       
-        console.log(data)
       
-    //   if (!data) {
-   //       setLoading(true)
-     //   }if (data.success == true) {
-        //  dispatch(setUserInfo(data.userInfo))
-      //    setLoading(false) 
-     //     setCommandes(data.commande)
-
-    //    }if (data.success == false) {
-     //     setMessage(data.message)
-     //     setOpens(true)
-     //   }  
+       if (!data) {
+          setLoading(true)
+        }if (data.success == true) {
+          setLoading(false) 
+          setCommandes(data.commandeNonPaye)
+        }if (data.success == false) {
+          setMessage(data.message)
+          setOpens(true)
+        }  
       } catch (error) {
         console.error('operation failed.');
       }
 }
+
+
+
+const getCommandeInfo = async()=>{
+  setActive(0)
+  try{
+      const response = await fetch(`http://localhost:8000/commandeInfo`,{
+        method:'GET',
+        credentials:"include", 
+        headers: {
+          'Content-Type': 'application/json',
+           authorization:`${token}`
+        }
+      });
+      const data = await response.json()
+      
+    
+     if (!data) {
+        setLoading(true)
+      }if (data.success == true) {
+      //  dispatch(setUserInfo(data.userInfo))
+        setLoading(false) 
+        setCommandes(data.commande)
+
+      }if (data.success == false) {
+        setMessage(data.message)
+        setOpens(true)
+      }  
+    } catch (error) {
+      console.error('operation failed.');
+    }
+}
+
+
+
+const getCommandeEncore = async()=>{
+  setActive(2)
+  try{
+      const response = await fetch(`http://localhost:8000/commandeencore`,{
+        method:'GET',
+        credentials:"include", 
+        headers: {
+          'Content-Type': 'application/json',
+           authorization:`${token}`
+        }
+      });
+      const data = await response.json()
+      
+    
+     if (!data) {
+        setLoading(true)
+      }if (data.success == true) {
+        setLoading(false) 
+        setCommandes(data.getCommandeEncore)
+
+      }if (data.success == false) {
+        setMessage(data.message)
+        setOpens(true)
+      }  
+    } catch (error) {
+      console.error('operation failed.');
+    }
+}
+
+
+const getCommandeExpedies = async()=>{
+  setActive(3)
+  try{
+      const response = await fetch(`http://localhost:8000/commandeexpedies`,{
+        method:'GET',
+        credentials:"include", 
+        headers: {
+          'Content-Type': 'application/json',
+           authorization:`${token}`
+        }
+      });
+      const data = await response.json()
+      
+    
+     if (!data) {
+        setLoading(true)
+      }if (data.success == true) {
+        setLoading(false) 
+        setCommandes(data.getCommandeExpedies)
+
+      }if (data.success == false) {
+        setMessage(data.message)
+        setOpens(true)
+      }  
+    } catch (error) {
+      console.error('operation failed.');
+    }
+}
+
+
+
+const getCommandeTerminees = async()=>{
+  setActive(4)
+  try{
+      const response = await fetch(`http://localhost:8000/commandeterminees`,{
+        method:'GET',
+        credentials:"include", 
+        headers: {
+          'Content-Type': 'application/json',
+           authorization:`${token}`
+        }
+      });
+      const data = await response.json()
+      
+    
+     if (!data) {
+        setLoading(true)
+      }if (data.success == true) {
+        setLoading(false) 
+        setCommandes(data.getCommandeTerminees)
+
+      }if (data.success == false) {
+        setMessage(data.message)
+        setOpens(true)
+      }  
+    } catch (error) {
+      console.error('operation failed.');
+    }
+}
+
+
+
 
 
 
@@ -146,20 +270,20 @@ export const Commande = () => {
                           <Box sx={{width:'100%',bgcolor:'Window',display:'flex',flexDirection:'column',my:2,p:1}} >
                              <Box  sx={{display:'flex',alignItems:'center',mb:2,justifyContent:'space-between'}} >
                                <Box sx={{display:'flex',alignItems:'center'}} >
-                             { active === 0 ? <Button onClick={()=>setActive(0)} variant="text" sx={{color:'black',bgcolor:'Window',fontWeight:'800',borderBottom:"2px solid #ff5722 ",":hover":{bgcolor:'Window'}}} >Tout</Button> 
-                             : <Button onClick={()=>setActive(0)} variant="text" sx={{color:'#212121',bgcolor:'Window',":hover":{bgcolor:'Window',color:'#ff5722'}}} >Tout</Button>}
+                             { active === 0 ? <Button onClick={getCommandeInfo} variant="text" sx={{color:'black',bgcolor:'Window',fontWeight:'800',borderBottom:"2px solid #ff5722 ",":hover":{bgcolor:'Window'}}} >Tout</Button> 
+                             : <Button onClick={getCommandeInfo} variant="text" sx={{color:'#212121',bgcolor:'Window',":hover":{bgcolor:'Window',color:'#ff5722'}}} >Tout</Button>}
                              
                              { active === 1 ? <Button onClick={getCommandeNonPaye} variant="text" sx={{color:'black',bgcolor:'Window',fontWeight:'800',borderBottom:"2px solid #ff5722 ",":hover":{bgcolor:'Window'}}} >Non payées</Button> 
                              : <Button onClick={getCommandeNonPaye} variant="text" sx={{color:'#212121',bgcolor:'Window',":hover":{bgcolor:'Window',color:'#ff5722'}}} >Non payées</Button>}
        
-       { active === 2 ? <Button onClick={()=>setActive(2)} variant="text" sx={{color:'black',bgcolor:'Window',fontWeight:'800',borderBottom:"2px solid #ff5722 ",":hover":{bgcolor:'Window'}}} >En cours</Button> 
-                             : <Button onClick={()=>setActive(2)} variant="text" sx={{color:'#212121',bgcolor:'Window',":hover":{bgcolor:'Window',color:'#ff5722'}}} >En cours</Button>}
+       { active === 2 ? <Button onClick={getCommandeEncore} variant="text" sx={{color:'black',bgcolor:'Window',fontWeight:'800',borderBottom:"2px solid #ff5722 ",":hover":{bgcolor:'Window'}}} >En cours</Button> 
+                             : <Button onClick={getCommandeEncore} variant="text" sx={{color:'#212121',bgcolor:'Window',":hover":{bgcolor:'Window',color:'#ff5722'}}} >En cours</Button>}
        
-       { active === 3 ? <Button onClick={()=>setActive(3)} variant="text" sx={{color:'black',bgcolor:'Window',fontWeight:'800',borderBottom:"2px solid #ff5722 ",":hover":{bgcolor:'Window'}}} >Expédiées</Button> 
-                             : <Button onClick={()=>setActive(3)} variant="text" sx={{color:'#212121',bgcolor:'Window',":hover":{bgcolor:'Window',color:'#ff5722'}}} >Expédiées</Button>}
+       { active === 3 ? <Button onClick={getCommandeExpedies} variant="text" sx={{color:'black',bgcolor:'Window',fontWeight:'800',borderBottom:"2px solid #ff5722 ",":hover":{bgcolor:'Window'}}} >Expédiées</Button> 
+                             : <Button onClick={getCommandeExpedies} variant="text" sx={{color:'#212121',bgcolor:'Window',":hover":{bgcolor:'Window',color:'#ff5722'}}} >Expédiées</Button>}
        
-       { active === 4 ? <Button onClick={()=>setActive(4)} variant="text" sx={{color:'black',bgcolor:'Window',fontWeight:'800',borderBottom:"2px solid #ff5722 ",":hover":{bgcolor:'Window'}}} >Terminées</Button> 
-                             : <Button onClick={()=>setActive(4)} variant="text" sx={{color:'#212121',bgcolor:'Window',":hover":{bgcolor:'Window',color:'#ff5722'}}} >Terminées</Button>}
+       { active === 4 ? <Button onClick={getCommandeTerminees} variant="text" sx={{color:'black',bgcolor:'Window',fontWeight:'800',borderBottom:"2px solid #ff5722 ",":hover":{bgcolor:'Window'}}} >Terminées</Button> 
+                             : <Button onClick={getCommandeTerminees} variant="text" sx={{color:'#212121',bgcolor:'Window',":hover":{bgcolor:'Window',color:'#ff5722'}}} >Terminées</Button>}
        
                              </Box>
        
@@ -174,15 +298,14 @@ export const Commande = () => {
        
                        <Box sx={{display:'flex',alignItems:'center'}} >
        
-       
-                       <Autocomplete
-               sx={{width:'150px'}}
-                 options={options}
-                 size='small'
-                 renderInput={(params) => (
-                   <TextField {...params}  variant="outlined" />
-                 )}
-               />
+          <TextField
+         id="Phone"
+          sx={{width:'150px'}}
+         placeholder="commandes or product vendeur"
+         size='small'
+         value="commandes"
+         disabled
+         />
            
                <TextField
          id="Phone"
