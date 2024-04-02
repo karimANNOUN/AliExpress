@@ -7,8 +7,27 @@ import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import GppGoodOutlinedIcon from '@mui/icons-material/GppGoodOutlined';
 import PaymentIcon from '@mui/icons-material/Payment';
-export const VoirInfoCard = ({showCard,setShowCard,setShow}:any) => {
+import { PaypalButton } from './PaypalButton';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+
+
+export const VoirInfoCard = ({showCard,setShowCard,setShow,totalLivraisonPrice,totalPrice}:any) => {
     const handleClose = () => setShowCard(false);
+
+
+    const [message,setMessage]=useState('')
+    const [payment,setPayment]=useState(false)
+
+    const [opens, setOpens] = useState(false);
+  
+    const handleCloses = (event?: React.SyntheticEvent | Event, reason?: string) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpens(false);
+    };
 
     const style = {
         position: 'absolute' as 'absolute',
@@ -24,6 +43,8 @@ export const VoirInfoCard = ({showCard,setShowCard,setShow}:any) => {
         flexDirection:'column',
         alignItems:'center',
         p: 1,
+        overflow:'auto',
+        maxHeight:'80%'
       };
 
   return (
@@ -34,7 +55,19 @@ export const VoirInfoCard = ({showCard,setShowCard,setShow}:any) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
+  
         <Box sx={style}>
+
+        <Snackbar open={opens} autoHideDuration={3000} onClose={handleCloses}>
+        <Alert
+          onClose={handleCloses}
+          severity={ payment == true ? "success" : "error"}
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
         
         <IconButton onClick={handleClose} sx={{position:'absolute',top:'2%',right:'2%'}} >
                 <CloseIcon sx={{fontSize:'22px'}} />
@@ -64,7 +97,11 @@ export const VoirInfoCard = ({showCard,setShowCard,setShow}:any) => {
 </Box>
         </Box>
 
-            </Box>        
+            </Box>    
+
+            <Box sx={{border:'2px solid #e0e0e0',width:'95%',borderRadius:'8px',display:'flex',alignItems:'center',mb:2,p:1}} >
+                <PaypalButton totalPrice={totalPrice} totalLivraisonPrice={totalLivraisonPrice} setMessage={setMessage} setPayment={setPayment} setOpens={setOpens} />
+              </Box>    
 
         </Box>
         </Modal>

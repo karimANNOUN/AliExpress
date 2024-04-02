@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useCallback, useEffect, useState} from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
@@ -11,7 +11,8 @@ import { BoxLocation } from './BoxLocation';
 import { AddCard } from './paymentInfo/AddCard';
 import { VoirInfoCard } from './paymentInfo/VoirInfoCard';
 import { useSelector } from 'react-redux';
-import { PaypalButton } from './paymentInfo/PaypalButton';
+
+
 
 export const PaymentStoreCard = () => {
 
@@ -20,8 +21,7 @@ export const PaymentStoreCard = () => {
 
     const [show,setShow]=useState(false)
     const [showCard,setShowCard]=useState(false)
-
-
+  
 
     const handelOpenPayment=()=> setShow(true)
 
@@ -34,18 +34,20 @@ export const PaymentStoreCard = () => {
     const storePayer=useSelector((state:any)=>state.app.storePayer)
 
   
+      
+      const totalPrice  =  storePayer.reduce((accumulator:any, currentProduct:any) => {
+          return accumulator + (currentProduct.priceProduct * currentProduct.quantity );
+        }, 0);
 
-    const totalPrice = storePayer.reduce((accumulator:any, currentProduct:any) => {
-      return accumulator + (currentProduct.priceProduct * currentProduct.quantity );
-    }, 0);
+   
 
-    const totalLivraisonPrice = storePayer.reduce((accumulator:any, currentProduct:any) => {
-      return accumulator + currentProduct.priceLivraison;
-    }, 0);
-
-
+    
   
+      const totalLivraisonPrice = storePayer.reduce((accumulator:any, currentProduct:any) => {
+        return accumulator + currentProduct.priceLivraison;
+      }, 0);
 
+ 
 
 
 
@@ -173,7 +175,7 @@ export const PaymentStoreCard = () => {
 
         </Box>
           <AddCard show={show} setShow={setShow} showCard={showCard} setShowCard={setShowCard} />
-          <VoirInfoCard show={show} setShow={setShow} showCard={showCard} setShowCard={setShowCard} />
+          <VoirInfoCard show={show} setShow={setShow} showCard={showCard} setShowCard={setShowCard} totalPrice={totalPrice} totalLivraisonPrice={totalLivraisonPrice} />
         </Box>
 
         <Box sx={{width:'100%',display:'flex',flexDirection:'column',alignItems:'center',bgcolor:'Window',borderRadius:'8px',border:'2px solid #f5f5f5',mt:2}} >
@@ -237,7 +239,6 @@ export const PaymentStoreCard = () => {
           Commander
     </Button>
          
-         <PaypalButton totalPrice={totalPrice} totalLivraisonPrice={totalLivraisonPrice}  />
 
           </Box>
           </Box>
