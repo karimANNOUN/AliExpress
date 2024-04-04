@@ -20,14 +20,28 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { CommandeCard } from './components/CommandeCard';
 
+type Order = {
+  id: number;
+  buyerId: number;
+  createdAt: Date; 
+  orderPaymentId: string;
+  state: string;
+};
 
 export const Commande = () => {
 
 
 
     const [active,setActive]=useState(0)
+    const [periode,setPeriode]=useState('')
+    const [input,setInput]=useState("")
+  
 
-    const options = ['Commandes','Suivre'];
+    const handelchangeSearchProducts = (value:string)=>{
+      setInput(value)
+    }
+
+    
 
     const topOption = ['Tous', 'Le dernier 6 mois', 'Depuis 1 ans','Depuis 2 ans'];
 
@@ -55,6 +69,67 @@ export const Commande = () => {
     };
 
 
+
+    
+
+      const  filtredPeriode = ((command:any)=>{
+
+        const currentDate = new Date();
+        const sixMonthsAgo = new Date(currentDate);
+        sixMonthsAgo.setMonth(currentDate.getMonth() - 6);
+    
+        const oneYearAgo = new Date(currentDate);
+        oneYearAgo.setMonth(currentDate.getMonth() - 12);
+    
+        const twoYearAgo = new Date(currentDate);
+        twoYearAgo.setMonth(currentDate.getMonth() - 24);
+    
+        const commandDate = new Date(command.createdAt);
+        
+        if (periode == '' ) {
+          return  commandDate <= currentDate;
+        }if (periode == 'Tous' ) {
+          return  commandDate <= currentDate;
+        }if (periode == 'Le dernier 6 mois') {
+          return commandDate >= sixMonthsAgo && commandDate <= currentDate;
+        }if (periode == 'Depuis 1 ans') {
+          return commandDate >= oneYearAgo && commandDate <= currentDate;
+        }if (periode == 'Depuis 2 ans') {
+          return commandDate >= twoYearAgo && commandDate <= currentDate;
+        }
+       }
+    )
+
+ 
+
+
+
+
+     const filtredProduct = ((curent:any)=>{
+        if (input == "") {
+          return curent
+        }else{
+        return (input && curent && curent.product.title  && curent.product.title.toLowerCase().includes(input))
+         || (input && curent && curent.product.title  && curent.product.title.toUpperCase().includes(input))
+         || (input && curent && curent.product.title  && curent.product.title.includes(input))
+        }
+    })
+
+ 
+
+
+
+   
+
+   
+
+
+
+
+
+
+
+
     useEffect(()=>{
       const getCommandeInfo = async()=>{
           try{
@@ -72,7 +147,6 @@ export const Commande = () => {
              if (!data) {
                 setLoading(true)
               }if (data.success == true) {
-              //  dispatch(setUserInfo(data.userInfo))
                 setLoading(false) 
                 setCommandes(data.commande)
 
@@ -136,7 +210,6 @@ const getCommandeInfo = async()=>{
      if (!data) {
         setLoading(true)
       }if (data.success == true) {
-      //  dispatch(setUserInfo(data.userInfo))
         setLoading(false) 
         setCommandes(data.commande)
 
@@ -193,6 +266,8 @@ const getCommandeExpedies = async()=>{
         }
       });
       const data = await response.json()
+
+     
       
     
      if (!data) {
@@ -268,7 +343,7 @@ const getCommandeTerminees = async()=>{
              <CompteListe/>
               <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'73%'}} >
                           <Box sx={{width:'100%',bgcolor:'Window',display:'flex',flexDirection:'column',my:2,p:1}} >
-                             <Box  sx={{display:'flex',alignItems:'center',mb:2,justifyContent:'space-between'}} >
+                             <Box  sx={{display:'flex',alignItems:'center',mb:2}} >
                                <Box sx={{display:'flex',alignItems:'center'}} >
                              { active === 0 ? <Button onClick={getCommandeInfo} variant="text" sx={{color:'black',bgcolor:'Window',fontWeight:'800',borderBottom:"2px solid #ff5722 ",":hover":{bgcolor:'Window'}}} >Tout</Button> 
                              : <Button onClick={getCommandeInfo} variant="text" sx={{color:'#212121',bgcolor:'Window',":hover":{bgcolor:'Window',color:'#ff5722'}}} >Tout</Button>}
@@ -287,11 +362,7 @@ const getCommandeTerminees = async()=>{
        
                              </Box>
        
-                            { active ===5 ? <Button onClick={()=>setActive(5)} variant="text" sx={{color:'black',fontWeight:'800',alignItems:'center',fontSize:'10px',bgcolor:'Window',":hover":{bgcolor:'Window',color:'black',fontWeight:'800'}}} > <DeleteIcon sx={{mr:1,fontSize:'12px'}} /> Commandes supprimées</Button>
-                            
-                            :
-                            <Button variant="text" onClick={()=>setActive(5)} sx={{color:'#212121',alignItems:'center',fontSize:'10px',bgcolor:'Window',":hover":{bgcolor:'Window',color:'black',fontWeight:'800'}}} > <DeleteIcon sx={{mr:1,fontSize:'12px'}} /> Commandes supprimées</Button>
-                            }
+                           
                              </Box>
        
                              <Box sx={{display:'flex',width:'100%',alignItems:'center',justifyContent:'space-between'}} >
@@ -310,8 +381,9 @@ const getCommandeTerminees = async()=>{
                <TextField
          id="Phone"
           sx={{width:'350px'}}
-         placeholder="commandes or product vendeur"
+         placeholder="commandes article name"
          size='small'
+         onChange={(e)=>handelchangeSearchProducts(e.target.value)}
          InputProps={{
            endAdornment:(
                <InputAdornment sx={{bgcolor:'#f4511e',height:'100%',right:0,position:'absolute'}} position='end' >
@@ -334,8 +406,10 @@ const getCommandeTerminees = async()=>{
              id="combo-box-demo"
              size='small'
              options={topOption}
+             onChange={(e,newValue:any)=>setPeriode(newValue)}
              sx={{ width: '200px' }}
-             renderInput={(params) => <TextField  {...params} />}
+             placeholder='Filter commandes'
+             renderInput={(params) => <TextField placeholder='Filter commandes' {...params} />}
            />
               
               
@@ -396,7 +470,7 @@ const getCommandeTerminees = async()=>{
                                </Box> 
                                :
 
-                               (commandes.map( (details:any) => <Box key={details.id} sx={{width:'95%',my:1,display:'flex',flexDirection:'column',p:1,border:'solid 1px #bdbdbd',borderRadius:'6px'}} >
+                               (commandes.filter(filtredPeriode).map( (details:any) => <Box key={details.id} sx={{width:'95%',my:1,display:'flex',flexDirection:'column',p:1,border:'solid 1px #bdbdbd',borderRadius:'6px'}} >
                                 
                                 <Box sx={{display:'flex',width:'100%',justifyContent:'space-between',mb:1}} >
                                 <Typography sx={{color:'#bdbdbd',fontWeight:'500'}}  variant='subtitle2' gutterBottom>
@@ -409,7 +483,7 @@ const getCommandeTerminees = async()=>{
 
                                 </Box>
 
-                               { details.items.map( (command:any) => <CommandeCard key={command.id} command={command} />)}
+                               { details.items.filter(filtredProduct).map( (command:any) => <CommandeCard key={command.id} command={command} />)}
 
 
                                </Box>)) 

@@ -18,6 +18,10 @@ export const CardFavorit = ({favorit}:any) => {
   
      const token = Cookies.get('token');
 
+     useEffect(()=>{
+      console.log(favorit)
+     },[])
+
     const handelDeleteFavoritLists=async()=>{
       try{
       const response = await fetch(`http://localhost:8000/deletefavoritlist`,{
@@ -117,7 +121,7 @@ export const CardFavorit = ({favorit}:any) => {
 
                                             <Typography sx={{color:'#bdbdbd',fontWeight:'500',mb:2,textAlign:'left'}}  variant='caption' gutterBottom>
                                 
-                                            105 orders
+                                            {!favorit.product.article.length ? "0" : favorit.product.article.length } orders
                             </Typography>   
 
 

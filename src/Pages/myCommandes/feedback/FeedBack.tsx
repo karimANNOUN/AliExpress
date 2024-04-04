@@ -1,17 +1,19 @@
-import {useState} from 'react'
-
+import {useEffect, useState} from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-
 import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import CloseIcon from '@mui/icons-material/Close';
 
 import { CompteListe } from '../components/CompteListe';
 import { ProductAimiez } from '../components/ProductAimiez';
-import { Divider, IconButton, InputLabel } from '@mui/material';
+import {  IconButton, InputLabel } from '@mui/material';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { CollumnTableReview } from './components/CollumnTableReview';
+
 export const FeedBack = () => {
 
     const options = ['Tous', 'Encore' , 'En attente du retour des article(s)' ,'Finalisé'];
@@ -19,8 +21,83 @@ export const FeedBack = () => {
     const [show,setShow]=useState(false)
 
     const [active,setActive]=useState(0)
+    const [input,setInput]=useState(Number)
 
-  return (
+    const [loading,setLoading]=useState(false)
+    const [message,setMessage]=useState('')
+    const [commandes,setCommandes]=useState <any> ([])
+  
+    const dispatch=useDispatch()
+    const navigate=useNavigate()
+  
+    const token = Cookies.get('token');
+
+    const [opens, setOpens] = useState(false);
+
+    const handleCloses = (event?: React.SyntheticEvent | Event, reason?: string) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpens(false);
+    };
+
+
+useEffect(()=>{
+
+  const getCommandeInfo = async()=>{
+    try{
+        const response = await fetch(`http://localhost:8000/commandeInforeviews`,{
+          method:'GET',
+          credentials:"include", 
+          headers: {
+            'Content-Type': 'application/json',
+             authorization:`${token}`
+          },
+        });
+        const data = await response.json()
+
+
+        
+      
+       if (!data) {
+          setLoading(true)
+        }if (data.success == true) {
+          setLoading(false) 
+          setCommandes(data.getCommandeReviews)
+
+        }if (data.success == false) {
+          setMessage(data.message)
+          setOpens(true)
+        }  
+      } catch (error) {
+        console.error('operation failed.');
+      }
+}
+
+getCommandeInfo()
+
+},[])
+      
+    
+  
+
+
+
+
+    const filtredProduct = ((curent:any)=>{
+      if (input == null) {
+        return curent
+      }else{
+      return (input && curent && curent.product.title  && curent.product.title.toLowerCase().includes(input))
+       || (input && curent && curent.product.title  && curent.product.title.toUpperCase().includes(input))
+       || (input && curent && curent.product.title  && curent.product.title.includes(input))
+      }
+  })
+
+
+
+  return (    
     <div style={{display:'flex',justifyContent:'center',backgroundColor:'#eeeeee'}} >
     <Box sx={{width:'70%',display:'flex',justifyContent:'space-between'}} >
       <CompteListe/>
@@ -122,7 +199,7 @@ export const FeedBack = () => {
 
                        </Box>
 
-                       <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'100%',bgcolor:'Window',mb:2}} >
+                       <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'100%',bgcolor:'Window',mb:2,overflow:'auto',maxHeight:'500px'}} >
                                  <Box sx={{display:'flex',alignItems:'center',width:'95%',bgcolor:'#eeeeee',p:1}} >
                                     <Box sx={{width:'33%'}} >
                                     <Typography sx={{color:'black',textAlign:'left'}}  variant='body1' gutterBottom>
@@ -144,12 +221,22 @@ export const FeedBack = () => {
                                     </Box>
 
                                  </Box>
+
+                                 <Box sx={{display:'flex',flexDirection:'column',width:'95%',bgcolor:'Window',p:1}} >
+
+                                 { loading == true ? "Loading" :  commandes.map( (command:any) => <CollumnTableReview key={command.id} command={command} /> )}
+                                      
+                                      
+                                    
+
+                                 </Box>
                                 
                                   
-                                  <Box sx={{width:'100%',alignItems:'center'}} >
+                                  { !commandes.length ? <Box sx={{width:'100%',alignItems:'center'}} >
                                   <Typography sx={{color:'black',textAlign:'left',ml:2}}  variant='subtitle2' gutterBottom>
                                   Aucune commande en attente d'avis </Typography>
-                                  </Box>
+                                  </Box> : "" }
+
 
                        </Box>
                        
@@ -166,5 +253,7 @@ export const FeedBack = () => {
        </Box>
     </Box>
 </div>
+    
+
   )
 }

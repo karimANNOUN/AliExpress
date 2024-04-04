@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -11,9 +11,30 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { Divider } from '@mui/material';
+import {
+	PayPalScriptProvider,
+	PayPalHostedFieldsProvider,
+	PayPalHostedField,
+} from "@paypal/react-paypal-js";
 
 
 export const AddCardInfo = ({setShow,show}:any) => {
+
+
+  const [clientToken, setClientToken] = useState(null);
+
+	useEffect(() => {
+		(async () => {
+			const response = await (
+				await fetch(
+					"https://react-paypal-js-storybook.fly.dev/api/paypal/generate-client-token",
+					{ method: "POST" }
+				)
+			).json();
+			setClientToken(response?.client_token || response?.clientToken);
+		})();
+	}, []);
+
 
     const handleClose = () => setShow(false);
      
@@ -112,7 +133,7 @@ export const AddCardInfo = ({setShow,show}:any) => {
 
 
   return (
-    <div>
+    <>
       <Modal
         open={show}
         onClose={handleClose}
@@ -146,7 +167,11 @@ export const AddCardInfo = ({setShow,show}:any) => {
 
        </Box>
 
+
+     
+
        <Box sx={{display:'flex',alignItems:'center',justifyContent:'space-between',width:'100%'}} >
+
         
         <TextField
   id="name"
@@ -261,6 +286,8 @@ export const AddCardInfo = ({setShow,show}:any) => {
           <ErrorOutlineIcon sx={{fontSize:'16px'}} /> Votre commande sera traitée en USD.
           </Typography>
    </Box>
+
+   
        
 
        <Divider sx={{my:4,width:'100%'}} />
@@ -271,7 +298,8 @@ export const AddCardInfo = ({setShow,show}:any) => {
 
         </Box>
         </Modal>
+       
 
-    </div>
+    </>
   )
 }

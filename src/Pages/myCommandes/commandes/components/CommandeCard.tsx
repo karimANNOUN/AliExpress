@@ -14,18 +14,14 @@ export const CommandeCard = ({command}:any) => {
 
    
     
-        <Box sx={{display:'flex',alignItems:'center',width:'100%',my:2,justifyContent:'space-between'}} >
+        <Box sx={{display:'flex',alignItems:'center',width:'100%',my:2}} >
            
-         <Link variant='body2' sx={{color:'black',fontWeight:'700',fontSize:'12px',textAlign:'left',ml:2,":hover":{color:'#ff5722'}}} href="#" underline="none">
+         <Link variant='body2' sx={{color:'black',fontWeight:'700',fontSize:'12px',textAlign:'left',ml:2,":hover":{color:'#ff5722'}}} href={`/store/${command.sellerId}`} underline="none">
          
          {command.seller.name} Store
       </Link>
     
-      <IconButton  >
-          <CreateIcon sx={{fontSize:'14px'}} />
-    </IconButton>
-    
-    
+     
                     </Box>
         
                     <Box sx={{display:'flex',alignItems:'center',width:'100%',ml:2}} >
@@ -33,7 +29,7 @@ export const CommandeCard = ({command}:any) => {
         <img src={command.imageUrl} style={{width:'110px',height:'130px',borderRadius:'8px'}} />
         <Box sx={{display:'flex',flexDirection:'column',height:'100%',width:'100%',px:2}} >
           <Box sx={{display:'flex',alignItems:'center',width:'100%',justifyContent:'space-between'}} >
-          <Link variant='body1' sx={{color:'black',fontWeight:'700',fontSize:'12px',textAlign:'left',ml:1,":hover":{color:'#ff5722'}}} href="#" underline="none">
+          <Link variant='body1' sx={{color:'black',fontWeight:'700',fontSize:'12px',textAlign:'left',ml:1,":hover":{color:'#ff5722'}}} href={`/${command.productId}`} underline="none">
            
         {command.product.title}
     
