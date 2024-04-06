@@ -1,17 +1,77 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { Divider } from '@mui/material';
+import { Divider, IconButton } from '@mui/material';
 import Link from '@mui/material/Link';
 import Rating from '@mui/material/Rating';
 import { ReviewEvaluation } from './ReviewEvaluation';
+import CreateIcon from '@mui/icons-material/Create';
+import Tooltip from '@mui/material/Tooltip';
+import { UpdateComment } from './UpdateComment';
+import { UpdateImageComment } from './UpdateImageComment';
+import { ImageCard } from './ImageCard';
+import { UpdateRating } from './UpdateRating';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Cookies from 'js-cookie';
 
-export const CollumnTableReview = ({command}:any) => {
+export const CollumnTableReview = ({command,setMessage,setOpens,setCommandes,setIsError}:any) => {
 
-    const [rating, setRating] = React.useState<number | null>(0);
+
+    const [openComment,setOpenComment]=useState(false)
+    const handleOpenComment = () => setOpenComment(true);
+
+
+    const [openRating,setOpenRating]=useState(false)
+    const handleOpenRating = () => setOpenRating(true);
+
+    
+
+   
     const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
+
+
+  const [loading,setLoading]=useState(false)
+
+  const token = Cookies.get('token');
+
+  const deleteReview = async()=>{
+    try{
+        const response = await fetch(`http://localhost:8000/deleteReview`,{
+          method:'DELETE',
+          credentials:"include", 
+          headers: {
+            'Content-Type': 'application/json',
+             authorization:`${token}`
+          },
+          body:JSON.stringify({command})
+        });
+        const data = await response.json()
+
+
+        
+      
+       if (!data) {
+          setLoading(true)
+        }if (data.success == true) {
+          setLoading(false) 
+          setMessage(data.message)
+          setIsError(false)
+          setOpens(true)
+          setCommandes(data.getCommandeReviews)
+        }if (data.success == false) {
+          setMessage(data.message)
+          setIsError(true)
+          setOpens(true)
+        }  
+      } catch (error) {
+        console.error('operation failed.');
+      }
+}
+
+   
+
 
   return (
 
@@ -92,13 +152,19 @@ US ${ command.priceProduct}
                                         <Typography sx={{color:'black',textAlign:'left',fontWeight:'800'}}  variant='body1' gutterBottom>
                                      Comments : 
                                    </Typography>
-                                   <Typography sx={{color:'black',textAlign:'left'}}  variant='subtitle2' gutterBottom>
+                                   <Typography sx={{color:'black',textAlign:'left',mr:2}}  variant='caption' gutterBottom>
                                      {command.product.review[0].comment}
                                    </Typography>
+                                   <Tooltip title="Update Comment">
+                                   <IconButton onClick={handleOpenComment} >
+                                    <CreateIcon sx={{fontSize:'15px'}} />
+                                   </IconButton>
+                                   </Tooltip>
+                                   <UpdateComment OpenComment={openComment} setOpenComment={setOpenComment} setIsError={setIsError} setMessage={setMessage} setOpens={setOpens} setCommandes={setCommandes} review={command.product.review[0]} />
                                         </Box>
 
                                         <Box sx={{display:'flex',alignItems:'center'}} >
-                                           { command.product.review[0].images.map( (imge:any) => <img key={imge.id} src={imge.imageUrl} style={{width:'22%',marginRight:1,height:'30px',borderRadius:'8px'}} />)}
+                          { command.product.review[0].images.map( (imge:any) => <ImageCard key={imge.id} setIsError={setIsError} setMessage={setMessage} setOpens={setOpens} setCommandes={setCommandes} imge={imge} />  )}
                                         </Box>
                                       
                                     </Box>
@@ -111,12 +177,28 @@ US ${ command.priceProduct}
                                     {  !command.product.review.length  ?  <Typography sx={{color:'black',textAlign:'center'}}  variant='body1' gutterBottom>
                                      No Action
                                    </Typography> : 
-                                    <Rating name="half-rating" defaultValue={2.5} precision={0.5}  readOnly />
+                                   <Box sx={{display:'flex',alignItems:'center'}} >
+                                    <Rating sx={{mr:2}} name="read-only" value={parseInt(command.product.review[0].rating)} readOnly />
+                                    <Tooltip title="Update Rating">
+                                   <IconButton onClick={handleOpenRating} >
+                                    <CreateIcon sx={{fontSize:'15px'}} />
+                                   </IconButton>
+                                   </Tooltip>
+                                    <UpdateRating openRating={openRating} setOpenRating={setOpenRating} setIsError={setIsError} setMessage={setMessage} setOpens={setOpens} setCommandes={setCommandes} review={command.product.review[0]} />
+                                    </Box>
+                                 
                                    }
  
                                     </Box>
+
+                                    <Tooltip title="Delete Review">
+                                   <IconButton onClick={deleteReview} >
+                                    <DeleteIcon sx={{fontSize:'15px',":hover":{color:'#f44336'}}} />
+                                   </IconButton>
+                                   </Tooltip>
+
  </Box>
-  <ReviewEvaluation open={open} setOpen={setOpen} />
+  <ReviewEvaluation open={open} setOpen={setOpen} setMessage={setMessage} setOpens={setOpens} command={command} setCommandes={setCommandes} setIsError={setIsError} />
 <Divider/>
  </>
   )

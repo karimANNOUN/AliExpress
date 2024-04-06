@@ -13,6 +13,8 @@ import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { CollumnTableReview } from './components/CollumnTableReview';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 export const FeedBack = () => {
 
@@ -26,6 +28,7 @@ export const FeedBack = () => {
     const [loading,setLoading]=useState(false)
     const [message,setMessage]=useState('')
     const [commandes,setCommandes]=useState <any> ([])
+    const [isError,setIsError]=useState(Boolean)
   
     const dispatch=useDispatch()
     const navigate=useNavigate()
@@ -77,28 +80,47 @@ useEffect(()=>{
 
 getCommandeInfo()
 
-},[])
+},[input])
       
+
+const filtercommande = () =>{
+  if (input == null ) {
+    return  null
+  } if (input !== null ) {
+    return setCommandes(commandes.filter((command:any)=> command.commandeId == input ))
+  }
+} 
     
   
 
 
 
 
-    const filtredProduct = ((curent:any)=>{
-      if (input == null) {
-        return curent
-      }else{
-      return (input && curent && curent.product.title  && curent.product.title.toLowerCase().includes(input))
-       || (input && curent && curent.product.title  && curent.product.title.toUpperCase().includes(input))
-       || (input && curent && curent.product.title  && curent.product.title.includes(input))
-      }
-  })
+   
 
+
+  const filterReview = (comnd:any)=>{
+    if (active == 0  ) {
+      return comnd.product.review.length == 0
+    }if (active == 1  ) {
+      return comnd.product.review.length !== 0
+  
+    }
+  }
 
 
   return (    
     <div style={{display:'flex',justifyContent:'center',backgroundColor:'#eeeeee'}} >
+      <Snackbar open={opens} autoHideDuration={3000} onClose={handleCloses}>
+        <Alert
+          onClose={handleCloses}
+          severity={ isError == true ? "error" : 'success' }
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
     <Box sx={{width:'70%',display:'flex',justifyContent:'space-between'}} >
       <CompteListe/>
        <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'73%'}} >
@@ -151,26 +173,20 @@ getCommandeInfo()
                      <Box sx={{display:'flex',alignItems:'center',bgcolor:'#eeeeee',width:'100%',borderBottom:'2px solid #bdbdbd'}} >
                          
                       { active === 0 ? <Button onClick={()=>(setActive(0),setShow(false))} variant='outlined' sx={{color:'white',bgcolor:'#9e9e9e',border:'1px solid #9e9e9e',alignItems:'center',":hover":{color:'white',bgcolor:'#9e9e9e'}}} >
-                      Commandes en attente de mon avis (0)
+                      Commandes en attente de mon avis ({commandes.filter((comnd:any)=> comnd.product.review.length == 0 ).length == 0 ? "0" : commandes.filter((comnd:any)=> comnd.product.review.length == 0 ).length })
                         </Button> :
                         <Button onClick={()=>(setActive(0),setShow(false))}  variant='outlined' sx={{color:'black',bgcolor:'Window',border:'1px solid #9e9e9e',alignItems:'center',":hover":{color:'black',bgcolor:'Window',border:'1px solid #9e9e9e'}}} >
-                        Commandes en attente de mon avis (0)
+                        Commandes en attente de mon avis ({commandes.filter((comnd:any)=> comnd.product.review.length == 0 ).length == 0 ? "0" : commandes.filter((comnd:any)=> comnd.product.review.length == 0 ).length })
                        </Button>
                         }
 
                       { active === 1 ?   <Button onClick={()=>(setActive(1),setShow(false))}  variant='outlined' sx={{color:'white',bgcolor:'#9e9e9e',border:'1px solid #9e9e9e',alignItems:'center',":hover":{color:'white',bgcolor:'#9e9e9e'}}}  >
-                        valuations sur vous
+                      Vos évaluations
                         </Button> :
                          <Button onClick={()=>(setActive(1),setShow(false))}  variant='outlined' sx={{color:'black',bgcolor:'Window',border:'1px solid #9e9e9e',alignItems:'center',":hover":{color:'black',bgcolor:'Window',border:'1px solid #9e9e9e'}}} >
-                         valuations sur vous
+                         Vos évaluations
                          </Button>}
 
-                         { active === 3 ?   <Button onClick={()=>(setActive(3),setShow(false))}  variant='outlined' sx={{color:'white',bgcolor:'#9e9e9e',border:'1px solid #9e9e9e',alignItems:'center',":hover":{color:'white',bgcolor:'#9e9e9e'}}}  >
-                         Vos évaluations
-                        </Button> :
-                         <Button onClick={()=>(setActive(3),setShow(false))}  variant='outlined' sx={{color:'black',bgcolor:'Window',border:'1px solid #9e9e9e',alignItems:'center',":hover":{color:'black',bgcolor:'Window',border:'1px solid #9e9e9e'}}} >
-                         Vos évaluations
-                         </Button>}
 
                      </Box>
                        
@@ -185,10 +201,11 @@ getCommandeInfo()
                       sx={{width:'200px',mr:1}}
                       placeholder="Commandes Number"
                       size='small'
+                      onChange={(e:any)=>setInput(e.target.value)}
   
                        />
 
-<Button variant='contained' sx={{color:'white',bgcolor:'#fbc02d',borderRadius:'12px' ,":hover":{color:'white',bgcolor:'#fbc02d'} }} >
+<Button variant='contained' onClick={filtercommande} sx={{color:'white',bgcolor:'#fbc02d',borderRadius:'12px' ,":hover":{color:'white',bgcolor:'#fbc02d'} }} >
         Rechercher
     </Button>
 
@@ -224,7 +241,9 @@ getCommandeInfo()
 
                                  <Box sx={{display:'flex',flexDirection:'column',width:'95%',bgcolor:'Window',p:1}} >
 
-                                 { loading == true ? "Loading" :  commandes.map( (command:any) => <CollumnTableReview key={command.id} command={command} /> )}
+         { loading == true ? "Loading"
+         
+      :  commandes.filter(filterReview).map( (command:any) => <CollumnTableReview key={command.id} command={command} setIsError={setIsError} setMessage={setMessage} setOpens={setOpens} setCommandes={setCommandes} /> )}
                                       
                                       
                                     
@@ -232,7 +251,7 @@ getCommandeInfo()
                                  </Box>
                                 
                                   
-                                  { !commandes.length ? <Box sx={{width:'100%',alignItems:'center'}} >
+                                  { !commandes.filter(filterReview).length ? <Box sx={{width:'100%',alignItems:'center'}} >
                                   <Typography sx={{color:'black',textAlign:'left',ml:2}}  variant='subtitle2' gutterBottom>
                                   Aucune commande en attente d'avis </Typography>
                                   </Box> : "" }
