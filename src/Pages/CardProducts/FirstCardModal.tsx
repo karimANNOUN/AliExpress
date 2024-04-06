@@ -6,7 +6,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import IconButton from '@mui/material/IconButton';
 import Rating from '@mui/material/Rating';
 import Divider from '@mui/material/Divider';
-export const FirstCardModal = ({art,activeSize,setActiveSize,indexs,setIndexs}:any) => {
+export const FirstCardModal = ({art,activeSize,setActiveSize,indexs,setIndexs,totalQuantity,totalRating}:any) => {
 
    
 
@@ -69,13 +69,13 @@ export const FirstCardModal = ({art,activeSize,setActiveSize,indexs,setIndexs}:a
      </Typography>
 
     <Box sx={{display:'flex',alignItems:'center'}} >
-    <Rating sx={{color:'black',height:'100%'}} size="medium"  name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
+    <Rating name="read-only" value={totalRating/art.review.length} readOnly size="small" sx={{color:'black',height:'100%'}} />
     <Typography sx={{fontWeight:'700',mx:2}}  variant='subtitle1' gutterBottom>
-    4.3 
+    { !art.review.length ? "0" : totalRating/art.review.length} 
      </Typography>
 
      <Typography sx={{fontWeight:'100',color:'#9e9e9e'}}  variant='body1' gutterBottom>
-     591 Avis  ౹  + 5 000 Vendus
+      {art.review.length} Avis  ౹  {totalQuantity} Vendus
      </Typography>
 
     </Box>

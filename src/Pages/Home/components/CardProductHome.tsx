@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
@@ -11,10 +11,20 @@ import { motion } from "framer-motion";
 
 export const CardProductHome = ({art,toggleDrawer}:any) => {
 
+ 
 
     const navigate=useNavigate()
 
   
+    const totalQuantity  =  art.article.reduce((accumulator:any, currentProduct:any) => {
+      return accumulator + (currentProduct.quantity );
+    }, 0);
+
+    const totalRating =  art.review.reduce((accumulator:any, currentProduct:any) => {
+      return accumulator + ( parseInt(currentProduct.rating));
+    }, 0); 
+
+   
  
 
     const [over, setOver] = useState(false);
@@ -54,9 +64,9 @@ export const CardProductHome = ({art,toggleDrawer}:any) => {
         {art.title}
       </Typography>
        <Box sx={{display:'flex',mb:1}} >
-       <Rating name="read-only" value={2} readOnly size="small" sx={{color:'black',mr:1}} />
+       <Rating name="read-only" value={totalRating/art.review.length} readOnly size="small" sx={{color:'black',mr:1}} />
        <Typography sx={{textAlign:'left'}}  variant='caption' gutterBottom>
-        + 2000 Vendu(s)
+        {totalQuantity} Vendu(s)
       </Typography>
        </Box>
        <Box sx={{display:'flex',alignItems:'center'}} >
@@ -85,7 +95,7 @@ export const CardProductHome = ({art,toggleDrawer}:any) => {
           </Box>
      
 
-             <CardModalProduct open={open} toggleDrawer={toggleDrawer} setOpen={setOpen} art={art} />
+             <CardModalProduct open={open} toggleDrawer={toggleDrawer} setOpen={setOpen} art={art} totalQuantity={totalQuantity} totalRating={totalRating} />
          <Backdrop
          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
          open={over}

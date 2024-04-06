@@ -8,8 +8,9 @@ import Button from '@mui/material/Button';
 import Rating from '@mui/material/Rating';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import { motion  } from "framer-motion"
+import { LinearProgress } from '@mui/material';
 
-export const ModalComment = ({open,setOpen,reviewsTypes,comments,show,setShow,index,setIndex}:any) => {
+export const ModalComment = ({open,setOpen,reviewsTypes,comments,show,setShow,index,setIndex,product,totalRating,filterReviews}:any) => {
 
     const handleClose = () => setOpen(false);
 
@@ -48,15 +49,15 @@ export const ModalComment = ({open,setOpen,reviewsTypes,comments,show,setShow,in
          transition={{duration:1,ease:'easeInOut',stiffness:1000,damping:10}}
          >
          <Typography sx={{fontWeight:'800',textAlign:'left'}} variant="h6" gutterBottom>
-         Customer Reviews (591)
+         Customer Reviews ({product.review.length})
       </Typography>
       <Box sx={{display:'flex',justifyContent:'space-between'}} >
        <Box sx={{display:'flex',flexDirection:'column'}} >
        <Typography sx={{fontWeight:'800',textAlign:'left'}} variant="h2" gutterBottom>
-       4.3
+       { !product.review.length ? "0" : totalRating/product.review.length} 
       </Typography>
 
-      <Rating sx={{color:'black',mb:1}} name="half-rating-read" defaultValue={4.3} precision={0.1} size="large" readOnly />
+      <Rating name="read-only" value={totalRating/product.review.length} readOnly size="large" sx={{color:'black',mb:1}} />
       <Typography sx={{textAlign:'left',color:'#9e9e9e'}} variant="subtitle1" gutterBottom>
       Tous les avis proviennent d'acheteurs vérifiés
       </Typography>
@@ -67,8 +68,9 @@ export const ModalComment = ({open,setOpen,reviewsTypes,comments,show,setShow,in
         <Typography sx={{textAlign:'left',color:'#9e9e9e'}} variant="subtitle1" gutterBottom>
         5 Étoiles
       </Typography>
+      <LinearProgress sx={{width:'300px',height:'10px',borderRadius:'8px',mx:1,bgcolor:'#eeeeee'}} color='success' variant="determinate" value={product.review.filter((rev:any)=>(rev.rating == '5')).length*100/product.review.length} />
       <Typography sx={{textAlign:'left',color:'#9e9e9e'}} variant="subtitle1" gutterBottom>
-      385
+      {product.review.filter((rev:any)=>rev.rating == '5').length}
       </Typography>
         </Box>
 
@@ -76,8 +78,9 @@ export const ModalComment = ({open,setOpen,reviewsTypes,comments,show,setShow,in
         <Typography sx={{textAlign:'left',color:'#9e9e9e'}} variant="subtitle1" gutterBottom>
         4 Étoiles
       </Typography>
+      <LinearProgress sx={{width:'300px',height:'10px',borderRadius:'8px',mx:1,bgcolor:'#eeeeee'}} color='success' variant="determinate" value={product.review.filter((rev:any)=>(rev.rating == '4')).length*100/product.review.length} />
       <Typography sx={{textAlign:'left',color:'#9e9e9e'}} variant="subtitle1" gutterBottom>
-      385
+      {product.review.filter((rev:any)=>rev.rating == '4').length}
       </Typography>
         </Box>
 
@@ -85,8 +88,10 @@ export const ModalComment = ({open,setOpen,reviewsTypes,comments,show,setShow,in
         <Typography sx={{textAlign:'left',color:'#9e9e9e'}} variant="subtitle1" gutterBottom>
         3 Étoiles
       </Typography>
+      <LinearProgress sx={{width:'300px',height:'10px',borderRadius:'8px',mx:1,bgcolor:'#eeeeee'}} color='success' variant="determinate" value={product.review.filter((rev:any)=>(rev.rating == '3')).length*100/product.review.length} />
+
       <Typography sx={{textAlign:'left',color:'#9e9e9e'}} variant="subtitle1" gutterBottom>
-      385
+      {product.review.filter((rev:any)=>rev.rating == '3').length}
       </Typography>
         </Box>
 
@@ -94,8 +99,10 @@ export const ModalComment = ({open,setOpen,reviewsTypes,comments,show,setShow,in
         <Typography sx={{textAlign:'left',color:'#9e9e9e'}} variant="subtitle1" gutterBottom>
         2 Étoiles
       </Typography>
+      <LinearProgress sx={{width:'300px',height:'10px',borderRadius:'8px',mx:1,bgcolor:'#eeeeee'}} color='success' variant="determinate" value={product.review.filter((rev:any)=>(rev.rating == '2')).length*100/product.review.length} />
+
       <Typography sx={{textAlign:'left',color:'#9e9e9e'}} variant="subtitle1" gutterBottom>
-      385
+      {product.review.filter((rev:any)=>rev.rating == '2').length}
       </Typography>
         </Box>
 
@@ -103,8 +110,10 @@ export const ModalComment = ({open,setOpen,reviewsTypes,comments,show,setShow,in
         <Typography sx={{textAlign:'left',color:'#9e9e9e'}} variant="subtitle1" gutterBottom>
         1 Étoiles
       </Typography>
+      <LinearProgress sx={{width:'300px',height:'10px',borderRadius:'8px',mx:1,bgcolor:'#eeeeee'}} color='success' variant="determinate" value={product.review.filter((rev:any)=>(rev.rating == '1')).length*100/product.review.length} />
+
       <Typography sx={{textAlign:'left',color:'#9e9e9e'}} variant="subtitle1" gutterBottom>
-      385
+      {product.review.filter((rev:any)=>rev.rating == '1').length}
       </Typography>
         </Box>
 
@@ -114,8 +123,8 @@ export const ModalComment = ({open,setOpen,reviewsTypes,comments,show,setShow,in
       { reviewsTypes.map((review:any)=> <div key={review.id} >
 
         { review.id - 1 === active ?
-     <Button onClick={()=>setActive(review.id - 1)}  sx={{bgcolor:'#ffab91',mx:1,my:1,color:'#bf360c',borderRadius:'8px',borderColor:'#bf360c',":hover":{color:'#bf360c',borderColor:'#bf360c',bgcolor:'#ffab91'}}} variant="outlined">{review.type}(612)</Button> : 
-     <Button onClick={()=>setActive(review.id - 1)}  sx={{bgcolor:'#e0e0e0',mx:1,my:1,color:'black',borderRadius:'8px',borderColor:'#fafafa',":hover":{color:'black',borderColor:'#fafafa',bgcolor:'#e0e0e0'}}} variant="outlined">{review.type}(612)</Button>
+     <Button onClick={()=>setActive(review.id - 1)}  sx={{bgcolor:'#ffab91',mx:1,my:1,color:'#bf360c',borderRadius:'8px',borderColor:'#bf360c',":hover":{color:'#bf360c',borderColor:'#bf360c',bgcolor:'#ffab91'}}} variant="outlined">{review.type}({review.review})</Button> : 
+     <Button onClick={()=>setActive(review.id - 1)}  sx={{bgcolor:'#e0e0e0',mx:1,my:1,color:'black',borderRadius:'8px',borderColor:'#fafafa',":hover":{color:'black',borderColor:'#fafafa',bgcolor:'#e0e0e0'}}} variant="outlined">{review.type}({review.review})</Button>
      }
         
         </div>)}
@@ -123,36 +132,40 @@ export const ModalComment = ({open,setOpen,reviewsTypes,comments,show,setShow,in
  
        <Box sx={{display:'flex',flexDirection:'column',my:2}} >
   
-    {comments.map((com:any)=> <Box key={com.id} sx={{display:'flex',flexDirection:'column'}} >
+    {!product.review.length ? "" : ( product.review.filter(filterReviews).length == 0 ? 
+   <Typography sx={{textAlign:'left',color:'#9e9e9e',mb:1}} variant='body1' gutterBottom>
+   Nothing review(s) in this rating 
+  </Typography>
+   :product.review.filter(filterReviews).map((com:any)=> <Box key={com.id} sx={{display:'flex',flexDirection:'column'}} >
        <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'center'}} >
        <Rating sx={{color:'black',mb:1}} name="half-rating-read" defaultValue={4.3} precision={0.1} size='medium' readOnly />
        <Typography sx={{textAlign:'left',color:'#9e9e9e'}} variant="subtitle1" gutterBottom>
-       27 Nov 2023
+       {com.createdAt}
       </Typography>
        </Box> 
        <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'center'}} >
        <Typography sx={{textAlign:'left',color:'#9e9e9e'}} variant="subtitle1" gutterBottom>
-       Color:black 02 Shoe Size:45
+       Color:{com.colorProduct} {com.quantity} {product.title} {product.properties}:{com.propertyType}
       </Typography>
        <Typography sx={{textAlign:'left',color:'#9e9e9e'}} variant="subtitle1" gutterBottom>
-       J***z
+       {com.buyer.name.charAt(0) +'*'.repeat(com.buyer.name.length - 2)+com.buyer.name.charAt(com.buyer.name.length - 1) }
       </Typography>
        </Box> 
        <Typography sx={{textAlign:'left',color:'#9e9e9e'}} variant="subtitle1" gutterBottom>
-       Ils ont l'air bien d'avoir une telle sa durabilité et ses rêves parce que je le vois frajil et d'usure rapide...
+       {com.comment}
       </Typography>
       <Box sx={{display:'flex',alignItems:'center'}} >
-        { com.puctures.map((rev:any)=> <img key={rev.id} onClick={()=>(setShow(false),setIndex(rev.id - 1))} src={rev.img}  style={{width:'80px',height:'80px',borderRadius:'8px',marginRight:5}} />)}
+        { com.images.map((rev:any,index:any)=> <img key={rev.id} onClick={()=>(setShow(false),setIndex(index))} src={rev.imageUrl}  style={{width:'80px',height:'80px',borderRadius:'8px',marginRight:5}} />)}
       </Box>
 
       { !show ? <Box sx={{width:'350px',height:'400px',my:1,position:'relative'}} >
-       <img src={com.puctures[index].img} style={{width:'100%',height:'100%',borderRadius:'12px'}} />
+       <img src={com.images[index].imageUrl} style={{width:'100%',height:'100%',borderRadius:'12px'}} />
        <IconButton onClick={()=>{setShow(true)  }} sx={{position:'absolute',bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'},top:'5%',right:'5%'}} ><CloseOutlinedIcon sx={{fontSize:'20px',color:'#9e9e9e'}} /></IconButton>
         </Box> : "" }
 
       <Button sx={{width:'150px',color:'black',my:1,borderRadius:'12px',":hover":{color:'black'}}} variant='text'> <ThumbUpOutlinedIcon sx={{fontSize:'18px',mr:1}} /> Serviable(0)</Button>
      </Box>
-     )}
+     ))}
      
 
      </Box>

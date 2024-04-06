@@ -10,7 +10,7 @@ import Divider from '@mui/material/Divider';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 
-export const FirstCard = ({activeSize,setActiveSize,indexs,setIndexs}:any) => {
+export const FirstCard = ({activeSize,setActiveSize,indexs,setIndexs,totalQuantity,totalRating}:any) => {
 
   const product=useSelector((state:any)=>state.app.product)
 
@@ -28,6 +28,9 @@ export const FirstCard = ({activeSize,setActiveSize,indexs,setIndexs}:any) => {
       const handleClickLeft = () => {
         setCurrentIndex((prevIndex) => (prevIndex - 6 + product.images.filter((img:any)=> img.color !== 'imageDescription').length) % product.images.filter((img:any)=> img.color !== 'imageDescription').length);
       };
+
+
+    
 
 
   return (
@@ -100,13 +103,14 @@ export const FirstCard = ({activeSize,setActiveSize,indexs,setIndexs}:any) => {
     animate={{x:0,y:0,scale:1,opacity:1}}
     transition={{duration:0.7,ease:'easeIn'}}
     >
-    <Rating sx={{color:'black',height:'100%'}} size="medium"  name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
+   
+     <Rating name="read-only" value={totalRating/product.review.length} readOnly size="medium" sx={{color:'black',height:'100%'}} />
     <Typography sx={{fontWeight:'700',mx:2}}  variant='subtitle1' gutterBottom>
-    4.3 
+    { !product.review.length ? "0" : totalRating/product.review.length} 
      </Typography>
 
      <Typography sx={{fontWeight:'100',color:'#9e9e9e'}}  variant='body1' gutterBottom>
-     591 Avis  ౹  + 5 000 Vendus
+     {product.review.length} Avis  ౹  {totalQuantity} Vendus
      </Typography>
 
     </motion.div>

@@ -7,7 +7,7 @@ import { FirstCardModal } from './FirstCardModal';
 import { ImageCardModal } from './ImageCardModal';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
-export const CardModalProduct = ({setOpen,open,art,toggleDrawer}:any) => {
+export const CardModalProduct = ({setOpen,open,art,toggleDrawer,totalQuantity,totalRating}:any) => {
 
     const style = {
         position: 'absolute' as 'absolute',
@@ -42,7 +42,7 @@ export const CardModalProduct = ({setOpen,open,art,toggleDrawer}:any) => {
 
 
 <Box sx={{display:'flex',flexDirection:'column'}} >
-<FirstCardModal activeSize={activeSize} setActiveSize={setActiveSize} art={art} indexs={indexs} setIndexs={setIndexs} />
+<FirstCardModal activeSize={activeSize} setActiveSize={setActiveSize} art={art} indexs={indexs} setIndexs={setIndexs} totalQuantity={totalQuantity} totalRating={totalRating}  />
 
 
 </Box>
