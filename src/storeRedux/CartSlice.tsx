@@ -13,7 +13,8 @@ const cartSlice= createSlice({
         userInfo:{},
         storePayer:[],
         seller:{},
-        productSeller:{}
+        productSeller:{},
+        reviews:[]
       
         
       
@@ -50,10 +51,13 @@ const cartSlice= createSlice({
        setProductSeller:(state,action)=>{
         state.productSeller=action.payload
        },
+       setReviews:(state,action)=>{
+        state.reviews=action.payload
+       },
 
 
     }
 })
 
-export const {setUserValid,setUser,setProduct ,setProductStore ,setProducts ,setFavoritProducts,setUserInfo,setStorePayer,setSeller,setProductSeller }=cartSlice.actions;
+export const {setUserValid,setUser,setProduct ,setProductStore ,setProducts ,setFavoritProducts,setUserInfo,setStorePayer,setSeller,setProductSeller,setReviews }=cartSlice.actions;
 export const cartReducer = cartSlice.reducer;

@@ -86,6 +86,7 @@ export const UpdateImageComment = ({openImage,setOpenImage,setMessage,setOpens,i
     const updateReviewImages= async ()=>{
 
         try{
+          setLoading(true)
           const formData : any = new FormData();
           formData.append('file', image);
           formData.append('viewImage', JSON.stringify(img));
@@ -95,9 +96,6 @@ export const UpdateImageComment = ({openImage,setOpenImage,setMessage,setOpens,i
               headers:{authorization:`${Token}`},
             }) 
             .then(res=>{
-              if (!res.data) {
-                setLoading(true)
-              }
               if (res.data.success == false) {
                 setMessage(res.data.message)
                 setIsError(true)

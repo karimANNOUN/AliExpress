@@ -7,7 +7,7 @@ import { EmptyCardStore } from './EmptyCardStore';
 import { EmptyMeilleurProduct } from './EmptyMeilleurProduct';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-export const NameStore = () => {
+export const NameStore = ({seller}:any) => {
 
    
    const params=useParams()
@@ -19,7 +19,7 @@ export const NameStore = () => {
   const [newProdUsed,setNewProdUser]=useState([])
   const [latestProdUsed,setLatestProdUser]=useState([])
 
-   useEffect( ()=>{
+   useEffect(()=>{
        const getProductStoreNew =async()=>{
          const response=await fetch(`http://localhost:8000/store/new/${params.storeId}`, {
           method: 'GET',
@@ -108,18 +108,7 @@ export const NameStore = () => {
   
 
  
-    const newOffre : any[] =[
-      
-    ]
-
-    const newProducts=[
-        {id:1,name:'kimou'},{id:2,name:'kimou'},{id:3,name:'kimou'},{id:4,name:'kimou'},{id:5,name:'kimou'}
-    ]
-
-    const selectionProducts=[
-        {id:1,name:'kimou'},{id:2,name:'kimou'},{id:3,name:'kimou'},{id:5,name:'kimou'},{id:6,name:'kimou'},{id:7,name:'kimou'},{id:8,name:'kimou'},{id:9,name:'kimou'},{id:10,name:'kimou'},{id:11,name:'kimou'},
-        {id:12,name:'kimou'},{id:13,name:'kimou'},{id:14,name:'kimou'},{id:15,name:'kimou'},{id:16,name:'kimou'}
-    ]
+   
 
 
   return (

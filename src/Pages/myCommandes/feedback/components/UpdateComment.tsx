@@ -36,6 +36,7 @@ export const UpdateComment = ({OpenComment,setOpenComment,setMessage,setOpens,re
 
     const updateCommentReview = async()=>{
         try{
+          setLoading(true)
             const response = await fetch(`http://localhost:8000/UpdateCommentReview`,{
               method:'PATCH',
               credentials:"include", 
@@ -50,9 +51,7 @@ export const UpdateComment = ({OpenComment,setOpenComment,setMessage,setOpens,re
     
             
           
-           if (!data) {
-              setLoading(true)
-            }if (data.success == true) {
+           if (data.success == true) {
               setLoading(false) 
               setMessage(data.message)
               setIsError(false)

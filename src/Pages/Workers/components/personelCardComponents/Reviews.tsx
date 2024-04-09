@@ -10,7 +10,7 @@ import { ModalComment } from './ModalComment';
 import { motion ,useScroll ,useMotionValueEvent   } from "framer-motion"
 import { LinearProgress } from '@mui/material';
 
-export const Reviews = ({totalQuantity,totalRating,product}:any) => {
+export const Reviews = ({totalRating,product}:any) => {
 
     const [show,setShow]=useState(true)
     const [index,setIndex]=useState(0)
@@ -206,7 +206,7 @@ export const Reviews = ({totalQuantity,totalRating,product}:any) => {
     <Box sx={{display:'flex',justifyContent:'center',alignItems:'center'}} >
     <Button onClick={handleOpen} sx={{bgcolor:'#e0e0e0',color:'black',fontWeight:'800',borderRadius:'12px',":hover":{bgcolor:'#9e9e9e'}}} variant="text">Voir Plus</Button>
     </Box>
-     <ModalComment reviewsTypes={reviewsTypes} open={open} setOpen={setOpen} comments={comments} show={show} setShow={setShow} index={index} setIndex={setIndex} product={product} totalRating={totalRating} filterReviews={filterReviews} />
+     <ModalComment reviewsTypes={reviewsTypes} open={open} setOpen={setOpen} comments={comments} show={show} setShow={setShow} index={index} setIndex={setIndex} product={product} totalRating={totalRating}  />
    </motion.div>
     }
     </>

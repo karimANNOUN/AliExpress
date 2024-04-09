@@ -10,7 +10,7 @@ import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import { motion  } from "framer-motion"
 import { LinearProgress } from '@mui/material';
 
-export const ModalComment = ({open,setOpen,reviewsTypes,comments,show,setShow,index,setIndex,product,totalRating,filterReviews}:any) => {
+export const ModalComment = ({open,setOpen,reviewsTypes,comments,show,setShow,index,setIndex,product,totalRating}:any) => {
 
     const handleClose = () => setOpen(false);
 
@@ -30,7 +30,25 @@ export const ModalComment = ({open,setOpen,reviewsTypes,comments,show,setShow,in
       };
 
 
-      const [active,setActive]=useState(0)
+      const [activeReview,setActiveReview]=useState(0)
+
+      const filterReviews  = (rev:any)=>{
+        if (activeReview == 0 ) {
+         return product.review.filter((rev:any)=> rev ).length
+        }if (activeReview == 1 ) {
+        return product.review.filter((rev:any)=>rev.rating == '5').length
+        }if (activeReview == 2 ) {
+         return product.review.filter((rev:any)=>rev.rating == '4').length
+        }if (activeReview == 3) {
+         return product.review.filter((rev:any)=>rev.rating == '3').length
+        }if (activeReview == 4 ) {
+         return product.review.filter((rev:any)=>rev.rating == '2').length
+        }if (activeReview == 5 ) {
+         return product.review.filter((rev:any)=>rev.rating == '1').length
+        }
+     }
+
+  
 
   return (
     <div>
@@ -122,9 +140,9 @@ export const ModalComment = ({open,setOpen,reviewsTypes,comments,show,setShow,in
       <Box sx={{display:'flex',flexWrap:'wrap'}} >
       { reviewsTypes.map((review:any)=> <div key={review.id} >
 
-        { review.id - 1 === active ?
-     <Button onClick={()=>setActive(review.id - 1)}  sx={{bgcolor:'#ffab91',mx:1,my:1,color:'#bf360c',borderRadius:'8px',borderColor:'#bf360c',":hover":{color:'#bf360c',borderColor:'#bf360c',bgcolor:'#ffab91'}}} variant="outlined">{review.type}({review.review})</Button> : 
-     <Button onClick={()=>setActive(review.id - 1)}  sx={{bgcolor:'#e0e0e0',mx:1,my:1,color:'black',borderRadius:'8px',borderColor:'#fafafa',":hover":{color:'black',borderColor:'#fafafa',bgcolor:'#e0e0e0'}}} variant="outlined">{review.type}({review.review})</Button>
+        { review.id - 1 === activeReview ?
+     <Button onClick={()=>setActiveReview(review.id - 1)}  sx={{bgcolor:'#ffab91',mx:1,my:1,color:'#bf360c',borderRadius:'8px',borderColor:'#bf360c',":hover":{color:'#bf360c',borderColor:'#bf360c',bgcolor:'#ffab91'}}} variant="outlined">{review.type}({review.review})</Button> : 
+     <Button onClick={()=>setActiveReview(review.id - 1)}  sx={{bgcolor:'#e0e0e0',mx:1,my:1,color:'black',borderRadius:'8px',borderColor:'#fafafa',":hover":{color:'black',borderColor:'#fafafa',bgcolor:'#e0e0e0'}}} variant="outlined">{review.type}({review.review})</Button>
      }
         
         </div>)}
@@ -138,7 +156,7 @@ export const ModalComment = ({open,setOpen,reviewsTypes,comments,show,setShow,in
   </Typography>
    :product.review.filter(filterReviews).map((com:any)=> <Box key={com.id} sx={{display:'flex',flexDirection:'column'}} >
        <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'center'}} >
-       <Rating sx={{color:'black',mb:1}} name="half-rating-read" defaultValue={4.3} precision={0.1} size='medium' readOnly />
+       <Rating sx={{color:'black',mb:1}} name="read-only" value={parseInt(com.rating)} size='medium' readOnly />
        <Typography sx={{textAlign:'left',color:'#9e9e9e'}} variant="subtitle1" gutterBottom>
        {com.createdAt}
       </Typography>

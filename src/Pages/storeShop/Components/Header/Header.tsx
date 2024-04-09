@@ -14,14 +14,14 @@ import { useSelector } from 'react-redux';
 
 
 
-export const Header = () => {
+export const Header = ({seller}:any) => {
 
     const navigate=useNavigate()
     const location=useLocation()
 
     const [expand,setExpand]=useState(false)
     const [show,setShow]=useState(false)
-
+ 
 
     const [expands,setExpands]=useState(false)
     const [shows,setShows]=useState(false)
@@ -38,16 +38,13 @@ export const Header = () => {
      }
      }
 
-     const seller=useSelector((state:any)=>state.app.seller)
-
-  console.log(seller)
-
+ 
      const [hovers,setHovers]=useState(active) 
 
   return (
      <Box sx={{width:'100%',display:'flex',flexDirection:'column',alignItems:'center'}} >
     <Box sx={{display:'flex',height:'70px',width:'60%',alignItems:'center'}} >
-    <Button onMouseEnter={()=>setShow(true)} onMouseLeave={()=>setShow(false)} sx={{color:'black',fontFamily:'unset',":hover":{bgcolor:'Window',fontFamily:'unset',color:'#ef6c00',textDecorationLine:'underline'}}} variant="text">{!seller ? "" : seller.reprisentativeLegal.completeName} Store</Button>
+    <Button onMouseEnter={()=>setShow(true)} onMouseLeave={()=>setShow(false)} sx={{color:'black',fontFamily:'unset',":hover":{bgcolor:'Window',fontFamily:'unset',color:'#ef6c00',textDecorationLine:'underline'}}} variant="text">{!seller ? "" : seller.name} Store</Button>
  
     <div onMouseEnter={()=>setShow(true)} onMouseLeave={()=>setShow(false)} style={{width:'60px',height:'40px',backgroundColor:'#e1f5fe',display:'flex',justifyContent:'center',alignItems:'center'}} >
       <WorkspacePremiumOutlinedIcon sx={{fontSize:'18px',height:'100%',color:'#2196f3'}} />
@@ -75,7 +72,7 @@ export const Header = () => {
 
     <Box sx={{height:'60px',width:'100%'}} >
     <Typography sx={{fontWeight:'800'}} variant='h5' gutterBottom>
-    {!seller ? "" : seller.reprisentativeLegal.completeName} Store
+    {!seller ? "" : seller.name} Store
  </Typography>
     </Box>
 

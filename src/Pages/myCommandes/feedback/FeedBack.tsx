@@ -96,17 +96,30 @@ const filtercommande = () =>{
 
 
 
-   
+const [newCom,setNewCom]=useState(false)   
 
 
   const filterReview = (comnd:any)=>{
     if (active == 0  ) {
-      return comnd.product.review.length == 0
+      return comnd.product.review.length == 0 
     }if (active == 1  ) {
-      return comnd.product.review.length !== 0
+      return comnd.product.review.length !== 0 
   
     }
   }
+
+
+
+
+  useEffect(()=>{
+ 
+   if (active == 0) {
+    setNewCom(true) 
+   }if (active == 1) {
+    setNewCom(false)
+   }
+   
+  },[active])
 
 
   return (    
@@ -243,7 +256,7 @@ const filtercommande = () =>{
 
          { loading == true ? "Loading"
          
-      :  commandes.filter(filterReview).map( (command:any) => <CollumnTableReview key={command.id} command={command} setIsError={setIsError} setMessage={setMessage} setOpens={setOpens} setCommandes={setCommandes} /> )}
+      :  commandes.filter(filterReview).map( (command:any) => <CollumnTableReview key={command.id} command={command} setIsError={setIsError} setMessage={setMessage} setOpens={setOpens} setCommandes={setCommandes} newCom={newCom} /> )}
                                       
                                       
                                     

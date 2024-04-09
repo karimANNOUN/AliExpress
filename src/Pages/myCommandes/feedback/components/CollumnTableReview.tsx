@@ -15,7 +15,7 @@ import { UpdateRating } from './UpdateRating';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Cookies from 'js-cookie';
 
-export const CollumnTableReview = ({command,setMessage,setOpens,setCommandes,setIsError}:any) => {
+export const CollumnTableReview = ({command,setMessage,setOpens,setCommandes,setIsError,newCom}:any) => {
 
 
     const [openComment,setOpenComment]=useState(false)
@@ -38,6 +38,7 @@ export const CollumnTableReview = ({command,setMessage,setOpens,setCommandes,set
 
   const deleteReview = async()=>{
     try{
+      setLoading(true)
         const response = await fetch(`http://localhost:8000/deleteReview`,{
           method:'DELETE',
           credentials:"include", 
@@ -52,12 +53,10 @@ export const CollumnTableReview = ({command,setMessage,setOpens,setCommandes,set
 
         
       
-       if (!data) {
-          setLoading(true)
-        }if (data.success == true) {
-          setLoading(false) 
+       if (data.success == true) {
           setMessage(data.message)
           setIsError(false)
+          setLoading(false) 
           setOpens(true)
           setCommandes(data.getCommandeReviews)
         }if (data.success == false) {
@@ -191,11 +190,11 @@ US ${ command.priceProduct}
  
                                     </Box>
 
-                                    <Tooltip title="Delete Review">
+                                    { newCom ==true ? "" : <Tooltip title="Delete Review">
                                    <IconButton onClick={deleteReview} >
                                     <DeleteIcon sx={{fontSize:'15px',":hover":{color:'#f44336'}}} />
                                    </IconButton>
-                                   </Tooltip>
+                                   </Tooltip>}
 
  </Box>
   <ReviewEvaluation open={open} setOpen={setOpen} setMessage={setMessage} setOpens={setOpens} command={command} setCommandes={setCommandes} setIsError={setIsError} />

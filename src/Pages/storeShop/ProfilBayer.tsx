@@ -4,7 +4,8 @@ import { Header } from './Components/Header/Header';
 import { NameStore } from './Components/Header/NameStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { setSeller } from '../../storeRedux/CartSlice';
+import { useQuery } from '@tanstack/react-query';
+//import { setSeller } from '../../storeRedux/CartSlice';
 
 export const ProfilBayer = () => {
 
@@ -12,9 +13,13 @@ export const ProfilBayer = () => {
 
   const dispatch = useDispatch()
 
-  const [loading,setLoading]=useState(false)
+  const [loading,setLoading]=useState(Boolean)
+  const [seller,setSeller]=useState<any>({})
 
-   useEffect( ()=>{
+
+  useEffect( ()=>{
+    
+    setLoading(true)
        const getStoreSeller =async()=>{
          const response=await fetch(`http://localhost:8000/store/${params.storeId}`, {
           method: 'GET',
@@ -24,28 +29,28 @@ export const ProfilBayer = () => {
           },
         })
         const data = await response.json()
-        if (!data) {
-          setLoading(true)
-        }
       if (data.success == true) {
-       
+       //   dispatch(setSeller(data.seller)) 
+          setSeller(data.seller)  
           setLoading(false)
-          dispatch(setSeller(data.seller))   
-      }
+        }
         
       }
        getStoreSeller()
    },[])
 
 
+  if (loading == true ) return <div>'Loading...'</div> 
 
-   
+ 
+
+  
    
   return (
-    <div>
+    <div> 
         <Box sx={{display:'flex',flexDirection:'column',alignItems:'center'}} >
-        <Header/>
-        <NameStore/>
+        <Header seller={seller} />
+        <NameStore seller={seller} />
         </Box>
     </div>
   )

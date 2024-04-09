@@ -37,6 +37,7 @@ export const UpdateRating = ({openRating,setOpenRating,setMessage,setOpens,revie
 
     const updateRating = async()=>{
         try{
+          setLoading(true)
             const response = await fetch(`http://localhost:8000/UpdateRatingReview`,{
               method:'PATCH',
               credentials:"include", 
@@ -47,13 +48,8 @@ export const UpdateRating = ({openRating,setOpenRating,setMessage,setOpens,revie
               body:JSON.stringify({review,rating})
             });
             const data = await response.json()
-    
-    
-            
           
-           if (!data) {
-              setLoading(true)
-            }if (data.success == true) {
+           if (data.success == true) {
               setLoading(false) 
               setMessage(data.message)
               setIsError(false)

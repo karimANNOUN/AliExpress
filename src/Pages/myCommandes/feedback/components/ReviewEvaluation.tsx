@@ -88,7 +88,7 @@ export const ReviewEvaluation = ({setOpen,open,setMessage,setOpens,command,setCo
     const handelReviewInformation= async ()=>{
 
       try{
-  
+        setLoading(true)
         const formData : any = new FormData();
       
         formData.append('manyImages', manyImages);
@@ -113,9 +113,6 @@ export const ReviewEvaluation = ({setOpen,open,setMessage,setOpens,command,setCo
             headers:{authorization:`${Token}`},
           }) 
           .then(res=>{
-            if (!res.data) {
-              setLoading(true)
-            }
             if (res.data.success == false) {
               setMessage(res.data.message)
               setIsError(true)
