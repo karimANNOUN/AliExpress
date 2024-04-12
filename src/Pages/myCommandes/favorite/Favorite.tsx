@@ -19,6 +19,7 @@ export const Favorite = () => {
      const token = Cookies.get('token');
 
     useEffect(()=>{
+      setLoading(true)
       const handelgetFavoritProduct=async()=>{
         const response = await fetch(`http://localhost:8000/getfavoritproduct`,{
           method: 'GET',
@@ -30,9 +31,7 @@ export const Favorite = () => {
         });
         const data = await response.json()
      
-        if (!data) {
-          setLoading(true)
-        }if (data.success == true) {
+       if (data.success == true) {
           dispatch(setFavoritProducts(data.favoritProducts))
           setLoading(false) 
         }
@@ -45,7 +44,6 @@ export const Favorite = () => {
 
     const favoritLists=useSelector((state:any)=>state.app.favoritProducts)
   
-   
 
   return (
     <div style={{display:'flex',justifyContent:'center',backgroundColor:'#eeeeee'}} >

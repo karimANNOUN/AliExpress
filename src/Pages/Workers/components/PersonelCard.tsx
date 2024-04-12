@@ -17,7 +17,8 @@ export const PersonelCard = ({loading }:any) => {
    const product=useSelector((state:any)=>state.app.product)
     
     const [activeSize,setActiveSize]=useState(0)
-    const [indexs,setIndexs]=useState(0)
+    const [indexs,setIndexs]=useState(product.images.filter((img:any)=> img.color !== 'imageDescription')[0].id)
+    const [favColor,setFavColor]=useState(product.images.filter((img:any)=> img.color !== 'imageDescription')[0].id)
 
    
 
@@ -43,7 +44,7 @@ export const PersonelCard = ({loading }:any) => {
      
      : 
      <Box sx={{display:'flex',flexDirection:'column'}} >
-     <FirstCard activeSize={activeSize} setActiveSize={setActiveSize} indexs={indexs} setIndexs={setIndexs} totalQuantity={totalQuantity} totalRating={totalRating} />
+     <FirstCard activeSize={activeSize} setActiveSize={setActiveSize} indexs={indexs} setIndexs={setIndexs} totalQuantity={totalQuantity} totalRating={totalRating} setFavColor={setFavColor} />
      <Divider sx={{my:2}} />
      <CompletedCard/>
      <Divider sx={{my:2}} />
@@ -64,7 +65,7 @@ export const PersonelCard = ({loading }:any) => {
         </Box>
      : 
      <Box sx={{width:'350px',height:'600px',borderRadius:'10px',border:'2px solid #eeeeee',display:'flex',justifyContent:'center',alignItems:'center',position:'sticky',top:'2%',right:0}} >
-        <ImageCard activeSize={activeSize} setActiveSize={setActiveSize} indexs={indexs} setIndexs={setIndexs}/>
+        <ImageCard activeSize={activeSize} setActiveSize={setActiveSize} indexs={indexs} setIndexs={setIndexs} favColor={favColor} />
      </Box>}
     
     </Box>

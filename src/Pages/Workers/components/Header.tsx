@@ -10,13 +10,16 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Skeleton from '@mui/material/Skeleton';
+import { useEffect } from 'react';
 export const Header = ({loading}:any) => {
 
         const navigate=useNavigate()
 
         const product=useSelector((state:any)=>state.app.product)
 
-        console.log(product)
+       useEffect(()=>{
+        console.log(product.review)
+       },[])
        
       
   return (

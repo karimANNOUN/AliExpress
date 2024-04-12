@@ -26,7 +26,8 @@ export const CardModalProduct = ({setOpen,open,art,toggleDrawer,totalQuantity,to
       const handleClose = () => setOpen(false);
 
       const [activeSize,setActiveSize]=useState(0)
-      const [indexs,setIndexs]=useState(0)
+      const [indexs,setIndexs]=useState(art.images.filter((img:any)=> img.color !== 'imageDescription')[0].id)
+      const [favColor,setFavColor]=useState(art.images.filter((img:any)=> img.color !== 'imageDescription')[0].id)
 
 
   return (
@@ -42,7 +43,7 @@ export const CardModalProduct = ({setOpen,open,art,toggleDrawer,totalQuantity,to
 
 
 <Box sx={{display:'flex',flexDirection:'column'}} >
-<FirstCardModal activeSize={activeSize} setActiveSize={setActiveSize} art={art} indexs={indexs} setIndexs={setIndexs} totalQuantity={totalQuantity} totalRating={totalRating}  />
+<FirstCardModal activeSize={activeSize} setActiveSize={setActiveSize} art={art} indexs={indexs} setIndexs={setIndexs} totalQuantity={totalQuantity} totalRating={totalRating} setFavColor={setFavColor}  />
 
 
 </Box>
@@ -51,7 +52,7 @@ export const CardModalProduct = ({setOpen,open,art,toggleDrawer,totalQuantity,to
 
 
 <Box sx={{width:'300px',height:'530px',borderRadius:'10px',borderStyle:'solid',borderColor:'#eeeeee',display:'flex',justifyContent:'center',alignItems:'center'}} >
-   <ImageCardModal activeSize={activeSize} setActiveSize={setActiveSize} toggleDrawer={toggleDrawer}  setOpen={setOpen} art={art} indexs={indexs} setIndexs={setIndexs}  />
+   <ImageCardModal activeSize={activeSize} setActiveSize={setActiveSize} toggleDrawer={toggleDrawer}  setOpen={setOpen} art={art} indexs={indexs} setIndexs={setIndexs} favColor={favColor}  />
 </Box>
 
 </Box>

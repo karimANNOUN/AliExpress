@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -6,13 +6,15 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import IconButton from '@mui/material/IconButton';
 import Rating from '@mui/material/Rating';
 import Divider from '@mui/material/Divider';
-export const FirstCardModal = ({art,activeSize,setActiveSize,indexs,setIndexs,totalQuantity,totalRating}:any) => {
+export const FirstCardModal = ({art,activeSize,setActiveSize,indexs,setIndexs,totalQuantity,totalRating,setFavColor}:any) => {
 
    
 
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    
+    useEffect(()=>{
+     setIndexs(art.images[0].id)
+    },[])
 
     const handleClickRight = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 6) % art.images.filter((img:any)=> img.color !== 'imageDescription').length);
@@ -26,13 +28,15 @@ export const FirstCardModal = ({art,activeSize,setActiveSize,indexs,setIndexs,to
     <Box sx={{display:'flex',overflowY: 'auto',}} >
     <Box sx={{display:'flex',flexDirection:'column',width:'400px',height:'500px',mr:4}} >
       
-     <img src={art.images.filter((img:any)=>  img.color !== 'imageDescription')[indexs].imageUrl} style={{width:'400px',height:'400px',borderRadius:'8px'}}  />
+     <img src={art.images.filter((img:any)=>  img.id == indexs )[0].imageUrl} style={{width:'400px',height:'400px',borderRadius:'8px'}}  />
    
      <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'center',width:'100%',height:'100px',overflow:'hidden',position:'relative'}} >
 
-     { art.images.filter((img:any)=> img.color !== 'imageDescription').slice(currentIndex, currentIndex + 6).map((category:any,index:any)=> 
-     <Box key={index} onMouseEnter={ ()=> setIndexs(index) } sx={{height:'60px',width:'60px',borderRadius:'12px'}} >
-       {index === indexs  ?  <img onClick={()=> setIndexs(index)} src={category.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px',borderStyle:'solid',borderColor:'#424242'}} /> : <img onClick={()=> setIndexs(index)} src={category.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px'}} /> }
+     { art.images.filter((img:any)=> img.color !== 'imageDescription').slice(currentIndex, currentIndex + 6).map((category:any)=> 
+     <Box key={category.id} onMouseEnter={ ()=> setIndexs(category.id) } sx={{height:'60px',width:'60px',borderRadius:'12px'}} >
+       {category.id === indexs  ?
+         <img onClick={()=> setIndexs(category.id)} src={category.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px',borderStyle:'solid',borderColor:'#424242'}} /> :
+         <img onClick={()=> setIndexs(category.id)} src={category.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px'}} /> }
       </Box>
       )}
 
@@ -94,14 +98,19 @@ export const FirstCardModal = ({art,activeSize,setActiveSize,indexs,setIndexs,to
      </Typography>
     </Box>
     <Typography sx={{fontWeight:'800',textAlign:'left'}}  variant='body1' gutterBottom>
-    Couleur: { art.images.length == 0 ? "" :   ( indexs>=5 ? "other color" : art.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) )[indexs].color) }
+    Couleur: { art.images.length == 0 ? "" :
+    
+    ( art.images.filter((img:any)=> ( img.color !== 'imageDescription' && img.id == indexs ) )[0].color == "manyImages" ? "other color"
+     : art.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' && img.id == indexs ) )[0].color) }
      </Typography>
 
       <Box sx={{display:'flex',alignItems:'center',width:'80%',my:2}} >
-       { art.images.length == 0 ? "" : art.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) ).slice(0, 5).map((categ:any,index:any)=>
+       { art.images.length == 0 ? "" : art.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) ).slice(0, 5).map((categ:any)=>
        
-       <Box key={index} sx={{height:'50px',width:'50px',borderRadius:'12px',mx:2}} >
-         {index === indexs  ?  <img onClick={()=> setIndexs(index)} src={categ.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px',borderStyle:'solid',borderColor:'#424242'}} /> : <img onClick={()=> setIndexs(index)} src={categ.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px'}} /> }
+       <Box key={categ.id} sx={{height:'50px',width:'50px',borderRadius:'12px',mx:2}} >
+         {categ.id === indexs  ?
+           <img onClick={()=>(setIndexs(categ.id),setFavColor(categ.id))} src={categ.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px',borderStyle:'solid',borderColor:'#424242'}} /> :
+           <img onClick={()=>(setIndexs(categ.id),setFavColor(categ.id))} src={categ.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px'}} /> }
        </Box>
        )}
       </Box>

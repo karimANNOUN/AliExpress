@@ -235,9 +235,16 @@ export const PaymentStoreCard = () => {
          (≈DA{(totalPrice+totalLivraisonPrice)*140})
            </Typography>
            </Box>
-           <Button onClick={handelShowCard} variant='contained' sx={{bgcolor:'#ff1744',color:'white',mb:2,width:'100%',borderRadius:'16px' ,":hover":{color:'white',bgcolor:'#ff1744'} }} >
-          Commander
-    </Button>
+      {userInfo.locationUser == null ? 
+       <Button onClick={handelShowCard} disabled variant='contained' sx={{bgcolor:'#ff1744',color:'white',mb:2,width:'100%',borderRadius:'16px' ,":hover":{color:'white',bgcolor:'#ff1744'} }} >
+       Commander
+ </Button>
+      :
+        <Button onClick={handelShowCard} variant='contained' sx={{bgcolor:'#ff1744',color:'white',mb:2,width:'100%',borderRadius:'16px' ,":hover":{color:'white',bgcolor:'#ff1744'} }} >
+        Commander
+  </Button>
+      }
+        
          
 
           </Box>

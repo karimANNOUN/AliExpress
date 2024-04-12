@@ -31,7 +31,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 
 
-export const ImageCard = ({activeSize,indexs,setIndexs}:any) => {
+export const ImageCard = ({activeSize,indexs,setIndexs,favColor}:any) => {
   
   const [openAlert, setOpenAlert] = useState(false);
 
@@ -62,15 +62,15 @@ export const ImageCard = ({activeSize,indexs,setIndexs}:any) => {
 
    const quantitySize=art.property[activeSize].quantity;
 
-   const favoritColor=art.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) )[indexs].color;
+   const favoritColor=art.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' && img.id == favColor ) )[0].color;
 
-   const favoriteImage=art.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) )[indexs].imageUrl;
+   const favoriteImage=art.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' && img.id == favColor ) )[0].imageUrl;
 
    const user=useSelector((state:any)=>state.app.userInfo)
 
    const productsStore=useSelector((state:any)=>state.app.productStore)
 
-   const products=useSelector((state:any)=>state.app.products)
+
  
 
    const handleStoreProducts = async () => {

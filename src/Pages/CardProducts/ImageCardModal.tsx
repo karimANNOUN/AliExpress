@@ -29,7 +29,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   
 });
 
-export const ImageCardModal = ({setOpen,art,activeSize,toggleDrawer,indexs}:any) => {
+export const ImageCardModal = ({setOpen,art,activeSize,toggleDrawer,indexs,favColor}:any) => {
 
   const [openAlert, setOpenAlert] = useState(false);
 
@@ -67,9 +67,9 @@ export const ImageCardModal = ({setOpen,art,activeSize,toggleDrawer,indexs}:any)
 
    const quantitySize=art.property[activeSize].quantity;
 
-   const favoritColor=art.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) )[indexs].color;
+   const favoritColor=art.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' && img.id == favColor ) )[0].color;;
 
-   const favoriteImage=art.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) )[indexs].imageUrl;
+   const favoriteImage=art.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' && img.id == favColor ) )[0].imageUrl;
 
 
    const productsStore=useSelector((state:any)=>state.app.productStore)

@@ -10,7 +10,7 @@ import Divider from '@mui/material/Divider';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 
-export const FirstCard = ({activeSize,setActiveSize,indexs,setIndexs,totalQuantity,totalRating}:any) => {
+export const FirstCard = ({activeSize,setActiveSize,indexs,setIndexs,totalQuantity,totalRating,setFavColor}:any) => {
 
   const product=useSelector((state:any)=>state.app.product)
 
@@ -30,6 +30,7 @@ export const FirstCard = ({activeSize,setActiveSize,indexs,setIndexs,totalQuanti
       };
 
 
+      
     
 
 
@@ -38,7 +39,7 @@ export const FirstCard = ({activeSize,setActiveSize,indexs,setIndexs,totalQuanti
     <Box sx={{display:'flex',flexDirection:'column',width:'500px',height:'600px',mr:4}} >
       
      <motion.img 
-     src={product.images.filter((img:any)=>  img.color !== 'imageDescription')[indexs].imageUrl} 
+     src={product.images.filter((img:any)=>  (img.id == indexs ))[0].imageUrl} 
      style={{width:'500px',height:'500px',borderRadius:'8px'}}
      initial={{ opacity: 0,scale:0.5 }}
      animate={{ opacity: 1,scale:1 }}
@@ -47,9 +48,9 @@ export const FirstCard = ({activeSize,setActiveSize,indexs,setIndexs,totalQuanti
    
      <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'center',width:'100%',height:'100px',overflow:'hidden',position:'relative'}} >
 
-     { product.images.filter((img:any)=> img.color !== 'imageDescription').slice(currentIndex, currentIndex + 6).map((category:any,index:any)=> 
-     <Box key={index} onMouseEnter={ ()=> setIndexs(index) } sx={{height:'70px',width:'70px',borderRadius:'12px'}} >
-       {index === indexs  ?  <img onClick={()=> setIndexs(index)} src={category.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px',borderStyle:'solid',borderColor:'#424242'}} /> : <img onClick={()=> setIndexs(index)} src={category.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px'}} /> }
+     { product.images.filter((img:any)=> img.color !== 'imageDescription').slice(currentIndex, currentIndex + 6).map((category:any)=> 
+     <Box key={category.id} onMouseEnter={ ()=> setIndexs(category.id) } sx={{height:'70px',width:'70px',borderRadius:'12px'}} >
+       {category.id === indexs  ?  <img onClick={()=> setIndexs(category.id)} src={category.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px',borderStyle:'solid',borderColor:'#424242'}} /> : <img onClick={()=> setIndexs(category.id)} src={category.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px'}} /> }
       </Box>
       )}
 
@@ -146,7 +147,10 @@ export const FirstCard = ({activeSize,setActiveSize,indexs,setIndexs,totalQuanti
      </motion.div>
 
     <Typography sx={{fontWeight:'800',textAlign:'left'}}  variant='body1' gutterBottom>
-    Couleur: { product.images.length == 0 ? "" :   ( indexs>=5 ? "other color" : product.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) )[indexs].color) }
+    Couleur: { product.images.length == 0 ? "" :
+    
+    ( product.images.filter((img:any)=> ( img.color !== 'imageDescription' && img.id == indexs ) )[0].color == "manyImages" ? "other color"
+     : product.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' && img.id == indexs ) )[0].color) }
      </Typography>
      
      <motion.div
@@ -157,10 +161,12 @@ export const FirstCard = ({activeSize,setActiveSize,indexs,setIndexs,totalQuanti
      >
 
 <Box sx={{display:'flex',width:'100%',alignItems:'center',my:2}} >
-       { product.images.length == 0 ? "" : product.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription' ) ).map((categ:any,index:any)=>
+       { product.images.length == 0 ? "" : product.images.filter((img:any)=> (img.color !== 'manyImages' && img.color !== 'imageDescription'  ) ).map((categ:any)=>
        
-       <Box key={index} sx={{height:'50px',width:'50px',borderRadius:'12px',mx:2}} >
-         {index === indexs  ?  <img onClick={()=> setIndexs(index)} src={categ.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px',borderStyle:'solid',borderColor:'#424242'}} /> : <img onClick={()=> setIndexs(index)} src={categ.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px'}} /> }
+       <Box key={categ.id} sx={{height:'50px',width:'50px',borderRadius:'12px',mx:2}} >
+         {categ.id == indexs  ?  
+         <img onClick={()=>(setIndexs(categ.id),setFavColor(categ.id))} src={categ.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px',borderStyle:'solid',borderColor:'#424242'}} /> 
+       : <img onClick={()=>(setIndexs(categ.id),setFavColor(categ.id))} src={categ.imageUrl} style={{height:'100%',width:'100%',borderRadius:'8px'}} /> }
        </Box>
        )}
       </Box>

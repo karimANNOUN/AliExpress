@@ -15,6 +15,7 @@ export const Worker = () => {
   const [loading,setLoading]=useState(false)
 
    useEffect( ()=>{
+    setLoading(true)
        const getOneProduct =async()=>{
          const response=await fetch(`http://localhost:8000/getproduct/${params.id}`, {
           method: 'GET',
@@ -24,9 +25,7 @@ export const Worker = () => {
           },
         })
         const data = await response.json()
-        if (!data) {
-          setLoading(true)
-        }
+     
       if (data.success == true) {
        
           setLoading(false)
@@ -38,6 +37,7 @@ export const Worker = () => {
       }
        getOneProduct()
    },[])
+
 
 
 

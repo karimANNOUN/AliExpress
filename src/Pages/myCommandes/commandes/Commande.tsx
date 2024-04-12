@@ -5,16 +5,12 @@ import Typography from '@mui/material/Typography';
 import { IconButton, InputAdornment } from '@mui/material';
 import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
-
 import { ProductAimiez } from '../components/ProductAimiez';
-import DeleteIcon from '@mui/icons-material/Delete';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import SearchIcon from '@mui/icons-material/Search';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import CheckIcon from '@mui/icons-material/Check';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
@@ -53,8 +49,6 @@ export const Commande = () => {
     const [message,setMessage]=useState('')
     const [commandes,setCommandes]=useState <any> ([])
   
-    const dispatch=useDispatch()
-    const navigate=useNavigate()
   
     const token = Cookies.get('token');
 
@@ -131,6 +125,7 @@ export const Commande = () => {
 
 
     useEffect(()=>{
+      setLoading(true)
       const getCommandeInfo = async()=>{
           try{
               const response = await fetch(`http://localhost:8000/commandeInfo`,{
@@ -144,9 +139,7 @@ export const Commande = () => {
               const data = await response.json()
               
             
-             if (!data) {
-                setLoading(true)
-              }if (data.success == true) {
+           if (data.success == true) {
                 setLoading(false) 
                 setCommandes(data.commande)
 
@@ -164,6 +157,7 @@ export const Commande = () => {
 
 
   const getCommandeNonPaye = async()=>{
+    setLoading(true)
     setActive(1)
     try{
         const response = await fetch(`http://localhost:8000/commandenonpaye`,{
@@ -177,9 +171,7 @@ export const Commande = () => {
         const data = await response.json()
       
       
-       if (!data) {
-          setLoading(true)
-        }if (data.success == true) {
+      if (data.success == true) {
           setLoading(false) 
           setCommandes(data.commandeNonPaye)
         }if (data.success == false) {
@@ -194,6 +186,7 @@ export const Commande = () => {
 
 
 const getCommandeInfo = async()=>{
+  setLoading(true)
   setActive(0)
   try{
       const response = await fetch(`http://localhost:8000/commandeInfo`,{
@@ -207,9 +200,7 @@ const getCommandeInfo = async()=>{
       const data = await response.json()
       
     
-     if (!data) {
-        setLoading(true)
-      }if (data.success == true) {
+    if (data.success == true) {
         setLoading(false) 
         setCommandes(data.commande)
 
@@ -225,6 +216,7 @@ const getCommandeInfo = async()=>{
 
 
 const getCommandeEncore = async()=>{
+  setLoading(true)
   setActive(2)
   try{
       const response = await fetch(`http://localhost:8000/commandeencore`,{
@@ -238,9 +230,7 @@ const getCommandeEncore = async()=>{
       const data = await response.json()
       
     
-     if (!data) {
-        setLoading(true)
-      }if (data.success == true) {
+    if (data.success == true) {
         setLoading(false) 
         setCommandes(data.getCommandeEncore)
 
@@ -255,6 +245,7 @@ const getCommandeEncore = async()=>{
 
 
 const getCommandeExpedies = async()=>{
+  setLoading(true)
   setActive(3)
   try{
       const response = await fetch(`http://localhost:8000/commandeexpedies`,{
@@ -270,9 +261,7 @@ const getCommandeExpedies = async()=>{
      
       
     
-     if (!data) {
-        setLoading(true)
-      }if (data.success == true) {
+    if (data.success == true) {
         setLoading(false) 
         setCommandes(data.getCommandeExpedies)
 
@@ -288,6 +277,7 @@ const getCommandeExpedies = async()=>{
 
 
 const getCommandeTerminees = async()=>{
+  setLoading(true)
   setActive(4)
   try{
       const response = await fetch(`http://localhost:8000/commandeterminees`,{
@@ -301,9 +291,7 @@ const getCommandeTerminees = async()=>{
       const data = await response.json()
       
     
-     if (!data) {
-        setLoading(true)
-      }if (data.success == true) {
+   if (data.success == true) {
         setLoading(false) 
         setCommandes(data.getCommandeTerminees)
 
@@ -318,14 +306,13 @@ const getCommandeTerminees = async()=>{
 
 
 
-
+if(loading == true) return <div>...loading</div>
 
 
 
   return (
 
-    <>
-    { loading == true ?  "Loading" :
+   
            <div style={{display:'flex',justifyContent:'center',backgroundColor:'#eeeeee'}} >
 
 <Snackbar open={opens} autoHideDuration={3000} onClose={handleCloses}>
@@ -501,8 +488,6 @@ const getCommandeTerminees = async()=>{
               </Box>
            </Box>
        </div>
-    }
-    </>
 
  
   )

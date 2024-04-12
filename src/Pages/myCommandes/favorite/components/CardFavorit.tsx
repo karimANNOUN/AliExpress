@@ -18,9 +18,7 @@ export const CardFavorit = ({favorit}:any) => {
   
      const token = Cookies.get('token');
 
-     useEffect(()=>{
-      console.log(favorit)
-     },[])
+     
 
     const handelDeleteFavoritLists=async()=>{
       try{
@@ -121,7 +119,7 @@ export const CardFavorit = ({favorit}:any) => {
 
                                             <Typography sx={{color:'#bdbdbd',fontWeight:'500',mb:2,textAlign:'left'}}  variant='caption' gutterBottom>
                                 
-                                            {!favorit.product.article.length ? "0" : favorit.product.article.length } orders
+                                            {!favorit.product.article ? "0" : favorit.product.article.length } orders
                             </Typography>   
 
 

@@ -106,7 +106,7 @@ export const BoxLocation = ({setOpen,open}:any) => {
             {userInfo.name}
         </Typography>
         <Typography sx={{fontWeight:'100',color:'#bdbdbd',textAlign:'left'}} variant='body1' gutterBottom>
-        +213 {userInfo.locationUser.phoneNumber}
+        +{userInfo.locationUser.phoneNumber}
         </Typography>
         </Box>
         
