@@ -47,10 +47,11 @@ export default function AllRoutes() {
      <Routes>
         <Route path='/' element={<Home/>} />
         <Route path='/:id' element={<Worker/>} />
+        
         <Route path='/store/:storeId' element={<ProfilBayer/>} />
         <Route path='/store/:storeId/:categories' element={<CategoriesType/>} />
         <Route path='/store/:storeId/avis' element={<AvisVendeur/>} />
-        <Route path='/store/lisencecommerciale' element={<LisenceCommercial/>} />
+        <Route path='/store/:storeId/lisencecommerciale' element={<LisenceCommercial/>} />
 
         <Route path='/stores'  >
           <Route path='productuser' element={<ProtectedRoutes><HomeStore/></ProtectedRoutes>} />

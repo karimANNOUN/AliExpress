@@ -69,7 +69,7 @@ export const VendeurRating = () => {
 
       const rating =[{id:1,name:'one',Number:1},{id:2,name:'tow',Number:2},{id:3,name:'three',Number:3},{id:4,name:'four',Number:4},{id:5,name:'five',Number:5}]
 
-
+      const positifReviews= Math.floor(reviews.filter((rev:any)=> parseInt(rev.rating) >= 4 ).length*100*10/reviews.length)/10
  
    
 
@@ -210,7 +210,7 @@ export const VendeurRating = () => {
        Avis positifs  :
   </Typography>
   <Typography sx={{fontWeight:'800',textAlign:'left'}} variant='caption' gutterBottom>
-      {reviews.filter((rev:any)=> parseInt(rev.rating) >= 4 ).length*100/reviews.length}%
+      {positifReviews}%
   </Typography>
        </Box>
 
@@ -259,7 +259,7 @@ export const VendeurRating = () => {
 <Box sx={{height:'20px',width:'160px',display:'flex',justifyContent:'center',alignItems:'center',ml:1}} >
     <Box sx={{height:'100%',width:'50%',bgcolor:'#c2185b',display:'flex',justifyContent:'center',alignItems:'center'}} >
     <Typography sx={{textAlign:'left',fontSize:'12px',color:'white',mt:1}} variant='caption' gutterBottom>
-    {reviews.filter((rev:any)=> rev.rating === rating[0].Number ).length*100/reviews.length}%
+   {Math.floor(reviews.filter((rev:any)=> rev.rating === rating[0].Number ).length*100*10/reviews.length)/10}%
 </Typography>
     </Box>
 
@@ -293,7 +293,7 @@ export const VendeurRating = () => {
 <Box sx={{height:'20px',width:'160px',display:'flex',justifyContent:'center',alignItems:'center',ml:1}} >
     <Box sx={{height:'100%',width:'50%',bgcolor:'#c2185b',display:'flex',justifyContent:'center',alignItems:'center'}} >
     <Typography sx={{textAlign:'left',fontSize:'12px',color:'white',mt:1}} variant='caption' gutterBottom>
-    {reviews.filter((rev:any)=> rev.rating === rating[1].Number ).length*100/reviews.length}%
+    {Math.floor(reviews.filter((rev:any)=> rev.rating === rating[1].Number ).length*100*10/reviews.length)/10}%
 </Typography>
     </Box>
 
@@ -324,7 +324,7 @@ export const VendeurRating = () => {
 <Box sx={{height:'20px',width:'160px',display:'flex',justifyContent:'center',alignItems:'center',ml:1}} >
     <Box sx={{height:'100%',width:'50%',bgcolor:'#c2185b',display:'flex',justifyContent:'center',alignItems:'center'}} >
     <Typography sx={{textAlign:'left',fontSize:'12px',color:'white',mt:1}} variant='caption' gutterBottom>
-    {reviews.filter((rev:any)=> rev.rating === rating[2].Number ).length*100/reviews.length}%
+    {Math.floor(reviews.filter((rev:any)=> rev.rating === rating[2].Number ).length*100*10/reviews.length)/10}%
 </Typography>
     </Box>
 
@@ -355,7 +355,7 @@ export const VendeurRating = () => {
 <Box sx={{height:'20px',width:'160px',display:'flex',justifyContent:'center',alignItems:'center',ml:1}} >
     <Box sx={{height:'100%',width:'50%',bgcolor:'#c2185b',display:'flex',justifyContent:'center',alignItems:'center'}} >
     <Typography sx={{textAlign:'left',fontSize:'12px',color:'white',mt:1}} variant='caption' gutterBottom>
-    {reviews.filter((rev:any)=> rev.rating === rating[3].Number ).length*100/reviews.length}%
+    {Math.floor(reviews.filter((rev:any)=> rev.rating === rating[3].Number ).length*100*10/reviews.length)/10}%
 </Typography>
     </Box>
 
@@ -386,7 +386,7 @@ export const VendeurRating = () => {
 <Box sx={{height:'20px',width:'160px',display:'flex',justifyContent:'center',alignItems:'center',ml:1}} >
     <Box sx={{height:'100%',width:'50%',bgcolor:'#c2185b',display:'flex',justifyContent:'center',alignItems:'center'}} >
     <Typography sx={{textAlign:'left',fontSize:'12px',color:'white',mt:1}} variant='caption' gutterBottom>
-    {reviews.filter((rev:any)=> rev.rating === rating[4].Number ).length*100/reviews.length}%
+    {Math.floor(reviews.filter((rev:any)=> rev.rating === rating[4].Number ).length*100*10/reviews.length)/10}%
 </Typography>
     </Box>
 

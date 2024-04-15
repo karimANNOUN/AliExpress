@@ -37,7 +37,7 @@ export const Product = () => {
 
       const handelGetProduct=async()=>{
         try {
-         
+          setLoading(true)
         const response = await fetch(`http://localhost:8000/seller/getprod`,{
           method: 'GET',
           credentials:"include", 
@@ -47,9 +47,7 @@ export const Product = () => {
           }
         });
         const data = await response.json()
-        if (!data) {
-          setLoading(true)
-        }if (data.success == true) {
+       if (data.success == true) {
           setProductsSeller(data.productSeller)
           setLoading(false) 
         } 
@@ -70,6 +68,7 @@ export const Product = () => {
     const handelGetProduct=async()=>{
       try {
        setActive(0)
+       setLoading(true)
       const response = await fetch(`http://localhost:8000/seller/getprod`,{
         method: 'GET',
         credentials:"include", 
@@ -79,9 +78,7 @@ export const Product = () => {
         }
       });
       const data = await response.json()
-      if (!data) {
-        setLoading(true)
-      }if (data.success == true) {
+    if (data.success == true) {
         setProductsSeller(data.productSeller)
         setLoading(false) 
       } 
@@ -97,6 +94,7 @@ export const Product = () => {
     const handelGetProductPrix=async()=>{
       try {
         setActive(3)
+        setLoading(true)
       const response = await fetch(`http://localhost:8000/getpricedown`,{
         method: 'GET',
         credentials:"include", 
@@ -106,9 +104,7 @@ export const Product = () => {
         }
       });
       const data = await response.json()
-      if (!data) {
-        setLoading(true)
-      }if (data.success == true) {
+     if (data.success == true) {
         setProductsSeller(data.productSeller)
         setLoading(false) 
       } 
@@ -124,7 +120,7 @@ export const Product = () => {
     const handelGetProductLivraison=async()=>{
       try {
         setActive(4)
-
+        setLoading(true)
       const response = await fetch(`http://localhost:8000/livraisongratuite`,{
         method: 'GET',
         credentials:"include", 
@@ -134,9 +130,7 @@ export const Product = () => {
         }
       });
       const data = await response.json()
-      if (!data) {
-        setLoading(true)
-      }if (data.success == true) {
+     if (data.success == true) {
         setProductsSeller(data.productSeller)
         setLoading(false) 
       } 
@@ -150,6 +144,8 @@ export const Product = () => {
    
 
     const [active,setActive]=useState(0)
+
+    if(loading==true) return <div>...loading</div>
 
   return (
     <Box sx={{bgcolor:'#e0e0e0'}} >

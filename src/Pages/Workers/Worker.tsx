@@ -44,7 +44,7 @@ export const Worker = () => {
   return (
     <div>
         <Box sx={{}} >
-        <Header loading={loading} />
+        <Header loading={loading} setLoading={setLoading} />
           <PersonelCard loading={loading}  />
         </Box>
     </div>

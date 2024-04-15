@@ -13,6 +13,32 @@ export const AvisVendeur = () => {
   const params=useParams()
   const dispatch =useDispatch()
 
+
+  const [seller,setSeller]=useState<any>({})
+
+
+  useEffect( ()=>{
+    
+    setLoading(true)
+       const getStoreSeller =async()=>{
+         const response=await fetch(`http://localhost:8000/store/${params.storeId}`, {
+          method: 'GET',
+          credentials: 'include', 
+          headers: {
+            'Content-Type': 'application/json', 
+          },
+        })
+        const data = await response.json()
+      if (data.success == true) {
+          setSeller(data.seller)  
+          setLoading(false)
+        }
+        
+      }
+       getStoreSeller()
+   },[])
+
+
   useEffect( ()=>{
       
     setLoading(true)
@@ -51,7 +77,7 @@ export const AvisVendeur = () => {
 
   return (
     <Box sx={{display:'flex',flexDirection:'column',alignItems:'center'}} >
-         <Header />
+         <Header seller={seller} />
          <VendeurRating />
     </Box>
   )

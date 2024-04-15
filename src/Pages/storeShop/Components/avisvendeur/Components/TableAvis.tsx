@@ -44,7 +44,7 @@ export const TableAvis = () => {
         createData('Positifs (4-5 étoiles)', `${sixEtoileOne(filtredArray1)}` , `${sixEtoileThree(filtredArray2)}`, `${sixEtoileSix(filtredArray3)}`),
         createData('Neutre (3 étoiles)', `${troiEtoileOne(filtredArray4)}`, `${troiEtoileThree(filtredArray5)}`, `${troiEtoileSix(filtredArray6)}`),
         createData('Négatif (1-2 étoiles)', `${oneEtoileOne(filtredArray7)}`, `${oneEtoileThree(filtredArray8)}`, `${oneEtoileSix(filtredArray9)}`),
-    createData("Taux d'avis positifs", `${sixEtoileOne(filtredArray1)*100/reviews.length}%`, `${sixEtoileThree(filtredArray2)*100/reviews.length}%` , `${sixEtoileSix(filtredArray3)*100/reviews.length}%`),
+    createData("Taux d'avis positifs", `${Math.floor(sixEtoileOne(filtredArray1)*100*10/reviews.length)/10}%`, `${Math.floor(sixEtoileThree(filtredArray2)*100*10/reviews.length)/10}%` , `${Math.floor(sixEtoileSix(filtredArray3)*100*10/reviews.length)/10}%`),
      
       ];
 

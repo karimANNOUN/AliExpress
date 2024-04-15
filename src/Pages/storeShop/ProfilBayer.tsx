@@ -30,7 +30,6 @@ export const ProfilBayer = () => {
         })
         const data = await response.json()
       if (data.success == true) {
-       //   dispatch(setSeller(data.seller)) 
           setSeller(data.seller)  
           setLoading(false)
         }

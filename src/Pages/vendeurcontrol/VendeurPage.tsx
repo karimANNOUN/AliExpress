@@ -302,6 +302,8 @@ const handleAddEvent = () => {
 
     try{
 
+      setLoading(true)
+
       const formData : any = new FormData();
     
       formData.append(`${color1}`, productColorImage1);
@@ -350,9 +352,6 @@ const handleAddEvent = () => {
           headers:{authorization:`${Token}`},
         }) 
         .then(res=>{
-          if (!res.data) {
-            setLoading(true)
-          }
           if (res.data.success == false) {
             setOpenAlert(true)
             setAlert(false)

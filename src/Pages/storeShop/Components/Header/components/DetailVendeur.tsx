@@ -1,14 +1,16 @@
-import React from 'react'
 import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { useSelector } from 'react-redux';
-export const DetailVendeur = ({setShow}:any) => {
+import { useNavigate } from 'react-router-dom';
+import { LisenceCommercial } from '../../../LisenceCommercial';
+export const DetailVendeur = ({setShow,reviews,seller}:any) => {
 
-  const seller=useSelector((state:any)=>state.app.seller)
+
+const navigate=useNavigate()
+
 
   
 
@@ -27,7 +29,7 @@ export const DetailVendeur = ({setShow}:any) => {
  <Typography sx={{textAlign:'left',fontWeight:'300',mb:1,color:'#c2185b'}} variant='caption' gutterBottom>
  {!seller ? "" : seller.createdAt}
  </Typography>
- <Link sx={{color:'#ff5722',textAlign:'left',textDecorationLine:'none',":hover":{color:'#ff5722',textDecorationLine:'underline'}}} target='_blank' href="/store/lisencecommerciale">Licence commerciale</Link>
+ <Link sx={{color:'#ff5722',textAlign:'left',textDecorationLine:'none',":hover":{color:'#ff5722',textDecorationLine:'underline'}}} target='_blank' href={`/store/${seller.id}/lisencecommerciale`}>Licence commerciale</Link>
       </Box>
       <Box sx={{width:'60%',height:'100%',display:'flex',flexDirection:'column',pl:3}} >
       <Typography sx={{textAlign:'left',fontWeight:'800',my:1}} variant='caption' gutterBottom>
@@ -38,21 +40,24 @@ export const DetailVendeur = ({setShow}:any) => {
  <Typography sx={{textAlign:'left',color:'#bdbdbd',fontWeight:'800',mr:1}} variant='caption' gutterBottom>
  Article conforme à la des
  </Typography>
- <Link variant='caption' sx={{color:'#c2185b',textAlign:'left',fontWeight:'200',textDecorationLine:'none',":hover":{color:'#c2185b',textDecorationLine:'underline'}}} href="#"> 4.3 En dessous de la m</Link>
+ <Link variant='caption' sx={{color:'#c2185b',textAlign:'left',fontWeight:'200',textDecorationLine:'none',":hover":{color:'#c2185b',textDecorationLine:'underline'}}} href={`/store/${seller.id}/avis`}>
+ {Math.floor(reviews.filter((rev:any)=> rev.rating >= 4  ).length*100*10/reviews.length)/10}% En dessus de la moyenne</Link>
  </Box>
 
  <Box sx={{display:'flex',alignItems:'center'}} >
  <Typography sx={{textAlign:'left',color:'#bdbdbd',fontWeight:'800',mr:1}} variant='caption' gutterBottom>
  Article conforme à la des
  </Typography>
- <Link variant='caption' sx={{color:'#c2185b',textAlign:'left',fontWeight:'200',textDecorationLine:'none',":hover":{color:'#c2185b',textDecorationLine:'underline'}}} href="#"> 4.3 En dessous de la m</Link>
+ <Link variant='caption' sx={{color:'#c2185b',textAlign:'left',fontWeight:'200',textDecorationLine:'none',":hover":{color:'#c2185b',textDecorationLine:'underline'}}} href={`/store/${seller.id}/avis`}>
+ {Math.floor(reviews.filter((rev:any)=> rev.rating === 3  ).length*100*10/reviews.length)/10}% égale de la moyenne</Link>
  </Box>
 
  <Box sx={{display:'flex',alignItems:'center'}} >
  <Typography sx={{textAlign:'left',color:'#bdbdbd',fontWeight:'800',mr:1}} variant='caption' gutterBottom>
  Article conforme à la des
  </Typography>
- <Link variant='caption' sx={{color:'#c2185b',textAlign:'left',fontWeight:'200',textDecorationLine:'none',":hover":{color:'#c2185b',textDecorationLine:'underline'}}} href="#"> 4.3 En dessous de la m</Link>
+ <Link variant='caption' sx={{color:'#c2185b',textAlign:'left',fontWeight:'200',textDecorationLine:'none',":hover":{color:'#c2185b',textDecorationLine:'underline'}}} href={`/store/${seller.id}/avis`}>
+ {Math.floor(reviews.filter((rev:any)=> rev.rating < 3  ).length*100*10/reviews.length)/10}% En dessous de la moyenne</Link>
  </Box>
     
  
@@ -64,7 +69,7 @@ export const DetailVendeur = ({setShow}:any) => {
     <MailOutlineIcon sx={{color:'#ff5722',mr:1}} /> Contact vendeur
     </Link>
     <Box sx={{display:'flex',alignItems:'center',pr:3}} >
-    <Button sx={{color:'black',fontSize:'10px',mr:1,borderColor:'#e0e0e0',":hover":{bgcolor:'Window',borderColor:'#e0e0e0',mr:1,color:'#ff5722',textDecorationLine:'underline'}}} variant="outlined">Visitez la page Vendeur</Button>
+    <Button onClick={()=>navigate(`/store/${seller.id}`)} sx={{color:'black',fontSize:'10px',mr:1,borderColor:'#e0e0e0',":hover":{bgcolor:'Window',borderColor:'#e0e0e0',mr:1,color:'#ff5722',textDecorationLine:'underline'}}} variant="outlined">Visitez la page Vendeur</Button>
     <Button  sx={{color:'black',fontSize:'10px',mr:1,borderColor:'#e0e0e0',":hover":{bgcolor:'Window',borderColor:'#e0e0e0',color:'#ff5722',textDecorationLine:'underline'}}} variant="outlined">Suivre</Button>
     </Box>
    </Box>

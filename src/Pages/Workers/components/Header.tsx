@@ -7,20 +7,51 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Skeleton from '@mui/material/Skeleton';
-import { useEffect } from 'react';
-export const Header = ({loading}:any) => {
+import { useEffect, useState } from 'react';
+
+export const Header = ({loading,setLoading}:any) => {
 
         const navigate=useNavigate()
 
         const product=useSelector((state:any)=>state.app.product)
+        const params=useParams()
 
-       useEffect(()=>{
-        console.log(product.review)
-       },[])
+        const [reviews,setReviews]=useState([])
+
+        useEffect( ()=>{
+                setLoading(true)
+                   const getReviewsStore =async()=>{
+                     const response=await fetch(`http://localhost:8000/getReviewsAll/${params.id}`, {
+                      method: 'GET',
+                      credentials: 'include', 
+                      headers: {
+                        'Content-Type': 'application/json', 
+                      },
+                    })
+                    const data = await response.json()
+
+                 
+                  if (data.success == true) {
+                      setReviews(data.getReviewsSeller)
+                      setLoading(false)
+                    
+                   
+                  }
+                    
+                  }
+                   getReviewsStore()
+               },[])
        
+
+               
+             
+        const positifReviews= Math.floor(reviews.filter((rev:any)=> parseInt(rev.rating) >= 4 ).length*100*10/reviews.length)/10
+
+
+
       
   return (
       
@@ -53,7 +84,7 @@ export const Header = ({loading}:any) => {
               </Box>
               <Box sx={{display:'flex',alignItems:'center',color:'white'}} >
               <Typography sx={{fontWeight:'800',color:'white',mr:2}} variant="subtitle2" gutterBottom>
-              88.6% Avis positifs 
+              {positifReviews}% Avis positifs 
       </Typography> |
       <Typography sx={{fontWeight:'800',color:'white',mx:2}} variant="subtitle2" gutterBottom>
       15.8K Abonnés
@@ -73,11 +104,10 @@ export const Header = ({loading}:any) => {
      : <Box sx={{height:'60px',width:'100%',bgcolor:'#eeeeee',display:'flex',justifyContent:'center'}} >
           
           <Box sx={{display:'flex',alignItems:'center',height:'100%',width:'70%'}} >
-      <Button sx={{color:'#424242',height:'100%',":hover":{borderBottomStyle:'solid',borderBottomWidth:'3px',borderBottomColor:'#ff5722'}}}  variant="text">Page d'Acceille</Button>
-      <Button sx={{mx:2,color:'#424242',height:'100%',":hover":{borderBottomStyle:'solid',borderBottomWidth:'3px',borderBottomColor:'#ff5722'}}}  variant="text"> Catégory <ExpandMoreIcon/> </Button>
-      <Button sx={{mx:2,color:'#424242',height:'100%',":hover":{borderBottomStyle:'solid',borderBottomWidth:'3px',borderBottomColor:'#ff5722'}}}  variant="text">Article en Promo</Button>
-      <Button sx={{mx:2,color:'#424242',height:'100%',":hover":{borderBottomStyle:'solid',borderBottomWidth:'3px',borderBottomColor:'#ff5722'}}}  variant="text">Meilleurs Ventes</Button>
-      <Button sx={{mx:2,color:'#424242',height:'100%',":hover":{borderBottomStyle:'solid',borderBottomWidth:'3px',borderBottomColor:'#ff5722'}}}  variant="text">Avis sur le vendeur</Button>
+      <Button onClick={()=>navigate(`/store/${product.userId}`)} sx={{color:'#424242',height:'100%',":hover":{borderBottomStyle:'solid',borderBottomWidth:'3px',borderBottomColor:'#ff5722'}}}  variant="text">Page d'Acceille</Button>
+      <Button onClick={()=>navigate(`/store/${product.userId}/articleprosmos`)} sx={{mx:2,color:'#424242',height:'100%',":hover":{borderBottomStyle:'solid',borderBottomWidth:'3px',borderBottomColor:'#ff5722'}}}  variant="text">Article en Promo</Button>
+      <Button onClick={()=>navigate(`/store/${product.userId}/meilleur`)} sx={{mx:2,color:'#424242',height:'100%',":hover":{borderBottomStyle:'solid',borderBottomWidth:'3px',borderBottomColor:'#ff5722'}}}  variant="text">Meilleurs Ventes</Button>
+      <Button onClick={()=>navigate(`/store/${product.userId}/avis`)} sx={{mx:2,color:'#424242',height:'100%',":hover":{borderBottomStyle:'solid',borderBottomWidth:'3px',borderBottomColor:'#ff5722'}}}  variant="text">Avis sur le vendeur</Button>
      
       </Box>
       
