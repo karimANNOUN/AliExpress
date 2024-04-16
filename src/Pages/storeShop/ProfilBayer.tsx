@@ -48,7 +48,7 @@ export const ProfilBayer = () => {
   return (
     <div> 
         <Box sx={{display:'flex',flexDirection:'column',alignItems:'center'}} >
-        <Header seller={seller} />
+        <Header seller={seller} setSeller={setSeller} />
         <NameStore seller={seller} />
         </Box>
     </div>

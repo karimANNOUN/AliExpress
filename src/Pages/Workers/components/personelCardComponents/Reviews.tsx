@@ -3,9 +3,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 import Button from '@mui/material/Button';
-import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import IconButton from '@mui/material/IconButton';
 import { ModalComment } from './ModalComment';
 import { motion ,useScroll ,useMotionValueEvent   } from "framer-motion"
 import { LinearProgress } from '@mui/material';

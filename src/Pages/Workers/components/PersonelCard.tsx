@@ -35,6 +35,8 @@ export const PersonelCard = ({loading }:any) => {
   return (
     <Box sx={{display:'flex',justifyContent:'space-around',mt:3}} >
 
+
+
 {loading == true ? 
         
         <Box sx={{width:'100%',bgcolor:'#424242',display:'flex',alignItems:'center'}} >

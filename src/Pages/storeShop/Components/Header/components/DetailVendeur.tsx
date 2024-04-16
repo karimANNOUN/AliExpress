@@ -4,12 +4,69 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { LisenceCommercial } from '../../../LisenceCommercial';
-export const DetailVendeur = ({setShow,reviews,seller}:any) => {
+import Cookies from 'js-cookie';
+import { useState } from 'react';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import AddIcon from '@mui/icons-material/Add';
+export const DetailVendeur = ({setShow,reviews,seller,checked,setSeller}:any) => {
 
 
 const navigate=useNavigate()
+const params=useParams()
+const token = Cookies.get('token');
+const [loading,setLoading]=useState(false)
+
+
+const postFollowers = async()=>{
+  try{
+    setLoading(true)
+  const response=await fetch(`http://localhost:8000/createStoreFollower/${params.storeId}`, {
+   method: 'POST',
+   credentials: 'include', 
+   headers: {
+     'Content-Type': 'application/json',
+      authorization:`${token}` 
+   },
+   body:JSON.stringify({})
+ })
+ const data = await response.json()
+
+
+if (data.success == true) {
+  setSeller(data.seller)
+  setLoading(false)
+}
+} catch (error) {
+  console.error('operation failed.');
+}
+}
+
+
+
+const deleteFollowers = async()=>{
+  try{
+  setLoading(true)
+  const response=await fetch(`http://localhost:8000/deleteStoreFollower/${params.storeId}`, {
+   method: 'DELETE',
+   credentials: 'include', 
+   headers: {
+     'Content-Type': 'application/json',
+      authorization:`${token}` 
+   },
+   body:JSON.stringify({})
+ })
+ const data = await response.json()
+
+if (data.success == true) {
+  setSeller(data.seller)
+  setLoading(false)
+}
+} catch (error) {
+  console.error('operation failed.');
+}
+}
 
 
   
@@ -70,7 +127,10 @@ const navigate=useNavigate()
     </Link>
     <Box sx={{display:'flex',alignItems:'center',pr:3}} >
     <Button onClick={()=>navigate(`/store/${seller.id}`)} sx={{color:'black',fontSize:'10px',mr:1,borderColor:'#e0e0e0',":hover":{bgcolor:'Window',borderColor:'#e0e0e0',mr:1,color:'#ff5722',textDecorationLine:'underline'}}} variant="outlined">Visitez la page Vendeur</Button>
-    <Button  sx={{color:'black',fontSize:'10px',mr:1,borderColor:'#e0e0e0',":hover":{bgcolor:'Window',borderColor:'#e0e0e0',color:'#ff5722',textDecorationLine:'underline'}}} variant="outlined">Suivre</Button>
+    
+    { checked == true ?   
+    <Button onClick={deleteFollowers} sx={{color:'black',fontSize:'10px',mr:1,borderColor:'#e0e0e0',":hover":{bgcolor:'Window',borderColor:'#e0e0e0',color:'#ff5722',textDecorationLine:'underline'}}} variant="outlined"> <FavoriteIcon/> Suivé</Button>
+    :<Button onClick={postFollowers}  sx={{color:'black',fontSize:'10px',mr:1,borderColor:'#e0e0e0',":hover":{bgcolor:'Window',borderColor:'#e0e0e0',color:'#ff5722',textDecorationLine:'underline'}}} variant="outlined"> <AddIcon/> Suivre</Button>}
     </Box>
    </Box>
 

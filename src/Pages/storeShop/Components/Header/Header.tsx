@@ -11,10 +11,16 @@ import { DetailVendeur } from './components/DetailVendeur';
 import { CategoryCard } from './components/CategoryCard';
 import {useNavigate,useLocation, useParams} from 'react-router-dom'
 import { useSelector } from 'react-redux';
+import Cookies from 'js-cookie';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import AddIcon from '@mui/icons-material/Add';
 
 
 
-export const Header = ({seller}:any) => {
+
+export const Header = ({seller,setSeller}:any) => {
+
+   const user =useSelector((state:any)=>state.app.user)
 
     const navigate=useNavigate()
     const location=useLocation()
@@ -26,6 +32,9 @@ export const Header = ({seller}:any) => {
 
     const [expands,setExpands]=useState(false)
     const [shows,setShows]=useState(false)
+    const [checked,setChecked]=useState(true)
+
+        const token = Cookies.get('token');
 
    const active=()=>{
     if(location.pathname == `/store/${params.storeId}/articleprosmos`){
@@ -66,7 +75,76 @@ export const Header = ({seller}:any) => {
                   }
                    getReviewsStore()
                },[])
+
+
+
+
+
+               const postFollowers = async()=>{
+                  try{
+                  const response=await fetch(`http://localhost:8000/createStoreFollower/${params.storeId}`, {
+                   method: 'POST',
+                   credentials: 'include', 
+                   headers: {
+                     'Content-Type': 'application/json',
+                      authorization:`${token}` 
+                   },
+                   body:JSON.stringify({})
+                 })
+                 const data = await response.json()
+  
+              
+               if (data.success == true) {
+                  setSeller(data.seller)
+                  setLoading(false)
+                }
+          } catch (error) {
+                  console.error('operation failed.');
+                }
+          }
+  
+  
+  
+          const deleteFollowers = async()=>{
+                  try{
+                  const response=await fetch(`http://localhost:8000/deleteStoreFollower/${params.storeId}`, {
+                   method: 'DELETE',
+                   credentials: 'include', 
+                   headers: {
+                     'Content-Type': 'application/json',
+                      authorization:`${token}` 
+                   },
+                   body:JSON.stringify({})
+                 })
+                 const data = await response.json()
+              
+               if (data.success == true) {
+                  setSeller(data.seller)
+                  setLoading(false)
+                }
+          } catch (error) {
+                  console.error('operation failed.');
+                }
+          }
+  
+  
+         
+          useEffect(()=>{
+  
+                  const findFollower = seller.followers.find((follow:any)=> follow.buyerId === user.id )
+  
+                  if (findFollower) {
+                          setChecked(true)
+                  }else{
+                          setChecked(false)
+                  }
+  
+          },[seller,show])
+  
        
+
+       
+               
 
                
              
@@ -111,12 +189,15 @@ export const Header = ({seller}:any) => {
    
    </Button>
   
-   <Button sx={{color:'black',mr:1,borderColor:'#e0e0e0',":hover":{bgcolor:'Window',borderColor:'#e0e0e0',color:'black'}}} variant="outlined">Suivre</Button>
+   { checked == true ?
+    <Button onClick={deleteFollowers} sx={{color:'black',mr:1,borderColor:'#e0e0e0',":hover":{bgcolor:'Window',borderColor:'#e0e0e0',color:'black'}}} variant="outlined"> <FavoriteIcon/> Suivé</Button>:
+    <Button onClick={postFollowers} sx={{color:'black',mr:1,borderColor:'#e0e0e0',":hover":{bgcolor:'Window',borderColor:'#e0e0e0',color:'black'}}} variant="outlined"> <AddIcon/> Suivre</Button>
+   }
        
    <Typography sx={{textAlign:'left',fontWeight:'800'}} variant='body2' gutterBottom>
-   15.9KAbonnés
+   {seller.followers.length}Abonnés
  </Typography>
- { show ? <DetailVendeur setShow={setShow} reviews={reviews} seller={seller} /> : "" }
+ { show ? <DetailVendeur setShow={setShow} reviews={reviews} seller={seller} checked={checked} setSeller={setSeller} /> : "" }
     </Box>
 
 

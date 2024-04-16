@@ -5,25 +5,33 @@ import Avatar from '@mui/material/Avatar';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Skeleton from '@mui/material/Skeleton';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
+import { setProduct } from '../../../storeRedux/CartSlice';
 
 export const Header = ({loading,setLoading}:any) => {
 
         const navigate=useNavigate()
 
         const product=useSelector((state:any)=>state.app.product)
+        const user =useSelector((state:any)=>state.app.user)
+
         const params=useParams()
+        const dispatch=useDispatch()
 
         const [reviews,setReviews]=useState([])
+        const [checked,setChecked]=useState(true)
+
+        const token = Cookies.get('token');
 
         useEffect( ()=>{
                 setLoading(true)
                    const getReviewsStore =async()=>{
+                        try{
                      const response=await fetch(`http://localhost:8000/getReviewsAll/${params.id}`, {
                       method: 'GET',
                       credentials: 'include', 
@@ -40,18 +48,85 @@ export const Header = ({loading,setLoading}:any) => {
                     
                    
                   }
+                } catch (error) {
+                        console.error('operation failed.');
+                      }
                     
                   }
                    getReviewsStore()
                },[])
+
+
+
+               const postFollowers = async()=>{
+                try{
+                setLoading(true)
+                const response=await fetch(`http://localhost:8000/createFollower/${params.id}`, {
+                 method: 'POST',
+                 credentials: 'include', 
+                 headers: {
+                   'Content-Type': 'application/json',
+                    authorization:`${token}` 
+                 },
+                 body:JSON.stringify({product})
+               })
+               const data = await response.json()
+
+            
+             if (data.success == true) {
+                dispatch(setProduct(data.product)) 
+                setLoading(false)
+              }
+        } catch (error) {
+                console.error('operation failed.');
+              }
+        }
+
+
+
+        const deleteFollowers = async()=>{
+                try{
+                setLoading(true)
+                const response=await fetch(`http://localhost:8000/deleteFollower/${params.id}`, {
+                 method: 'DELETE',
+                 credentials: 'include', 
+                 headers: {
+                   'Content-Type': 'application/json',
+                    authorization:`${token}` 
+                 },
+                 body:JSON.stringify({product})
+               })
+               const data = await response.json()
+            
+             if (data.success == true) {
+                dispatch(setProduct(data.product)) 
+                setLoading(false)
+              }
+        } catch (error) {
+                console.error('operation failed.');
+              }
+        }
+
+
        
+        useEffect(()=>{
+
+                const findFollower = product.user.followers.find((follow:any)=> follow.buyerId === user.id )
+
+                if (findFollower) {
+                        setChecked(true)
+                }else{
+                        setChecked(false)
+                }
+
+        },[product])
 
                
              
         const positifReviews= Math.floor(reviews.filter((rev:any)=> parseInt(rev.rating) >= 4 ).length*100*10/reviews.length)/10
 
 
-
+        
       
   return (
       
@@ -75,9 +150,15 @@ export const Header = ({loading,setLoading}:any) => {
               { !product ? "" : product.user.name}
       </Typography>
       <Box>
-      <Typography sx={{color:'#2196f3',bgcolor:'white',textAlign:'left'}} variant="caption" gutterBottom>
+      { positifReviews <= 33 ? <Typography sx={{color:'#2196f3',bgcolor:'#bdbdbd',textAlign:'left'}} variant="caption" gutterBottom>
+              Bronze
+      </Typography> : "" }
+      { positifReviews > 33 && positifReviews <= 66 ? <Typography sx={{color:'#2196f3',bgcolor:'white',textAlign:'left'}} variant="caption" gutterBottom>
               Silver
-      </Typography>
+      </Typography> : "" }
+      { positifReviews > 66 ? <Typography sx={{color:'#fbc02d',bgcolor:'#fffde7',textAlign:'left'}} variant="caption" gutterBottom>
+              Gold
+      </Typography> : "" }
       </Box>
               </Box> 
              <ChevronRightIcon sx={{color:'white',fontSize:'30px'}} />
@@ -87,12 +168,14 @@ export const Header = ({loading,setLoading}:any) => {
               {positifReviews}% Avis positifs 
       </Typography> |
       <Typography sx={{fontWeight:'800',color:'white',mx:2}} variant="subtitle2" gutterBottom>
-      15.8K Abonnés
+      {product.user.followers.length} Abonnés
       </Typography>
 
-      <Button sx={{bgcolor:'white',color:'black',":hover":{bgcolor:'white',color:'black'},mr:2,borderRadius:'25px'}} variant="contained"> <AddIcon  /> Suivre</Button>
-      <Button sx={{bgcolor:'white',color:'black',":hover":{bgcolor:'white',color:'black'},mr:2,borderRadius:'25px'}} variant="contained"> <ChatBubbleOutlineIcon  /> Messages</Button>
-
+      { checked == true ? 
+        <Button onClick={deleteFollowers} sx={{bgcolor:'white',color:'black',":hover":{bgcolor:'white',color:'black'},mr:2,borderRadius:'25px'}} variant="contained"> <FavoriteIcon/> Suivé</Button>
+      : <Button onClick={postFollowers} sx={{bgcolor:'white',color:'black',":hover":{bgcolor:'white',color:'black'},mr:2,borderRadius:'25px'}} variant="contained"> <AddIcon  /> Suivre</Button>
+      
+      }
               </Box>
           </Box>}
           {loading == true ? 

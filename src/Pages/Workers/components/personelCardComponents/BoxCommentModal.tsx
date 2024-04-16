@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
@@ -6,12 +6,90 @@ import Button from '@mui/material/Button';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import IconButton from '@mui/material/IconButton';
+import { setProduct } from '../../../../storeRedux/CartSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import Cookies from 'js-cookie';
 
 
 export const BoxCommentModal = ({com,product}:any) => {
 
     const [show,setShow]=useState(true)
     const [index,setIndex]=useState(0)
+
+    const [loading,setLoading]=useState(false)
+    const [checked,setChecked]=useState(true)
+
+    const user =useSelector((state:any)=>state.app.user)
+
+     const token = Cookies.get('token');
+     const dispatch=useDispatch()
+
+
+
+    const postLikes = async()=>{
+      try{
+        setLoading(true)
+      const response=await fetch(`http://localhost:8000/postLikes`, {
+       method: 'POST',
+       credentials: 'include', 
+       headers: {
+         'Content-Type': 'application/json',
+          authorization:`${token}` 
+       },
+       body:JSON.stringify({com})
+     })
+     const data = await response.json()
+
+   if (data.success == true) {
+      dispatch(setProduct(data.product)) 
+      setLoading(false)
+    }
+} catch (error) {
+      console.error('operation failed.');
+    }
+}
+
+
+
+const deleteLikes = async()=>{
+      try{
+        setLoading(true)
+      const response=await fetch(`http://localhost:8000/deleteLikes`, {
+       method: 'DELETE',
+       credentials: 'include', 
+       headers: {
+         'Content-Type': 'application/json',
+          authorization:`${token}` 
+       },
+       body:JSON.stringify({com})
+     })
+     const data = await response.json()
+  
+   if (data.success == true) {
+      dispatch(setProduct(data.product)) 
+      setLoading(false)
+    }
+} catch (error) {
+      console.error('operation failed.');
+    }
+}
+
+
+useEffect(()=>{
+
+  const findLikes = com.likes.find((comment:any)=> comment.userId === user.id )
+
+  if (findLikes) {
+    setChecked(true)
+}else{
+    setChecked(false)
+}
+
+},[product])
+
+
+if(loading == true) return <div>...loading</div>
+
 
   return (
     <Box sx={{display:'flex',flexDirection:'column'}} >
@@ -40,8 +118,11 @@ export const BoxCommentModal = ({com,product}:any) => {
        <img src={com.images.filter((rev:any)=> rev.id == index  )[0].imageUrl} style={{width:'100%',height:'100%',borderRadius:'12px'}} />
        <IconButton onClick={()=>{setShow(true)  }} sx={{position:'absolute',bgcolor:'#e0e0e0',":hover":{bgcolor:'#e0e0e0'},top:'5%',right:'5%'}} ><CloseOutlinedIcon sx={{fontSize:'20px',color:'#9e9e9e'}} /></IconButton>
         </Box> : "" }
+       
+        { checked ==true ? <Button onClick={deleteLikes} sx={{width:'150px',color:'#2196f3',my:1,borderRadius:'12px',":hover":{color:'#2196f3'}}} variant='text'> <ThumbUpOutlinedIcon sx={{fontSize:'18px',color:'#2196f3',mr:1}} /> Serviable({com.likes.length})</Button>:
+       <Button onClick={postLikes} sx={{width:'150px',color:'black',my:1,borderRadius:'12px',":hover":{color:'black'}}} variant='text'> <ThumbUpOutlinedIcon sx={{fontSize:'18px',mr:1}} /> Serviable({com.likes.length})</Button>
+     }
 
-      <Button sx={{width:'150px',color:'black',my:1,borderRadius:'12px',":hover":{color:'black'}}} variant='text'> <ThumbUpOutlinedIcon sx={{fontSize:'18px',mr:1}} /> Serviable(0)</Button>
      </Box>
   )
 }

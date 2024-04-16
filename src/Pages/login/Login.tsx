@@ -59,15 +59,19 @@ const [message,setMessage]=useState('')
               setMessage(data.message)
           }if (data.success == true && user.user.user.role =="simple"  ) {
             Cookies.set('token', data.token, { expires: 7 });
+            dispatch(setUser(user.user.user))
               navigate("/")   
           }if (data.success == true && user.user.user.role =="seller attente1" ) {
             Cookies.set('token', data.token, { expires: 7 });
+            dispatch(setUser(user.user.user))
              navigate("/loginvendeurboutique")
           }if (data.success == true && user.user.user.role =="seller attente2") {
             Cookies.set('token', data.token, { expires: 7 });
+            dispatch(setUser(user.user.user))
             navigate("/decisionvendeurboutique")
           }if (data.success == true && user.user.user.role =="seller") {
             Cookies.set('token', data.token, { expires: 7 });
+            dispatch(setUser(user.user.user))
             navigate("/") 
           }
           

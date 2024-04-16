@@ -27,9 +27,9 @@ export const Worker = () => {
         const data = await response.json()
      
       if (data.success == true) {
-       
-          setLoading(false)
-          dispatch(setProduct(data.product))   
+        dispatch(setProduct(data.product)) 
+        setLoading(false)
+            
        
        
       }
