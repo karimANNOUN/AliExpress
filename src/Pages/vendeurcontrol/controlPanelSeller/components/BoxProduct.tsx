@@ -93,6 +93,22 @@ export const BoxProduct = ({prod,setProductsSeller}:any) => {
     }
 
 
+    const calculateTotalCommande = (prod:any) =>{
+
+      let total = 0;
+
+      prod.article.filter((art:any)=>art.state == "terminees" ).forEach((product:any) => {
+        
+          total += product.quantity 
+     
+    });
+
+    return total;
+     
+    }
+
+
+
   return (
     <Box  sx={{display:'flex',border:'2px solid #e0e0e0',mb:2,borderRadius:'8px',height:'120px',width:'100%'}} >
 
@@ -132,7 +148,7 @@ export const BoxProduct = ({prod,setProductsSeller}:any) => {
                 </Box>
 
                 <Typography sx={{fontWeight:'800',textAlign:'left',color:'#bdbdbd',my:2}} variant='body2' gutterBottom>
-    3000 commande
+    {calculateTotalCommande(prod)} commande
     </Typography>
            
             </Box>

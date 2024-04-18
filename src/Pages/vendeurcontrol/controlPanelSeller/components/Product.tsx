@@ -10,24 +10,14 @@ import Checkbox from '@mui/material/Checkbox';
 import { BoxProduct } from './BoxProduct';
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
 import Cookies from 'js-cookie';
+import FormControlLabel from '@mui/material/FormControlLabel';
+
+
 
 
 export const Product = () => {
 
-    const data = [
-        { value: 5, label: 'A' },
-        { value: 10, label: 'B' },
-        { value: 15, label: 'C' },
-        { value: 20, label: 'D' },
-      ];
-      
-      const size = {
-        width: 400,
-        height: 200,
-      };
-      
-
- 
+       
 
     const token = Cookies.get('token');
     const [loading, setLoading]=useState(Boolean)
@@ -114,36 +104,53 @@ export const Product = () => {
     }
      
     }
+
+    const totalArticle = (productsSeller:any) =>{
+      let total = 0;
+
+       productsSeller.forEach((product:any)=>{
+        total += product._count.article
+       })
+       return total
+      
+    }
    
+    
 
+    const filtredOrder  = (product:any)=>{
+      return  Math.floor(product._count.article*1000/totalArticle(productsSeller))/10
+      }
 
-    const handelGetProductLivraison=async()=>{
-      try {
-        setActive(4)
-        setLoading(true)
-      const response = await fetch(`http://localhost:8000/livraisongratuite`,{
-        method: 'GET',
-        credentials:"include", 
-        headers: {
-          'Content-Type': 'application/json',
-           authorization:`${token}`
-        }
-      });
-      const data = await response.json()
-     if (data.success == true) {
-        setProductsSeller(data.productSeller)
-        setLoading(false) 
-      } 
-  
-    } catch (error) {
-      console.error('operation failed.');
-    }
+    
+    const data = productsSeller.sort((a:any, b:any) => b._count.article - a._count.article).slice(0, 4).map((product:any)=>( { value: filtredOrder(product) , label: `${product.title}` }))
      
-    }
+     
+    const size = {
+      width: 400,
+      height: 200,
+    };
+
+
 
    
 
     const [active,setActive]=useState(0)
+
+    const [checked, setChecked] = useState(false);
+    const handleChange = (e:any) => {
+      setChecked(e.target.checked);
+  };
+  
+  
+  const filtredProduct =(prod:any)=>{
+    if (checked) {
+     return  prod.prixlivraison === 0 
+     }else{
+      return prod
+     }
+  }
+
+
 
     if(loading==true) return <div>...loading</div>
 
@@ -191,12 +198,13 @@ export const Product = () => {
         }
 
             
-             
-            { active === 4 ? <Button sx={{color:'black',":hover":{bgcolor:'#eeeeee'}}} variant="text"> <Checkbox  defaultChecked  /> Livraison gratuite </Button> :
 
-          <Button sx={{color:'black',":hover":{bgcolor:'#eeeeee'}}} onClick={handelGetProductLivraison}   variant="text"> <Checkbox /> Livraison gratuite </Button>
-            
-            }
+            <FormControlLabel 
+              control={<Checkbox  
+              onChange={handleChange}
+              checked={checked}
+              />} 
+             label="Livraison gratuite" />
 
          
        
@@ -207,7 +215,7 @@ export const Product = () => {
           <Typography sx={{fontWeight:'800',color:'#757575',textAlign:'center'}} variant='body2' gutterBottom>
            empty store you don't have any products
         </Typography>
-          :  productsSeller.map((prod:any)=> <BoxProduct setProductsSeller={setProductsSeller} key={prod.id} prod={prod} /> ))}
+          :  productsSeller.filter(filtredProduct).map((prod:any)=> <BoxProduct setProductsSeller={setProductsSeller} key={prod.id} prod={prod} /> ))}
    
     </Box>
 

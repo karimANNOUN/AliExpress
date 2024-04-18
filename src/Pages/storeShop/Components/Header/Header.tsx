@@ -18,7 +18,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 
 
-export const Header = ({seller,setSeller}:any) => {
+export const Header = ({seller,setSeller,loading}:any) => {
 
    const user =useSelector((state:any)=>state.app.user)
 
@@ -49,11 +49,11 @@ export const Header = ({seller,setSeller}:any) => {
      }
 
      const [hovers,setHovers]=useState(active) 
-     const [loading,setLoading]=useState(false)
+     const [loading1,setLoading1]=useState(false)
      const [reviews,setReviews]=useState([])
 
         useEffect( ()=>{
-                setLoading(true)
+                setLoading1(true)
                    const getReviewsStore =async()=>{
                      const response=await fetch(`http://localhost:8000/getAllReviewSeller/${params.storeId}`, {
                       method: 'GET',
@@ -67,7 +67,7 @@ export const Header = ({seller,setSeller}:any) => {
                  
                   if (data.success == true) {
                       setReviews(data.getReviewsSeller)
-                      setLoading(false)
+                      setLoading1(false)
                     
                    
                   }
@@ -96,7 +96,7 @@ export const Header = ({seller,setSeller}:any) => {
               
                if (data.success == true) {
                   setSeller(data.seller)
-                  setLoading(false)
+                 
                 }
           } catch (error) {
                   console.error('operation failed.');
@@ -120,7 +120,7 @@ export const Header = ({seller,setSeller}:any) => {
               
                if (data.success == true) {
                   setSeller(data.seller)
-                  setLoading(false)
+          
                 }
           } catch (error) {
                   console.error('operation failed.');
@@ -130,28 +130,22 @@ export const Header = ({seller,setSeller}:any) => {
   
          
           useEffect(()=>{
-  
-                  const findFollower = seller.followers.find((follow:any)=> follow.buyerId === user.id )
-  
-                  if (findFollower) {
-                          setChecked(true)
-                  }else{
-                          setChecked(false)
-                  }
-  
+                   
+                    
+                      const findFollower = seller.followers.find((follow:any)=> follow.buyerId === user.id )
+                
+                      if (findFollower) {
+                              setChecked(true)
+                      }else{
+                              setChecked(false)
+                      }      
+                    
           },[seller,show])
-  
-       
-
-       
-               
-
-               
-             
+   
         const positifReviews= Math.floor(reviews.filter((rev:any)=> parseInt(rev.rating) >= 4 ).length*100*10/reviews.length)/10
 
 
-  if (loading == true) return <div>...loading</div>
+  
 
   return (
      <Box sx={{width:'100%',display:'flex',flexDirection:'column',alignItems:'center'}} >
@@ -182,7 +176,9 @@ export const Header = ({seller,setSeller}:any) => {
    
  </div> : "" }
 
- <Button onMouseEnter={()=>setShow(true)} onMouseLeave={()=>setShow(false)} sx={{color:'black',fontFamily:'unset',":hover":{bgcolor:'Window',fontFamily:'unset',color:'#ef6c00',textDecorationLine:'underline'}}} variant="text">{positifReviews}%</Button>
+ { 
+ loading1 == true ? "Loading...":
+ <Button onMouseEnter={()=>setShow(true)} onMouseLeave={()=>setShow(false)} sx={{color:'black',fontFamily:'unset',":hover":{bgcolor:'Window',fontFamily:'unset',color:'#ef6c00',textDecorationLine:'underline'}}} variant="text">{positifReviews}%</Button>}
 
  <Button onMouseEnter={()=>(setExpand(true),setShow(true))} onMouseLeave={()=>(setExpand(false),setShow(false))} sx={{color:'black',fontFamily:'unset',":hover":{bgcolor:'Window',fontFamily:'unset',color:'#ef6c00',textDecorationLine:'underline'}}} variant="text">
    Critique Positive { !expand ? <ExpandMoreIcon sx={{fontSize:'20px'}} /> : <ExpandLessIcon sx={{fontSize:'20px'}} /> } 
@@ -195,7 +191,7 @@ export const Header = ({seller,setSeller}:any) => {
    }
        
    <Typography sx={{textAlign:'left',fontWeight:'800'}} variant='body2' gutterBottom>
-   {seller.followers.length}Abonnés
+   { !seller.followers ? "0" : seller.followers.length}Abonnés
  </Typography>
  { show ? <DetailVendeur setShow={setShow} reviews={reviews} seller={seller} checked={checked} setSeller={setSeller} /> : "" }
     </Box>

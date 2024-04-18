@@ -39,7 +39,7 @@ export const Worker = () => {
    },[])
 
 
-
+if (loading == true) return <div>...loading</div>
 
   return (
     <div>

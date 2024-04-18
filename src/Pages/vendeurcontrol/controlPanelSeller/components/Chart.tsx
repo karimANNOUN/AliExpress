@@ -1,8 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { axisClasses } from '@mui/x-charts';
 
-const chartSetting = {
+
+  
+export const Chart  = ({order,productsSeller,loading}:any) =>  {
+  
+  
+ 
+  const [titleOne,setTitleOne]=useState('london')
+  const [titleTow,setTitleTow]=useState('paris')
+
+   
+
+  useEffect(()=>{
+
+    const product=productsSeller.sort((a:any, b:any) => b._count.article - a._count.article).slice(0, 2)   
+
+
+
+ // setTitleOne(product[0].title.replace(/'/g, ''))
+//  setTitleTow(product[1].title.replace(/'/g, ''))
+
+  },[])
+
+  
+
+
+
+  const chartSetting = {
     yAxis: [
       {
         label: 'rainfall (mm)',
@@ -16,83 +42,82 @@ const chartSetting = {
       },
     },
   };
-  const dataset = [
+  const dataset =  [
     {
-      london: 59,
-      paris: 57,
+      titleOne : 80,
+      titleTow: 57,
       month: 'Jan',
     },
     {
-      london: 50,
-      paris: 52,
+      titleOne : 59,
+      titleTow: 57,
       month: 'Fev',
     },
     {
-      london: 47,
-      paris: 53,
+      titleOne : 59,
+      titleTow: 57,
       month: 'Mar',
     },
     {
-      london: 54,
-      paris: 56,
+      titleOne : 59,
+      titleTow: 57,
       month: 'Apr',
     },
     {
-      london: 57,
-      paris: 69,
+      titleOne : 59,
+      titleTow: 57,
       month: 'May',
     },
     {
-      london: 60,
-      paris: 63,
+      titleOne : 59,
+      titleTow: 57,
       month: 'June',
     },
     {
-      london: 59,
-      paris: 60,
+      titleOne : 59,
+      titleTow: 57,
       month: 'July',
     },
     {
-      london: 65,
-      paris: 60,
+      titleOne : 59,
+      titleTow: 57,
       month: 'Aug',
     },
     {
-      london: 51,
-      paris: 51,
+      titleOne : 59,
+      titleTow: 57,
       month: 'Sept',
     },
     {
-      london: 60,
-      paris: 65,
+      titleOne : 59,
+      titleTow: 57,
       month: 'Oct',
     },
     {
-      london: 67,
-      paris: 64,
+      titleOne : 59,
+      titleTow: 57,
       month: 'Nov',
     },
     {
-      london: 61,
-      paris: 70,
+      titleOne : 59,
+      titleTow: 100,
       month: 'Dec',
     },
   ];
   
   const valueFormatter = (value: number) => `${value}mm`;
 
-  
-export const Chart  = () =>  {
-  
-
+if (loading == true) {
+  return <div>...loading</div>
+}
 
     return (
         <BarChart
         dataset={dataset}
         xAxis={[{ scaleType: 'band', dataKey: 'month' }]}
         series={[
-          { dataKey: 'london', label: 'London', valueFormatter },
-          { dataKey: 'paris', label: 'Paris', valueFormatter },
+          { dataKey: `${titleOne}`, label:`${titleOne}`, valueFormatter },
+          { dataKey: `${titleTow}`, label:`${titleTow}`, valueFormatter },
         ]}
         {...chartSetting}
       />

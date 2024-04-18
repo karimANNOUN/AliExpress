@@ -1,19 +1,15 @@
-import React,{useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import Box from '@mui/material/Box';
 import { Header } from './Components/Header/Header';
 import { NameStore } from './Components/Header/NameStore';
-import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-//import { setSeller } from '../../storeRedux/CartSlice';
+
 
 export const ProfilBayer = () => {
 
-  const params=useParams()
+const params=useParams()
 
-  const dispatch = useDispatch()
-
-  const [loading,setLoading]=useState(Boolean)
+  const [loading,setLoading]=useState(false)
   const [seller,setSeller]=useState<any>({})
 
 
@@ -39,6 +35,10 @@ export const ProfilBayer = () => {
    },[])
 
 
+
+   
+
+
   if (loading == true ) return <div>'Loading...'</div> 
 
  
@@ -48,7 +48,7 @@ export const ProfilBayer = () => {
   return (
     <div> 
         <Box sx={{display:'flex',flexDirection:'column',alignItems:'center'}} >
-        <Header seller={seller} setSeller={setSeller} />
+        <Header seller={seller} setSeller={setSeller} loading={loading}  />
         <NameStore seller={seller} />
         </Box>
     </div>

@@ -25,11 +25,12 @@ export const Header = ({loading,setLoading}:any) => {
 
         const [reviews,setReviews]=useState([])
         const [checked,setChecked]=useState(true)
+        const [loading1,setLoading1]=useState(false)
 
         const token = Cookies.get('token');
 
         useEffect( ()=>{
-                setLoading(true)
+                setLoading1(true)
                    const getReviewsStore =async()=>{
                         try{
                      const response=await fetch(`http://localhost:8000/getReviewsAll/${params.id}`, {
@@ -44,7 +45,7 @@ export const Header = ({loading,setLoading}:any) => {
                  
                   if (data.success == true) {
                       setReviews(data.getReviewsSeller)
-                      setLoading(false)
+                      setLoading1(false)
                     
                    
                   }
@@ -60,7 +61,7 @@ export const Header = ({loading,setLoading}:any) => {
 
                const postFollowers = async()=>{
                 try{
-                setLoading(true)
+                setLoading1(true)
                 const response=await fetch(`http://localhost:8000/createFollower/${params.id}`, {
                  method: 'POST',
                  credentials: 'include', 
@@ -75,7 +76,7 @@ export const Header = ({loading,setLoading}:any) => {
             
              if (data.success == true) {
                 dispatch(setProduct(data.product)) 
-                setLoading(false)
+                setLoading1(false)
               }
         } catch (error) {
                 console.error('operation failed.');
@@ -86,7 +87,7 @@ export const Header = ({loading,setLoading}:any) => {
 
         const deleteFollowers = async()=>{
                 try{
-                setLoading(true)
+                setLoading1(true)
                 const response=await fetch(`http://localhost:8000/deleteFollower/${params.id}`, {
                  method: 'DELETE',
                  credentials: 'include', 
@@ -100,7 +101,7 @@ export const Header = ({loading,setLoading}:any) => {
             
              if (data.success == true) {
                 dispatch(setProduct(data.product)) 
-                setLoading(false)
+                setLoading1(false)
               }
         } catch (error) {
                 console.error('operation failed.');
@@ -110,7 +111,8 @@ export const Header = ({loading,setLoading}:any) => {
 
        
         useEffect(()=>{
-
+              
+               
                 const findFollower = product.user.followers.find((follow:any)=> follow.buyerId === user.id )
 
                 if (findFollower) {
@@ -118,7 +120,6 @@ export const Header = ({loading,setLoading}:any) => {
                 }else{
                         setChecked(false)
                 }
-
         },[product])
 
                
@@ -131,7 +132,7 @@ export const Header = ({loading,setLoading}:any) => {
   return (
       
     <div>
-        {loading == true ? 
+        {loading1 == true ? 
         
         <Box sx={{width:'100%',bgcolor:'#424242',display:'flex',alignItems:'center'}} >
         <Skeleton variant="circular" width={40} height={40} />
@@ -178,7 +179,7 @@ export const Header = ({loading,setLoading}:any) => {
       }
               </Box>
           </Box>}
-          {loading == true ? 
+          {loading1 == true ? 
         
         <Box sx={{width:'100%',bgcolor:'#424242',display:'flex',alignItems:'center'}} >
          <Skeleton variant="rectangular" width={210} height='60px' />

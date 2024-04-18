@@ -15,7 +15,7 @@ function App() {
   {id:4,url:'/loginvendeurboutique'},{id:5,url:'/login/motpassoublie'},
   {id:6,url:'/login/motpassoublie/redirect'},{id:7,url:'/decisionvendeurboutique'},{id:8,url:'/register'},
   {id:9,url:'/addproduct'},{id:10,url:'/controlpanelseller/dashboard'},{id:11,url:'/controlpanelseller/products'},
-  {id:12,url:`/controlpanelseller/updateproduct/:prodId`}]
+  {id:12,url:`/controlpanelseller/updateproduct/${params.prodId}`},{id:1,url:`/controlpanelseller/orders`}]
 
   return (
     <div className="App">

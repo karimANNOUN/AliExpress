@@ -37,14 +37,7 @@ export const PersonelCard = ({loading }:any) => {
 
 
 
-{loading == true ? 
-        
-        <Box sx={{width:'100%',bgcolor:'#424242',display:'flex',alignItems:'center'}} >
-        <Skeleton variant="circular" width={40} height={40} />
-         <Skeleton variant="rectangular" width={210} height={60} />
-        </Box>
-     
-     : 
+
      <Box sx={{display:'flex',flexDirection:'column'}} >
      <FirstCard activeSize={activeSize} setActiveSize={setActiveSize} indexs={indexs} setIndexs={setIndexs} totalQuantity={totalQuantity} totalRating={totalRating} setFavColor={setFavColor} />
      <Divider sx={{my:2}} />
@@ -55,20 +48,13 @@ export const PersonelCard = ({loading }:any) => {
      <Reviews totalQuantity={totalQuantity} totalRating={totalRating} product={product} />
      <Divider sx={{my:2}} />
      <ProductLikely/>
-     </Box> }
+     </Box> 
            
 
 
-     {loading == true ? 
-        
-        <Box sx={{width:'100%',bgcolor:'#424242',display:'flex',alignItems:'center'}} >
-        <Skeleton variant="circular" width={40} height={40} />
-         <Skeleton variant="rectangular" width={210} height={60} />
-        </Box>
-     : 
      <Box sx={{width:'350px',height:'600px',borderRadius:'10px',border:'2px solid #eeeeee',display:'flex',justifyContent:'center',alignItems:'center',position:'sticky',top:'2%',right:0}} >
         <ImageCard activeSize={activeSize} setActiveSize={setActiveSize} indexs={indexs} setIndexs={setIndexs} favColor={favColor} />
-     </Box>}
+     </Box>
     
     </Box>
   )
