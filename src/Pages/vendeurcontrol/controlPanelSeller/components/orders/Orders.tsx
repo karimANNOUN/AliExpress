@@ -178,7 +178,7 @@ export const Orders = () => {
      date
     </Typography>
       </Box>
-      <Box sx={{display:'flex',alignItems:'center',width:'14%'}} >
+      <Box sx={{display:'flex',alignItems:'center',justifyContent:'flex-end',width:'14%'}} >
     <Typography sx={{fontWeight:'900',textAlign:'left'}} variant='subtitle2' gutterBottom>
      More Détails
     </Typography>

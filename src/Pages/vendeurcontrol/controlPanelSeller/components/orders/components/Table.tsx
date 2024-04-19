@@ -4,6 +4,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Cookies from 'js-cookie';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { ModalOrdersDetails } from './ModalOrdersDetails';
 export const Table = ({ord}:any) => {
 
 
@@ -15,6 +16,11 @@ export const Table = ({ord}:any) => {
     const handleClose = () => {
       setAnchorEl(null);
     };
+
+
+
+    const [opens, setOpens] = useState(false);
+  const handleOpen = () => setOpens(true);
 
 
   return (
@@ -86,8 +92,10 @@ export const Table = ({ord}:any) => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>Détails</MenuItem>
+        <MenuItem onClick={handleOpen}>Détails</MenuItem>
       </Menu>
+
+      <ModalOrdersDetails opens={opens} setOpens={setOpens} setAnchorEl={setAnchorEl} ord={ord} />
 
        </Box>
   )
