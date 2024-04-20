@@ -5,7 +5,8 @@ import Cookies from 'js-cookie';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { ModalOrdersDetails } from './ModalOrdersDetails';
-export const Table = ({ord}:any) => {
+
+export const Table = ({ord,setOrder}:any) => {
 
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -95,7 +96,7 @@ export const Table = ({ord}:any) => {
         <MenuItem onClick={handleOpen}>Détails</MenuItem>
       </Menu>
 
-      <ModalOrdersDetails opens={opens} setOpens={setOpens} setAnchorEl={setAnchorEl} ord={ord} />
+      <ModalOrdersDetails opens={opens} setOpens={setOpens} setAnchorEl={setAnchorEl} ord={ord} setOrder={setOrder} />
 
        </Box>
   )

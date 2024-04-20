@@ -35,7 +35,9 @@ export const Lists = () => {
       setCount(1)
     }if (location.pathname == '/controlpanelseller/orders') {
       setCount(2)
-    }  
+    }if (location.pathname == '/controlpanelseller/customers') {
+      setCount(3)
+    }    
 
   },[location])
 
@@ -113,14 +115,27 @@ export const Lists = () => {
         
         }
 
-        <ListItem disablePadding>
-          <ListItemButton>
+{ count == 3 ? 
+        <ListItem sx={{color:'#1976d2' ,bgcolor:'#90caf9'}} disablePadding>
+          <ListItemButton onClick={()=>navigate('/controlpanelseller/customers')} >
             <ListItemIcon>
               <GroupIcon />
             </ListItemIcon>
             <ListItemText primary="Customers" />
           </ListItemButton>
         </ListItem>
+        :
+        <ListItem disablePadding>
+          <ListItemButton onClick={()=>navigate('/controlpanelseller/customers')} >
+            <ListItemIcon>
+              <GroupIcon />
+            </ListItemIcon>
+            <ListItemText primary="Customers" />
+          </ListItemButton>
+        </ListItem>
+        
+        
+        }
 
         <ListItem disablePadding>
           <ListItemButton>

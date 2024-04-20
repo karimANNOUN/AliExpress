@@ -1,4 +1,4 @@
-import React,{ useState } from 'react'
+import React,{ useEffect, useState } from 'react'
 import { Box,IconButton,Typography } from '@mui/material'
 import Button from '@mui/material/Button';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -107,6 +107,20 @@ export const BoxProduct = ({prod,setProductsSeller}:any) => {
      
     }
 
+const [outStock,setOutStock]=useState(Boolean)
+
+    useEffect(()=>{
+    
+        const findQuantity= prod.property.find((product:any)=> product.quantity === 0 )
+        if (findQuantity) {
+          setOutStock(true)
+        }else{
+          setOutStock(false)
+        }
+  
+     
+     },[])
+
 
 
   return (
@@ -122,7 +136,7 @@ export const BoxProduct = ({prod,setProductsSeller}:any) => {
             <Box sx={{width:'80%',display:'flex',flexDirection:'column'}} >
                 <Box sx={{width:'100%',display:'flex',justifyContent:'space-between',alignItems:'center'}} >
               
-                <Link href={`/controlpanelseller/updateproduct/${prod.id}`} underline="none" sx={{color:'#757575'}} >
+                <Link href={`/controlpanelseller/updateproduct/${prod.id}`} underline="none" sx={{color:'#757575',ml:1}} >
     {prod.title},{prod.description}
     </Link>
     
@@ -147,9 +161,16 @@ export const BoxProduct = ({prod,setProductsSeller}:any) => {
 
                 </Box>
 
-                <Typography sx={{fontWeight:'800',textAlign:'left',color:'#bdbdbd',my:2}} variant='body2' gutterBottom>
+                <Typography sx={{fontWeight:'800',textAlign:'left',color:'#bdbdbd',ml:1,mt:2}} variant='body2' gutterBottom>
     {calculateTotalCommande(prod)} commande
     </Typography>
+
+    {outStock==true ? 
+     <Typography sx={{fontWeight:'800',textAlign:'left',color:'#d50000',ml:1}} variant='body2' gutterBottom>
+     Out Stock Quantity in your product 
+     Check Properties
+     </Typography>
+    : "" }
            
             </Box>
         </Box>

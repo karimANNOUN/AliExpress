@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -7,6 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import { Divider } from '@mui/material';
 import Paper from '@mui/material/Paper';
+import Cookies from 'js-cookie';
 
 
 const style = {
@@ -20,7 +21,7 @@ const style = {
     p:2,
   };
 
-export const ModalOrdersDetails = ({opens,setOpens,setAnchorEl,ord}:any) => {
+export const ModalOrdersDetails = ({opens,setOpens,setAnchorEl,ord,setOrder}:any) => {
 
     const handleClose = () => {
         setOpens(false)
@@ -28,10 +29,61 @@ export const ModalOrdersDetails = ({opens,setOpens,setAnchorEl,ord}:any) => {
     
     };
 
+    const token = Cookies.get('token');
+    const [loading,setLoading]=useState(false)
 
-     useEffect(()=>{
-       console.log(ord)
-    },[opens])
+    const handelCreateOrderExpidee=async()=>{
+        try {
+          setLoading(true)
+        const response = await fetch(`http://localhost:8000/createOrderExpidee`,{
+          method: 'PATCH',
+          credentials:"include", 
+          headers: {
+            'Content-Type': 'application/json',
+             authorization:`${token}`
+          },
+          body:JSON.stringify({ord})
+        });
+        const data = await response.json()
+       if (data.success == true) {
+          setOrder(data.orderSeller)
+          setLoading(false) 
+        } 
+    
+      } catch (error) {
+        console.error('operation failed.');
+      }
+       
+      }
+
+
+
+      const handelDeleteOrderCannaled=async()=>{
+        try {
+          setLoading(true)
+        const response = await fetch(`http://localhost:8000/deleteOrderCannaled`,{
+          method: 'PATCH',
+          credentials:"include", 
+          headers: {
+            'Content-Type': 'application/json',
+             authorization:`${token}`
+          },
+          body:JSON.stringify({ord})
+        });
+        const data = await response.json()
+       if (data.success == true) {
+          setOrder(data.orderSeller)
+          setLoading(false) 
+        } 
+    
+      } catch (error) {
+        console.error('operation failed.');
+      }
+       
+      }
+
+
+    
 
   return (
     <div> 
@@ -78,7 +130,7 @@ export const ModalOrdersDetails = ({opens,setOpens,setAnchorEl,ord}:any) => {
 
 
       <Typography id="modal-modal-description" variant='subtitle2' sx={{ color:'#bdbdbd',textAlign:'center' }}>
-      <b style={{fontWeight:'bold'}} >product{ord.product.properties}</b> <br/>
+      <b style={{fontWeight:'bold'}} >product {ord.product.properties}</b> <br/>
         {ord.propertyType}
       </Typography>
 
@@ -238,19 +290,19 @@ export const ModalOrdersDetails = ({opens,setOpens,setAnchorEl,ord}:any) => {
 
       <Box sx={{display:'flex',justifyContent:'center',alignItems:'center'}} >
        
-      { ord.state == "terminees" ? <Typography sx={{fontWeight:'100',bgcolor:'#c8e6c9',color:'#66bb6a',textAlign:'left'}} variant='subtitle2' gutterBottom>
+      { ord.state == "terminees" ? <Typography sx={{fontWeight:'300',bgcolor:'#c8e6c9',color:'#66bb6a',textAlign:'left'}} variant='subtitle1' gutterBottom>
     Dilvred
     </Typography> : "" }
    
 
     
-    { ord.state == "non paye" ? <Typography sx={{fontWeight:'100',bgcolor:'#ffcdd2',color:'#d50000',textAlign:'left'}} variant='subtitle2' gutterBottom>
+    { ord.state == "non paye" ? <Typography sx={{fontWeight:'300',bgcolor:'#ffcdd2',color:'#d50000',textAlign:'left'}} variant='subtitle1' gutterBottom>
     Cancelled
     </Typography> : "" }
    
 
     
-    { ord.state == "expédiée" ? <Typography sx={{fontWeight:'100',bgcolor:'#bbdefb',color:'#0d47a1',textAlign:'left'}} variant='subtitle2' gutterBottom>
+    { ord.state == "expédiée" ? <Typography sx={{fontWeight:'300',bgcolor:'#bbdefb',color:'#0d47a1',textAlign:'left'}} variant='subtitle1' gutterBottom>
     expédiée
     </Typography> : "" }
   
@@ -258,8 +310,8 @@ export const ModalOrdersDetails = ({opens,setOpens,setAnchorEl,ord}:any) => {
      
     { ord.state == "En Attente" ?  
     <Box sx={{display:'flex',alignItems:'center'}} >
-         <Button sx={{bgcolor:'#d500f9',color:'white',mr:3,":hover":{bgcolor:'#d500f9',color:'white'}}} variant="text">Approve Order</Button>
-         <Button sx={{bgcolor:'#d50000',color:'white',":hover":{bgcolor:'#d50000',color:'white'}}} variant="text">Reject Order</Button>
+         <Button onClick={handelCreateOrderExpidee} disabled={loading==true ? true : false } sx={{bgcolor:'#d500f9',color:'white',mr:3,":hover":{bgcolor:'#d500f9',color:'white'}}} variant="text">Approve Order</Button>
+         <Button onClick={handelDeleteOrderCannaled} disabled={loading==true ? true : false }  sx={{bgcolor:'#d50000',color:'white',":hover":{bgcolor:'#d50000',color:'white'}}} variant="text">Reject Order</Button>
     </Box>
     
     : "" }

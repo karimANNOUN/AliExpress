@@ -105,6 +105,9 @@ export const Product = () => {
      
     }
 
+
+
+
     const totalArticle = (productsSeller:any) =>{
       let total = 0;
 
@@ -149,6 +152,10 @@ export const Product = () => {
       return prod
      }
   }
+
+
+
+ 
 
 
 
