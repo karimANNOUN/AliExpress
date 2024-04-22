@@ -41,6 +41,7 @@ import { Product } from '../Pages/vendeurcontrol/controlPanelSeller/components/P
 import { UpdateProduct } from '../Pages/vendeurcontrol/updateproduct/UpdateProduct'
 import { Orders } from '../Pages/vendeurcontrol/controlPanelSeller/components/orders/Orders'
 import { Customers } from '../Pages/vendeurcontrol/controlPanelSeller/components/customers/Customers'
+import { ReviewsSeller } from '../Pages/vendeurcontrol/controlPanelSeller/components/reviews/ReviewsSeller'
 
 
 export default function AllRoutes() {
@@ -91,6 +92,7 @@ export default function AllRoutes() {
           <Route path='/controlpanelseller/updateproduct/:prodId' element={<UpdateProduct/>} />
           <Route path='/controlpanelseller/orders' element={<Orders/>} />
           <Route path='/controlpanelseller/customers' element={<Customers/>} />
+          <Route path='/controlpanelseller/reviews' element={<ReviewsSeller/>} />
             
 
           <Route path='/register' element={<Register/>} />

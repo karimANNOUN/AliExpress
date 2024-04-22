@@ -37,7 +37,9 @@ export const Lists = () => {
       setCount(2)
     }if (location.pathname == '/controlpanelseller/customers') {
       setCount(3)
-    }    
+    }if(location.pathname == '/controlpanelseller/reviews') {
+      setCount(4)
+    }        
 
   },[location])
 
@@ -137,23 +139,27 @@ export const Lists = () => {
         
         }
 
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <LeaderboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Statistics" />
-          </ListItemButton>
-        </ListItem>
 
+{ count == 4 ? 
+        <ListItem sx={{color:'#1976d2' ,bgcolor:'#90caf9'}} disablePadding>
+          <ListItemButton onClick={()=>navigate('/controlpanelseller/reviews')} >
+            <ListItemIcon>
+              <ReviewsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Reviews" />
+          </ListItemButton>
+        </ListItem>:
+        
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton onClick={()=>navigate('/controlpanelseller/reviews')}  >
             <ListItemIcon>
               <ReviewsIcon />
             </ListItemIcon>
             <ListItemText primary="Reviews" />
           </ListItemButton>
         </ListItem>
+        
+        }
 
         <ListItem disablePadding>
           <ListItemButton>
