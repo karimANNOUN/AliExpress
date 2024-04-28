@@ -39,7 +39,9 @@ export const Lists = () => {
       setCount(3)
     }if(location.pathname == '/controlpanelseller/reviews') {
       setCount(4)
-    }        
+    }if(location.pathname == '/controlpanelseller/transactions') {
+      setCount(5)
+    }           
 
   },[location])
 
@@ -48,8 +50,8 @@ export const Lists = () => {
     <nav aria-label="main mailbox folders">
       <List>
       
-      { count == 0 ? 
-         <ListItem sx={{color:'#1976d2' ,bgcolor:'#90caf9'}} disablePadding>
+      
+         <ListItem sx={count == 0 ? {color:'#1976d2' ,bgcolor:'#90caf9'} : {}} disablePadding>
          <ListItemButton onClick={()=>navigate('/controlpanelseller/dashboard')} >
            <ListItemIcon >
              <DashboardIcon />
@@ -57,22 +59,11 @@ export const Lists = () => {
            <ListItemText primary="Dashbord" />
          </ListItemButton>
        </ListItem>
-      :
-      <ListItem  disablePadding>
-      <ListItemButton onClick={()=>navigate('/controlpanelseller/dashboard')} >
-        <ListItemIcon >
-          <DashboardIcon />
-        </ListItemIcon>
-        <ListItemText primary="Dashbord" />
-      </ListItemButton>
-    </ListItem>
-      
-      }
+     
+
        
 
-       { count == 1 ? 
-
-        <ListItem sx={{color:'#1976d2' ,bgcolor:'#90caf9'}} disablePadding>
+        <ListItem sx={count == 1 ? {color:'#1976d2' ,bgcolor:'#90caf9'} : {}} disablePadding>
           <ListItemButton onClick={()=>navigate('/controlpanelseller/products')} >
             <ListItemIcon>
               <Inventory2Icon />
@@ -81,21 +72,10 @@ export const Lists = () => {
           </ListItemButton>
         </ListItem>
 
-        :
-         
-        <ListItem  disablePadding>
-        <ListItemButton onClick={()=>navigate('/controlpanelseller/products')} >
-          <ListItemIcon>
-            <Inventory2Icon />
-          </ListItemIcon>
-          <ListItemText primary="Products" />
-        </ListItemButton>
-      </ListItem>
-        
-        }
+     
 
-{ count == 2 ? 
-        <ListItem sx={{color:'#1976d2' ,bgcolor:'#90caf9'}} disablePadding>
+
+        <ListItem sx={count == 2 ? {color:'#1976d2' ,bgcolor:'#90caf9'} : {}} disablePadding>
           <ListItemButton onClick={()=>navigate('/controlpanelseller/orders')} >
             <ListItemIcon>
               <ShoppingCartIcon />
@@ -103,22 +83,10 @@ export const Lists = () => {
             <ListItemText primary="Orders" />
           </ListItemButton>
         </ListItem>
-        :
-        
-        <ListItem disablePadding>
-        <ListItemButton onClick={()=>navigate('/controlpanelseller/orders')} >
-          <ListItemIcon>
-            <ShoppingCartIcon />
-          </ListItemIcon>
-          <ListItemText primary="Orders" />
-        </ListItemButton>
-      </ListItem>
-        
-        
-        }
+       
 
-{ count == 3 ? 
-        <ListItem sx={{color:'#1976d2' ,bgcolor:'#90caf9'}} disablePadding>
+
+        <ListItem sx={count == 3 ? {color:'#1976d2' ,bgcolor:'#90caf9'} : {}} disablePadding>
           <ListItemButton onClick={()=>navigate('/controlpanelseller/customers')} >
             <ListItemIcon>
               <GroupIcon />
@@ -126,49 +94,28 @@ export const Lists = () => {
             <ListItemText primary="Customers" />
           </ListItemButton>
         </ListItem>
-        :
-        <ListItem disablePadding>
-          <ListItemButton onClick={()=>navigate('/controlpanelseller/customers')} >
-            <ListItemIcon>
-              <GroupIcon />
-            </ListItemIcon>
-            <ListItemText primary="Customers" />
-          </ListItemButton>
-        </ListItem>
-        
-        
-        }
+      
 
 
-{ count == 4 ? 
-        <ListItem sx={{color:'#1976d2' ,bgcolor:'#90caf9'}} disablePadding>
+        <ListItem sx={ count == 4 ? {color:'#1976d2' ,bgcolor:'#90caf9'} : {} } disablePadding>
           <ListItemButton onClick={()=>navigate('/controlpanelseller/reviews')} >
             <ListItemIcon>
               <ReviewsIcon />
             </ListItemIcon>
             <ListItemText primary="Reviews" />
           </ListItemButton>
-        </ListItem>:
-        
-        <ListItem disablePadding>
-          <ListItemButton onClick={()=>navigate('/controlpanelseller/reviews')}  >
-            <ListItemIcon>
-              <ReviewsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Reviews" />
-          </ListItemButton>
         </ListItem>
-        
-        }
 
-        <ListItem disablePadding>
-          <ListItemButton>
+
+        <ListItem sx={ count == 5 ? {color:'#1976d2' ,bgcolor:'#90caf9'} : {}}  disablePadding>
+          <ListItemButton onClick={()=>navigate('/controlpanelseller/transactions')}  >
             <ListItemIcon>
               <PaidIcon />
             </ListItemIcon>
             <ListItemText primary="Transactions" />
           </ListItemButton>
-        </ListItem>
+        </ListItem> 
+        
 
         <ListItem disablePadding>
           <ListItemButton>

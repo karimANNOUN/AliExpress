@@ -118,41 +118,71 @@ export const Orders = () => {
 
     <Box sx={{bgcolor:'Window',display:'flex',alignItems:'center',width:'99%',mb:2,borderRadius:'6px',p:1}} >
 
-    {active === 0 ? 
-                <Button onClick={()=>setActive(0)} sx={{color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">All Orders</Button>
-
-                : 
-                <Button onClick={()=>setActive(0)} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">All Orders</Button>
-            }
-        
-  
-                {active === 1 ? 
-                <Button onClick={()=>setActive(1)} sx={{color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">En Attente</Button>
-
-                : 
-                <Button onClick={()=>setActive(1)} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">En Attente</Button>
-            }
+                <Button 
+                onClick={()=>setActive(0)} 
+                sx={
+                  active === 0 ?
+                  {color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}} :
+                  {color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}
+                } 
+                variant="text">
+                  All Orders
+                  </Button>
 
             
-            {active === 2 ?
-        <Button onClick={()=>setActive(2)} sx={{color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">Expideé</Button>
-        :
-        <Button onClick={()=>setActive(2)} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">Expideé</Button>
-        }
+        
+
+                <Button 
+                onClick={()=>setActive(1)} 
+                sx={
+                  active === 1 ?
+                  {color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}:
+                  {color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}
+                } 
+                variant="text">En Attente
+                </Button>
+
+              
+
+            
+            
+        <Button 
+        onClick={()=>setActive(2)} 
+        sx={active === 2 ?
+          {color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}:
+          {color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}
+        } 
+        variant="text"
+        >
+        Expideé
+        </Button>
+       
          
+        <Button 
+        onClick={()=>setActive(3)} 
+        sx={
+          active === 3 ?
+          {color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}:
+          {color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}
+        } 
+        variant="text"
+        >
+        refusé
+        </Button>
+       
 
-           {active === 3 ?
-        <Button onClick={()=>setActive(3)} sx={{color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">refusé</Button>
-        :
-        <Button onClick={()=>setActive(3)}  sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">refusé</Button>
-        }
-
-
-{active === 4 ?
-        <Button onClick={()=>setActive(4)} sx={{color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">Terminée</Button>
-        :
-        <Button onClick={()=>setActive(4)} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">Terminée</Button>
-        }
+        <Button 
+        onClick={()=>setActive(4)} 
+        sx={
+          active === 4 ?
+          {color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}:
+          {color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}
+        } 
+        variant="text"
+        >
+        Terminée
+        </Button>
+       
 
        
     </Box> 
@@ -205,7 +235,11 @@ export const Orders = () => {
     </Typography>
       </Box>
       </Box>
-       {order.filter(filtredOrders).map( (ord:any)=> <Table key={ord.id} ord={ord} setOrder={setOrder} /> )}
+       { order.filter(filtredOrders).length === 0 ? 
+        <Typography sx={{fontWeight:'200',textAlign:'left',mt:1}} variant='body2' gutterBottom>
+        Nothing Orders(0)
+</Typography>
+       : order.filter(filtredOrders).map( (ord:any)=> <Table key={ord.id} ord={ord} setOrder={setOrder} /> )}
         </Box>
 
 

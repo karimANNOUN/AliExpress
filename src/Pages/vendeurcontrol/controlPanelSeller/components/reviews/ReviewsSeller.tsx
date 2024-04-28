@@ -159,27 +159,50 @@ export const ReviewsSeller = () => {
     <Box sx={{bgcolor:'Window',display:'flex',flexWrap:'wrap',width:'99%',mb:2,borderRadius:'6px',p:1}} >
 
      { reviewsTypes.map(review=> <div key={review.id} >
-       { review.id - 1 === activeReview ?
-    <Button onClick={()=>setActiveReview(review.id - 1)}  sx={{bgcolor:'#ffab91',mx:1,my:1,color:'#bf360c',borderRadius:'8px',borderColor:'#bf360c',":hover":{color:'#bf360c',borderColor:'#bf360c',bgcolor:'#ffab91'}}} variant="outlined">{review.type}({review.review})</Button> : 
-    <Button onClick={()=>setActiveReview(review.id - 1)}  sx={{bgcolor:'#e0e0e0',mx:1,my:1,color:'black',borderRadius:'8px',borderColor:'#fafafa',":hover":{color:'black',borderColor:'#fafafa',bgcolor:'#e0e0e0'}}} variant="outlined">{review.type}({review.review})</Button>
-    }
+    <Button 
+    onClick={()=>setActiveReview(review.id - 1)}  
+    sx={
+      activeReview === (review.id - 1) ?
+      {bgcolor:'#ffab91',mx:1,my:1,color:'#bf360c',borderRadius:'8px',borderColor:'#bf360c',":hover":{color:'#bf360c',borderColor:'#bf360c',bgcolor:'#ffab91'}} :
+      {bgcolor:'#e0e0e0',mx:1,my:1,color:'black',borderRadius:'8px',borderColor:'#fafafa',":hover":{color:'black',borderColor:'#fafafa',bgcolor:'#e0e0e0'}}
+    } 
+    variant="outlined"
+    >
+      {review.type}({review.review})
+      </Button> 
    </div>
    )}
 
 
 <div >
-       { activeReview === 6 ?
-    <Button onClick={()=>setActiveReview(6)}  sx={{bgcolor:'#ffab91',mx:1,my:1,color:'#bf360c',borderRadius:'8px',borderColor:'#bf360c',":hover":{color:'#bf360c',borderColor:'#bf360c',bgcolor:'#ffab91'}}} variant="outlined">order By rating</Button> : 
-    <Button onClick={handelGetReviewsByRating}  sx={{bgcolor:'#e0e0e0',mx:1,my:1,color:'black',borderRadius:'8px',borderColor:'#fafafa',":hover":{color:'black',borderColor:'#fafafa',bgcolor:'#e0e0e0'}}} variant="outlined">order By rating</Button>
-    }
+       
+    <Button 
+    onClick={handelGetReviewsByRating}  
+    sx={
+      activeReview === 6 ?
+      {bgcolor:'#ffab91',mx:1,my:1,color:'#bf360c',borderRadius:'8px',borderColor:'#bf360c',":hover":{color:'#bf360c',borderColor:'#bf360c',bgcolor:'#ffab91'}}:
+      {bgcolor:'#e0e0e0',mx:1,my:1,color:'black',borderRadius:'8px',borderColor:'#fafafa',":hover":{color:'black',borderColor:'#fafafa',bgcolor:'#e0e0e0'}} 
+    } 
+    variant="outlined">
+      order By rating
+      </Button>
+  
    </div>
 
 
    <div  >
-       {  activeReview === 7 ?
-    <Button onClick={()=>setActiveReview(7)}  sx={{bgcolor:'#ffab91',mx:1,my:1,color:'#bf360c',borderRadius:'8px',borderColor:'#bf360c',":hover":{color:'#bf360c',borderColor:'#bf360c',bgcolor:'#ffab91'}}} variant="outlined">by Quantity</Button> : 
-    <Button onClick={handelGetReviewsByQuantity}  sx={{bgcolor:'#e0e0e0',mx:1,my:1,color:'black',borderRadius:'8px',borderColor:'#fafafa',":hover":{color:'black',borderColor:'#fafafa',bgcolor:'#e0e0e0'}}} variant="outlined">by Quantity</Button>
-    }
+      
+    <Button 
+    onClick={handelGetReviewsByQuantity}  
+    sx={
+      activeReview === 7 ?
+      {bgcolor:'#ffab91',mx:1,my:1,color:'#bf360c',borderRadius:'8px',borderColor:'#bf360c',":hover":{color:'#bf360c',borderColor:'#bf360c',bgcolor:'#ffab91'}}:
+      {bgcolor:'#e0e0e0',mx:1,my:1,color:'black',borderRadius:'8px',borderColor:'#fafafa',":hover":{color:'black',borderColor:'#fafafa',bgcolor:'#e0e0e0'}}
+    } 
+    variant="outlined">
+      by Quantity
+      </Button>
+
    </div>
 
     

@@ -175,46 +175,71 @@ export const Product = () => {
 
     <Box sx={{bgcolor:'Window',display:'flex',alignItems:'center',width:'100%',mb:2,borderRadius:'6px',p:1}} >
 
-    {active === 0 ? 
-                <Button onClick={()=>setActive(0)} sx={{color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">All Products</Button>
+   
+                <Button 
+                onClick={handelGetProduct} 
+                sx={
+                  active === 0 ?
+                  {color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}:
+                  {color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}
+                } 
+                variant="text">
+                All Products
+                </Button>
 
-                : 
-                <Button onClick={handelGetProduct} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">All Products</Button>
-            }
+                
         
   
-                {active === 1 ? 
-                <Button onClick={()=>setActive(1)} sx={{color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">Pertinence</Button>
+               
+        <Button 
+        onClick={()=>setActive(1)} 
+        sx={
+          active === 1 ?
+          {color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}:
+          {color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}
+        } 
+        variant="text">
+          Pertinence
+          </Button>
 
-                : 
-                <Button onClick={()=>setActive(1)} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">Pertinence</Button>
-            }
-
-            
-            {active === 2 ?
-        <Button onClick={()=>setActive(2)} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text"> Commandes<ArrowDownwardIcon sx={{fontSize:'14px',color:'#ff3d00'}} /></Button>
-        :
-        <Button onClick={()=>setActive(2)} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text"> Commandes<ArrowDownwardIcon sx={{fontSize:'14px'}} /></Button>
-        }
-         
-
-           {active === 3 ?
-        <Button onClick={()=>setActive(3)} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text"> Prix<ImportExportIcon sx={{fontSize:'14px',color:'#ff3d00'}} /></Button>
-        :
-        <Button onClick={handelGetProductPrix} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text"> Prix<ImportExportIcon sx={{fontSize:'14px'}} /></Button>
-        }
+              
 
             
+          
+        <Button 
+        onClick={()=>setActive(2)} 
+        sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} 
+        variant="text"> 
+        Commandes
+        <ArrowDownwardIcon 
+         sx={
+          active === 2 ?
+          {fontSize:'14px',color:'#ff3d00'} :
+          {fontSize:'14px',color:'black'} 
+          } />
+        </Button>
+      
 
+           
+        <Button 
+        onClick={handelGetProductPrix} 
+        sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} 
+        variant="text"> 
+        Prix<ImportExportIcon 
+        sx={
+          active === 3 ?
+          {fontSize:'14px',color:'#ff3d00'} :
+          {fontSize:'14px',color:'black'} 
+          }
+        />
+        </Button>
+       
             <FormControlLabel 
               control={<Checkbox  
               onChange={handleChange}
               checked={checked}
               />} 
              label="Livraison gratuite" />
-
-         
-       
     </Box> 
 
     <Box sx={{bgcolor:'Window',display:'flex',flexDirection:'column',alignItems:'center',width:'100%',overflow:'auto',borderRadius:'6px',height:'600px',p:1}} >

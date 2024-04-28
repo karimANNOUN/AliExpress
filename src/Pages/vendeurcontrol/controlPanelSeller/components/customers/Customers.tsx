@@ -236,36 +236,58 @@ if(loading==true) return <div>...loading</div>
 
     <Box sx={{bgcolor:'Window',display:'flex',alignItems:'center',width:'99%',mb:2,borderRadius:'6px',p:1}} >
 
-{active === 0 ? 
-            <Button onClick={handelGetCustomers} sx={{color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">All Customers</Button>
 
-            : 
-            <Button onClick={handelGetCustomers} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">All Customers</Button>
-        }
+            <Button 
+            onClick={handelGetCustomers} 
+            sx={ active ===0 ?
+              {color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}:
+              {color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}
+            } 
+            variant="text">
+              All Customers
+            </Button>
+
+           
     
 
-            {active === 1 ? 
-            <Button onClick={handelGetCustomerSelles} sx={{color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">Salles</Button>
+           
+            <Button 
+            onClick={handelGetCustomerSelles} 
+            sx={ active ===1 ?
+              {color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}:
+              {color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}
+            }  
+            variant="text">
+              Salles
+            </Button>
 
-            : 
-            <Button onClick={handelGetCustomerSelles} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">Salles</Button>
-        }
+           
 
-{active === 2 ? 
-            <Button onClick={handelGetCustomerEmail} sx={{color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">By Email</Button>
+            <Button 
+            onClick={handelGetCustomerEmail} 
+            sx={ active ===2 ?
+              {color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}:
+              {color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}
+            }  
+            variant="text">
+              By Email
+            </Button>
 
-            : 
-            <Button onClick={handelGetCustomerEmail} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">By Email</Button>
-        }
+          
 
 
-{active === 3 ? 
-            <Button onClick={handelGetCustomerName} sx={{color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">By Name</Button>
 
-            : 
-            <Button onClick={handelGetCustomerName} sx={{color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}} variant="text">By Name</Button>
-        }
+            <Button 
+            onClick={handelGetCustomerName} 
+            sx={ active ===3 ?
+              {color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}:
+              {color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}
+            }  
+            variant="text">
+            By Name
+            </Button>
 
+          
    
 </Box> 
 

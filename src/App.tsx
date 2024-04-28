@@ -16,7 +16,7 @@ function App() {
   {id:6,url:'/login/motpassoublie/redirect'},{id:7,url:'/decisionvendeurboutique'},{id:8,url:'/register'},
   {id:9,url:'/addproduct'},{id:10,url:'/controlpanelseller/dashboard'},{id:11,url:'/controlpanelseller/products'},
   {id:12,url:`/controlpanelseller/updateproduct/${params.prodId}`},{id:13,url:`/controlpanelseller/orders`},
-  {id:14,url:`/controlpanelseller/customers`},{id:15,url:`/controlpanelseller/reviews`}]
+  {id:14,url:`/controlpanelseller/customers`},{id:15,url:`/controlpanelseller/reviews`},{id:16,url:`/controlpanelseller/transactions`}]
 
   return (
     <div className="App">
