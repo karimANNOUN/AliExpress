@@ -41,6 +41,8 @@ export const Lists = () => {
       setCount(4)
     }if(location.pathname == '/controlpanelseller/transactions') {
       setCount(5)
+    }if(location.pathname == '/controlpanelseller/storeSettings') {
+      setCount(6)
     }           
 
   },[location])
@@ -117,12 +119,12 @@ export const Lists = () => {
         </ListItem> 
         
 
-        <ListItem disablePadding>
-          <ListItemButton>
+        <ListItem sx={ count == 6 ? {color:'#1976d2' ,bgcolor:'#90caf9'} : {}} disablePadding>
+          <ListItemButton onClick={()=>navigate('/controlpanelseller/storeSettings')} >
             <ListItemIcon>
               <LanguageIcon />
             </ListItemIcon>
-            <ListItemText primary="Sellers" />
+            <ListItemText primary="Store Settings" />
           </ListItemButton>
         </ListItem>
 

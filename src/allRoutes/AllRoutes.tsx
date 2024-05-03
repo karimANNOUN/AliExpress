@@ -43,6 +43,7 @@ import { Orders } from '../Pages/vendeurcontrol/controlPanelSeller/components/or
 import { Customers } from '../Pages/vendeurcontrol/controlPanelSeller/components/customers/Customers'
 import { ReviewsSeller } from '../Pages/vendeurcontrol/controlPanelSeller/components/reviews/ReviewsSeller'
 import { Transactions } from '../Pages/vendeurcontrol/controlPanelSeller/components/transaction/Transactions'
+import { StoreSettings } from '../Pages/vendeurcontrol/controlPanelSeller/components/storeSeller/StoreSettings'
 
 
 export default function AllRoutes() {
@@ -95,6 +96,7 @@ export default function AllRoutes() {
           <Route path='/controlpanelseller/customers' element={<Customers/>} />
           <Route path='/controlpanelseller/reviews' element={<ReviewsSeller/>} />
           <Route path='/controlpanelseller/transactions' element={<Transactions/>} />
+          <Route path='/controlpanelseller/storeSettings' element={<StoreSettings/>} />
             
 
           <Route path='/register' element={<Register/>} />

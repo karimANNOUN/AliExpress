@@ -13,6 +13,8 @@ import Paper from '@mui/material/Paper';
 import { ModalAmountExtract } from './components/ModalAmountExtract';
 import Cookies from 'js-cookie';
 import LoadingButton from '@mui/lab/LoadingButton';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 
 export const Transactions = () => {
 
@@ -31,6 +33,20 @@ export const Transactions = () => {
   const handleClick = () => {
     setLoading1(true);
   }
+
+
+
+  const [checked, setChecked] = useState(false);
+  const handleChange = (e:any) => {
+    setChecked(e.target.checked);
+};
+
+
+
+const [checked1, setChecked1] = useState(false);
+const handleChange1 = (e:any) => {
+  setChecked1(e.target.checked);
+};
 
   
 
@@ -124,6 +140,7 @@ export const Transactions = () => {
       }
 
 
+      
 
 
       const handelPostCheckOutOrder=async()=>{
@@ -160,17 +177,25 @@ export const Transactions = () => {
         if (active === 0) {
             return trans
         }if (active === 1) {
-            return trans
-        }if (active === 2) {
-            return trans
-        }if (active === 3) {
             return trans.state == "En Attente"
-        }if (active === 4) {
+        }if (active === 2) {
             return trans.state == "terminees"
         }
       }
-      
 
+
+      const sorTransactions = (a:any,b:any) =>{
+
+        if (checked) {
+            return b.sales - a.sales
+        } if (checked1) {
+            const dateA :any = new Date(a.Date);
+            const dateB : any = new Date(b.Date);
+            return (dateB - dateA);
+        }
+      }
+
+     
 
       if(loading == true) return <div>...loading</div>
 
@@ -186,9 +211,9 @@ export const Transactions = () => {
     Transactions
     </Typography>
 
-    <Box sx={{bgcolor:'Window',display:'flex',alignItems:'center',width:'99%',mb:2,borderRadius:'6px',p:1}} >
+    <Box sx={{bgcolor:'Window',display:'flex',alignItems:'center',justifyContent:'space-between',width:'99%',mb:2,borderRadius:'6px',p:1}} >
 
-
+    <Box sx={{display:'flex',alignItems:'center'}} >
 <Button 
 onClick={()=>setActive(0)} 
 sx={ active ===0 ?
@@ -210,8 +235,11 @@ sx={ active ===1 ?
   {color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}
 }  
 variant="text">
-  transed by sales
+  En Attente
 </Button>
+
+
+
 
 
 <Button 
@@ -221,35 +249,30 @@ sx={ active ===2 ?
   {color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}
 }  
 variant="text">
-  transed by date
-</Button>
-
-
-
-<Button 
-onClick={()=>setActive(3)} 
-sx={ active ===3 ?
-  {color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}:
-  {color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}
-}  
-variant="text">
-  En Attente
-</Button>
-
-
-
-
-
-<Button 
-onClick={()=>setActive(4)} 
-sx={ active ===4 ?
-  {color:'#ff3d00',mr:2,":hover":{bgcolor:'#eeeeee'}}:
-  {color:'black',mr:2,":hover":{bgcolor:'#eeeeee'}}
-}  
-variant="text">
 Terminées
 </Button>
 
+</Box>
+
+
+
+<Box sx={{display:'flex',alignItems:'center'}} >
+<FormControlLabel 
+              control={<Checkbox  
+              onChange={handleChange}
+              checked={checked}
+              disabled={checked1 ? true : false}
+              />} 
+             label="transed by sales" />
+
+<FormControlLabel 
+              control={<Checkbox  
+              onChange={handleChange1}
+              checked={checked1}
+              disabled={checked ? true : false}
+              />} 
+             label="transed by date" />
+</Box>
 
 
 </Box> 
@@ -321,7 +344,7 @@ Terminées
           <Typography sx={{fontWeight:'200',textAlign:'left',ml:1}} variant='subtitle2' gutterBottom>
           no Transactions
           </Typography>
-          : rows.filter(filtredTransactions).map((row:any) => (
+          : rows.filter(filtredTransactions).sort(sorTransactions).map((row:any) => (
             <TableRow
               key={row.TransactionId}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

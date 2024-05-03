@@ -5,13 +5,10 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import CloseIcon from '@mui/icons-material/Close';
-
 import { CompteListe } from '../components/CompteListe';
 import { ProductAimiez } from '../components/ProductAimiez';
 import {  IconButton, InputLabel } from '@mui/material';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { CollumnTableReview } from './components/CollumnTableReview';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
@@ -30,9 +27,7 @@ export const FeedBack = () => {
     const [commandes,setCommandes]=useState <any> ([])
     const [isError,setIsError]=useState(Boolean)
   
-    const dispatch=useDispatch()
-    const navigate=useNavigate()
-  
+   
     const token = Cookies.get('token');
 
     const [opens, setOpens] = useState(false);
