@@ -89,14 +89,14 @@ export default function AllRoutes() {
           <Route path='/loginvendeurboutique' element={ <ProtectedRoutes><VendeurBoutique/></ProtectedRoutes> } />
           <Route path='/decisionvendeurboutique' element={ <ProtectedRoutes><ReviewDecision/></ProtectedRoutes> } />
 
-          <Route path='/controlpanelseller/dashboard' element={<ControlPanelSeller/>} />
-          <Route path='/controlpanelseller/products' element={<Product/>} />
-          <Route path='/controlpanelseller/updateproduct/:prodId' element={<UpdateProduct/>} />
-          <Route path='/controlpanelseller/orders' element={<Orders/>} />
-          <Route path='/controlpanelseller/customers' element={<Customers/>} />
-          <Route path='/controlpanelseller/reviews' element={<ReviewsSeller/>} />
-          <Route path='/controlpanelseller/transactions' element={<Transactions/>} />
-          <Route path='/controlpanelseller/storeSettings' element={<StoreSettings/>} />
+          <Route path='/controlpanelseller/dashboard' element={<ProtectedRoutes><ControlPanelSeller/></ProtectedRoutes>} />
+          <Route path='/controlpanelseller/products' element={<ProtectedRoutes><Product/></ProtectedRoutes>} />
+          <Route path='/controlpanelseller/updateproduct/:prodId' element={<ProtectedRoutes><UpdateProduct/></ProtectedRoutes>} />
+          <Route path='/controlpanelseller/orders' element={<ProtectedRoutes><Orders/></ProtectedRoutes>} />
+          <Route path='/controlpanelseller/customers' element={<ProtectedRoutes><Customers/></ProtectedRoutes>} />
+          <Route path='/controlpanelseller/reviews' element={<ProtectedRoutes><ReviewsSeller/></ProtectedRoutes>} />
+          <Route path='/controlpanelseller/transactions' element={<ProtectedRoutes><Transactions/></ProtectedRoutes>} />
+          <Route path='/controlpanelseller/storeSettings' element={<ProtectedRoutes><StoreSettings/></ProtectedRoutes>} />
             
 
           <Route path='/register' element={<Register/>} />

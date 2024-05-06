@@ -1,16 +1,14 @@
 import { Box,IconButton,Typography } from '@mui/material'
 import  { useEffect, useState } from 'react'
-import Button from '@mui/material/Button';
 import { Header } from '../Header';
 import { Lists } from '../Lists';
-import { EmptyProductStore } from './components/EmptyProductStore';
 import { EmptyCard } from './components/EmptyCard';
-import Link from '@mui/material/Link';
 import CreateIcon from '@mui/icons-material/Create';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { ModalUpdateImages } from './components/ModalUpdateImages';
 import Cookies from 'js-cookie';
+import { CardProduct } from './components/CardProduct';
 
 
 export const StoreSettings = () => {
@@ -21,7 +19,10 @@ export const StoreSettings = () => {
     const [newProdUsed,setNewProdUsed]=useState<any>([])
     const [state,setState]=useState("")
     const [store,setStore]=useState <any> ({})
+    const [update,setUpdate]=useState(false)
 
+
+    const productSellerLune = [{id:1},{id:2},{id:3}]
 
     const [openModal, setOpenModal] = useState(false);
     const handleOpenCreate = () =>{
@@ -95,13 +96,38 @@ export const StoreSettings = () => {
     
         handelGetStoreSeller()
     
+
+
+        const handelGetProducLune=async()=>{
+            try {
+              setLoading(true)
+            const response = await fetch(`http://localhost:8000/storeSellerAlaLune`,{
+              method: 'GET',
+              credentials:"include", 
+              headers: {
+                'Content-Type': 'application/json',
+                 authorization:`${token}`
+              }
+            });
+            const data = await response.json()
+           if (data.success == true) {
+              setNewProdUsed(data.productSellerLune)
+              setLoading(false) 
+            } 
+        
+          } catch (error) {
+            console.error('operation failed.');
+          }
+           
+          }
+      
+          handelGetProducLune()
+      
      
         
       },[])
 
 
-
-    
 
         const handelDeleteStoreSellerImages=async()=>{
           try {
@@ -191,7 +217,7 @@ if (loading == true) return <div>...Loading</div>
         onClose={handleClose}
         MenuListProps={{
           'aria-labelledby': 'basic-button',
-        }}
+        }} 
       >
         { store.firstImageStore == null ? "" : <MenuItem onClick={handleOpenUpdate}>Update Images</MenuItem>}
         { store.firstImageStore == null ? <MenuItem onClick={handleOpenCreate}>Create Images</MenuItem> : ""}
@@ -200,19 +226,10 @@ if (loading == true) return <div>...Loading</div>
       <ModalUpdateImages openModal={openModal} setOpenModal={setOpenModal} setAnchorEl={setAnchorEl} setAnchorEl1={setAnchorEl1} state={state} setStore={setStore} />
          </Box>
          <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'center',width:'70%',position:'absolute',top:'20%',right:'15%'}} >
-            { newProdUsed.length === 0 ? <EmptyCard/>  :  newProdUsed.map( (product:any)=> <Box key={product.id} sx={{width:'30%',height:'200px',display:'flex',bgcolor:'Window',justifyContent:'space-around',alignItems:'center',borderWidth:'2px',borderRadius:'6px',borderStyle:'solid',borderColor:'#ffd600'}} >
-               <img src={ newProdUsed.length === 0 ? "" : product.images[0].imageUrl} style={{width:'40%',height:'90%',borderRadius:'8px'}} />
-               <Box sx={{display:'flex',flexDirection:'column',justifyContent:'center',height:'90%',width:'50%'}} >
-               <Link variant='caption' sx={{color:'#9e9e9e',textAlign:'left',mb:2,textDecorationLine:'none',":hover":{color:'#9e9e9e',textDecorationLine:'underline'}}} href={`/${product.id}`}>
-               {product.title}
-               </Link>
-               
-               <Typography sx={{fontWeight:'800',textAlign:'left'}} variant='h6' gutterBottom>
-               DA{product.price - (product.price*product.solde/100) }
-       </Typography>
-  
-               </Box>
-            </Box>)}
+            { newProdUsed.length === 1 ? <CardProduct setNewProdUsed={setNewProdUsed} product={newProdUsed[0]}/>  : <EmptyCard setNewProdUsed={setNewProdUsed} />}
+            { newProdUsed.length === 2 ? <CardProduct setNewProdUsed={setNewProdUsed} product={newProdUsed[1]}/> : <EmptyCard setNewProdUsed={setNewProdUsed} />}
+            { newProdUsed.length === 3 ? <CardProduct setNewProdUsed={setNewProdUsed} product={newProdUsed[2]}/> : <EmptyCard setNewProdUsed={setNewProdUsed} />}
+           
          </Box>
 
      

@@ -1,15 +1,13 @@
 import {useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
-import { styled } from '@mui/material/styles'; 
 import {  Divider } from '@mui/material';
-import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import Cookies from 'js-cookie';
-import { CloseOutlined } from '@mui/icons-material';
+import { CardLuneProduct } from './CardLuneProduct';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 
 const style = {
@@ -27,60 +25,52 @@ const style = {
     alignItems:'center'
   };
 
-export const ModalSecondImages = ({openModal1,setOpenModal1,setAnchorEl1,state}:any) => {
+export const ModalSecondImages = ({openModal1,setOpenModal1,setNewProdUsed}:any) => {
 
-    const VisuallyHiddenInput = styled('input')({
-        clip: 'rect(0 0 0 0)',
-        clipPath: 'inset(50%)',
-        height: 1,
-        overflow: 'hidden',
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        whiteSpace: 'nowrap',
-        width: 1,
-      });
-    
-      const [uploadProgress, setUploadProgress] = useState(0);
-      const [hiden,setHiden]=useState(false)
-      const [imageDescription, setImageDescription] = useState<string | null | any >(null);
-      const [productDescriptionImage,setProductDescriptionImage]=useState<File | null>()
 
-      const handleChangeImageDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setProductDescriptionImage(e.target.files?.[0] || null )
-    
-        
-    
-       const file =e.target.files?.[0] 
-    
-        if (file) {
-          const reader = new FileReader();
-    
-          reader.onload = (e) => {
-            if (e.target && e.target.result) {
-              const progress = Math.round((e.loaded / e.total ) * 100);
-
-              setUploadProgress(progress)
-              setImageDescription(e.target.result as string);
-              setHiden(true)
-             
-            }
-          };
-    
-        
-          reader.readAsDataURL( file);
-        }
-    
-      };
-
-    const handleClose = () => {
-        setOpenModal1(false)
-        setAnchorEl1(null)
-    
-    };
 
     const token = Cookies.get('token');
+    const [products,setProducts]=useState<any>([])
     const [loading,setLoading]=useState(false)
+    
+     
+    const handleClose = () => {
+        setOpenModal1(false)
+    };
+
+
+    useEffect(()=>{
+
+        const handelGetProductNonLune=async()=>{
+          try {
+            setLoading(true)
+          const response = await fetch(`http://localhost:8000/productNonLune`,{
+            method: 'GET',
+            credentials:"include", 
+            headers: {
+              'Content-Type': 'application/json',
+               authorization:`${token}`
+            }
+          });
+          const data = await response.json()
+         if (data.success == true) {
+            setProducts(data.productNonLune)
+            setLoading(false) 
+          } 
+      
+        } catch (error) {
+          console.error('operation failed.');
+        }
+         
+        }
+        handelGetProductNonLune()
+
+},[openModal1])
+
+
+if (loading == true) return <div>...loading</div>
+    
+
   return (
     <div> 
     <Modal
@@ -92,37 +82,22 @@ export const ModalSecondImages = ({openModal1,setOpenModal1,setAnchorEl1,state}:
     <Box sx={style}>
 
    <Typography variant='body2' sx={{mt:1,fontWeight:'700',fontFamily:'serif'}} >  
-          Upload your image now 
+          Add Your Product A La Lune  
         </Typography>
 
         <Divider sx={{width:'100%',my:1}} />
-     <Box sx={{height:'90%',width:'100%',display:'flex',alignItems:'center',justifyContent:'center'}} >
+     <Box sx={{height:'100%',width:'100%',display:'flex',flexDirection:'column',alignItems:'center'}} >
       
-        { hiden == false ?
-        <Box sx={{height:'100%',width:'100%',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}} >
-             <InsertPhotoIcon sx={{fontSize:'40px'}} />
-       <Typography variant='body2' sx={{my:1,color:'#9e9e9e'}} >  
-       Faites glisser les photos et les vidéos ici
-        </Typography>
-        <Button variant="outlined"  component='label' sx={{width:'220px',color:'white',bgcolor:'#1976d2',borderRadius:'6px',my:1,":hover":{color:'white',bgcolor:'#1976d2'}}} >
-        Upload file
-        <VisuallyHiddenInput id='description'  onChange={handleChangeImageDescription} type="file" />
-        </Button>
+        { products.filter((prod:any)=> prod.state !== "lune" ).length === 0 ? 
+        <Box sx={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',width:'100%',height:'100%'}} >
+            <DeleteOutlinedIcon sx={{fontSize:'150px',color:'#e0e0e0',mb:1}} />
+          <Typography variant='body2' sx={{mt:1,fontWeight:'700',fontFamily:'serif'}} >  
+         Nothings have any products 
+       </Typography>
         </Box>
-         : "" }
-
-        {uploadProgress !== 0 ? <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'100%',height:'100%',my:1,position:'relative'}} >
-        <img src={imageDescription} style={{height:'90%',width:'100%'}} />
-
-         {uploadProgress == 100 ? 
-         <Button variant='contained' color='primary'  sx={{color:'white',mt:2,textTransform:'lowercase',borderRadius:'12px' ,":hover":{color:'white'} }} >
-         Update Image
-       </Button>
-         : "" }
-         <IconButton onClick={()=>(setHiden(false),setUploadProgress(0))} sx={{":hover":{bgcolor:'#bbbbbb'},bgcolor:'#bbbbbb',position:'absolute',top:'2%',right:'3%'}} >
-          <CloseOutlined sx={{fontSize:'14px'}} />
-         </IconButton>
-         </Box> : "" }
+        : (products.filter((prod:any)=> prod.state !== "lune" ).map((prod:any)=> <CardLuneProduct key={prod.id} prod={prod} setNewProdUsed={setNewProdUsed}  setOpenModal1={setOpenModal1} setProducts={setProducts} /> )) }
+      
+       
 
      </Box>
         
