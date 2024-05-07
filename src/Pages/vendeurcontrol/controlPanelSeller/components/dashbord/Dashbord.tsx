@@ -7,7 +7,7 @@ import Inventory2Icon from '@mui/icons-material/Inventory2';
 
 import { PieChart } from '@mui/x-charts/PieChart';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { Chart } from './Chart';
+import { Chart } from './components/Chart';
 
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';

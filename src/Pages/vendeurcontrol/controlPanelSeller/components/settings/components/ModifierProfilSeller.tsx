@@ -2,17 +2,16 @@ import {useEffect, useState} from 'react'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { ModalProfilUpdate } from './ModalProfilUpdate';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
-import { setUserInfo } from '../../../../storeRedux/CartSlice';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
+import { ProfilUpdateSeller } from './ProfilUpdateSeller';
+import { setUserInfo } from '../../../../../../storeRedux/CartSlice';
 
-
-export const ModifierProfil = () => {
+export const ModifierProfilSeller = () => {
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -69,42 +68,41 @@ useEffect(()=>{
    
     const userInfo=useSelector((state:any)=>state.app.userInfo)
 
-    
 
   return (
-    <div style={{display:'flex',justifyContent:'center',backgroundColor:'#eeeeee'}} >
-        <Snackbar open={opens} autoHideDuration={3000} onClose={handleClose}>
-        <Alert
-          onClose={handleClose}
-          severity="error"
-          variant="filled"
-          sx={{ width: '100%' }}
-        >
-          {message}
-        </Alert>
-      </Snackbar>
+    <div style={{display:'flex',justifyContent:'center',backgroundColor:'#eeeeee',width:'100%'}} >
+    <Snackbar open={opens} autoHideDuration={3000} onClose={handleClose}>
+    <Alert
+      onClose={handleClose}
+      severity="error"
+      variant="filled"
+      sx={{ width: '100%' }}
+    >
+      {message}
+    </Alert>
+  </Snackbar>
 
 
 
-        <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'70%',p:2}} >
-            <Box sx={{display:'flex',alignItems:'center',width:'100%',borderBottom:'2px solid #e0e0e0',p:1}} >
-            <Typography  sx={{textAlign:'left',fontWeight:'700'}}  variant='h6' gutterBottom>
-            Rédiger le profil de membre
-        </Typography>
-            </Box>
-            <Box sx={{width:'100%'}} >
-             { loading == true ? 
-             <Stack spacing={1}  >
-            
-             <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+    <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',width:'70%',p:2}} >
+        <Box sx={{display:'flex',alignItems:'center',width:'100%',borderBottom:'2px solid #e0e0e0',p:1}} >
+        <Typography  sx={{textAlign:'left',fontWeight:'700'}}  variant='h6' gutterBottom>
+        Rédiger le profil de membre
+    </Typography>
+        </Box>
+        <Box sx={{width:'100%'}} >
+         { loading == true ? 
+         <Stack spacing={1}  >
+        
+         <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+   
        
-           
-             <Skeleton variant="rectangular" width="80%" height={60} />
-             <Skeleton variant="rounded" width="80%" height={60} />
-           </Stack> :
+         <Skeleton variant="rectangular" width="80%" height={60} />
+         <Skeleton variant="rounded" width="80%" height={60} />
+       </Stack> :
 
 <Box sx={{display:'flex',border:'1px solid #2196f3',flexDirection:'column',alignItems:'center',borderRadius:'8px',p:1,my:2,width:'80%'}} >
-               
+           
 <Typography  sx={{}}  variant='subtitle2' gutterBottom>
 <b>Nom:</b>	{ !userInfo ? "" : userInfo.name}
 </Typography>
@@ -131,18 +129,18 @@ useEffect(()=>{
 </Typography>
 <Box sx={{width:'100%',bgcolor:'Window',height:'60px',display:'flex',alignItems:'center',justifyContent:'center'}} >
 <Button onClick={()=>handleOpen()} variant='contained' sx={{color:'black',background:'linear-gradient(to right, #ffd54f 0%, #ffb300 40% , #ff6f00 70%)',textTransform:'lowercase', borderRadius: '8px' ,":hover":{color:'black',background:'linear-gradient(to right, #ffd54f 0%, #ffb300 40% , #ff6f00 70%)'} }} >
-           Modifier
-          </Button> 
+       Modifier
+      </Button> 
 
 </Box>
- <ModalProfilUpdate open={open} setOpen={setOpen} />
+<ProfilUpdateSeller open={open} setOpen={setOpen} />
 </Box>
-                     
-             }
-            </Box>
-         
-
+                 
+         }
         </Box>
-    </div>
+     
+
+    </Box>
+</div>
   )
 }

@@ -126,7 +126,7 @@ export const Header = ({loading,setLoading}:any) => {
              
         const positifReviews= Math.floor(reviews.filter((rev:any)=> parseInt(rev.rating) >= 4 ).length*100*10/reviews.length)/10
 
-
+        if (loading == true) return <div>...loading</div>
         
       
   return (
@@ -143,12 +143,12 @@ export const Header = ({loading,setLoading}:any) => {
               <Box component='div' onClick={()=>navigate(`/store/${product.userId}`)} sx={{display:'flex',alignItems:'center'}} >
               <Avatar
            alt="Remy Sharp"
-               src={ !product ? "" : (product.user.imageProfle == null ? "" : product.user.imageProfle) }
+               src={ !product.user ? "" : product.user.imageProfle }
                sx={{ width: 50, height: 50 }}
               />
               <Box sx={{display:'flex',flexDirection:'column',alignItems:'flex-start',justifyContent:'center',mx:1}} >
               <Typography sx={{fontWeight:'800',color:'white'}} variant="subtitle2" gutterBottom>
-              { !product ? "" : product.user.name}
+              { !product.user ? "" : product.user.name}
       </Typography>
       <Box>
       { positifReviews <= 33 ? <Typography sx={{color:'#2196f3',bgcolor:'#bdbdbd',textAlign:'left'}} variant="caption" gutterBottom>
@@ -169,7 +169,7 @@ export const Header = ({loading,setLoading}:any) => {
               {positifReviews}% Avis positifs 
       </Typography> |
       <Typography sx={{fontWeight:'800',color:'white',mx:2}} variant="subtitle2" gutterBottom>
-      {product.user.followers.length} Abonnés
+      { !product.user ? "" : product.user.followers.length} Abonnés
       </Typography>
 
       { checked == true ? 

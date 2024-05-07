@@ -4,7 +4,7 @@ import { Header } from './components/Header';
 import { PersonelCard } from './components/PersonelCard';
 import { useEffect,useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useDispatch  } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setProduct } from '../../storeRedux/CartSlice';
 export const Worker = () => {
 
@@ -38,6 +38,11 @@ export const Worker = () => {
        getOneProduct()
    },[])
 
+
+
+   
+
+   
 
 if (loading == true) return <div>...loading</div>
 

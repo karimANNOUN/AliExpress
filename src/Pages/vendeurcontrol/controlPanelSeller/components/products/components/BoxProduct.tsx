@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Link from '@mui/material/Link';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import { setProductSeller } from '../../../../storeRedux/CartSlice';
+import { setProductSeller } from '../../../../../../storeRedux/CartSlice';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
@@ -124,7 +124,7 @@ const [outStock,setOutStock]=useState(Boolean)
 
 
   return (
-    <Box  sx={{display:'flex',border:'2px solid #e0e0e0',mb:2,borderRadius:'8px',height:'120px',width:'100%'}} >
+    <Box  sx={{display:'flex',border:'2px solid #e0e0e0',mb:2,borderRadius:'8px',height:'120px',width:'99%'}} >
 
 <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleCloseAlert} severity={ alert == false ? "error" : "success" } sx={{ width: '100%' }}>

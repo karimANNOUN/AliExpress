@@ -4,50 +4,51 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import { setUserInfo } from '../../../../storeRedux/CartSlice';
 import { LoadingButton } from '@mui/lab';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import { useNavigate } from 'react-router-dom';
+import { setUserInfo } from '../../../../../../storeRedux/CartSlice';
 
-export const PasswordUpdate = () => {
+export const EmailUpdateSeller = () => {
 
-   
 
-      const [opens, setOpens] = useState(false);
+    const [opens, setOpens] = useState(false);
   
-  const handleCloses = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpens(false);
-  };
-    
-  const token = Cookies.get('token');
-
-      const [loading,setLoading]=useState(false)
-      const [message,setMessage]=useState('')
-      const [newPassword,setNewPassword]=useState('')
-      const [show,setShow]=useState(false)
-
-      const userInfo=useSelector((state:any)=>state.app.userInfo)
-
-      const dispatch=useDispatch()
-        const navigate=useNavigate()
-    
+    const handleCloses = (event?: React.SyntheticEvent | Event, reason?: string) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpens(false);
+    };
+      
+    const token = Cookies.get('token');
+  
+    const [loading,setLoading]=useState(false)
+    const [message,setMessage]=useState('')
+    const [newEmail,setNewEmail]=useState('')
+    const [show,setShow]=useState(false)
+    const [data,setData]=useState<any>({})
+  
+    const userInfo=useSelector((state:any)=>state.app.userInfo)
+  
+    const dispatch=useDispatch()
+  
         const [selectedCode, setSelectedCode] = useState(null);
-   
-
+     
+  
         const [seconds, setSeconds] = useState(60);
-
-        const handelUpdatePassword=async()=>{
-
+  
+  
+        const handelUpdateEmail=async()=>{
+  
           const email=userInfo.email
   
           try{
-          const response = await fetch(`http://localhost:8000/updatepassword`,{
+            setLoading(true)
+          const response = await fetch(`http://localhost:8000/updateemail`,{
             method:'PATCH',
             credentials:"include", 
             headers: {
@@ -59,21 +60,19 @@ export const PasswordUpdate = () => {
           });
           const data = await response.json()
       
-          if (!data) {
-            setLoading(true)
-          }if (data.success == true) {
+        if (data.success == true) {
             setLoading(false) 
   
             const intervalId = setInterval(() => {
               setSeconds((prevSeconds) => prevSeconds - 1);
             }, 1000);
           
-            // Stop the timer after 60 seconds
+         
             const stopTimerTimeout = setTimeout(() => {
               clearInterval(intervalId);
             }, 60000);
           
-            // Clean up the interval and timeout when the component unmounts
+           
             return () => {
               clearInterval(intervalId);
               clearTimeout(stopTimerTimeout);
@@ -87,14 +86,14 @@ export const PasswordUpdate = () => {
         }
          
         }
-
-
-        const handelConfirmPasswordCode=async()=>{
-
+    
+        const handelConfirmEmailCode=async()=>{
+  
           const email=userInfo.email
   
           try{
-          const response = await fetch(`http://localhost:8000/updateconfirmpassword`,{
+            setLoading(true)
+          const response = await fetch(`http://localhost:8000/updateconfirmemail`,{
             method:'PATCH',
             credentials:"include", 
             headers: {
@@ -106,9 +105,8 @@ export const PasswordUpdate = () => {
             
           });
           const data = await response.json()
-          if (!data) {
-            setLoading(true)
-          }if (data.success == true) {
+          
+         if (data.success == true) {
             setLoading(false) 
             setShow(true)
             setSeconds(60)
@@ -121,30 +119,32 @@ export const PasswordUpdate = () => {
         }
         }
   
-        const handelConfirmNewPassword=async()=>{
-
-          
+  
+        
+        const handelConfirmNewEmail=async()=>{
+  
+          const email=userInfo.email
   
           try{
-          const response = await fetch(`http://localhost:8000/updateconfirmenewpassword`,{
+            setLoading(true)
+          const response = await fetch(`http://localhost:8000/updateconfirmenewmail`,{
             method:'PATCH',
             credentials:"include", 
             headers: {
               'Content-Type': 'application/json',
                authorization:`${token}`
             },
-            body: JSON.stringify({ newPassword }),
+            body: JSON.stringify({ newEmail }),
            
             
           });
           const data = await response.json()
-          console.log(data)
-          if (!data) {
-            setLoading(true)
-          }if (data.success == true) {
-            setLoading(false) 
+          if (data.success == true) {
             dispatch(setUserInfo(data.userInfo))
-            navigate('/settings')
+            setLoading(false) 
+            setMessage(data.message)
+            setData(data)
+            setOpens(true)
           }if (data.success == false) {
             setMessage(data.message)
             setOpens(true)
@@ -153,12 +153,13 @@ export const PasswordUpdate = () => {
           console.error('operation failed.');
         }
         }
-
-
+  
+  
         if (seconds === 0 ) {
           const handelRemoveCode=async()=>{
             try{
-              const response = await fetch(`http://localhost:8000/resendcodepassword`,{
+                setLoading(true) 
+              const response = await fetch(`http://localhost:8000/resendcode`,{
                 method:'PATCH',
                 credentials:"include", 
                 headers: {
@@ -168,9 +169,7 @@ export const PasswordUpdate = () => {
               });
               const data = await response.json()
           
-              if (!data) {
-                setLoading(true)
-              }if (data.success == true) {
+             if (data.success == true) {
                 setLoading(false) 
                 setSeconds(60)
               }if (data.success == false) {
@@ -183,9 +182,10 @@ export const PasswordUpdate = () => {
           }
           handelRemoveCode()
         }
+      
   
         function maskEmail(email:any) {
-     
+       
           const [localPart, domain] = email.split('@');
         
     
@@ -198,15 +198,15 @@ export const PasswordUpdate = () => {
         }
   
         const email = maskEmail(userInfo.email);
-
+  
 
 
   return (
-    <div style={{display:'flex',justifyContent:'center'}} >
+    <div style={{display:'flex',justifyContent:'center',width:'100%'}} >
          <Snackbar open={opens} autoHideDuration={3000} onClose={handleCloses}>
         <Alert
           onClose={handleCloses}
-          severity="error"
+          severity={data?.success == true ? "success" : "error" }
           variant="filled"
           sx={{ width: '100%' }}
         >
@@ -231,6 +231,7 @@ export const PasswordUpdate = () => {
 <TextField
   id="livraison time"
   sx={{ width: '100%' ,bgcolor:'white'}}
+  placeholder="confirmation code"
   size='medium'
   label='Email confirmation code'
   type='number'
@@ -238,7 +239,7 @@ export const PasswordUpdate = () => {
   onChange={(e:any)=>setSelectedCode(e.target.value)}
     />
      
-     {  seconds === 60 ? <Button onClick={handelUpdatePassword} variant='text' sx={{color:'#2196f3',my:2,textTransform:'lowercase' ,":hover":{color:'#2196f3'} }} >
+     {  seconds === 60 ? <Button onClick={handelUpdateEmail} variant='text' sx={{color:'#2196f3',my:2,textTransform:'lowercase' ,":hover":{color:'#2196f3'} }} >
         Renvoyer un Code
     </Button>
   :
@@ -256,7 +257,7 @@ export const PasswordUpdate = () => {
 
       <LoadingButton
           color="secondary"
-          onClick={handelConfirmPasswordCode}
+          onClick={handelConfirmEmailCode}
           loading={loading}
           loadingPosition="start"
           sx={{color:'white',width:'100%',bgcolor:'#d32f2f',borderRadius:'12px',my:2 ,":hover":{color:'white',bgcolor:'#d32f2f'} }}
@@ -270,10 +271,10 @@ export const PasswordUpdate = () => {
         <Box sx={{width:'20%',display:'flex',flexDirection:'column',alignItems:'center',p:2,my:3}} >
             <Box sx={{display:'flex',flexDirection:'column',width:'100%'}} >
             <Typography  sx={{textAlign:'left',fontWeight:'700'}}  variant='h6' gutterBottom>
-            Update New Password 
+            Update New Email 
         </Typography>
         <Typography  sx={{textAlign:'left',fontWeight:'200'}}  variant='body1' gutterBottom>
-        Entrez your new password to update it 
+        Entrez your new email to update it 
         </Typography>
             </Box>
       
@@ -287,18 +288,19 @@ export const PasswordUpdate = () => {
   sx={{ width: '100%' ,bgcolor:'white'}}
   
   size='medium'
-  label='New Password'
-  type='password'
+  label='New Email'
+  type='email'
   required
-  onChange={(e:any)=>setNewPassword(e.target.value)}
+  onChange={(e:any)=>setNewEmail(e.target.value)}
     />
      
       </Box>
 
       <LoadingButton
           color="secondary"
-          onClick={handelConfirmNewPassword}
+          onClick={handelConfirmNewEmail}
           loading={loading}
+          disabled={ newEmail == "" ? true : false }
           loadingPosition="start"
           sx={{color:'white',width:'100%',bgcolor:'#d32f2f',borderRadius:'12px',my:2 ,":hover":{color:'white',bgcolor:'#d32f2f'} }}
           variant="contained"

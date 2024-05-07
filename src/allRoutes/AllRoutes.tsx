@@ -37,13 +37,17 @@ import { ProtectedSeller1 } from './ProtectedSeller1'
 import { ProtectedSeller2 } from './ProtectedSeller2'
 import { LisenceCommercial } from '../Pages/storeShop/LisenceCommercial'
 import { ControlPanelSeller } from '../Pages/vendeurcontrol/controlPanelSeller/ControlPanelSeller'
-import { Product } from '../Pages/vendeurcontrol/controlPanelSeller/components/Product'
+import { Product } from '../Pages/vendeurcontrol/controlPanelSeller/components/products/Product'
 import { UpdateProduct } from '../Pages/vendeurcontrol/updateproduct/UpdateProduct'
 import { Orders } from '../Pages/vendeurcontrol/controlPanelSeller/components/orders/Orders'
 import { Customers } from '../Pages/vendeurcontrol/controlPanelSeller/components/customers/Customers'
 import { ReviewsSeller } from '../Pages/vendeurcontrol/controlPanelSeller/components/reviews/ReviewsSeller'
 import { Transactions } from '../Pages/vendeurcontrol/controlPanelSeller/components/transaction/Transactions'
 import { StoreSettings } from '../Pages/vendeurcontrol/controlPanelSeller/components/storeSeller/StoreSettings'
+import { Dashbord } from '../Pages/vendeurcontrol/controlPanelSeller/components/dashbord/Dashbord'
+import { OffresHot } from '../Pages/vendeurcontrol/controlPanelSeller/components/hotOffres/OffresHot'
+import { Settings } from '../Pages/vendeurcontrol/controlPanelSeller/components/settings/Settings'
+import { UploadImageSeller } from '../Pages/vendeurcontrol/controlPanelSeller/components/settings/components/UploadImageSeller'
 
 
 export default function AllRoutes() {
@@ -88,15 +92,23 @@ export default function AllRoutes() {
           <Route path='/loginvendeur' element={<LoginVendeur/>} />
           <Route path='/loginvendeurboutique' element={ <ProtectedRoutes><VendeurBoutique/></ProtectedRoutes> } />
           <Route path='/decisionvendeurboutique' element={ <ProtectedRoutes><ReviewDecision/></ProtectedRoutes> } />
+           
 
-          <Route path='/controlpanelseller/dashboard' element={<ProtectedRoutes><ControlPanelSeller/></ProtectedRoutes>} />
-          <Route path='/controlpanelseller/products' element={<ProtectedRoutes><Product/></ProtectedRoutes>} />
-          <Route path='/controlpanelseller/updateproduct/:prodId' element={<ProtectedRoutes><UpdateProduct/></ProtectedRoutes>} />
-          <Route path='/controlpanelseller/orders' element={<ProtectedRoutes><Orders/></ProtectedRoutes>} />
-          <Route path='/controlpanelseller/customers' element={<ProtectedRoutes><Customers/></ProtectedRoutes>} />
-          <Route path='/controlpanelseller/reviews' element={<ProtectedRoutes><ReviewsSeller/></ProtectedRoutes>} />
-          <Route path='/controlpanelseller/transactions' element={<ProtectedRoutes><Transactions/></ProtectedRoutes>} />
-          <Route path='/controlpanelseller/storeSettings' element={<ProtectedRoutes><StoreSettings/></ProtectedRoutes>} />
+
+           <Route path='/controlpanelseller' element={<ProtectedRoutes><ControlPanelSeller/></ProtectedRoutes>} >
+
+           <Route path='dashboard' element={<ProtectedRoutes><Dashbord/></ProtectedRoutes>} />
+          <Route path='products' element={<ProtectedRoutes><Product/></ProtectedRoutes>} />
+          <Route path='updateproduct/:prodId' element={<ProtectedRoutes><UpdateProduct/></ProtectedRoutes>} />
+          <Route path='orders' element={<ProtectedRoutes><Orders/></ProtectedRoutes>} />
+          <Route path='customers' element={<ProtectedRoutes><Customers/></ProtectedRoutes>} />
+          <Route path='reviews' element={<ProtectedRoutes><ReviewsSeller/></ProtectedRoutes>} />
+          <Route path='transactions' element={<ProtectedRoutes><Transactions/></ProtectedRoutes>} />
+          <Route path='storeSettings' element={<ProtectedRoutes><StoreSettings/></ProtectedRoutes>} />
+          <Route path='hotoffres' element={<ProtectedRoutes><OffresHot/></ProtectedRoutes>} />
+          <Route path='settings' element={<ProtectedRoutes><Settings/></ProtectedRoutes>} />
+             
+           </Route>
             
 
           <Route path='/register' element={<Register/>} />

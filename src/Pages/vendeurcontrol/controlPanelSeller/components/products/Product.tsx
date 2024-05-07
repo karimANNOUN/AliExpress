@@ -1,13 +1,13 @@
 import { Box,Typography } from '@mui/material'
 import  { useEffect, useState } from 'react'
 
-import { Header } from './Header';
-import { Lists } from './Lists';
+import { Header } from '../Header';
+import { Lists } from '../Lists';
 import Button from '@mui/material/Button';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import Checkbox from '@mui/material/Checkbox';
-import { BoxProduct } from './BoxProduct';
+import { BoxProduct } from './components/BoxProduct';
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
 import Cookies from 'js-cookie';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -162,12 +162,7 @@ export const Product = () => {
     if(loading==true) return <div>...loading</div>
 
   return (
-    <Box sx={{bgcolor:'#e0e0e0'}} >
-    <Header/>
-    <Box sx={{display:'flex',width:'100%',height:'100vh'}} >
-      <Box sx={{width:'15%',bgcolor:'Window',height:'100%'}} >
-        <Lists/>
-      </Box>
+   
       <Box sx={{width:'85%',height:'100%',display:'flex',flexDirection:'column',px:2}} >
     <Typography sx={{fontWeight:'800',textAlign:'left',my:2}} variant="h6" gutterBottom>
     Products
@@ -242,7 +237,7 @@ export const Product = () => {
              label="Livraison gratuite" />
     </Box> 
 
-    <Box sx={{bgcolor:'Window',display:'flex',flexDirection:'column',alignItems:'center',width:'100%',overflow:'auto',borderRadius:'6px',height:'600px',p:1}} >
+    <Box sx={{bgcolor:'Window',display:'flex',flexDirection:'column',alignItems:'center',width:'100%',overflowY:'auto',borderRadius:'6px',height:'600px',p:1}} >
         { !productsSeller ? [] :  ( productsSeller.length == 0 ? 
           <Typography sx={{fontWeight:'800',color:'#757575',textAlign:'center'}} variant='body2' gutterBottom>
            empty store you don't have any products
@@ -288,9 +283,6 @@ export const Product = () => {
 
 
     </Box>
-    </Box>
-
-     
-    </Box>
+   
   )
 }

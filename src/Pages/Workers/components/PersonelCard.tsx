@@ -12,9 +12,9 @@ import Skeleton from '@mui/material/Skeleton';
 import { useSelector } from 'react-redux';
 
 
-export const PersonelCard = ({loading }:any) => {
+export const PersonelCard = ({loading  }:any) => {
 
-   const product=useSelector((state:any)=>state.app.product)
+  const product=useSelector((state:any)=>state.app.product)
     
     const [activeSize,setActiveSize]=useState(0)
     const [indexs,setIndexs]=useState(product.images.filter((img:any)=> img.color !== 'imageDescription')[0].id)
@@ -31,6 +31,8 @@ export const PersonelCard = ({loading }:any) => {
       return accumulator + ( parseInt(currentProduct.rating));
     }, 0); 
     
+
+   
 
   return (
     <Box sx={{display:'flex',justifyContent:'space-around',mt:3}} >

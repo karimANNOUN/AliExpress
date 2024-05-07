@@ -189,12 +189,7 @@ export const StoreSettings = () => {
 if (loading == true) return <div>...Loading</div>
 
   return (
-    <Box sx={{bgcolor:'#e0e0e0'}} >
-    <Header/>
-    <Box sx={{display:'flex',width:'100%',height:'100vh'}} >
-      <Box sx={{width:'15%',bgcolor:'Window',height:'100%'}} >
-        <Lists/>
-      </Box>
+   
       <Box sx={{width:'85%',height:'100%',display:'flex',flexDirection:'column',px:2, maxHeight:'98vh'}} >
     <Typography sx={{fontWeight:'800',textAlign:'left',my:2}} variant="h6" gutterBottom>
     Store Settings
@@ -226,9 +221,9 @@ if (loading == true) return <div>...Loading</div>
       <ModalUpdateImages openModal={openModal} setOpenModal={setOpenModal} setAnchorEl={setAnchorEl} setAnchorEl1={setAnchorEl1} state={state} setStore={setStore} />
          </Box>
          <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'center',width:'70%',position:'absolute',top:'20%',right:'15%'}} >
-            { newProdUsed.length === 1 ? <CardProduct setNewProdUsed={setNewProdUsed} product={newProdUsed[0]}/>  : <EmptyCard setNewProdUsed={setNewProdUsed} />}
-            { newProdUsed.length === 2 ? <CardProduct setNewProdUsed={setNewProdUsed} product={newProdUsed[1]}/> : <EmptyCard setNewProdUsed={setNewProdUsed} />}
-            { newProdUsed.length === 3 ? <CardProduct setNewProdUsed={setNewProdUsed} product={newProdUsed[2]}/> : <EmptyCard setNewProdUsed={setNewProdUsed} />}
+            { newProdUsed.length >= 1 ? <CardProduct setNewProdUsed={setNewProdUsed} product={newProdUsed[0]}/>  : <EmptyCard setNewProdUsed={setNewProdUsed} />}
+            { newProdUsed.length >= 2 ? <CardProduct setNewProdUsed={setNewProdUsed} product={newProdUsed[1]}/> : <EmptyCard setNewProdUsed={setNewProdUsed} />}
+            { newProdUsed.length >= 3 ? <CardProduct setNewProdUsed={setNewProdUsed} product={newProdUsed[2]}/> : <EmptyCard setNewProdUsed={setNewProdUsed} />}
            
          </Box>
 
@@ -272,8 +267,7 @@ if (loading == true) return <div>...Loading</div>
 
 
         </Box>
-        </Box>
-        </Box>
+       
         
   )
 }

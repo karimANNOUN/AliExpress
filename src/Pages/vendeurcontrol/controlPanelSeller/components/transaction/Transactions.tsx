@@ -200,12 +200,7 @@ const handleChange1 = (e:any) => {
       if(loading == true) return <div>...loading</div>
 
   return (
-    <Box sx={{bgcolor:'#e0e0e0'}} >
-    <Header/>
-    <Box sx={{display:'flex',width:'100%',height:'100vh'}} >
-      <Box sx={{width:'15%',bgcolor:'Window',height:'100%'}} >
-        <Lists/>
-      </Box>
+   
       <Box sx={{width:'85%',height:'100%',display:'flex',flexDirection:'column',px:2}} >
     <Typography sx={{fontWeight:'800',textAlign:'left',my:2}} variant="h6" gutterBottom>
     Transactions
@@ -364,10 +359,6 @@ Terminées
 
         </Box>
         </Box>
-        </Box>
-
-   
-
-        </Box>
+       
   )
 }

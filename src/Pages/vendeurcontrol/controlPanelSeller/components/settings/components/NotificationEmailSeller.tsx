@@ -1,15 +1,11 @@
-
 import Box from '@mui/material/Box';
 import Switch, { SwitchProps } from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
-import { CompteListe } from '../../components/CompteListe';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { styled } from '@mui/material/styles';
 
+export const NotificationEmailSeller = () => {
 
-
-
-export const NotificationEmail = () => {
 
     const IOSSwitch = styled((props: SwitchProps) => (
         <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
@@ -63,10 +59,13 @@ export const NotificationEmail = () => {
       }));
 
   return (
-    <div style={{display:'flex',justifyContent:'center',backgroundColor:'#eeeeee'}} >
-    <Box sx={{width:'70%',display:'flex',justifyContent:'space-between'}} >
-      <CompteListe/>
-       <Box sx={{display:'flex',justifyContent:'center',alignItems:'center',width:'73%'}} >
+    <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',backgroundColor:'#eeeeee',width:'100%'}} >
+
+    <Typography  sx={{textAlign:'left',fontWeight:'300',mb:2}}  variant='h6' gutterBottom>
+                    Notifications
+                     </Typography>
+   
+       <Box sx={{display:'flex',justifyContent:'center',alignItems:'center',width:'73%',mb:2}} >
                    
 
                       <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',width:'53%',bgcolor:'Window',p:2}} >
@@ -207,7 +206,7 @@ export const NotificationEmail = () => {
 
 
        </Box>
-    </Box>
+    
 </div>
   )
 }

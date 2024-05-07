@@ -1,53 +1,16 @@
 import { Box,Typography } from '@mui/material'
-import  { useEffect, useState } from 'react'
+import  { useState } from 'react'
 import Button from '@mui/material/Button';
-import { Header } from '../Header';
-import { Lists } from '../Lists';
+
 import { PieChart } from '@mui/x-charts/PieChart';
-import Cookies from 'js-cookie';
 import { Table } from './components/Table';
 
 
-export const Orders = () => {
+export const Orders = ({order,setOrder}:any) => {
 
 
     const [active,setActive]=useState(0)
-    const [loading,setLoading]=useState(false)
-    const [order,setOrder]=useState<any>([])
-  const token = Cookies.get('token');
-  
-
-  useEffect(()=>{
-
-    const handelGetOrders=async()=>{
-      try {
-        setLoading(true)
-      const response = await fetch(`http://localhost:8000/sellerOrders/getOrders`,{
-        method: 'GET',
-        credentials:"include", 
-        headers: {
-          'Content-Type': 'application/json',
-           authorization:`${token}`
-        }
-      });
-      const data = await response.json()
-     if (data.success == true) {
-        setOrder(data.orderSeller)
-        setLoading(false) 
-      } 
-  
-    } catch (error) {
-      console.error('operation failed.');
-    }
-     
-    }
-
-    handelGetOrders()
-
- 
-    
-  },[])
-
+   
 
 
   const filtredOrders = (ordr:any) =>{
@@ -102,15 +65,9 @@ export const Orders = () => {
                 }
 
 
-  if(loading == true) return <div>...loading</div>
 
   return (
-    <Box sx={{bgcolor:'#e0e0e0'}} >
-    <Header/>
-    <Box sx={{display:'flex',width:'100%',height:'100vh'}} >
-      <Box sx={{width:'15%',bgcolor:'Window',height:'100%'}} >
-        <Lists/>
-      </Box>
+   
       <Box sx={{width:'85%',height:'100%',display:'flex',flexDirection:'column',px:2}} >
     <Typography sx={{fontWeight:'800',textAlign:'left',my:2}} variant="h6" gutterBottom>
     Orders
@@ -284,9 +241,6 @@ export const Orders = () => {
 
 
     </Box>
-    </Box>
-
-     
-    </Box>
+  
   )
 }

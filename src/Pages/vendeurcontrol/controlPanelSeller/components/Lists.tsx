@@ -10,16 +10,16 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import GroupIcon from '@mui/icons-material/Group';
-import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import PaidIcon from '@mui/icons-material/Paid';
 import LanguageIcon from '@mui/icons-material/Language';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
-import BrushIcon from '@mui/icons-material/Brush';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Badge from '@mui/material/Badge';
+import Tooltip from '@mui/material/Tooltip';
 
-export const Lists = () => {
+export const Lists = ({order}:any) => {
 
   const navigate=useNavigate()
 
@@ -28,8 +28,9 @@ export const Lists = () => {
   const location=useLocation()
 
   useEffect(()=>{
-
-    if (location.pathname == '/controlpanelseller/dashboard') {
+    if (location.pathname == '/controlpanelseller') {
+      setCount(0)
+    }if (location.pathname == '/controlpanelseller/dashboard') {
       setCount(0)
     }if (location.pathname == '/controlpanelseller/products') {
       setCount(1)
@@ -43,6 +44,10 @@ export const Lists = () => {
       setCount(5)
     }if(location.pathname == '/controlpanelseller/storeSettings') {
       setCount(6)
+    }if(location.pathname == '/controlpanelseller/hotoffres') {
+      setCount(7)
+    }if(location.pathname == '/controlpanelseller/settings' ) {
+      setCount(8)
     }           
 
   },[location])
@@ -78,12 +83,16 @@ export const Lists = () => {
 
 
         <ListItem sx={count == 2 ? {color:'#1976d2' ,bgcolor:'#90caf9'} : {}} disablePadding>
+        <Tooltip title="order en attente">
           <ListItemButton onClick={()=>navigate('/controlpanelseller/orders')} >
             <ListItemIcon>
+            <Badge badgeContent={order.filter((ordr:any)=> ordr.state == "En Attente").length} color="info">
               <ShoppingCartIcon />
+              </Badge>
             </ListItemIcon>
             <ListItemText primary="Orders" />
           </ListItemButton>
+          </Tooltip>
         </ListItem>
        
 
@@ -124,12 +133,12 @@ export const Lists = () => {
             <ListItemIcon>
               <LanguageIcon />
             </ListItemIcon>
-            <ListItemText primary="Store Settings" />
+            <ListItemText primary="Store" />
           </ListItemButton>
         </ListItem>
 
-        <ListItem disablePadding>
-          <ListItemButton>
+        <ListItem sx={ count == 7 ? {color:'#1976d2' ,bgcolor:'#90caf9'} : {}} disablePadding>
+          <ListItemButton onClick={()=>navigate('/controlpanelseller/hotoffres')} >
             <ListItemIcon>
               <AssignmentTurnedInIcon />
             </ListItemIcon>
@@ -139,17 +148,9 @@ export const Lists = () => {
 
         <Divider />
 
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <BrushIcon />
-            </ListItemIcon>
-            <ListItemText primary="Appearance" />
-          </ListItemButton>
-        </ListItem>
 
-        <ListItem disablePadding>
-          <ListItemButton>
+        <ListItem sx={ count == 8 ? {color:'#1976d2' ,bgcolor:'#90caf9'} : {}} disablePadding>
+          <ListItemButton onClick={()=>navigate('/controlpanelseller/settings')} >
             <ListItemIcon>
               <SettingsIcon />
             </ListItemIcon>
