@@ -72,7 +72,11 @@ const [message,setMessage]=useState('')
           }if (data.success == true && user.user.user.role =="seller") {
             Cookies.set('token', data.token, { expires: 7 });
             dispatch(setUser(user.user.user))
-            navigate("/") 
+            navigate("/controlpanelseller/dashboard") 
+          }if (data.success == true && user.user.user.role =="moderate") {
+            Cookies.set('token', data.token, { expires: 7 });
+            dispatch(setUser(user.user.user))
+            navigate("/controlpanelmoderate/dashboard") 
           }
           
         }

@@ -224,7 +224,7 @@ if(loading==true) return <div>...loading</div>
 
   return (
    
-      <Box sx={{width:'85%',height:'100%',display:'flex',flexDirection:'column',px:2}} >
+      <Box sx={{width:'100%',height:'100%',display:'flex',flexDirection:'column'}} >
     <Typography sx={{fontWeight:'800',textAlign:'left',my:2}} variant="h6" gutterBottom>
     Customers
     </Typography>

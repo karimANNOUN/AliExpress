@@ -29,7 +29,6 @@ import { VendeurBoutique } from '../Pages/login/loginbayer/component/VendeurBout
 import { ReviewDecision } from '../Pages/login/loginbayer/component/ReviewDecision'
 import { MotpassOublie } from '../Pages/login/loginbayer/component/passwordoublie/MotpassOublie'
 import { ConfermationPassword } from '../Pages/login/loginbayer/component/passwordoublie/ConfermationPassword'
-import { VendeurPage } from '../Pages/vendeurcontrol/VendeurPage'
 import { Register } from '../Pages/login/register/Register'
 import { ProtectedRoutes } from './ProtectedRoutes'
 import { ProtectedRoutesSeller } from './ProtectedRoutesSeller'
@@ -45,9 +44,11 @@ import { ReviewsSeller } from '../Pages/vendeurcontrol/controlPanelSeller/compon
 import { Transactions } from '../Pages/vendeurcontrol/controlPanelSeller/components/transaction/Transactions'
 import { StoreSettings } from '../Pages/vendeurcontrol/controlPanelSeller/components/storeSeller/StoreSettings'
 import { Dashbord } from '../Pages/vendeurcontrol/controlPanelSeller/components/dashbord/Dashbord'
-import { OffresHot } from '../Pages/vendeurcontrol/controlPanelSeller/components/hotOffres/OffresHot'
+import { OffresHot } from '../Pages/vendeurcontrol/controlPanelSeller/components/addProduct/OffresHot'
 import { Settings } from '../Pages/vendeurcontrol/controlPanelSeller/components/settings/Settings'
-import { UploadImageSeller } from '../Pages/vendeurcontrol/controlPanelSeller/components/settings/components/UploadImageSeller'
+import { ControlPanelModerate } from '../Pages/moderation/ControlPanelModerate'
+
+import { DashbordModerate } from '../Pages/moderation/components/Dashbord/DashbordModerate'
 
 
 export default function AllRoutes() {
@@ -109,12 +110,16 @@ export default function AllRoutes() {
           <Route path='settings' element={<ProtectedRoutes><Settings/></ProtectedRoutes>} />
              
            </Route>
+
+
+           <Route path='/controlpanelmoderate' element={<ProtectedRoutes><ControlPanelModerate/></ProtectedRoutes>} >
+           <Route path='dashboard' element={<ProtectedRoutes><DashbordModerate/></ProtectedRoutes>} />
+
+           </Route>
             
 
           <Route path='/register' element={<Register/>} />
-          <Route path='/addproduct' element={<ProtectedRoutes><VendeurPage/></ProtectedRoutes>} />
-
-      
+         
         </Routes> 
     </>
   )

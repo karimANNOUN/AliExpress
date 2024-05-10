@@ -12,11 +12,10 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import Skeleton from '@mui/material/Skeleton';
-import { SearchBox } from './SearchBox/SearchBox';
 
 export const Header = () => {
 
-const user = useSelector((state:any)=>state.app.user)
+    const user = useSelector((state:any)=>state.app.user)
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -31,7 +30,7 @@ const user = useSelector((state:any)=>state.app.user)
     const navigate=useNavigate()
 
     const handelDashbord = ()=>{
-      navigate('/controlpanelseller/dashboard')
+      navigate('/controlpanelmoderate/dashboard')
       setAnchorEl(null)
     }
 
@@ -53,59 +52,8 @@ const user = useSelector((state:any)=>state.app.user)
     const [loading,setLoading]=useState(Boolean)
     const [productsSeller,setProductsSeller]=useState([])
 
-    useEffect(()=>{
-
-      const handelGetProduct=async()=>{
-        try {
-          setLoading(true)
-        const response = await fetch(`http://localhost:8000/seller/getprod`,{
-          method: 'GET',
-          credentials:"include", 
-          headers: {
-            'Content-Type': 'application/json',
-             authorization:`${token}`
-          }
-        });
-        const data = await response.json()
-       if (data.success == true) {
-          setProductsSeller(data.productSeller)
-          setTimeout(() => {
-            setLoading(false)   
-          }, 2000);
-          
-        } 
-    
-      } catch (error) {
-        console.error('operation failed.');
-      }
-       
-      }
-
-      handelGetProduct()
-  
-   
-      
-    },[])
-
-
-
-   
-    
-         const result = productsSeller.filter((curent:any)=>{
-           return (input && curent && curent.title  && curent.title.toLowerCase().includes(input)) || (input && curent && curent.title  && curent.title.toUpperCase().includes(input)) || (input && curent && curent.title  && curent.title.includes(input))
-         })     
-      
-
-        
-  
-
-    const handelchange = (value:string)=>{
-      setInput(value)
-    }
-
-
   return (
-   <header style={{width:'100%',height:'80px',backgroundColor:'#6a1b9a'}} >
+    <header style={{width:'100%',height:'80px',backgroundColor:'#6a1b9a'}} >
     {loading == true ?
 
       <Box sx={{width:'99%',height:'100%',display:'flex',alignItems:'center',justifyContent:'space-between'}} >
@@ -120,7 +68,7 @@ const user = useSelector((state:any)=>state.app.user)
      <Box sx={{display:'flex',alignItems:'center',ml:2}} >
 
      <Typography sx={{fontWeight:'800',textAlign:'left',fontFamily:'monospace',color:'white'}} variant="h5" gutterBottom>
-    Khademni Seller
+    Khademni Moderation
     </Typography>
    
      </Box>
@@ -130,9 +78,8 @@ const user = useSelector((state:any)=>state.app.user)
     <TextField
          id="Phone"
           sx={{width:'100%',bgcolor:'white',borderRadius:'8px'}}
-         placeholder="Search Products"
+         placeholder="Search Sellers"
          size='small'
-         onChange={(e)=>handelchange(e.target.value)}
          InputProps={{
            endAdornment:(
                <InputAdornment sx={{height:'100%',right:0,position:'absolute'}} position='end' >
@@ -144,8 +91,6 @@ const user = useSelector((state:any)=>state.app.user)
            size:'small',
          }}
          />
-
-         { input == "" ? "" : <SearchBox result={result} />}
 
     </Box>
     
@@ -171,8 +116,6 @@ const user = useSelector((state:any)=>state.app.user)
       </Menu>
 
 </Box>
-    
-
     </Box>}
     
    </header>

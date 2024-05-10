@@ -62,8 +62,7 @@ export const UpdateProduct = () => {
       
 
   return (
-    <Box sx={{bgcolor:'#e0e0e0'}} >
-    <Header/>
+   
     <Box sx={{display:'flex',justifyContent:'space-around',mt:3}} >
 
     {loading == true  ? 
@@ -96,6 +95,6 @@ export const UpdateProduct = () => {
     </Box>
 
      
-    </Box>
+   
   )
 }

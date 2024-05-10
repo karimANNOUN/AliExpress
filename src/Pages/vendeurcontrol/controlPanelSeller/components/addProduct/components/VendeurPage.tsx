@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import product from '../../assets/solde.png'
+import product from '../../../../../../assets/solde.png'
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 import { styled } from '@mui/material/styles'; 
 import { IconButton, LinearProgress } from '@mui/material';
@@ -412,7 +412,7 @@ const handleAddEvent = () => {
 
 
   return (
-    <Box sx={{background: 'linear-gradient(to right, #1a237e 0%, #4a148c 65% , #512da8 85%)' , p:4  }} >
+    <Box sx={{background: 'linear-gradient(to right, #1a237e 0%, #4a148c 65% , #512da8 85%)' , p:2 }} >
       
       <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleCloseAlert} severity={ alert == false ? "error" : "success" } sx={{ width: '100%' }}>
@@ -855,15 +855,10 @@ const handleAddEvent = () => {
 
   </Box>
 
-  { loading == true ?   
-   
-   <Button disabled variant='contained' color='primary'  sx={{color:'white',width:'47%',textTransform:'lowercase',borderRadius:'12px' ,":hover":{color:'white'} }} >
+ 
+  <Button disabled={loading ? true : false } onClick={handelPostProductInformation} variant='contained' color='primary'  sx={{color:'white',width:'47%',textTransform:'lowercase',borderRadius:'12px' ,":hover":{color:'white'} }} >
       Ajouter Votre Produit
     </Button>
-
-  :<Button onClick={handelPostProductInformation} variant='contained' color='primary'  sx={{color:'white',width:'47%',textTransform:'lowercase',borderRadius:'12px' ,":hover":{color:'white'} }} >
-      Ajouter Votre Produit
-    </Button>}
 
          </Box>
 

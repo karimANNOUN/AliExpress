@@ -19,38 +19,38 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Badge from '@mui/material/Badge';
 import Tooltip from '@mui/material/Tooltip';
 
-export const Lists = ({order}:any) => {
+export const Lists = () => {
 
-  const navigate=useNavigate()
+    const navigate=useNavigate()
 
-  const [count,setCount]=useState(0)
-
-  const location=useLocation()
-
-  useEffect(()=>{
-    if (location.pathname == '/controlpanelseller') {
-      setCount(0)
-    }if (location.pathname == '/controlpanelseller/dashboard') {
-      setCount(0)
-    }if (location.pathname == '/controlpanelseller/products') {
-      setCount(1)
-    }if (location.pathname == '/controlpanelseller/orders') {
-      setCount(2)
-    }if (location.pathname == '/controlpanelseller/customers') {
-      setCount(3)
-    }if(location.pathname == '/controlpanelseller/reviews') {
-      setCount(4)
-    }if(location.pathname == '/controlpanelseller/transactions') {
-      setCount(5)
-    }if(location.pathname == '/controlpanelseller/storeSettings') {
-      setCount(6)
-    }if(location.pathname == '/controlpanelseller/hotoffres') {
-      setCount(7)
-    }if(location.pathname == '/controlpanelseller/settings' ) {
-      setCount(8)
-    }           
-
-  },[location])
+    const [count,setCount]=useState(0)
+  
+    const location=useLocation()
+  
+    useEffect(()=>{
+      if (location.pathname == '/controlpanelmoderate') {
+        setCount(0)
+      }if (location.pathname == '/controlpanelmoderate/dashboard') {
+        setCount(0)
+      }if (location.pathname == '/controlpanelseller/products') {
+        setCount(1)
+      }if (location.pathname == '/controlpanelseller/orders') {
+        setCount(2)
+      }if (location.pathname == '/controlpanelseller/customers') {
+        setCount(3)
+      }if(location.pathname == '/controlpanelseller/reviews') {
+        setCount(4)
+      }if(location.pathname == '/controlpanelseller/transactions') {
+        setCount(5)
+      }if(location.pathname == '/controlpanelseller/storeSettings') {
+        setCount(6)
+      }if(location.pathname == '/controlpanelseller/hotoffres') {
+        setCount(7)
+      }if(location.pathname == '/controlpanelseller/settings' ) {
+        setCount(8)
+      }           
+  
+    },[location])
 
   return (
     <Box sx={{ width: '100%', maxWidth: 360,height:'100%', bgcolor: 'background.paper' }}>
@@ -86,9 +86,9 @@ export const Lists = ({order}:any) => {
         <Tooltip title="order en attente">
           <ListItemButton onClick={()=>navigate('/controlpanelseller/orders')} >
             <ListItemIcon>
-            <Badge badgeContent={order.filter((ordr:any)=> ordr.state == "En Attente").length} color="info">
+           
               <ShoppingCartIcon />
-              </Badge>
+              
             </ListItemIcon>
             <ListItemText primary="Orders" />
           </ListItemButton>

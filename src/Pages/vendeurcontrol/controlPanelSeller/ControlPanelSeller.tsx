@@ -2,23 +2,25 @@ import { Box} from '@mui/material'
 import { Header } from './components/Header'
 import { Lists } from './components/Lists'
 import { Dashbord } from './components/dashbord/Dashbord';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { Product } from './components/products/Product';
 import { Orders } from './components/orders/Orders';
 import { Customers } from './components/customers/Customers';
 import { ReviewsSeller } from './components/reviews/ReviewsSeller';
 import { Transactions } from './components/transaction/Transactions';
 import { StoreSettings } from './components/storeSeller/StoreSettings';
-import { OffresHot } from './components/hotOffres/OffresHot';
+import { OffresHot } from './components/addProduct/OffresHot';
 import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import { Settings } from './components/settings/Settings';
+import { UpdateProduct } from '../updateproduct/UpdateProduct';
 
 
 
 export const ControlPanelSeller = () => {
 
-const location=useLocation()   
+const location=useLocation()
+const params=useParams()   
 const [order,setOrder]=useState<any>([])
 
 
@@ -63,10 +65,11 @@ if(loading == true) return <div>...loading</div>
   return (
     <Box sx={{bgcolor:'#e0e0e0'}} >
     <Header/>
-    <Box sx={{display:'flex',width:'100%',height:'100vh'}} >
-      <Box sx={{width:'15%',bgcolor:'Window',height:'100%'}} >
-        <Lists order={order} />
+    <Box sx={{display:'flex',width:'100%',mb:2,height:'100vh',position:'fixed',bgcolor:'#e0e0e0'}} >
+      <Box sx={{width:'15%',bgcolor:'Window',height:'100vh'}} >
+        <Lists order={order}  />
       </Box>
+      <Box sx={{width:'85%',height:'100vh',position:'relative',overflowY:'auto',px:2}} >
       { location.pathname == '/controlpanelseller/dashboard' ? <Dashbord/> : "" }
       { location.pathname == '/controlpanelseller/products' ? <Product/> : "" }
       { location.pathname == '/controlpanelseller/orders' ? <Orders order={order} setOrder={setOrder} /> : "" }
@@ -76,6 +79,8 @@ if(loading == true) return <div>...loading</div>
       { location.pathname == '/controlpanelseller/storeSettings' ? <StoreSettings/> : "" }
       { location.pathname == '/controlpanelseller/hotoffres' ? <OffresHot/> : "" }
       { location.pathname == '/controlpanelseller/settings' ? <Settings/> : "" }
+      { location.pathname == `/controlpanelseller/updateproduct/${params.prodId}` ? <UpdateProduct/> : "" }
+      </Box>
     </Box>
 
      

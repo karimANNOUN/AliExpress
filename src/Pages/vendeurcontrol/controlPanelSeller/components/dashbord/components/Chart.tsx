@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { axisClasses } from '@mui/x-charts';
+import { useLocation } from 'react-router-dom';
 
 
   
@@ -8,21 +9,22 @@ export const Chart  = ({order,productsSeller,loading}:any) =>  {
   
   
  
-  const [titleOne,setTitleOne]=useState('london')
-  const [titleTow,setTitleTow]=useState('paris')
+  const [titleOne,setTitleOne]=useState('ghoza')
+  const [titleTow,setTitleTow]=useState('marwa')
+
+  const location=useLocation()
 
    
 
   useEffect(()=>{
 
-    const product=productsSeller.sort((a:any, b:any) => b._count.article - a._count.article).slice(0, 2)   
+    const product=productsSeller.sort((a:any, b:any) => b._count.article - a._count.article).slice(0, 2) 
+      
+    
+ // setTitleOne(product[1].title.replace(/'/g, ''))
+ // setTitleTow(product[0].title.replace(/'/g, ''))
 
-
-
- // setTitleOne(product[0].title.replace(/'/g, ''))
-//  setTitleTow(product[1].title.replace(/'/g, ''))
-
-  },[])
+  },[location.pathname == '/controlpanelseller/dashboard'])
 
   
 
@@ -31,7 +33,7 @@ export const Chart  = ({order,productsSeller,loading}:any) =>  {
   const chartSetting = {
     yAxis: [
       {
-        label: 'rainfall (mm)',
+        label: 'article (number)',
       },
     ],
     width: 1000,
@@ -44,13 +46,13 @@ export const Chart  = ({order,productsSeller,loading}:any) =>  {
   };
   const dataset =  [
     {
-      titleOne : 80,
-      titleTow: 57,
+      titleOne : 0,
+      titleTow: 50,
       month: 'Jan',
     },
     {
-      titleOne : 59,
-      titleTow: 57,
+      titleOne : 89,
+      titleTow: 59,
       month: 'Fev',
     },
     {
@@ -105,7 +107,7 @@ export const Chart  = ({order,productsSeller,loading}:any) =>  {
     },
   ];
   
-  const valueFormatter = (value: number) => `${value}mm`;
+  const valueFormatter = (value: number) => `${value} article`;
 
 if (loading == true) {
   return <div>...loading</div>

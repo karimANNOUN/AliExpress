@@ -73,7 +73,7 @@ export const NotificationEmailSeller = () => {
                             <Box sx={{display:'flex',flexDirection:'column',width:'100%',mb:2}} >
                                <Box sx={{display:'flex',alignItems:'center',justifyContent:'space-between',width:'100%'}} >
                                <Typography  sx={{textAlign:'left',fontWeight:'300'}}  variant='h6' gutterBottom>
-                               Alertes et rappels de prix
+                               Alertes et rappels de transactions
                      </Typography>
                                  
                      <FormControlLabel
@@ -84,7 +84,7 @@ export const NotificationEmailSeller = () => {
 
                                 
                                <Typography  sx={{textAlign:'left',color:'#bdbdbd',fontWeight:'300'}}  variant='subtitle2' gutterBottom>
-                               Soyez informé des réductions sur les articles présents dans votre panier et dans vos favoris
+                               Soyez informé des formation sur votre transactions
                      </Typography>
 
                             </Box>
@@ -104,7 +104,7 @@ export const NotificationEmailSeller = () => {
 
                                 
                                <Typography  sx={{textAlign:'left',color:'#bdbdbd',fontWeight:'300'}}  variant='subtitle2' gutterBottom>
-                               Recevez des suggestions basées sur vos achats récents, vos recherches et les articles que vous avez consultés.
+                               Alert sur votre produits and quantites.
                      </Typography>
 
                             </Box>
@@ -114,7 +114,7 @@ export const NotificationEmailSeller = () => {
                             <Box sx={{display:'flex',flexDirection:'column',width:'100%',mb:2}} >
                                <Box sx={{display:'flex',alignItems:'center',justifyContent:'space-between',width:'100%'}} >
                                <Typography  sx={{textAlign:'left',fontWeight:'300'}}  variant='h6' gutterBottom>
-                               Exclusivités pour les membres
+                               Exclusivités pour les membres d'acahat
                      </Typography>
                                  
                      <FormControlLabel
@@ -125,7 +125,7 @@ export const NotificationEmailSeller = () => {
 
                                 
                                <Typography  sx={{textAlign:'left',color:'#bdbdbd',fontWeight:'300'}}  variant='subtitle2' gutterBottom>
-                               Profitez de nos réductions pour les anniversaires et les fêtes ! Ainsi que : coupons exclusifs, offres membres et plus encore.
+                               pour les membres qui following your store.
                      </Typography>
 
                             </Box>
@@ -159,7 +159,7 @@ export const NotificationEmailSeller = () => {
                             <Box sx={{display:'flex',flexDirection:'column',width:'100%',mb:2}} >
                                <Box sx={{display:'flex',alignItems:'center',justifyContent:'space-between',width:'100%'}} >
                                <Typography  sx={{textAlign:'left',fontWeight:'300'}}  variant='h6' gutterBottom>
-                               Offres du jour
+                               singale et avertissement sur votre produit 
                      </Typography>
                                  
                      <FormControlLabel
@@ -170,7 +170,7 @@ export const NotificationEmailSeller = () => {
 
                                 
                                <Typography  sx={{textAlign:'left',color:'#bdbdbd',fontWeight:'300'}}  variant='subtitle2' gutterBottom>
-                               Recevez des mises à jour quotidiennes d'AliExpress, y compris les dernières promotions et les nouveaux arrivages.
+                               votre produit signaler.
                      </Typography>
 
                             </Box>

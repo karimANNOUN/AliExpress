@@ -163,12 +163,12 @@ export const Product = () => {
 
   return (
    
-      <Box sx={{width:'85%',height:'100%',display:'flex',flexDirection:'column',px:2}} >
+      <Box sx={{width:'100%',height:'100%',display:'flex',flexDirection:'column'}} >
     <Typography sx={{fontWeight:'800',textAlign:'left',my:2}} variant="h6" gutterBottom>
     Products
     </Typography>
 
-    <Box sx={{bgcolor:'Window',display:'flex',alignItems:'center',width:'100%',mb:2,borderRadius:'6px',p:1}} >
+    <Box sx={{bgcolor:'Window',display:'flex',alignItems:'center',width:'99%',mb:2,borderRadius:'6px',p:1}} >
 
    
                 <Button 
@@ -237,7 +237,7 @@ export const Product = () => {
              label="Livraison gratuite" />
     </Box> 
 
-    <Box sx={{bgcolor:'Window',display:'flex',flexDirection:'column',alignItems:'center',width:'100%',overflowY:'auto',borderRadius:'6px',height:'600px',p:1}} >
+    <Box sx={{bgcolor:'Window',display:'flex',flexDirection:'column',alignItems:'center',width:'99%',overflowY:'auto',borderRadius:'6px',height:'600px',p:1}} >
         { !productsSeller ? [] :  ( productsSeller.length == 0 ? 
           <Typography sx={{fontWeight:'800',color:'#757575',textAlign:'center'}} variant='body2' gutterBottom>
            empty store you don't have any products
@@ -252,7 +252,7 @@ export const Product = () => {
 
 
 
-    <Box sx={{bgcolor:'Window',display:'flex',alignItems:'center',justifyContent:'center',mb:2,width:'100%',borderRadius:'6px',p:1}} >
+    <Box sx={{bgcolor:'Window',display:'flex',alignItems:'center',justifyContent:'center',mb:2,width:'99%',borderRadius:'6px',p:1}} >
 
       <Box sx={{width:'25%',height:'100%',display:'flex',alignItems:'center'}} >
       <Typography sx={{fontWeight:'800',color:'#757575',textAlign:'left'}} variant='body2' gutterBottom>

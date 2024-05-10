@@ -4,21 +4,51 @@ import Grid from '@mui/material/Grid';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
-
+import Card from '@mui/material/Card'
+import Button from '@mui/material/Button'
+import CardContent from '@mui/material/CardContent'
 import { PieChart } from '@mui/x-charts/PieChart';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { Chart } from './components/Chart';
-
-import { styled } from '@mui/material/styles';
+import { styled , useTheme } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Cookies from 'js-cookie';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { TableOrder } from './components/TableOrder';
+import { useSelector } from 'react-redux';
+import { StatisticCard } from './components/StatisticCard';
+import { calculateTotal ,filtredProduct } from './components/FunctionTotal';
+
+
+
+const TriangleImg = styled('img')({
+  right: 0,
+  bottom: 0,
+  height: 170,
+  position: 'absolute'
+})
+
+const TrophyImg = styled('img')({
+  right: 36,
+  bottom: 20,
+  height: 98,
+  position: 'absolute'
+})
+
+
 
 export const Dashbord = () => {
+
+
+  const user = useSelector((state:any)=>state.app.user)
+
 
   const [loading,setLoading]=useState(false)
   const [productsSeller,setProductsSeller]=useState<any>([])
   const [order,setOrder]=useState<any>([])
   const token = Cookies.get('token');
+  const navigate=useNavigate()
+
 
   useEffect(()=>{
 
@@ -102,39 +132,7 @@ export const Dashbord = () => {
 
    
      
-        const calculateTotal = (productsSeller:any) =>{
-
-          let total = 0;
-
-          productsSeller.forEach((product:any) => {
-            product.article.filter((art:any)=>art.state == "terminees" ).forEach((articl:any) => {
-              total += articl.quantity * articl.priceProduct
-            });
-        });
-
-        return total;
-         
-        }
-
-
-
-        const calculateTotalOrder = (productsSeller:any) =>{
-
-          let total = 0;
-
-          productsSeller.forEach((product:any) => {
-            total += product.article.length
-        });
-
-        return total;
-         
-        }
-
-
-        const filtredProduct = (product:any)=>{
-        return  Math.floor(product.article.filter((prod:any)=>prod.state == "terminees").length*1000/order.filter((prod:any)=>prod.state == "terminees").length)/10
-        }
-        
+      
 
    
 
@@ -142,52 +140,47 @@ export const Dashbord = () => {
 
 
   return (
-    <Box sx={{width:'85%',height:'100%',display:'flex',flexDirection:'column',px:2}} >
+    <Box sx={{width:'100%',height:'100%',display:'flex',flexDirection:'column'}} >
     <Typography sx={{fontWeight:'800',textAlign:'left',my:2}} variant="h6" gutterBottom>
     Dashbord
     </Typography>
 
     <Box sx={{ flexGrow: 1 }}>
     <Grid container spacing={2}>
-      <Grid item xs={4}>
-        <Item sx={{display:'flex',alignItems:'center'}} >
-           <MonetizationOnIcon sx={{fontSize:'80px',mr:2,color:'#ffb300'}} />
-           <Box sx={{display:'flex',flexDirection:'column',justifyContent:'center'}} >
-           <Typography sx={{fontWeight:'100',textAlign:'left'}} variant="subtitle2" gutterBottom>
-    Total Sales
-    </Typography>
-    <Typography sx={{fontWeight:'800',textAlign:'left'}} variant='body2' gutterBottom>
-      ${calculateTotal(productsSeller)}
-    </Typography>
-           </Box>
-        </Item>
-      </Grid>
-      <Grid item xs={4}>
-        <Item sx={{display:'flex',alignItems:'center'}} >
-        <ShoppingCartIcon sx={{fontSize:'80px',mr:2,color:'#26a69a'}} />
-           <Box sx={{display:'flex',flexDirection:'column',justifyContent:'center'}} >
-           <Typography sx={{fontWeight:'100',textAlign:'left'}} variant="subtitle2" gutterBottom>
-    Total Orders
-    </Typography>
-    <Typography sx={{fontWeight:'800',textAlign:'left'}} variant='body2' gutterBottom>
-     {calculateTotalOrder(productsSeller)}
-    </Typography>
-           </Box>
-        </Item>
-      </Grid>
-      <Grid item xs={4}>
-        <Item sx={{display:'flex',alignItems:'center'}} >
-        <Inventory2Icon sx={{fontSize:'80px',color:'#03a9f4',mr:2}} />
-           <Box sx={{display:'flex',flexDirection:'column',justifyContent:'center'}} >
-           <Typography sx={{fontWeight:'100',textAlign:'left'}} variant="subtitle2" gutterBottom>
-    Total Products
-    </Typography>
-    <Typography sx={{fontWeight:'800',textAlign:'left'}} variant='body2' gutterBottom>
-    {productsSeller.length == 0 ? "0" : productsSeller.length} 
-    </Typography>
-           </Box>
-        </Item>
-      </Grid>
+
+    <Grid item xs={4}>
+       
+
+        <Card sx={{ position: 'relative',width:'100%' }}>
+      <CardContent>
+        <Typography variant='h6'>Congratulations {user.name}! 🥳</Typography>
+        <Typography variant='body2' sx={{ letterSpacing: '0.25px' }}>
+          Best seller of the month
+        </Typography>
+        <Typography variant='h5' sx={{ my: 4, color: 'primary.main' }}>
+          DA{calculateTotal(productsSeller)}
+        </Typography>
+        <Button onClick={()=>{navigate('/controlpanelseller/orders')}} size='small' variant='contained'>
+          View Sales
+        </Button>
+        
+        <TrophyImg alt='trophy' src='https://demos.themeselection.com/materio-mui-react-nextjs-admin-template-free/images/misc/trophy.png' />
+      </CardContent>
+    </Card>
+
+         
+          </Grid>
+
+
+          <Grid item xs={8}>
+        
+
+          <StatisticCard productsSeller={productsSeller} order={order} />
+
+         
+          </Grid>
+       
+
 
 
 
@@ -212,7 +205,7 @@ export const Dashbord = () => {
     series={[
       {
         data: productsSeller.map((product:any)=>(
-          { id: product.id, value:filtredProduct(product), label:`${product.title}` }
+          { id: product.id, value:filtredProduct({product,order}), label:`${product.title}` }
         )) 
       },
     ]}
@@ -222,66 +215,14 @@ export const Dashbord = () => {
           </Item>
       </Grid>
       <Grid item xs={12}>
-        <Item sx={{display:'flex',flexDirection:'column'}} >
+      <Item sx={{display:'flex',flexDirection:'column'}} >
         <Typography sx={{fontWeight:'800',textAlign:'left',my:2}} variant='body2' gutterBottom>
     Latest Orders
     </Typography>
-
-       {order.map( (ord:any)=> <Box  key={ord.id} sx={{display:'flex',width:'100%',height:'15px',mb:2,alignItems:'center',justifyContent:'space-between'}} >
-        <Box sx={{display:'flex',alignItems:'center',width:'16%'}} >
-        <Typography sx={{fontWeight:'100',textAlign:'left'}} variant='subtitle2' gutterBottom>
-    {ord.id}
-    </Typography>
-        </Box>
-        <Box sx={{display:'flex',alignItems:'center',width:'16%'}} >
-    <Typography sx={{fontWeight:'900',textAlign:'left'}} variant='subtitle2' gutterBottom>
-    {ord.commande.buyer.name}
-    </Typography>
-    </Box>
-    <Box sx={{display:'flex',alignItems:'center',width:'16%'}} >
-    <Typography sx={{fontWeight:'100',textAlign:'left'}} variant='subtitle2' gutterBottom>
-    {ord.commande.buyer.email}
-    </Typography>
-     </Box>
-     <Box sx={{display:'flex',alignItems:'center',width:'16%'}} >
-    <Typography sx={{fontWeight:'100',textAlign:'left'}} variant='subtitle2' gutterBottom>
-    $ {ord.priceProduct*ord.quantity}
-    </Typography>
-     </Box>
-
-     <Box sx={{display:'flex',alignItems:'center',width:'16%'}} >
-    { ord.state == "terminees" ? <Typography sx={{fontWeight:'100',bgcolor:'#c8e6c9',color:'#66bb6a',textAlign:'left'}} variant='subtitle2' gutterBottom>
-    Dilvred
-    </Typography> : "" }
-   
-
-    
-    { ord.state == "non paye" ? <Typography sx={{fontWeight:'100',bgcolor:'#ffcdd2',color:'#d50000',textAlign:'left'}} variant='subtitle2' gutterBottom>
-    Cancelled
-    </Typography> : "" }
-   
-
-    
-    { ord.state == "expédiée" ? <Typography sx={{fontWeight:'100',bgcolor:'#bbdefb',color:'#0d47a1',textAlign:'left'}} variant='subtitle2' gutterBottom>
-    expédiée
-    </Typography> : "" }
-  
-
-     
-    { ord.state == "En Attente" ? <Typography sx={{fontWeight:'100',bgcolor:'#fff9c4',color:'#ffd600',textAlign:'left'}} variant='subtitle2' gutterBottom>
-    Pending
-    </Typography> : "" }
-     </Box>
-
-     <Box sx={{display:'flex',alignItems:'center',width:'16%'}} >
-    <Typography sx={{fontWeight:'100',textAlign:'left'}} variant='subtitle2' gutterBottom>
-     {ord.commande.createdAt}
-    </Typography>
-      </Box>
-
-       </Box>)}
+        <TableOrder order={order} />
         </Item>
       </Grid>
+
     </Grid>
   </Box>
 
