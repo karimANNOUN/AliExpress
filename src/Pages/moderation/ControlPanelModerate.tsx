@@ -10,7 +10,7 @@ export const ControlPanelModerate = () => {
     const location=useLocation()
 
   return (
-    <Box sx={{bgcolor:'#e0e0e0'}} >
+    <Box sx={{bgcolor:'#fafafa'}} >
     <Header/>
     <Box sx={{display:'flex',width:'100%',mb:2,height:'100vh',position:'fixed',bgcolor:'#e0e0e0'}} >
       <Box sx={{width:'15%',bgcolor:'Window',height:'100vh'}} >

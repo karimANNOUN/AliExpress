@@ -7,7 +7,6 @@ import Avatar from '@mui/material/Avatar'
 import CardHeader from '@mui/material/CardHeader'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
-import { calculateTotal , calculateTotalOrder} from './FunctionTotal';
 
 import TrendingUp from 'mdi-material-ui/TrendingUp'
 import CurrencyUsd from 'mdi-material-ui/CurrencyUsd'
@@ -25,36 +24,29 @@ interface DataType {
   icon: ReactElement
 }
 
+export const StatisticCardModerate = () => {
 
-
-
-export const StatisticCard = ({productsSeller,order}:any) => {
-
-
-
-
-
-      const salesData: DataType[] = [
+    const salesData: DataType[] = [
         {
-          stats: `${calculateTotalOrder(productsSeller)}`,
+          stats: `10`,
           title: 'Orders',
           color: 'primary',
           icon: <TrendingUp sx={{ fontSize: '1.75rem' }} />
         },
         {
-          stats: `${ !productsSeller.length ? "0" : productsSeller[0].user.followers.length}`,
-          title: 'Customers',
+          stats: `10`,
+          title: 'Sallers',
           color: 'success',
           icon: <AccountOutline sx={{ fontSize: '1.75rem' }} />
         },
         {
-          stats: `${productsSeller.length}`,
+          stats: `10`,
           color: 'warning',
           title: 'Products',
           icon: <CellphoneLink sx={{ fontSize: '1.75rem' }} />
         },
         {
-          stats: `DA${calculateTotal(productsSeller)}`,
+          stats: `10`,
           color: 'info',
           title: 'Revenue',
           icon: <CurrencyUsd sx={{ fontSize: '1.75rem' }} />
@@ -87,17 +79,14 @@ export const StatisticCard = ({productsSeller,order}:any) => {
         ))
       }
 
-
-
-
   return (
-    <Card sx={{width:'100%',height:'100%'}} >
+    <Card sx={{width:'100%'}} >
     <CardHeader
-      title='Statistics Card'
+      title='Statistics Region Sellers'
       subheader={
         <Typography variant='body2'>
           <Box component='span' sx={{ fontWeight: 600, color: 'text.primary' }}>
-            Total {order.filter((ordr:any)=> ordr.state == "terminees").length*100/order.length}% growth
+            Total 50% growth
           </Box>{' '}
           😎 this month
         </Typography>

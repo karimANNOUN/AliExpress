@@ -1,32 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import { Box,IconButton,Typography } from '@mui/material'
+import  { useEffect, useState } from 'react'
+import { Box,Typography } from '@mui/material'
 import Grid from '@mui/material/Grid';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import Inventory2Icon from '@mui/icons-material/Inventory2';
 import Card from '@mui/material/Card'
 import Button from '@mui/material/Button'
 import CardContent from '@mui/material/CardContent'
 import { PieChart } from '@mui/x-charts/PieChart';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { Chart } from './components/Chart';
-import { styled , useTheme } from '@mui/material/styles';
+import { styled  } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Cookies from 'js-cookie';
-import { useLocation, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { TableOrder } from './components/TableOrder';
 import { useSelector } from 'react-redux';
 import { StatisticCard } from './components/StatisticCard';
 import { calculateTotal ,filtredProduct } from './components/FunctionTotal';
 
 
-
-const TriangleImg = styled('img')({
-  right: 0,
-  bottom: 0,
-  height: 170,
-  position: 'absolute'
-})
 
 const TrophyImg = styled('img')({
   right: 36,

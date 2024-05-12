@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import { Divider } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Cookies from 'js-cookie';
-
+import Chip from '@mui/material/Chip'
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -145,27 +145,63 @@ export const ModalOrdersDetails = ({opens,setOpens,setAnchorEl,ord,setOrder}:any
         {ord.commande.buyer.name}
       </Typography>
 
-      { ord.state == "terminees" ? <Typography sx={{fontWeight:'100',bgcolor:'#c8e6c9',color:'#66bb6a',textAlign:'left'}} variant='subtitle2' gutterBottom>
-    Dilvred
-    </Typography> : "" }
+      { ord.state == "terminees" ?
+       <Chip
+       label="Dilvred"
+       color="success"
+       sx={{
+         height: 24,
+         fontSize: '0.75rem',
+         textTransform: 'capitalize',
+         '& .MuiChip-label': { fontWeight: 500 }
+       }}
+     />
+       : "" }
    
 
     
-    { ord.state == "non paye" ? <Typography sx={{fontWeight:'100',bgcolor:'#ffcdd2',color:'#d50000',textAlign:'left'}} variant='subtitle2' gutterBottom>
-    Cancelled
-    </Typography> : "" }
+    { ord.state == "non paye" ? 
+    <Chip
+    label="Cancelled"
+    color="error"
+    sx={{
+      height: 24,
+      fontSize: '0.75rem',
+      textTransform: 'capitalize',
+      '& .MuiChip-label': { fontWeight: 500 }
+    }}
+  />
+    : "" }
    
 
     
-    { ord.state == "expédiée" ? <Typography sx={{fontWeight:'100',bgcolor:'#bbdefb',color:'#0d47a1',textAlign:'left'}} variant='subtitle2' gutterBottom>
-    expédiée
-    </Typography> : "" }
+    { ord.state == "expédiée" ? 
+    <Chip
+    label="expédiée"
+    color="info"
+    sx={{
+      height: 24,
+      fontSize: '0.75rem',
+      textTransform: 'capitalize',
+      '& .MuiChip-label': { fontWeight: 500 }
+    }}
+  />
+    : "" }
   
 
      
-    { ord.state == "En Attente" ? <Typography sx={{fontWeight:'100',bgcolor:'#fff9c4',color:'#ffd600',textAlign:'left'}} variant='subtitle2' gutterBottom>
-    Pending
-    </Typography> : "" }
+    { ord.state == "En Attente" ? 
+     <Chip
+     label="Pending"
+     color="warning"
+     sx={{
+       height: 24,
+       fontSize: '0.75rem',
+       textTransform: 'capitalize',
+       '& .MuiChip-label': { fontWeight: 500 }
+     }}
+   />
+    : "" }
      
 
         </Box>
@@ -290,22 +326,51 @@ export const ModalOrdersDetails = ({opens,setOpens,setAnchorEl,ord,setOrder}:any
 
       <Box sx={{display:'flex',justifyContent:'center',alignItems:'center'}} >
        
-      { ord.state == "terminees" ? <Typography sx={{fontWeight:'300',bgcolor:'#c8e6c9',color:'#66bb6a',textAlign:'left'}} variant='subtitle1' gutterBottom>
-    Dilvred
-    </Typography> : "" }
+      { ord.state == "terminees" ?
+       <Chip
+       label="Dilvred"
+       color="success"
+       sx={{
+         height: 24,
+         fontSize: '0.75rem',
+         textTransform: 'capitalize',
+         '& .MuiChip-label': { fontWeight: 500 }
+       }}
+     />
+       : "" }
    
 
     
-    { ord.state == "non paye" ? <Typography sx={{fontWeight:'300',bgcolor:'#ffcdd2',color:'#d50000',textAlign:'left'}} variant='subtitle1' gutterBottom>
-    Cancelled
-    </Typography> : "" }
+    { ord.state == "non paye" ? 
+    <Chip
+    label="Cancelled"
+    color="error"
+    sx={{
+      height: 24,
+      fontSize: '0.75rem',
+      textTransform: 'capitalize',
+      '& .MuiChip-label': { fontWeight: 500 }
+    }}
+  />
+    : "" }
    
 
     
-    { ord.state == "expédiée" ? <Typography sx={{fontWeight:'300',bgcolor:'#bbdefb',color:'#0d47a1',textAlign:'left'}} variant='subtitle1' gutterBottom>
-    expédiée
-    </Typography> : "" }
+    { ord.state == "expédiée" ? 
+    <Chip
+    label="expédiée"
+    color="info"
+    sx={{
+      height: 24,
+      fontSize: '0.75rem',
+      textTransform: 'capitalize',
+      '& .MuiChip-label': { fontWeight: 500 }
+    }}
+  />
+    : "" }
   
+
+          
 
      
     { ord.state == "En Attente" ?  
