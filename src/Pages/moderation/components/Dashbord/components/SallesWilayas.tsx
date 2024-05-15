@@ -1,7 +1,7 @@
-// ** React Imports
+
 import { ReactNode } from 'react'
 
-// ** MUI Imports
+
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import Avatar from '@mui/material/Avatar'
@@ -10,79 +10,17 @@ import IconButton from '@mui/material/IconButton'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
-// ** Icons Imports
+
 import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
-import DotsVertical from 'mdi-material-ui/DotsVertical'
+import {calculateRevenueWilayaSales,calculateRevenueWilayaLast,calculateAllRevenueThistYear} from './FunctionTotalModeration'
 
 type ThemeColor = 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success'
 
-export const SallesWilayas = () => {
+export const SallesWilayas = ({seller,wiliaya}:any) => {
 
 
-    interface DataType {
-        title: string
-        sales: string
-        trend: ReactNode
-        trendDir: string
-        subtitle: string
-        avatarText: string
-        trendNumber: string
-        avatarColor: ThemeColor
-      }
-      
-      const data: DataType[] = [
-        {
-          sales: '894k',
-          trendDir: 'up',
-          subtitle: 'USA',
-          title: '$8,656k',
-          avatarText: 'US',
-          trendNumber: '25.8%',
-          avatarColor: 'success',
-          trend: <ChevronUp sx={{ color: 'success.main', fontWeight: 600 }} />
-        },
-        {
-          sales: '645k',
-          subtitle: 'UK',
-          trendDir: 'down',
-          title: '$2,415k',
-          avatarText: 'UK',
-          trendNumber: '6.2%',
-          avatarColor: 'error',
-          trend: <ChevronDown sx={{ color: 'error.main', fontWeight: 600 }} />
-        },
-        {
-          sales: '148k',
-          title: '$865k',
-          trendDir: 'up',
-          avatarText: 'IN',
-          subtitle: 'India',
-          trendNumber: '12.4%',
-          avatarColor: 'warning',
-          trend: <ChevronUp sx={{ color: 'success.main', fontWeight: 600 }} />
-        },
-        {
-          sales: '86k',
-          title: '$745k',
-          trendDir: 'down',
-          avatarText: 'JA',
-          subtitle: 'Japan',
-          trendNumber: '11.9%',
-          avatarColor: 'secondary',
-          trend: <ChevronDown sx={{ color: 'error.main', fontWeight: 600 }} />
-        },
-        {
-          sales: '42k',
-          title: '$45k',
-          trendDir: 'up',
-          avatarText: 'KO',
-          subtitle: 'Korea',
-          trendNumber: '16.2%',
-          avatarColor: 'error',
-          trend: <ChevronUp sx={{ color: 'success.main', fontWeight: 600 }} />
-        }
-      ]
+  
 
   return (
     <Card sx={{width:'100%',height:'100%'}} >
@@ -90,15 +28,15 @@ export const SallesWilayas = () => {
       title='Sales by Wilayas'
       titleTypographyProps={{ sx: { lineHeight: '1.2 !important', letterSpacing: '0.31px !important' } }}
     />
-    <CardContent sx={{ pt: theme => `${theme.spacing(2)} !important` }}>
-      {data.map((item: DataType, index: number) => {
+    <CardContent sx={{ pt: theme => `${theme.spacing(2)} !important` ,overflowY:'auto' }}>
+      {wiliaya.map((item: any, index: number) => {
         return (
           <Box
-            key={item.title}
+            key={item.state}
             sx={{
               display: 'flex',
               alignItems: 'center',
-              ...(index !== data.length - 1 ? { mb: 5.875 } : {})
+              ...(index !== wiliaya.length - 1 ? { mb: 5.875 } : {})
             }}
           >
             <Avatar
@@ -111,7 +49,7 @@ export const SallesWilayas = () => {
                 backgroundColor: `${item.avatarColor}.main`
               }}
             >
-              {item.avatarText}
+              {item.state.substring(0, 3)}
             </Avatar>
 
             <Box
@@ -125,29 +63,32 @@ export const SallesWilayas = () => {
             >
               <Box sx={{ marginRight: 2, display: 'flex', flexDirection: 'column' }}>
                 <Box sx={{ display: 'flex' }}>
-                  <Typography sx={{ mr: 0.5, fontWeight: 600, letterSpacing: '0.25px' }}>{item.title}</Typography>
+                  <Typography sx={{ mr: 0.5, fontWeight: 600, letterSpacing: '0.25px' }}> (DA) {calculateAllRevenueThistYear(item,seller)}</Typography>
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    {item.trend}
+                  { calculateAllRevenueThistYear(item,seller) / calculateRevenueWilayaLast(item,seller) > 1 ? 
+                       <ChevronUp sx={{ color: 'success.main', fontWeight: 600 }} /> :
+                       <ChevronDown sx={{ color: 'error.main', fontWeight: 600 }} />
+                       }
                     <Typography
                       variant='caption'
                       sx={{
                         fontWeight: 600,
                         lineHeight: 1.5,
-                        color: item.trendDir === 'down' ? 'error.main' : 'success.main'
                       }}
+                      color={ (calculateAllRevenueThistYear(item,seller) - calculateRevenueWilayaLast(item,seller) < 0) ? 'error.main' : 'success.main' }
                     >
-                      {item.trendNumber}
+                      { calculateRevenueWilayaLast(item,seller) === 0 ? 100 : (calculateAllRevenueThistYear(item,seller)*100/calculateRevenueWilayaLast(item,seller)) }%
                     </Typography>
                   </Box>
                 </Box>
                 <Typography variant='caption' sx={{ lineHeight: 1.5 }}>
-                  {item.subtitle}
+                  {item.state}
                 </Typography>
               </Box>
 
               <Box sx={{ display: 'flex', textAlign: 'end', flexDirection: 'column' }}>
                 <Typography sx={{ fontWeight: 600, fontSize: '0.875rem', lineHeight: 1.72, letterSpacing: '0.22px' }}>
-                  {item.sales}
+                  {calculateRevenueWilayaSales(item,seller)}
                 </Typography>
                 <Typography variant='caption' sx={{ lineHeight: 1.5 }}>
                   Sales

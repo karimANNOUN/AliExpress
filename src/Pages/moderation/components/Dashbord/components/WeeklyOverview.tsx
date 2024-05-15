@@ -9,8 +9,16 @@ import CardContent from '@mui/material/CardContent'
 import DotsVertical from 'mdi-material-ui/DotsVertical'
 import { ApexOptions } from 'apexcharts'
 import ReactApexcharts from 'react-apexcharts'
+import { useEffect } from 'react'
+import {calculateAllRevenueByDays,getDay,calculateAllRevenueMonth} from './FunctionTotalModeration'
 
-export const WeeklyOverview = () => {
+export const WeeklyOverview = ({seller}:any) => {
+
+
+ useEffect(()=>{
+  console.log(calculateAllRevenueMonth(seller,0))
+ })
+  
 
 
     const theme = useTheme()
@@ -61,9 +69,17 @@ export const WeeklyOverview = () => {
         }
       },
       xaxis: {
-        categories: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        categories: [ 
+                      getDay(6), 
+                      getDay(5), 
+                      getDay(4), 
+                      getDay(3), 
+                      getDay(2), 
+                      getDay(1), 
+                      getDay(0)
+                    ],
         tickPlacement: 'on',
-        labels: { show: false },
+        labels: { show: true },
         axisTicks: { show: false },
         axisBorder: { show: false }
       },
@@ -72,7 +88,7 @@ export const WeeklyOverview = () => {
         tickAmount: 4,
         labels: {
           offsetX: -17,
-          formatter: value => `${value > 999 ? `${(value / 1000).toFixed(0)}` : value}k`
+          formatter: value => `${value > 999 ? `${(value / 1000).toFixed(0)}K` : value}DA`
         }
       }
     }
@@ -87,13 +103,47 @@ export const WeeklyOverview = () => {
         }}
       />
       <CardContent sx={{ '& .apexcharts-xcrosshairs.apexcharts-active': { opacity: 0 } , }}>
-        <ReactApexcharts type='bar' height={205} options={options} series={[{ data: [37, 57, 45, 75, 57, 40, 65] }]} />
-        <Box sx={{ mb: 7, display: 'flex', alignItems: 'center' }}>
+        <ReactApexcharts 
+         type='bar' 
+         height={205} 
+         options={options} 
+         series={[{ 
+
+          data: [ calculateAllRevenueByDays(seller,6),
+                  calculateAllRevenueByDays(seller,5), 
+                  calculateAllRevenueByDays(seller,4), 
+                  calculateAllRevenueByDays(seller,3), 
+                  calculateAllRevenueByDays(seller,2), 
+                  calculateAllRevenueByDays(seller,1), 
+                  calculateAllRevenueByDays(seller,0)] 
+          
+          }]} />
+        { calculateAllRevenueMonth(seller,0)/calculateAllRevenueMonth(seller,1) < 1 ?  <Box sx={{ mb: 7, display: 'flex', alignItems: 'center' }}>
           <Typography variant='h5' sx={{ mr: 4 }}>
-            45%
+            { calculateAllRevenueMonth(seller,1) === 0 ?
+             100 :
+              (Math.floor( (calculateAllRevenueMonth(seller,0) - calculateAllRevenueMonth(seller,1)) *1000/calculateAllRevenueMonth(seller,1) )/10) }%
           </Typography>
-          <Typography variant='body2'>Your sales performance is 45% 😎 better compared to last month</Typography>
-        </Box>
+          <Typography variant='body2'>Your sales performance is Decreased  
+          {calculateAllRevenueMonth(seller,1) === 0 ? 
+          100 :
+          (Math.floor( (calculateAllRevenueMonth(seller,0) - calculateAllRevenueMonth(seller,1)) *1000/calculateAllRevenueMonth(seller,1) )/10) }% 
+          😎 compared to last month
+          </Typography>
+        </Box>:
+
+        <Box sx={{ mb: 7, display: 'flex', alignItems: 'center' }}>
+        <Typography variant='h5' sx={{ mr: 4 }}>
+          { calculateAllRevenueMonth(seller,1) === 0 ?
+           100 : 
+           Math.floor( calculateAllRevenueMonth(seller,0)*1000/calculateAllRevenueMonth(seller,1) )/10 }%
+        </Typography>
+        <Typography variant='body2'>Your sales performance is
+         {calculateAllRevenueMonth(seller,1) === 0 ?
+          100 : 
+          Math.floor( calculateAllRevenueMonth(seller,0)*1000/calculateAllRevenueMonth(seller,1) )/10 }% 😎 better compared to last month</Typography>
+      </Box>
+        }
         <Button sx={{mt:3}} fullWidth variant='contained'>
           Details
         </Button>

@@ -7,12 +7,12 @@ import Avatar from '@mui/material/Avatar'
 import CardHeader from '@mui/material/CardHeader'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
-
 import TrendingUp from 'mdi-material-ui/TrendingUp'
 import CurrencyUsd from 'mdi-material-ui/CurrencyUsd'
-import DotsVertical from 'mdi-material-ui/DotsVertical'
 import CellphoneLink from 'mdi-material-ui/CellphoneLink'
 import AccountOutline from 'mdi-material-ui/AccountOutline'
+
+import { calculateTotalProducts , calculateTotalOrders ,calculateAllRevenue ,calculateTotalOrdersTerminees } from './FunctionTotalModeration';
 
 // ** Types
 type ThemeColor = 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success'
@@ -24,29 +24,29 @@ interface DataType {
   icon: ReactElement
 }
 
-export const StatisticCardModerate = () => {
+export const StatisticCardModerate = ({seller}:any) => {
 
     const salesData: DataType[] = [
         {
-          stats: `10`,
+          stats: `${calculateTotalOrders(seller)}`,
           title: 'Orders',
           color: 'primary',
           icon: <TrendingUp sx={{ fontSize: '1.75rem' }} />
         },
         {
-          stats: `10`,
+          stats: `${seller.length}`,
           title: 'Sallers',
           color: 'success',
           icon: <AccountOutline sx={{ fontSize: '1.75rem' }} />
         },
         {
-          stats: `10`,
+          stats: `${calculateTotalProducts(seller)}`,
           color: 'warning',
           title: 'Products',
           icon: <CellphoneLink sx={{ fontSize: '1.75rem' }} />
         },
         {
-          stats: `10`,
+          stats: `${calculateAllRevenue(seller)}`,
           color: 'info',
           title: 'Revenue',
           icon: <CurrencyUsd sx={{ fontSize: '1.75rem' }} />
@@ -86,7 +86,7 @@ export const StatisticCardModerate = () => {
       subheader={
         <Typography variant='body2'>
           <Box component='span' sx={{ fontWeight: 600, color: 'text.primary' }}>
-            Total 50% growth
+            Total {calculateTotalOrdersTerminees(seller)*100/calculateTotalOrders(seller)}% orders Terminees
           </Box>{' '}
           😎 this month
         </Typography>

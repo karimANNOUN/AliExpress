@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box,Typography } from '@mui/material'
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card'
@@ -11,11 +11,54 @@ import { WeeklyOverview } from './components/WeeklyOverview';
 import { TotalEarning } from './components/TotalEarning';
 import { SallesWilayas } from './components/SallesWilayas';
 import { TableProducts } from './components/TableProducts';
+import Cookies from 'js-cookie';
 
 export const DashbordModerate = () => {
 
   const user = useSelector((state:any)=>state.app.user)
   const navigate=useNavigate()
+
+  const [loading,setLoading]=useState(false)
+  const [seller,setSeller]=useState<any>([])
+  const [wiliaya,setWilaya]=useState<any>([])
+  const token = Cookies.get('token');
+
+
+  useEffect(()=>{
+
+    const handelGetSellers=async()=>{
+      try {
+        setLoading(true)
+      const response = await fetch(`http://localhost:8000/getAllSellersRegion`,{
+        method: 'GET',
+        credentials:"include", 
+        headers: {
+          'Content-Type': 'application/json',
+           authorization:`${token}`
+        }
+      });
+      const data = await response.json()
+     if (data.success == true) {
+        setSeller(data.getAllSellers)
+        setWilaya(data.sellersWilaya)
+        setLoading(false) 
+      } 
+  
+    } catch (error) {
+      console.error('operation failed.');
+    }
+     
+    }
+
+    handelGetSellers()
+
+ 
+    
+  },[])
+
+
+if (loading == true) return <div>...loading</div>
+
 
   return (
     <Box sx={{width:'100%',height:'100%',display:'flex',flexDirection:'column'}} >
@@ -47,24 +90,24 @@ export const DashbordModerate = () => {
     </Card>
        </Grid>
        <Grid item xs={8}>
-       <StatisticCardModerate/>
+       <StatisticCardModerate seller={seller} />
        </Grid>
 
 
        <Grid item xs={4}>
-       <WeeklyOverview/>
+       <WeeklyOverview seller={seller} />
        </Grid>
 
        <Grid item xs={4}>
-       <TotalEarning/>
+       <TotalEarning seller={seller} />
        </Grid>
 
        <Grid item xs={4}>
-       <SallesWilayas/>
+       <SallesWilayas seller={seller} wiliaya={wiliaya} />
        </Grid>
 
        <Grid item xs={12}>
-       <TableProducts/>
+       <TableProducts seller={seller} />
        </Grid>
 
        </Grid>
