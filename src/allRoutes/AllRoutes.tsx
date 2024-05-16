@@ -49,6 +49,7 @@ import { Settings } from '../Pages/vendeurcontrol/controlPanelSeller/components/
 import { ControlPanelModerate } from '../Pages/moderation/ControlPanelModerate'
 
 import { DashbordModerate } from '../Pages/moderation/components/Dashbord/DashbordModerate'
+import { Sellers } from '../Pages/moderation/components/sellers/Sellers'
 
 
 export default function AllRoutes() {
@@ -114,7 +115,7 @@ export default function AllRoutes() {
 
            <Route path='/controlpanelmoderate' element={<ProtectedRoutes><ControlPanelModerate/></ProtectedRoutes>} >
            <Route path='dashboard' element={<ProtectedRoutes><DashbordModerate/></ProtectedRoutes>} />
-
+           <Route path='sellers' element={<ProtectedRoutes><Sellers/></ProtectedRoutes>} />
            </Route>
             
 

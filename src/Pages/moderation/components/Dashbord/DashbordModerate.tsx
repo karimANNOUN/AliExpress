@@ -11,53 +11,14 @@ import { WeeklyOverview } from './components/WeeklyOverview';
 import { TotalEarning } from './components/TotalEarning';
 import { SallesWilayas } from './components/SallesWilayas';
 import { TableProducts } from './components/TableProducts';
-import Cookies from 'js-cookie';
 
-export const DashbordModerate = () => {
+
+export const DashbordModerate = ({seller,wiliaya,loading}:any) => {
 
   const user = useSelector((state:any)=>state.app.user)
   const navigate=useNavigate()
 
-  const [loading,setLoading]=useState(false)
-  const [seller,setSeller]=useState<any>([])
-  const [wiliaya,setWilaya]=useState<any>([])
-  const token = Cookies.get('token');
-
-
-  useEffect(()=>{
-
-    const handelGetSellers=async()=>{
-      try {
-        setLoading(true)
-      const response = await fetch(`http://localhost:8000/getAllSellersRegion`,{
-        method: 'GET',
-        credentials:"include", 
-        headers: {
-          'Content-Type': 'application/json',
-           authorization:`${token}`
-        }
-      });
-      const data = await response.json()
-     if (data.success == true) {
-        setSeller(data.getAllSellers)
-        setWilaya(data.sellersWilaya)
-        setLoading(false) 
-      } 
-  
-    } catch (error) {
-      console.error('operation failed.');
-    }
-     
-    }
-
-    handelGetSellers()
-
- 
-    
-  },[])
-
-
-if (loading == true) return <div>...loading</div>
+  if (loading == true) return <div>...loading</div>
 
 
   return (
@@ -81,7 +42,7 @@ if (loading == true) return <div>...loading</div>
           discover our sellers region 
         </Typography>
         
-        <Button onClick={()=>{navigate('/controlpanelseller/orders')}} size='small' variant='contained'>
+        <Button onClick={()=>{navigate('/controlpanelmoderate/sellers')}} size='small' variant='contained'>
           View Sallers
         </Button>
         

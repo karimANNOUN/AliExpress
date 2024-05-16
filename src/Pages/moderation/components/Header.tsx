@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import Skeleton from '@mui/material/Skeleton';
 
-export const Header = () => {
+export const Header = ({loading}:any) => {
 
     const user = useSelector((state:any)=>state.app.user)
 
@@ -49,7 +49,6 @@ export const Header = () => {
 
     const token = Cookies.get('token');
     const [input,setInput]=useState("")
-    const [loading,setLoading]=useState(Boolean)
     const [productsSeller,setProductsSeller]=useState([])
 
   return (

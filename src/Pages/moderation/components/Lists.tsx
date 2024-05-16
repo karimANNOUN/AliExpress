@@ -36,7 +36,7 @@ export const Lists = () => {
         setCount(0)
       }if (location.pathname == '/controlpanelmoderate/dashboard') {
         setCount(0)
-      }if (location.pathname == '/controlpanelseller/products') {
+      }if (location.pathname == '/controlpanelmoderate/sellers') {
         setCount(1)
       }if (location.pathname == '/controlpanelseller/orders') {
         setCount(2)
@@ -59,7 +59,7 @@ export const Lists = () => {
 
     const navLinks= [
       {id:0,name:"Dashbord",icons:<Icon path={mdiMonitorDashboard} size={1} />,url:'/controlpanelmoderate/dashboard',tolip:"Dashbord"},
-      {id:1,name:"Sellers",icons:<Icon path={mdiCardAccountDetails} size={1} />,url:'/controlpanelseller/products',tolip:"Explore Sellers"},
+      {id:1,name:"Sellers",icons:<Icon path={mdiCardAccountDetails} size={1} />,url:'/controlpanelmoderate/sellers',tolip:"Explore Sellers"},
       {id:2,name:"Orders",icons:<Badge badgeContent="2" color="warning"><ShoppingCartIcon /></Badge>,url:'/controlpanelseller/orders',tolip:"All Orders"},
       {id:3,name:"Customers",icons:<GroupIcon />,url:'/controlpanelseller/customers',tolip:"find customers"},
       {id:4,name:"Reviews",icons:<ReviewsIcon />,url:'/controlpanelseller/reviews',tolip:"All Reviews"},

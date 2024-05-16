@@ -18,7 +18,8 @@ function App() {
   {id:12,url:`/controlpanelseller/updateproduct/:prodId`},{id:13,url:`/controlpanelseller/orders`},
   {id:14,url:`/controlpanelseller/customers`},{id:15,url:`/controlpanelseller/reviews`},
   {id:16,url:`/controlpanelseller/transactions`},{id:17,url:`/controlpanelseller/storeSettings`},
-  {id:18,url:'/controlpanelseller/hotoffres'},{id:19,url:'/controlpanelseller/settings'},{id:20,url:'/controlpanelmoderate/dashboard'}]
+  {id:18,url:'/controlpanelseller/hotoffres'},{id:19,url:'/controlpanelseller/settings'},
+  {id:20,url:'/controlpanelmoderate/dashboard'},{id:20,url:'/controlpanelmoderate/sellers'}]
 
   return (
     <div className="App">
