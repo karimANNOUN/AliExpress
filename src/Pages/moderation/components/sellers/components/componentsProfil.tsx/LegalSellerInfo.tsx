@@ -2,6 +2,7 @@ import React from 'react'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import RecyclingIcon from '@mui/icons-material/Recycling';
 
 export const LegalSellerInfo = ({sells}:any) => {
 
@@ -37,6 +38,8 @@ export const LegalSellerInfo = ({sells}:any) => {
         <Typography sx={{fontWeight:'700',textAlign:'left',mb:2}} variant="body1" gutterBottom>
         Representative Legal Info
     </Typography>
+
+   
     <Box sx={{width:'100%',maxHeight:'400px',overflowY:'auto',display:'flex',flexDirection:'column',justifyContent:'flex-start',mt:2}} >
     { legallInf.map( (profil) => <Box key={profil.id} sx={{display:'flex',alignItems:'center',mb:1}} >
     <Typography sx={{fontWeight:'700',textAlign:'left'}} variant="body1" gutterBottom>
@@ -61,6 +64,7 @@ export const LegalSellerInfo = ({sells}:any) => {
         <Typography sx={{fontWeight:'700',textAlign:'left',mb:2}} variant="body1" gutterBottom>
         Representative Legal Location
     </Typography>
+   
     <Box sx={{width:'100%',maxHeight:'400px',overflowY:'auto',display:'flex',flexDirection:'column',justifyContent:'flex-start',my:2}} >
     { legalLocation.map( (profil) => <Box key={profil.id} sx={{display:'flex',alignItems:'center',mb:1}} >
     <Typography sx={{fontWeight:'700',textAlign:'left'}} variant="body1" gutterBottom>
@@ -99,6 +103,8 @@ export const LegalSellerInfo = ({sells}:any) => {
         <Typography sx={{fontWeight:'700',textAlign:'left',mb:2}} variant="body1" gutterBottom>
         Representative Legal Identity
     </Typography>
+
+   
     <Box sx={{width:'100%',maxHeight:'400px',overflowY:'auto',display:'flex',flexDirection:'column',justifyContent:'flex-start',mt:2}} >
     { legalIdentity.map( (profil) => <Box key={profil.id} sx={{display:'flex',alignItems:'center',mb:1}} >
     <Typography sx={{fontWeight:'700',textAlign:'left'}} variant="body1" gutterBottom>

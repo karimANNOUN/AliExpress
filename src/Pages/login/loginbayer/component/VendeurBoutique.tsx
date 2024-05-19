@@ -30,6 +30,8 @@ export const VendeurBoutique = () => {
   const Token=Cookies.get('token')
     const navigate=useNavigate()
 
+    const [loading,setLoading]=useState(Boolean)
+
     const [uploadProgress, setUploadProgress] = useState(0);
     const [uploadProgress1, setUploadProgress1] = useState(0);
     const [uploadProgress2, setUploadProgress2] = useState(0);
@@ -226,6 +228,7 @@ export const VendeurBoutique = () => {
         formData.append('expire', expire);
 
        //   if (file !== null && category !== "" && name !== "" && price !== "" && quantity !== "" ) {
+        setLoading(true)
           axios.post(`http://localhost:8000/sellerstep`,formData, {
             withCredentials:true,
             headers:{authorization:`${Token}`},
@@ -235,6 +238,7 @@ export const VendeurBoutique = () => {
        // }
 
        if (data.success == true) {
+        setLoading(false)
          navigate("/decisionvendeurboutique")
        }
            
@@ -871,7 +875,13 @@ Pièce d'identité (recto-verso et en couleur)
       Enregistrer
     </Button>
 
-    <Button onClick={handelProduct} variant='contained' color='primary'  sx={{color:'white',width:'47%',textTransform:'lowercase',borderRadius:'12px' ,":hover":{color:'white'} }} >
+    <Button 
+      onClick={handelProduct} 
+      variant='contained' 
+      color='primary'  
+      sx={{color:'white',width:'47%',textTransform:'lowercase',borderRadius:'12px' ,":hover":{color:'white'} }} 
+      disabled={loading == true ? true : false }
+      >
       Soumettre une demmande
     </Button>
                 

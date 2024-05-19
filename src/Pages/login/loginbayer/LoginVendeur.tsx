@@ -20,65 +20,66 @@ export const LoginVendeur = () => {
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
-      
+    const [loading,setLoading]=useState(Boolean)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [name,setName]=useState('')
-    const [state,setState]=useState('')
+    const [state,setState]=useState<any>({})
+    const [gender,setGender]=useState<any>({})
     const [message, setMessage] = useState('');
     
   
 
     const options2 =[
-      'Adrar',
-      'Chlef',
-      'Laghouat',
-      'Oum El Bouaghi',
-      'Batna',
-      'Béjaïa',
-      'Biskra',
-      'Béchar',
-      'Blida',
-      'Bouira',
-      'Tamanrasset',
-      'Tébessa',
-      'Tlemcen',
-      'Tiaret',
-      'Tizi Ouzou',
-      'Alger',
-      'Djelfa',
-      'Jijel',
-      'Sétif',
-      'Saïda',
-      'Skikda',
-      'Sidi Bel Abbès',
-      'Annaba',
-      'Guelma',
-      'Constantine',
-      'Médéa',
-      'Mostaganem',
-      'MSila',
-      'Mascara',
-      'Ouargla',
-      'Oran',
-      'El Bayadh',
-      'Illizi',
-      'Bordj Bou Arréridj',
-      'Boumerdès',
-      'El Tarf',
-      'Tindouf',
-      'Tissemsilt',
-      'El Oued',
-      'Khenchela',
-      'Souk Ahras',
-      'Tipaza',
-      'Mila',
-      'Aïn Defla',
-      'Naâma',
-      'Aïn Témouchent',
-      'Ghardaïa',
-      'Relizane'
+      {name:'Adrar',region:'region sud'},
+      {name:'Chlef',region:'region centre'},
+      {name:'Laghouat',region:'region sud'},
+      {name:'Oum El Bouaghi',region:'region est'},
+      {name:'Batna',region:'region est'},
+      {name:'Béjaïa',region:'region est'},
+      {name:'Biskra',region:'region sud'},
+      {name:'Béchar',region:'region sud'},
+      {name:'Blida',region:'region centre'},
+      {name:'Bouira',region:'region centre'},
+      {name:'Tamanrasset',region:'region sud'},
+      {name:'Tébessa',region:'region est'},
+      {name:'Tlemcen',region:'region ouest'},
+      {name:'Tiaret',region:'region ouest'},
+      {name:'Tizi Ouzou',region:'region centre'},
+      {name:'Alger',region:'region centre'},
+      {name:'Djelfa',region:'region centre'},
+      {name:'Jijel',region:'region est'},
+      {name:'Sétif',region:'region est'},
+      {name:'Saïda',region:'region ouest'},
+      {name:'Skikda',region:'region est'},
+      {name:'Sidi Bel Abbès',region:'region ouest'},
+      {name:'Annaba',region:'region est'},
+      {name:'Guelma',region:'region est'},
+      {name:'Constantine',region:'region est'},
+      {name:'Médéa',region:'region centre'},
+      {name:'Mostaganem',region:'region ouest'},
+      {name:'MSila',region:'region centre'},
+      {name:'Mascara',region:'region ouest'},
+      {name:'Ouargla',region:'region sud'},
+      {name:'Oran',region:'region ouest'},
+      {name:'El Bayadh',region:'region ouest'},
+      {name:'Illizi',region:'region sud'},
+      {name:'Bordj Bou Arréridj',region:'region est'},
+      {name:'Boumerdès',region:'region centre'},
+      {name:'El Tarf',region:'region est'},
+      {name:'Tindouf',region:'region sud'},
+      {name:'Tissemsilt',region:'region centre'},
+      {name:'El Oued',region:'region sud'},
+      {name:'Khenchela',region:'region est'},
+      {name:'Souk Ahras',region:'region est'},
+      {name:'Tipaza',region:'region centre'},
+      {name:'Mila',region:'region est'},
+      {name:'Aïn Defla',region:'region centre'},
+      {name:'Naâma',region:'region ouest'},
+      {name:'Aïn Témouchent',region:'region ouest'},
+      {name:'Ghardaïa',region:'region sud'},
+      {name:'Relizane',region:'region ouest'}
     ];
     const steps = [
         'Créer un compte',
@@ -87,28 +88,32 @@ export const LoginVendeur = () => {
       ];
 
 
+      const options3 =[{name:"Male"},{name:"Female"}]
+
+      
       const handleRegisterSeller = async () => {
         try {
-         
+           setLoading(true)
           const response = await fetch(`http://localhost:8000/registerseller`,{
             method: 'POST',
             credentials:"include",
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, state ,password ,name }),
+            body: JSON.stringify({ email, state ,password ,name ,gender }),
            
           });
 
          
   
           const data = await response.json()
-         console.log(data)
          setEmail(data.newUser.email)
         if (data.success == false) {
             setMessage(data.message)
+            setLoading(false)
         }if (data.success == true) {
-            setOpen(true)     
+            setOpen(true) 
+            setLoading(false)    
         }
         //  console.log('User registered successfully.');
        
@@ -121,7 +126,12 @@ export const LoginVendeur = () => {
 
       const handleChange = (event:any, newValue :any) => {
         setState(newValue);
-        // Perform additional actions based on the selected value
+      
+      };
+
+      const handleChange1 = (event:any, newValue :any) => {
+        setGender(newValue);
+       
       };
 
 
@@ -162,8 +172,21 @@ export const LoginVendeur = () => {
       sx={{ width: '100%',my:1 }}
       size="small"
       placeholder='choose your state'
-      value={state}
+      getOptionLabel={(option) => option.name}
       onChange={handleChange}
+      renderInput={(params) => <TextField required  {...params} placeholder='choose your state'  />}
+    />
+
+
+   <label htmlFor='Gender' style={{textAlign:'left'}} > Gender </label>
+            <Autocomplete
+      id="Gender"
+      options={options3}
+      sx={{ width: '100%',my:1 }}
+      size="small"
+      placeholder='choose your state'
+      getOptionLabel={(option) => option.name}
+      onChange={handleChange1}
       renderInput={(params) => <TextField required  {...params} placeholder='choose your state'  />}
     />
 
@@ -230,7 +253,12 @@ export const LoginVendeur = () => {
         {message}
         </Typography>
  {password == confirmPassword && password !== "" && confirmPassword !== "" ?
-    <Button variant='contained' onClick={handleRegisterSeller} sx={{color:'white',textTransform:'lowercase',my:2,bgcolor:'#d32f2f',borderRadius:'12px' ,":hover":{color:'white',bgcolor:'#d32f2f'} }} >
+    <Button 
+       variant='contained' 
+       onClick={handleRegisterSeller}  
+       sx={{color:'white',textTransform:'lowercase',my:2,bgcolor:'#d32f2f',borderRadius:'12px' ,":hover":{color:'white',bgcolor:'#d32f2f'} }} 
+       disabled={loading == true ? true : false}
+       >
       S'inscrire
     </Button> : 
      <Button variant='contained' disabled  sx={{color:'white',textTransform:'lowercase',my:2,bgcolor:'#d32f2f',borderRadius:'12px' ,":hover":{color:'white',bgcolor:'#d32f2f'} }} >

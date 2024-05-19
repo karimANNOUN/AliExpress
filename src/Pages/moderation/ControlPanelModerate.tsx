@@ -62,7 +62,7 @@ export const ControlPanelModerate = () => {
       </Box>
       <Box sx={{width:'85%',height:'100vh',position:'relative',overflowY:'auto',px:2}} >
       { location.pathname == '/controlpanelmoderate/dashboard' ? <DashbordModerate seller={seller} wiliaya={wiliaya} loading={loading} /> : "" }
-      { location.pathname == '/controlpanelmoderate/sellers' ? <Sellers seller={seller} /> : "" }
+      { location.pathname == '/controlpanelmoderate/sellers' ? <Sellers seller={seller} loading={loading} /> : "" }
       </Box>
     </Box>
 

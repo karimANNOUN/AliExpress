@@ -12,7 +12,7 @@ import TableContainer from '@mui/material/TableContainer'
 import {calculateRevenueSeller} from './FunctionTotalModeration'
 
 
-type ThemeColor = 'error' | 'warning' | 'info' | 'success' 
+type ThemeColor = 'info' | 'error' | 'warning' | 'success' 
 
 
   
@@ -27,7 +27,6 @@ type ThemeColor = 'error' | 'warning' | 'info' | 'success'
 export const TableProducts = ({seller}:any) => {
 
 
-  
       
       const statusObj: StatusObj = {
         "seller attente1": { color: 'info' },

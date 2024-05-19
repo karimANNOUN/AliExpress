@@ -2,6 +2,7 @@ import React from 'react'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import RecyclingIcon from '@mui/icons-material/Recycling';
 
 export const ProfilSellerInfo = ({sells}:any) => {
 
@@ -47,6 +48,9 @@ export const ProfilSellerInfo = ({sells}:any) => {
         <Typography sx={{fontWeight:'700',textAlign:'left',mb:2}} variant="body1" gutterBottom>
     Seller Orders Info
     </Typography>
+
+  
+    
     <Box sx={{width:'100%',maxHeight:'400px',overflowY:'auto',display:'flex',flexDirection:'column',justifyContent:'flex-start',mt:2}} >
     { orderInfo.map( (profil) => <Box key={profil.id} sx={{display:'flex',alignItems:'center',mb:1}} >
     <Typography sx={{fontWeight:'700',textAlign:'left'}} variant="body1" gutterBottom>
@@ -74,7 +78,8 @@ export const ProfilSellerInfo = ({sells}:any) => {
     Hi, {sells.name} this is all your profil khademni info 
     </Typography>
 
-    { profilInf.map( (profil:any) => <Box key={profil.id} sx={{display:'flex',alignItems:'center',mb:1}} >
+    {
+     profilInf.map( (profil:any) => <Box key={profil.id} sx={{display:'flex',alignItems:'center',mb:1}} >
     <Typography sx={{fontWeight:'700',textAlign:'left'}} variant="body1" gutterBottom>
     {profil.info}:
     </Typography>
@@ -83,9 +88,9 @@ export const ProfilSellerInfo = ({sells}:any) => {
         {profil.details}
         </Typography>
 
-    </Box>)}
+    </Box>)
 
-   
+  }
 
         </Box>
 
@@ -95,6 +100,19 @@ export const ProfilSellerInfo = ({sells}:any) => {
     Followers
     </Typography>
 
+    
+    { sells.followers.length === 0 ?  
+
+<Box sx={{width:'100%',height:'250px',display:'flex',border:'solid 2px #e0e0e0',borderRadius:'8px',flexDirection:'column',justifyContent:'center',alignItems:'center',mt:2}} >
+
+<Typography sx={{fontWeight:'700',textAlign:'left',mb:2}} variant="body1" gutterBottom>
+    Not Find Followers
+    </Typography>
+
+    <RecyclingIcon  sx={{fontSize:'42px'}} />
+
+        </Box>
+: 
    
         <Box sx={{width:'100%',maxHeight:'400px',overflowY:'auto',display:'flex',flexDirection:'column',justifyContent:'flex-start',alignItems:'center',mt:2}} >
 
@@ -124,7 +142,7 @@ export const ProfilSellerInfo = ({sells}:any) => {
 
 </Box>)}
 
-        </Box>
+        </Box>}
     
    
 

@@ -67,7 +67,7 @@ export const SallesWilayas = ({seller,wiliaya}:any) => {
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   { calculateAllRevenueThistYear(item,seller) / calculateRevenueWilayaLast(item,seller) > 1 ? 
                        <ChevronUp sx={{ color: 'success.main', fontWeight: 600 }} /> :
-                       <ChevronDown sx={{ color: 'error.main', fontWeight: 600 }} />
+                       ( (calculateAllRevenueThistYear(item,seller) === 0 && calculateRevenueWilayaLast(item,seller) === 0) ? "" : <ChevronDown sx={{ color: 'error.main', fontWeight: 600 }} />)
                        }
                     <Typography
                       variant='caption'
@@ -77,7 +77,10 @@ export const SallesWilayas = ({seller,wiliaya}:any) => {
                       }}
                       color={ (calculateAllRevenueThistYear(item,seller) - calculateRevenueWilayaLast(item,seller) < 0) ? 'error.main' : 'success.main' }
                     >
-                      { calculateRevenueWilayaLast(item,seller) === 0 ? 100 : (calculateAllRevenueThistYear(item,seller)*100/calculateRevenueWilayaLast(item,seller)) }%
+                      { (calculateAllRevenueThistYear(item,seller) === 0 && calculateRevenueWilayaLast(item,seller) === 0)
+                       ? 0 : 
+                       
+                       ( calculateRevenueWilayaLast(item,seller) === 0 ?  100 : calculateAllRevenueThistYear(item,seller)*100/calculateRevenueWilayaLast(item,seller)) }%
                     </Typography>
                   </Box>
                 </Box>

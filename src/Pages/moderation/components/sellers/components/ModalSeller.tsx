@@ -1,4 +1,4 @@
-import { useState} from 'react';
+import { useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -12,9 +12,29 @@ import { CardProduct } from './componentsProfil.tsx/CardProduct';
 import { ProfilSellerInfo } from './componentsProfil.tsx/ProfilSellerInfo';
 import { LegalSellerInfo } from './componentsProfil.tsx/LegalSellerInfo';
 import { EntrepriseSellerInfo } from './componentsProfil.tsx/EntrepriseSellerInfo';
+import RecyclingIcon from '@mui/icons-material/Recycling';
+import Button from '@mui/material/Button';
 
+
+type ThemeColor = 'info' | 'error' | 'warning' | 'success' 
+
+
+interface StatusObj {
+    [key: string]: {
+      color: ThemeColor
+    }
+  }
 
 export const ModalSeller = ({opens,setOpens,sells}:any) => {
+
+
+
+    const statusObj: StatusObj = {
+        "seller attente1": { color: 'info' },
+        "rejected": { color: 'error' },
+        "seller attente2": { color: 'warning' },
+        "seller": { color: 'success' }
+      }
 
     const style = {
         position: 'absolute' as 'absolute',
@@ -46,12 +66,14 @@ export const ModalSeller = ({opens,setOpens,sells}:any) => {
 
 
     const handleClickRight = () => {
-        setCurrentIndex((prevIndex) => (prevIndex + 4) % sells.products.length);
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % sells.products.length);
       };
     
       const handleClickLeft = () => {
-        setCurrentIndex((prevIndex) => (prevIndex - 4 + sells.products.length) % sells.products.length);
+        setCurrentIndex((prevIndex) => (prevIndex - 1 + sells.products.length) % sells.products.length);
       };
+
+     
 
    
 
@@ -69,7 +91,7 @@ export const ModalSeller = ({opens,setOpens,sells}:any) => {
 
     <Box sx={{height:'300px',width:'100%',position:'relative'}} >
          <img 
-         src={sells.firstImageStore == "" ? "https://almparts.co.za/wp-content/uploads/2021/12/no-image-available-icon.jpg" : sells.firstImageStore } 
+         src={sells.firstImageStore == null ? "https://almparts.co.za/wp-content/uploads/2021/12/no-image-available-icon.jpg" : sells.firstImageStore } 
          alt='hh' 
          style={{height:'100%',width:'100%'}} 
          />
@@ -82,7 +104,7 @@ export const ModalSeller = ({opens,setOpens,sells}:any) => {
         <Box sx={{display:'flex',alignItems:'center'}} >
          <img 
          alt='kilou' 
-         src={sells.secondImageStore == "" ? "https://almparts.co.za/wp-content/uploads/2021/12/no-image-available-icon.jpg" : sells.secondImageStore } 
+         src={sells.secondImageStore == null ? "https://almparts.co.za/wp-content/uploads/2021/12/no-image-available-icon.jpg" : sells.secondImageStore } 
          style={{height:'80px',width:'80px',borderRadius:'8px' }} 
          />
          <Box sx={{display:'flex',flexDirection:'column',justifyContent:'center',ml:2}} >
@@ -102,8 +124,8 @@ export const ModalSeller = ({opens,setOpens,sells}:any) => {
     Status
     </Typography>
         <Chip
-                  label="Seller"
-                  color="success"
+                  label={sells.role}
+                  color={statusObj[sells.role].color}
                   sx={{
                     height: 35,
                     fontSize: '0.75rem',
@@ -121,7 +143,18 @@ export const ModalSeller = ({opens,setOpens,sells}:any) => {
     </Typography>
 
     
-    <ProfilSellerInfo sells={sells} />
+    { sells.role == "seller attente1" ?  
+
+     <Box sx={{width:'100%',height:'400px',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',mt:2}} >
+
+     <Typography sx={{fontWeight:'700',textAlign:'left',mb:2}} variant="body1" gutterBottom>
+         Nothings Profil Infos
+         </Typography>
+     
+         <RecyclingIcon  sx={{fontSize:'42px'}} />
+     
+             </Box>
+    : <ProfilSellerInfo sells={sells} />}
 
 
 
@@ -130,8 +163,19 @@ export const ModalSeller = ({opens,setOpens,sells}:any) => {
     </Typography>
 
 
+ { sells.role == "seller attente1" ?  
+    
+     <Box sx={{width:'100%',height:'400px',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',mt:2}} >
 
-    <LegalSellerInfo sells={sells} />
+     <Typography sx={{fontWeight:'700',textAlign:'left',mb:2}} variant="body1" gutterBottom>
+         Nothings Representative Legal Infos
+         </Typography>
+     
+         <RecyclingIcon  sx={{fontSize:'42px'}} />
+     
+             </Box>
+    :
+     <LegalSellerInfo sells={sells} /> }
 
 
 
@@ -143,10 +187,30 @@ export const ModalSeller = ({opens,setOpens,sells}:any) => {
 
 
 
-   
-   <EntrepriseSellerInfo sells={sells} />
+    { sells.role == "seller attente1" ?  
+    
+     <Box sx={{width:'100%',height:'400px',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',mt:2}} >
+
+     <Typography sx={{fontWeight:'700',textAlign:'left',mb:2}} variant="body1" gutterBottom>
+         Nothings Entreprise Seller Infos
+         </Typography>
+     
+         <RecyclingIcon  sx={{fontSize:'42px'}} />
+     
+             </Box>
+    :
+   <EntrepriseSellerInfo sells={sells} />}
 
 
+
+     {sells.role == "seller attente2" ? 
+     
+     <Box sx={{display:'flex',alignItems:'center',justifyContent:'center',width:'100%',my:3}} >
+     <Button  disabled={loading==true ? true : false } sx={{bgcolor:'#d500f9',color:'white',textTransform:'lowercase',mr:3,":hover":{bgcolor:'#d500f9',color:'white'}}} variant="text">Approve Seller</Button>
+     <Button  disabled={loading==true ? true : false }  sx={{bgcolor:'#d50000',color:'white',textTransform:'lowercase',":hover":{bgcolor:'#d50000',color:'white'}}} variant="text">Reject Seller</Button>
+</Box>
+
+     : "" }
     
 
     <Typography sx={{fontWeight:'600',textAlign:'left',fontFamily:'monospace',color:'#9c27b0'}} variant="h5" gutterBottom>
@@ -154,6 +218,18 @@ export const ModalSeller = ({opens,setOpens,sells}:any) => {
     </Typography>
 
 
+    { sells.products.length === 0 ?  
+    
+    <Box sx={{width:'100%',height:'400px',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',mt:2}} >
+
+    <Typography sx={{fontWeight:'700',textAlign:'left',mb:2}} variant="body1" gutterBottom>
+        No Products Find
+        </Typography>
+    
+        <RecyclingIcon  sx={{fontSize:'42px'}} />
+    
+            </Box>
+   :
 
     <Box sx={{display:'flex',alignItems:'center',width:'100%',position:'relative',mt:4}} >
 
@@ -172,7 +248,7 @@ export const ModalSeller = ({opens,setOpens,sells}:any) => {
  </Box> : "" }
     
 
-    </Box>
+    </Box>}
 
 
     </Box>
