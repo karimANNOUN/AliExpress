@@ -38,9 +38,6 @@ const [message,setMessage]=useState('')
       
         const data = await response.json()
 
-    //    Cookies.set('token', data.token, { expires: 7 });
-        
-    //    const Token=Cookies.get('token')
        
         const response2 = await fetch(`http://localhost:8000/user`,{
           method: 'GET',
@@ -57,35 +54,30 @@ const [message,setMessage]=useState('')
          
           if (data.success == false) {
               setMessage(data.message)
-          }if (data.success == true && user.user.user.role =="simple"  ) {
+          }if (data.success == true && user.user.role =="simple"  ) {
             Cookies.set('token', data.token, { expires: 7 });
-            dispatch(setUser(user.user.user))
+            dispatch(setUser(user.user))
               navigate("/")   
-          }if (data.success == true && user.user.user.role =="seller attente1" ) {
+          }if (data.success == true && (user.user.role =="seller attente1" || user.user.role =="rejected" || user.user.role =="saved")  ) {
             Cookies.set('token', data.token, { expires: 7 });
-            dispatch(setUser(user.user.user))
+            dispatch(setUser(user.user))
              navigate("/loginvendeurboutique")
-          }if (data.success == true && user.user.user.role =="seller attente2") {
+          }if (data.success == true && user.user.role =="seller attente2"  ) {
             Cookies.set('token', data.token, { expires: 7 });
-            dispatch(setUser(user.user.user))
+            dispatch(setUser(user.user))
             navigate("/decisionvendeurboutique")
-          }if (data.success == true && user.user.user.role =="seller") {
+          }if (data.success == true && user.user.role =="seller") {
             Cookies.set('token', data.token, { expires: 7 });
-            dispatch(setUser(user.user.user))
+            dispatch(setUser(user.user))
             navigate("/controlpanelseller/dashboard") 
-          }if (data.success == true && user.user.user.role =="moderate") {
+          }if (data.success == true && user.user.role =="moderate") {
             Cookies.set('token', data.token, { expires: 7 });
-            dispatch(setUser(user.user.user))
+            dispatch(setUser(user.user))
             navigate("/controlpanelmoderate/dashboard") 
           }
           
         }
-       
-
-   //     const data = await response.json()
-     //   console.log(data)
-
-      //  console.log('User registered successfully.');
+      
       } catch (error) {
         console.error('login failed.');
       }

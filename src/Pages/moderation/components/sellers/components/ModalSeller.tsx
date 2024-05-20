@@ -25,7 +25,7 @@ interface StatusObj {
     }
   }
 
-export const ModalSeller = ({opens,setOpens,sells}:any) => {
+export const ModalSeller = ({opens,setOpens,sells,setSeller}:any) => {
 
 
 
@@ -73,8 +73,64 @@ export const ModalSeller = ({opens,setOpens,sells}:any) => {
         setCurrentIndex((prevIndex) => (prevIndex - 1 + sells.products.length) % sells.products.length);
       };
 
-     
+      
 
+  
+  
+  
+      const handelApprovedSeller=async()=>{
+        try {
+          setLoading(true)
+        const response = await fetch(`http://localhost:8000/approvedSellers`,{
+          method: 'PATCH',
+          credentials:"include", 
+          headers: {
+            'Content-Type': 'application/json',
+             authorization:`${token}`
+          },
+          body:JSON.stringify({sells})
+        });
+        const data = await response.json()
+       if (data.success == true) {
+          setSeller(data.getAllSellers)
+          setLoading(false)
+          setOpens(false) 
+        } 
+    
+      } catch (error) {
+        console.error('operation failed.');
+      }
+       
+      }
+
+
+
+      const handelRejectedSeller=async()=>{
+        try {
+          setLoading(true)
+        const response = await fetch(`http://localhost:8000/rejectedSellers`,{
+          method: 'PATCH',
+          credentials:"include", 
+          headers: {
+            'Content-Type': 'application/json',
+             authorization:`${token}`
+          },
+          body:JSON.stringify({sells})
+        });
+        const data = await response.json()
+       if (data.success == true) {
+          setSeller(data.getAllSellers)
+          setLoading(false)
+          setOpens(false) 
+        } 
+    
+      } catch (error) {
+        console.error('operation failed.');
+      }
+       
+      }
+  
+    
    
 
    
@@ -206,8 +262,23 @@ export const ModalSeller = ({opens,setOpens,sells}:any) => {
      {sells.role == "seller attente2" ? 
      
      <Box sx={{display:'flex',alignItems:'center',justifyContent:'center',width:'100%',my:3}} >
-     <Button  disabled={loading==true ? true : false } sx={{bgcolor:'#d500f9',color:'white',textTransform:'lowercase',mr:3,":hover":{bgcolor:'#d500f9',color:'white'}}} variant="text">Approve Seller</Button>
-     <Button  disabled={loading==true ? true : false }  sx={{bgcolor:'#d50000',color:'white',textTransform:'lowercase',":hover":{bgcolor:'#d50000',color:'white'}}} variant="text">Reject Seller</Button>
+     <Button  
+       onClick={handelApprovedSeller}
+       disabled={loading==true ? true : false } 
+       sx={{bgcolor:'#d500f9',color:'white',textTransform:'lowercase',mr:3,":hover":{bgcolor:'#d500f9',color:'white'}}} 
+       variant="text"
+       >
+        Approve Seller
+     </Button>
+
+     <Button  
+         onClick={handelRejectedSeller}
+         disabled={loading==true ? true : false }  
+         sx={{bgcolor:'#d50000',color:'white',textTransform:'lowercase',":hover":{bgcolor:'#d50000',color:'white'}}} 
+         variant="text"
+         >
+            Reject Seller
+        </Button>
 </Box>
 
      : "" }

@@ -1,14 +1,9 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
 import Chip from '@mui/material/Chip'
-import Table from '@mui/material/Table'
 import TableRow from '@mui/material/TableRow'
-import TableHead from '@mui/material/TableHead'
-import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
-import TableContainer from '@mui/material/TableContainer'
 import {calculateRevenueSeller} from '../../../Dashbord/components/FunctionTotalModeration'
 import Button from '@mui/material/Button';
 import { ModalSeller } from '../ModalSeller'
@@ -21,7 +16,7 @@ interface StatusObj {
   }
 }
 
-export const TableRowSeller = ({row}:any) => {
+export const TableRowSeller = ({row,setSeller}:any) => {
 
   const statusObj: StatusObj = {
     "seller attente1": { color: 'info' },
@@ -61,7 +56,7 @@ export const TableRowSeller = ({row}:any) => {
     <Button onClick={handleOpen} sx={{borderRadius:'14px',textTransform:'lowercase'}} color='info' variant="contained">Open</Button>
     </TableCell>
 
-    <ModalSeller opens={opens} setOpens={setOpens}  sells={row} />
+    <ModalSeller opens={opens} setOpens={setOpens}  sells={row} setSeller={setSeller} />
 
   </TableRow>
   )

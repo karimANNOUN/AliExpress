@@ -332,20 +332,67 @@ if(loading == true) return <div>...loading</div>
                           <Box sx={{width:'100%',bgcolor:'Window',display:'flex',flexDirection:'column',my:2,p:1}} >
                              <Box  sx={{display:'flex',alignItems:'center',mb:2}} >
                                <Box sx={{display:'flex',alignItems:'center'}} >
-                             { active === 0 ? <Button onClick={getCommandeInfo} variant="text" sx={{color:'black',bgcolor:'Window',fontWeight:'800',borderBottom:"2px solid #ff5722 ",":hover":{bgcolor:'Window'}}} >Tout</Button> 
-                             : <Button onClick={getCommandeInfo} variant="text" sx={{color:'#212121',bgcolor:'Window',":hover":{bgcolor:'Window',color:'#ff5722'}}} >Tout</Button>}
+                            
+                              <Button 
+                               onClick={getCommandeInfo} 
+                               variant="text" 
+                               sx={ active === 0 ? 
+                                {color:'black',bgcolor:'Window',fontWeight:'800',borderBottom:"2px solid #ff5722 ",":hover":{bgcolor:'Window'}} 
+                                : 
+                                {color:'#212121',bgcolor:'Window',":hover":{bgcolor:'Window',color:'#ff5722'}} 
+                              } 
+                               >
+                                Tout
+                                </Button> 
+                            
                              
-                             { active === 1 ? <Button onClick={getCommandeNonPaye} variant="text" sx={{color:'black',bgcolor:'Window',fontWeight:'800',borderBottom:"2px solid #ff5722 ",":hover":{bgcolor:'Window'}}} >Non payées</Button> 
-                             : <Button onClick={getCommandeNonPaye} variant="text" sx={{color:'#212121',bgcolor:'Window',":hover":{bgcolor:'Window',color:'#ff5722'}}} >Non payées</Button>}
+                             <Button 
+                             onClick={getCommandeNonPaye} 
+                             variant="text" 
+                             sx={ active === 1 ? 
+                              {color:'black',bgcolor:'Window',fontWeight:'800',borderBottom:"2px solid #ff5722 ",":hover":{bgcolor:'Window'}} 
+                              : 
+                              {color:'#212121',bgcolor:'Window',":hover":{bgcolor:'Window',color:'#ff5722'}} 
+                            } 
+                             >
+                              Non payées
+                            </Button> 
        
-       { active === 2 ? <Button onClick={getCommandeEncore} variant="text" sx={{color:'black',bgcolor:'Window',fontWeight:'800',borderBottom:"2px solid #ff5722 ",":hover":{bgcolor:'Window'}}} >En cours</Button> 
-                             : <Button onClick={getCommandeEncore} variant="text" sx={{color:'#212121',bgcolor:'Window',":hover":{bgcolor:'Window',color:'#ff5722'}}} >En cours</Button>}
+                          <Button 
+                           onClick={getCommandeEncore} 
+                           variant="text" 
+                           sx={ active === 2 ? 
+                            {color:'black',bgcolor:'Window',fontWeight:'800',borderBottom:"2px solid #ff5722 ",":hover":{bgcolor:'Window'}} 
+                            : 
+                            {color:'#212121',bgcolor:'Window',":hover":{bgcolor:'Window',color:'#ff5722'}} 
+                          }  
+                           >
+                            En cours
+                          </Button> 
        
-       { active === 3 ? <Button onClick={getCommandeExpedies} variant="text" sx={{color:'black',bgcolor:'Window',fontWeight:'800',borderBottom:"2px solid #ff5722 ",":hover":{bgcolor:'Window'}}} >Expédiées</Button> 
-                             : <Button onClick={getCommandeExpedies} variant="text" sx={{color:'#212121',bgcolor:'Window',":hover":{bgcolor:'Window',color:'#ff5722'}}} >Expédiées</Button>}
+                        <Button 
+                          onClick={getCommandeExpedies} 
+                          variant="text" 
+                          sx={ active === 3 ? 
+                            {color:'black',bgcolor:'Window',fontWeight:'800',borderBottom:"2px solid #ff5722 ",":hover":{bgcolor:'Window'}} 
+                            : 
+                            {color:'#212121',bgcolor:'Window',":hover":{bgcolor:'Window',color:'#ff5722'}} 
+                          } 
+                          >
+                            Expédiées
+                          </Button> 
        
-       { active === 4 ? <Button onClick={getCommandeTerminees} variant="text" sx={{color:'black',bgcolor:'Window',fontWeight:'800',borderBottom:"2px solid #ff5722 ",":hover":{bgcolor:'Window'}}} >Terminées</Button> 
-                             : <Button onClick={getCommandeTerminees} variant="text" sx={{color:'#212121',bgcolor:'Window',":hover":{bgcolor:'Window',color:'#ff5722'}}} >Terminées</Button>}
+                         <Button 
+                           onClick={getCommandeTerminees} 
+                           variant="text" 
+                           sx={ active === 4 ? 
+                            {color:'black',bgcolor:'Window',fontWeight:'800',borderBottom:"2px solid #ff5722 ",":hover":{bgcolor:'Window'}} 
+                            : 
+                            {color:'#212121',bgcolor:'Window',":hover":{bgcolor:'Window',color:'#ff5722'}} 
+                          } 
+                           >
+                            Terminées
+                          </Button> 
        
                              </Box>
        

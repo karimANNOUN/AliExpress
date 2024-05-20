@@ -1,7 +1,7 @@
-import {useState} from 'react'
+import { useState} from 'react'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
+
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -12,7 +12,7 @@ import StepLabel from '@mui/material/StepLabel';
 import { ModalEmailConfirmation } from './component/ModalEmailConfirmation';
 import { Header } from './component/Header';
 import { Footer } from './component/Footer';
-import { useNavigate } from 'react-router-dom';
+
 
 export const LoginVendeur = () => {
 
@@ -115,8 +115,6 @@ export const LoginVendeur = () => {
             setOpen(true) 
             setLoading(false)    
         }
-        //  console.log('User registered successfully.');
-       
         } catch (error) {
           console.error('Registration failed.');
           setMessage('Registration failed , please try again')
@@ -135,9 +133,7 @@ export const LoginVendeur = () => {
       };
 
 
-
-     
-       
+    
 
 
   return (

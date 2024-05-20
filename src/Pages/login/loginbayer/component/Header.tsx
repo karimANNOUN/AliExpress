@@ -5,10 +5,17 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 export const Header = () => {
 
     const options =["arabic","english"]
     const navigate=useNavigate()
+
+
+    const handelDeconnect = () =>{
+      Cookies.remove("token")
+      navigate('/login')
+    }
 
   return (
     <Box sx={{display:'flex',width:'100%',py:2,justifyContent:'space-around',alignItems:'center',bgcolor:'Window',borderBottom:'2px solid #f5f5f5'}} >
@@ -27,8 +34,8 @@ size="small"
 renderInput={(params) => <TextField {...params} label="lang" />}
 />
 
-<Button variant='contained' onClick={()=>navigate("/login")} sx={{color:'white',ml:2,textTransform:'lowercase',bgcolor:'#d32f2f',borderRadius:'12px' ,":hover":{color:'white',bgcolor:'#d32f2f'} }} >
-connexion
+<Button variant='contained' onClick={handelDeconnect} sx={{color:'white',ml:2,textTransform:'lowercase',bgcolor:'#d32f2f',borderRadius:'12px' ,":hover":{color:'white',bgcolor:'#d32f2f'} }} >
+déconnexion
 </Button>
 
 </Box>

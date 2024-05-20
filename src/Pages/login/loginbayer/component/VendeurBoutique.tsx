@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -23,6 +23,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { LinearProgress ,IconButton } from '@mui/material';
 import { CloseOutlined } from '@mui/icons-material';
+import { useSelector } from 'react-redux';
 
 
 
@@ -82,7 +83,18 @@ export const VendeurBoutique = () => {
     const [hiden3,setHiden3]=useState(false)
     
 
-    //hello all brother this is me
+
+
+
+
+    const user = useSelector((state:any)=>state.app.user)
+
+    useEffect(()=>{
+     if (user.role == "rejected") {
+      setRaisonSocial(user.entrepriseInfo.raisonSociale)
+     }
+    })
+      
 
     const handleChangeImageStatus = (e: React.ChangeEvent<HTMLInputElement>) => {
       setImageStatus(e.target.files?.[0] || null )
@@ -227,20 +239,37 @@ export const VendeurBoutique = () => {
         formData.append('identityType', identityType);
         formData.append('expire', expire);
 
-       //   if (file !== null && category !== "" && name !== "" && price !== "" && quantity !== "" ) {
-        setLoading(true)
+        if (user.reprisentativeLegal.id == null ) {
+          setLoading(true)
           axios.post(`http://localhost:8000/sellerstep`,formData, {
             withCredentials:true,
             headers:{authorization:`${Token}`},
           }) 
           .then(res=>setData(res.data) )
           .catch(err=>console.log(err)) 
-       // }
+       
 
        if (data.success == true) {
         setLoading(false)
          navigate("/decisionvendeurboutique")
        }
+        }else{
+          setLoading(true)
+          axios.put(`http://localhost:8000/updatesellerstep`,formData, {
+            withCredentials:true,
+            headers:{authorization:`${Token}`},
+          }) 
+          .then(res=>setData(res.data) )
+          .catch(err=>console.log(err)) 
+       
+
+       if (data.success == true) {
+        setLoading(false)
+         navigate("/decisionvendeurboutique")
+       }
+        }
+
+        
            
              
         }catch(error){
@@ -869,11 +898,7 @@ Pièce d'identité (recto-verso et en couleur)
                     </Typography>
 
 
-               <Box sx={{width:'100%',display:'flex',alignItems:'center',justifyContent:'space-between'}} >     
-
-               <Button variant='contained'  sx={{color:'black',width:'47%',textTransform:'lowercase',bgcolor:'Window',borderRadius:'12px',border:'1px solid #9e9e9e' ,":hover":{color:'black',bgcolor:'Window'} }} >
-      Enregistrer
-    </Button>
+               <Box sx={{width:'100%',display:'flex',alignItems:'center',justifyContent:'center'}} >     
 
     <Button 
       onClick={handelProduct} 
