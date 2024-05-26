@@ -13,19 +13,21 @@ import { Typography } from '@mui/material'
 
 
 
-export const TableSeller = ({seller,setSeller,active,state}:any) => {
+export const TableSeller = ({seller,setSeller,active,sort}:any) => {
 
   const sortSellers = (a:any,b:any) =>{
-    if (state == null ) {
+    if (sort == null ) {
         return a
-    }if (state.label == 'name' ) {
-        return (a.name - b.name)
-    }if (state.label == 'date') {
-        return (a.createdAt - b.createdAt)
-    }if (state.label == 'email') {
-        return (a.email - b.email)
-    }if (state.label == 'wilaya') {
-        return (a.state - b.state)
+    }if (sort.label == 'name' ) {
+        return a.name - b.name
+    }if (sort.label == 'date') {
+      const dateA :any = new Date(a.createdAt);
+      const dateB : any = new Date(b.createdAt);
+      return (dateB - dateA);
+    }if (sort.label == 'email') {
+        return (a.email-b.email)
+    }if (sort.label == 'wilaya') {
+        return (a.state-b.state)
     }
   }
 

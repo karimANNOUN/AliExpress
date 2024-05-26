@@ -6,6 +6,7 @@ import { DashbordModerate } from './components/Dashbord/DashbordModerate'
 import { useLocation } from 'react-router-dom'
 import { Sellers } from './components/sellers/Sellers'
 import Cookies from 'js-cookie';
+import { CustomersModerate } from './components/customers/CustomersModerate'
 
 export const ControlPanelModerate = () => {
 
@@ -58,11 +59,12 @@ export const ControlPanelModerate = () => {
     <Header loading={loading} />
     <Box sx={{display:'flex',width:'100%',mb:2,height:'100vh',position:'fixed',bgcolor:'#e0e0e0'}} >
       <Box sx={{width:'15%',bgcolor:'Window',height:'100vh'}} >
-        <Lists />
+        <Lists seller={seller} loading={loading} />
       </Box>
       <Box sx={{width:'85%',height:'100vh',position:'relative',overflowY:'auto',px:2}} >
       { location.pathname == '/controlpanelmoderate/dashboard' ? <DashbordModerate seller={seller} wiliaya={wiliaya} loading={loading} /> : "" }
-      { location.pathname == '/controlpanelmoderate/sellers' ? <Sellers seller={seller} loading={loading} setSeller={setSeller} /> : "" }
+      { location.pathname == '/controlpanelmoderate/sellers' ? <Sellers seller={seller} loading={loading} setSeller={setSeller} wiliaya={wiliaya} /> : "" }
+      { location.pathname == '/controlpanelmoderate/customers' ? <CustomersModerate /> : "" }
       </Box>
     </Box>
 

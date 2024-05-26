@@ -2,12 +2,6 @@ import { useState,useEffect } from 'react';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import Inventory2Icon from '@mui/icons-material/Inventory2';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import GroupIcon from '@mui/icons-material/Group';
 import ReviewsIcon from '@mui/icons-material/Reviews';
@@ -23,7 +17,7 @@ import { mdiMonitorDashboard } from '@mdi/js';
 import { mdiCardAccountDetails } from '@mdi/js';
 import Chip from '@mui/material/Chip'
 
-export const Lists = () => {
+export const Lists = ({seller,loading}:any) => {
 
     const navigate=useNavigate()
 
@@ -38,7 +32,7 @@ export const Lists = () => {
         setCount(0)
       }if (location.pathname == '/controlpanelmoderate/sellers') {
         setCount(1)
-      }if (location.pathname == '/controlpanelseller/orders') {
+      }if (location.pathname == '/controlpanelmoderate/customers') {
         setCount(2)
       }if (location.pathname == '/controlpanelseller/customers') {
         setCount(3)
@@ -56,11 +50,12 @@ export const Lists = () => {
   
     },[location])
 
+    if (loading == true) return <div>...loading</div>
 
     const navLinks= [
       {id:0,name:"Dashbord",icons:<Icon path={mdiMonitorDashboard} size={1} />,url:'/controlpanelmoderate/dashboard',tolip:"Dashbord"},
-      {id:1,name:"Sellers",icons:<Icon path={mdiCardAccountDetails} size={1} />,url:'/controlpanelmoderate/sellers',tolip:"Explore Sellers"},
-      {id:2,name:"Orders",icons:<Badge badgeContent="2" color="warning"><ShoppingCartIcon /></Badge>,url:'/controlpanelseller/orders',tolip:"All Orders"},
+      {id:1,name:"Sellers",icons:<Badge badgeContent={seller.filter((sale:any)=>sale.role == "seller attente2").length} color="warning"><Icon path={mdiCardAccountDetails} size={1} /></Badge>,url:'/controlpanelmoderate/sellers',tolip:"Explore Sellers"},
+      {id:2,name:"Customers",icons:<GroupIcon/>,url:'/controlpanelmoderate/customers',tolip:"find customers"},
       {id:3,name:"Customers",icons:<GroupIcon />,url:'/controlpanelseller/customers',tolip:"find customers"},
       {id:4,name:"Reviews",icons:<ReviewsIcon />,url:'/controlpanelseller/reviews',tolip:"All Reviews"},
       {id:5,name:"Transactions",icons:<PaidIcon />,url:'/controlpanelseller/transactions',tolip:"Transactions Money"},
@@ -68,6 +63,8 @@ export const Lists = () => {
       {id:7,name:"Ajoutez Produit",icons:<AssignmentTurnedInIcon />,url:'/controlpanelseller/hotoffres',tolip:"Add New Product"},
       {id:8,name:"Settings",icons:<SettingsIcon />,url:'/controlpanelseller/settings',tolip:"Save Your Settings"},
     ]
+
+
 
   return (
     <Box sx={{ width: '100%', maxWidth: 360,height:'100%', bgcolor: 'background.paper' }}>

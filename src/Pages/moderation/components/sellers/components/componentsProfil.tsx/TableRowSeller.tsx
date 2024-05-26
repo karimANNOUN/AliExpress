@@ -6,7 +6,7 @@ import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
 import {calculateRevenueSeller} from '../../../Dashbord/components/FunctionTotalModeration'
 import Button from '@mui/material/Button';
-import { ModalSeller } from '../ModalSeller'
+import { ModalSeller } from './ModalSeller'
 
 type ThemeColor = 'error' | 'warning' | 'info' | 'success' 
 

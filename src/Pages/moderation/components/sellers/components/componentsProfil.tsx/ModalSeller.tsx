@@ -8,10 +8,10 @@ import Cookies from 'js-cookie';
 import Chip from '@mui/material/Chip'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { CardProduct } from './componentsProfil.tsx/CardProduct';
-import { ProfilSellerInfo } from './componentsProfil.tsx/ProfilSellerInfo';
-import { LegalSellerInfo } from './componentsProfil.tsx/LegalSellerInfo';
-import { EntrepriseSellerInfo } from './componentsProfil.tsx/EntrepriseSellerInfo';
+import { CardProduct } from './CardProduct';
+import { ProfilSellerInfo } from './ProfilSellerInfo';
+import { LegalSellerInfo } from './LegalSellerInfo';
+import { EntrepriseSellerInfo } from './EntrepriseSellerInfo';
 import RecyclingIcon from '@mui/icons-material/Recycling';
 import Button from '@mui/material/Button';
 
