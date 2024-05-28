@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -9,7 +9,6 @@ import { ReviewEvaluation } from './ReviewEvaluation';
 import CreateIcon from '@mui/icons-material/Create';
 import Tooltip from '@mui/material/Tooltip';
 import { UpdateComment } from './UpdateComment';
-import { UpdateImageComment } from './UpdateImageComment';
 import { ImageCard } from './ImageCard';
 import { UpdateRating } from './UpdateRating';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -70,7 +69,7 @@ export const CollumnTableReview = ({command,setMessage,setOpens,setCommandes,set
 }
 
    
-
+if (loading == true ) return <div>...loading</div>
 
   return (
 

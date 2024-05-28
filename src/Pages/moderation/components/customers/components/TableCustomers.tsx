@@ -5,7 +5,6 @@ import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
-import { useEffect } from 'react'
 import { Typography } from '@mui/material'
 import { TableRowCustomers } from './TableRowCustomers'
 

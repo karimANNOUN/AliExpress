@@ -11,6 +11,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import RecyclingIcon from '@mui/icons-material/Recycling';
 import Button from '@mui/material/Button';
 import { ProfilCustomerInfo } from './ProfilCustomerInfo';
+import { TableReviews } from './tableReviewsCustomers/TableReviews';
 
 
 type ThemeColor =  'success' 
@@ -41,7 +42,6 @@ export const ModalCustomers = ({opens,setOpens,customer}:any) => {
         display:'flex',
         flexDirection:'column',
         alignItems:'center',
-        
       };
 
 
@@ -51,16 +51,20 @@ export const ModalCustomers = ({opens,setOpens,customer}:any) => {
 
   return (
     <div> 
+
     <Modal
     open={opens}
     onClose={handleClose}
     aria-labelledby="modal-modal-title"
     aria-describedby="modal-modal-description"
   >
+
     <Box sx={style}>
-    <IconButton onClick={handleClose} sx={{bgcolor:'#424242',":hover":{bgcolor:'#424242'},position:'absolute',top:'-2%',right:'-1%'}} > <CloseIcon sx={{fontSize:'15px',color:'white'}} /> </IconButton>
 
     <Box sx={{overflowY:'auto',width:'95%',bgcolor:'Window',borderRadius:'8px',display:'flex',flexDirection:'column',alignItems:'flex-start',p:2}} >
+
+    <IconButton onClick={handleClose} sx={{bgcolor:'#424242',":hover":{bgcolor:'#424242'},position:'absolute',top:'-2%',right:'-1%'}} > <CloseIcon sx={{fontSize:'15px',color:'white'}} /> </IconButton>
+
 
 <Box sx={{width:'100%',display:'flex',justifyContent:'space-between',alignItems:'center',mb:4}} >
    <Box sx={{display:'flex',alignItems:'center'}} >
@@ -110,15 +114,16 @@ Wilaya: {customer.state}
      
    <Typography sx={{fontWeight:'600',textAlign:'left',fontFamily:'monospace',color:'#9c27b0'}} variant="h5" gutterBottom>
     Reviews Customers
-    </Typography>
+    </Typography  >
 
     
-     
+    <TableReviews customer={customer} />
 
    </Box>
 
     
         </Box>
+
         </Modal>
         </div>
   )

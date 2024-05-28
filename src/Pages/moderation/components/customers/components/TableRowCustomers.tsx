@@ -4,7 +4,6 @@ import Chip from '@mui/material/Chip'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
-// import {calculateRevenueSeller} from '../../../Dashbord/components/FunctionTotalModeration'
 import Button from '@mui/material/Button';
 import { ModalCustomers } from './ModalCustomers'
 
@@ -16,7 +15,7 @@ interface StatusObj {
   }
 }
 
-export const TableRowCustomers = ({row,setCustomers}:any) => {
+export const TableRowCustomers = ({row}:any) => {
 
     const statusObj: StatusObj = {
         "Male": { color: 'info' },
