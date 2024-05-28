@@ -14,12 +14,75 @@ export const Register = () => {
     const [confirmPassword,setConfirmPassword]=useState('')
     const [code,setCode]=useState('')
     const [show,setShow]=useState(false)
-    const [open,setOpen]=useState(false)
     const [see,setSee]=useState(false)
     const [message,setMessage]=useState('')
-    const [userEmail,setUserEmail]=useState('')
+    const [state,setState]=useState<any>({})
+    const [gender,setGender]=useState<any>({})
+
+    const handleChange = (event:any, newValue :any) => {
+      setState(newValue);
+    
+    };
+
+    const handleChange1 = (event:any, newValue :any) => {
+      setGender(newValue);
+     
+    };
 
     const options =["arabic","english"]
+
+    const options2 =[
+      {name:'Adrar',region:'region sud'},
+      {name:'Chlef',region:'region centre'},
+      {name:'Laghouat',region:'region sud'},
+      {name:'Oum El Bouaghi',region:'region est'},
+      {name:'Batna',region:'region est'},
+      {name:'Béjaïa',region:'region est'},
+      {name:'Biskra',region:'region sud'},
+      {name:'Béchar',region:'region sud'},
+      {name:'Blida',region:'region centre'},
+      {name:'Bouira',region:'region centre'},
+      {name:'Tamanrasset',region:'region sud'},
+      {name:'Tébessa',region:'region est'},
+      {name:'Tlemcen',region:'region ouest'},
+      {name:'Tiaret',region:'region ouest'},
+      {name:'Tizi Ouzou',region:'region centre'},
+      {name:'Alger',region:'region centre'},
+      {name:'Djelfa',region:'region centre'},
+      {name:'Jijel',region:'region est'},
+      {name:'Sétif',region:'region est'},
+      {name:'Saïda',region:'region ouest'},
+      {name:'Skikda',region:'region est'},
+      {name:'Sidi Bel Abbès',region:'region ouest'},
+      {name:'Annaba',region:'region est'},
+      {name:'Guelma',region:'region est'},
+      {name:'Constantine',region:'region est'},
+      {name:'Médéa',region:'region centre'},
+      {name:'Mostaganem',region:'region ouest'},
+      {name:'MSila',region:'region centre'},
+      {name:'Mascara',region:'region ouest'},
+      {name:'Ouargla',region:'region sud'},
+      {name:'Oran',region:'region ouest'},
+      {name:'El Bayadh',region:'region ouest'},
+      {name:'Illizi',region:'region sud'},
+      {name:'Bordj Bou Arréridj',region:'region est'},
+      {name:'Boumerdès',region:'region centre'},
+      {name:'El Tarf',region:'region est'},
+      {name:'Tindouf',region:'region sud'},
+      {name:'Tissemsilt',region:'region centre'},
+      {name:'El Oued',region:'region sud'},
+      {name:'Khenchela',region:'region est'},
+      {name:'Souk Ahras',region:'region est'},
+      {name:'Tipaza',region:'region centre'},
+      {name:'Mila',region:'region est'},
+      {name:'Aïn Defla',region:'region centre'},
+      {name:'Naâma',region:'region ouest'},
+      {name:'Aïn Témouchent',region:'region ouest'},
+      {name:'Ghardaïa',region:'region sud'},
+      {name:'Relizane',region:'region ouest'}
+    ];
+
+    const options3 =[{name:"Male"},{name:"Female"}]
 
     const navigate=useNavigate()
 
@@ -34,7 +97,7 @@ export const Register = () => {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, name ,password }),
+            body: JSON.stringify({ email, name ,password , gender , state }),
            
           });
 
@@ -49,7 +112,7 @@ export const Register = () => {
             setSee(true)
             setShow(true)     
         }
-        //  console.log('User registered successfully.');
+        
        
         } catch (error) {
           console.error('Registration failed.');
@@ -121,7 +184,7 @@ Seller center
         open your  account  ?<Link href="/login" underline="none" >Login</Link>
         </Typography>
 
-     { !see ? <Box sx={{width:'100%',display:'flex',flexDirection:'column',alignItems:'center'}} >
+     { !see ? <Box sx={{width:'100%',display:'flex',flexDirection:'column',alignItems:'flex-start'}} >
         <TextField
   id="nameAdress"
   sx={{ width: '100%' ,mt:1}}
@@ -136,6 +199,31 @@ Seller center
   placeholder="Enter your name "
   size='small'
   onChange={(e)=>setName(e.target.value)}
+    />
+
+
+            <Autocomplete
+      id="state"
+      options={options2}
+      sx={{ width: '100%' }}
+      size="small"
+      placeholder='choose your wilaya'
+      getOptionLabel={(option) => option.name}
+      onChange={handleChange}
+      renderInput={(params) => <TextField required  {...params} placeholder='choose your wilaya'  />}
+    />
+
+
+  
+            <Autocomplete
+      id="Gender"
+      options={options3}
+      sx={{ width: '100%',mt:1 }}
+      size="small"
+      placeholder='choose your gender'
+      getOptionLabel={(option) => option.name}
+      onChange={handleChange1}
+      renderInput={(params) => <TextField required  {...params} placeholder='choose your gender'  />}
     />
 
 <TextField

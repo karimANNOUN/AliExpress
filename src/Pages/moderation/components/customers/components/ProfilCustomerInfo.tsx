@@ -1,18 +1,15 @@
-
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import RecyclingIcon from '@mui/icons-material/Recycling';
 
-export const ProfilSellerInfo = ({sells}:any) => {
+export const ProfilCustomerInfo = ({customer}:any) => {
 
-
-    
-    const calculateTotalRevenue = (sells:any) =>{
+    const calculateTotalSales = (customer:any) =>{
 
         let total = 0;
     
-        sells.article.filter((art:any)=> art.state == "terminees" ).forEach((product:any) => {
+        customer.articleBuyer.filter((art:any)=> art.state == "terminees" ).forEach((product:any) => {
           total +=  product.quantity * product.priceProduct
       });
     
@@ -21,32 +18,30 @@ export const ProfilSellerInfo = ({sells}:any) => {
       }
 
     const orderInfo = [
-        {id:0,info:' Tous Products',details:sells.products.length},
-        {id:0,info:' Tous Commandes',details:sells.article.length},
-        {id:1,info:'Commandes Annuler',details:sells.article.filter((art:any)=> art.state == "non paye" ).length},
-        {id:2,info:'Commandes Accepter',details:sells.article.filter((art:any)=> art.state == "terminees" ).length},
-        {id:3,info:'Commandes En Attente',details:sells.article.filter((art:any)=> art.state == "En Attente" ).length},
-        {id:4,info:'Commandes En Livraison',details:sells.article.filter((art:any)=> art.state == "expédiée" ).length},
-        {id:5,info:'Revenue',details:`${calculateTotalRevenue(sells)}(DA)`},
+        {id:0,info:' Tous Commandes',details:customer.articleBuyer.length},
+        {id:1,info:'Commandes Annuler',details:customer.articleBuyer.filter((art:any)=> art.state == "non paye" ).length},
+        {id:2,info:'Commandes Accepter',details:customer.articleBuyer.filter((art:any)=> art.state == "terminees" ).length},
+        {id:3,info:'Commandes En Attente',details:customer.articleBuyer.filter((art:any)=> art.state == "En Attente" ).length},
+        {id:4,info:'Commandes En Livraison',details:customer.articleBuyer.filter((art:any)=> art.state == "expédiée" ).length},
+        {id:5,info:'Sales',details:`${calculateTotalSales(customer)}(DA)`},
     ]
 
 
     const profilInf = [
-        {id:0,info:'Full Name',details:`${sells.name}`},
-        {id:1,info:'Mobile',details:`${sells.reprisentativeLegal.legalPhoneNumber}`},
-        {id:2,info:'Email',details:`${sells.email}`},
-        {id:3,info:'Location',details:`${sells.reprisentativeLegal.pays}`},
-        {id:4,info:'Wilaya',details:`${sells.state}`},
-        {id:5,info:'Commune',details:`${sells.reprisentativeLegal.commune} Postal Code (${sells.reprisentativeLegal.postalCode}) `},
+        {id:0,info:'Full Name',details:`${customer.name}`},
+        {id:1,info:'Mobile',details:`${  !customer.locationUser ? "Null" : customer.locationUser.phoneNumber}`},
+        {id:2,info:'Email',details:`${customer.email}`},
+        {id:3,info:'Location',details:`${ !customer.locationUser ? "Null" : customer.locationUser.country}`},
+        {id:4,info:'Wilaya',details:`${customer.state}`},
+        {id:5,info:'Adress',details:`${ !customer.locationUser ? "Null" : customer.locationUser.rueAdress} / ${ !customer.locationUser ? "Null" : customer.locationUser.commune} / Postal Code :(${ !customer.locationUser ? "Null" : customer.locationUser.postalCode}) `},
     ]
-
 
   return (
     <Box sx={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',width:'100%',my:2}} >
 
     <Box sx={{width:'30%',display:'flex',flexDirection:'column',p:1}} >
         <Typography sx={{fontWeight:'700',textAlign:'left',mb:2}} variant="body1" gutterBottom>
-    Seller Orders Info
+    Customer Orders Info
     </Typography>
 
   
@@ -75,7 +70,7 @@ export const ProfilSellerInfo = ({sells}:any) => {
     </Typography>
 
     <Typography sx={{color:'#9e9e9e',textAlign:'left',my:2}} variant="subtitle2" gutterBottom>
-    Hi, {sells.name} this is all your profil khademni info 
+    Hi, {customer.name} this is all your profil khademni info 
     </Typography>
 
     {
@@ -97,16 +92,16 @@ export const ProfilSellerInfo = ({sells}:any) => {
         <Box sx={{width:'30%',display:'flex',flexDirection:'column',p:1}} >
 
         <Typography sx={{fontWeight:'700',textAlign:'left'}} variant="body1" gutterBottom>
-    Followers
+    Followings
     </Typography>
 
     
-    { sells.followers.length === 0 ?  
+    { customer.followersBuyer.length === 0 ?  
 
 <Box sx={{width:'100%',height:'250px',display:'flex',border:'solid 2px #e0e0e0',borderRadius:'8px',flexDirection:'column',justifyContent:'center',alignItems:'center',mt:2}} >
 
 <Typography sx={{fontWeight:'700',textAlign:'left',mb:2}} variant="body1" gutterBottom>
-    Not Find Followers
+    Not Find Followings
     </Typography>
 
     <RecyclingIcon  sx={{fontSize:'42px'}} />
@@ -116,22 +111,22 @@ export const ProfilSellerInfo = ({sells}:any) => {
    
         <Box sx={{width:'100%',maxHeight:'400px',overflowY:'auto',display:'flex',flexDirection:'column',justifyContent:'flex-start',alignItems:'center',mt:2}} >
 
-        { sells.followers.map( (profil:any) => <Box key={profil.id} sx={{display:'flex',alignItems:'center',width:'100%',justifyContent:'space-between',mb:2}} >
+        { customer.followersBuyer.map( (profil:any) => <Box key={profil.id} sx={{display:'flex',alignItems:'center',width:'100%',justifyContent:'space-between',mb:2}} >
 
 <Box sx={{display:'flex',alignItems:'center'}} >
     <img 
     alt='kihy'
-    src={profil.buyer.imageProfle == "" ? "https://almparts.co.za/wp-content/uploads/2021/12/no-image-available-icon.jpg" : profil.buyer.imageProfle } 
+    src={profil.seller.firstImageStore == "" ? "https://almparts.co.za/wp-content/uploads/2021/12/no-image-available-icon.jpg" : profil.seller.firstImageStore } 
     style={{height:'60px',width:'60px',borderRadius:'8px' }}
     />
 
     <Box sx={{display:'flex',flexDirection:'column',justifyContent:'center',ml:1}} >
     <Typography sx={{fontWeight:'500',textAlign:'left'}} variant="subtitle1" gutterBottom>
-   {profil.buyer.name}
+   {profil.seller.name}
  </Typography>
 
 <Typography sx={{color:'#9e9e9e',textAlign:'left'}} variant="caption" gutterBottom>
-{profil.buyer.email}
+{profil.seller.email}
 </Typography>
         </Box>
 

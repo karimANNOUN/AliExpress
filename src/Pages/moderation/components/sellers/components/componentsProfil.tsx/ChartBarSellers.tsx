@@ -47,7 +47,7 @@ export const ChartBarSellers = ({seller}:any) => {
    const state : any = {
           
         series: [{
-          name: 'Inflation',
+          name: '% sales this month ',
           data: [
               (Math.floor(calculateSalesMonth(seller,1)*1000/calculateSalesAll(seller))/10),
               (Math.floor(calculateSalesMonth(seller,2)*1000/calculateSalesAll(seller))/10),

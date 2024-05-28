@@ -7,10 +7,12 @@ import Autocomplete from '@mui/material/Autocomplete';
 import ReactApexcharts from 'react-apexcharts'
 import Grid from '@mui/material/Grid';
 import { ChartBarSellers } from './components/componentsProfil.tsx/ChartBarSellers';
+import Cookies from 'js-cookie';
 export const Sellers = ({seller,wiliaya,loading,setSeller}:any) => {
 
   const [active,setActive]=useState(0)
-  const [sort,setSort]=useState("")
+  const [loading1,setLoading1]=useState(Boolean)
+  
 
   const option = [
     { label: 'name'},
@@ -19,6 +21,39 @@ export const Sellers = ({seller,wiliaya,loading,setSeller}:any) => {
     { label: 'wilaya'},
   ]
 
+
+  const token = Cookies.get('token');
+
+
+  const handleChange = async(event:any, newValue :any) => {
+    
+  
+      try {
+        const sort = newValue.label;
+        setLoading1(true)
+  
+          const response = await fetch(`http://localhost:8000/getsellersSortedBy`,{
+        method: 'POST',
+        credentials:"include", 
+        headers: {
+          'Content-Type': 'application/json',
+           authorization:`${token}`
+        },
+        body:JSON.stringify({sort})
+      });
+      const data = await response.json()
+     if (data.success == true) {
+        setSeller(data.getAllSellers)
+        setLoading1(false) 
+      } 
+  
+      } catch (error) {
+        console.error('operation failed.');
+      }
+  
+  };
+
+ 
 
 
 const  state : any = {
@@ -159,7 +194,7 @@ Non demande
       options={option}
       sx={{ width: 300 }}
       size='small'
-      onChange={(e,newValue:any)=>setSort(newValue)}
+      onChange={handleChange}
       renderInput={(params) => <TextField {...params} label="sort by" />}
     />
 </Box>
@@ -172,7 +207,7 @@ Non demande
     <Grid  item xs={12}>
 
     <Box sx={{display:'flex',flexDirection:'column',width:'100%'}} >
-      <TableSeller seller={seller} setSeller={setSeller} active={active} sort={sort} />
+      <TableSeller seller={seller} setSeller={setSeller} active={active}  />
     </Box>
 
     </Grid>
