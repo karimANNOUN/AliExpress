@@ -6,6 +6,7 @@ import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
 import {calculateRevenueSeller} from '../../../Dashbord/components/FunctionTotalModeration'
 import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
 import { ModalSeller } from './ModalSeller'
 
 type ThemeColor = 'error' | 'warning' | 'info' | 'success' 
@@ -33,7 +34,11 @@ export const TableRowSeller = ({row,setSeller}:any) => {
     <TableRow hover  sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}>
     <TableCell sx={{ py: theme => `${theme.spacing(0.5)} !important` }}>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>{row.name}</Typography>
+      <Link variant='body1' sx={{color:'black',fontWeight:'700',fontSize:'12px',textAlign:'left',ml:1,":hover":{color:'#ff5722'}}} href={`/controll/${row.id}`} target="_blank" underline="none">
+
+        {row.name}
+
+        </Link>
       </Box>
     </TableCell>
     <TableCell>{row.email}</TableCell>

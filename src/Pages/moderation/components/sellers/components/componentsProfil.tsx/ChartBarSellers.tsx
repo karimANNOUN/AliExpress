@@ -1,4 +1,5 @@
 import { Box } from '@mui/material';
+import { useEffect } from 'react';
 import ReactApexcharts from 'react-apexcharts'
 
 
@@ -6,16 +7,23 @@ export const ChartBarSellers = ({seller}:any) => {
 
     const currentDate = new Date();
     const previousYearDate = new Date(currentDate.getFullYear() - 1, currentDate.getMonth(), currentDate.getDate());
+    const previous2YearDate = new Date(currentDate.getFullYear() - 2, currentDate.getMonth(), currentDate.getDate());
+  
+  
+    
+    
 
     const calculateSalesMonth = (seller:any,month:number) =>{
 
         let total = 0;
+
+        
     
         seller.forEach((rev:any) => {
             total +=  rev.article.filter((art:any)=>{
             const createdAtDate = new Date(art.commande.createdAt);
             const monthOfSpecificDateArticle = createdAtDate.getMonth() + 1;
-          return (art.state == "terminees" && monthOfSpecificDateArticle === month && createdAtDate > previousYearDate )
+          return (art.state == "terminees" && monthOfSpecificDateArticle === month &&  createdAtDate > previousYearDate )
             }).length
         });
     
@@ -33,7 +41,7 @@ export const ChartBarSellers = ({seller}:any) => {
         seller.forEach((rev:any) => {
             total +=  rev.article.filter((art:any)=>{
                 const createdAtDate = new Date(art.commande.createdAt);
-          return (art.state == "terminees" && createdAtDate > previousYearDate )
+          return (art.state == "terminees" &&  createdAtDate > previousYearDate  )
         }).length
         });
     

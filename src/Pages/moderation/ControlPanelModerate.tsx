@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { Box} from '@mui/material'
 import { Lists } from './components/Lists'
 import { Header } from './components/Header'
@@ -56,7 +56,7 @@ export const ControlPanelModerate = () => {
 
   return (
     <Box sx={{bgcolor:'#fafafa'}} >
-    <Header loading={loading} />
+    <Header />
     <Box sx={{display:'flex',width:'100%',mb:2,height:'100vh',position:'fixed',bgcolor:'#e0e0e0'}} >
       <Box sx={{width:'15%',bgcolor:'Window',height:'100vh'}} >
         <Lists seller={seller} loading={loading} />

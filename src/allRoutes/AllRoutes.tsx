@@ -51,6 +51,7 @@ import { ControlPanelModerate } from '../Pages/moderation/ControlPanelModerate'
 import { DashbordModerate } from '../Pages/moderation/components/Dashbord/DashbordModerate'
 import { Sellers } from '../Pages/moderation/components/sellers/Sellers'
 import { CustomersModerate } from '../Pages/moderation/components/customers/CustomersModerate'
+import { ControlSeller } from '../Pages/moderation/components/UpdateSeller/ControlSeller'
 
 
 export default function AllRoutes() {
@@ -120,6 +121,9 @@ export default function AllRoutes() {
            <Route path='customers' element={<ProtectedRoutes><CustomersModerate/></ProtectedRoutes>} />
            </Route>
             
+           <Route path='/controll/:sallerId' element={<ProtectedRoutes><ControlSeller/></ProtectedRoutes>} />
+         
+
 
           <Route path='/register' element={<Register/>} />
          

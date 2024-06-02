@@ -60,10 +60,13 @@ export const ModalCustomers = ({opens,setOpens,customer}:any) => {
   >
 
     <Box sx={style}>
+    <IconButton onClick={handleClose} sx={{bgcolor:'#424242',":hover":{bgcolor:'#424242'},position:'absolute',top:'-2%',right:'-1%'}} > 
+    <CloseIcon sx={{fontSize:'15px',color:'white'}} /> 
+    </IconButton>
 
     <Box sx={{overflowY:'auto',width:'95%',bgcolor:'Window',borderRadius:'8px',display:'flex',flexDirection:'column',alignItems:'flex-start',p:2}} >
 
-    <IconButton onClick={handleClose} sx={{bgcolor:'#424242',":hover":{bgcolor:'#424242'},position:'absolute',top:'-2%',right:'-1%'}} > <CloseIcon sx={{fontSize:'15px',color:'white'}} /> </IconButton>
+   
 
 
 <Box sx={{width:'100%',display:'flex',justifyContent:'space-between',alignItems:'center',mb:4}} >
