@@ -20,7 +20,8 @@ function App() {
   {id:16,url:`/controlpanelseller/transactions`},{id:17,url:`/controlpanelseller/storeSettings`},
   {id:18,url:'/controlpanelseller/hotoffres'},{id:19,url:'/controlpanelseller/settings'},
   {id:20,url:'/controlpanelmoderate/dashboard'},{id:21,url:'/controlpanelmoderate/sellers'},
-  {id:22,url:'/controlpanelmoderate/customers'},{id:23,url:`/controll/${params.sallerId}`}]
+  {id:22,url:'/controlpanelmoderate/customers'},{id:23,url:`/controll/${params.sallerId}`},
+  {id:24,url:'/controlpanelmoderate/signale'}]
 
   return (
     <div className="App">

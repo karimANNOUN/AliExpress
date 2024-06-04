@@ -12,8 +12,10 @@ export const CustomersModerate = () => {
 
   const [active,setActive]=useState(0)
   const [customers,setCustomers]=useState<any>([])
+  const [reviews,setReviews]=useState<any>([])
   const [loading,setLoading]=useState(false)
   const [loading1,setLoading1]=useState(false)
+  const [loading2,setLoading2]=useState(false)
   const token = Cookies.get('token');
 
   const option = [
@@ -79,6 +81,33 @@ export const CustomersModerate = () => {
     }
 
     handelGetCustomers()
+
+
+
+    const handelGetReviews=async()=>{
+      try {
+        setLoading2(true)
+      const response = await fetch(`http://localhost:8000/getLatesCustomersFeedBack`,{
+        method: 'GET',
+        credentials:"include", 
+        headers: {
+          'Content-Type': 'application/json',
+           authorization:`${token}`
+        }
+      });
+      const data = await response.json()
+     if (data.success == true) {
+        setReviews(data.getFeedBack)
+        setLoading2(false) 
+      } 
+  
+    } catch (error) {
+      console.error('operation failed.');
+    }
+     
+    }
+
+    handelGetReviews()
 
  
     
@@ -227,7 +256,7 @@ Female
     Latest Reviews
     </Typography>
             
-            <LatestReviews/>
+            { loading2 == true ? "...Loading" : <LatestReviews reviews={reviews} />}
         
               </Box>
     

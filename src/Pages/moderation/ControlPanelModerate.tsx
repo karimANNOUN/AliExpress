@@ -7,6 +7,7 @@ import { useLocation } from 'react-router-dom'
 import { Sellers } from './components/sellers/Sellers'
 import Cookies from 'js-cookie';
 import { CustomersModerate } from './components/customers/CustomersModerate'
+import { Signale } from './components/article Signale/Signale'
 
 export const ControlPanelModerate = () => {
 
@@ -65,6 +66,7 @@ export const ControlPanelModerate = () => {
       { location.pathname == '/controlpanelmoderate/dashboard' ? <DashbordModerate seller={seller} wiliaya={wiliaya} loading={loading} /> : "" }
       { location.pathname == '/controlpanelmoderate/sellers' ? <Sellers seller={seller} loading={loading} setSeller={setSeller} wiliaya={wiliaya} /> : "" }
       { location.pathname == '/controlpanelmoderate/customers' ? <CustomersModerate /> : "" }
+      { location.pathname == '/controlpanelmoderate/signale' ? <Signale/> : "" }
       </Box>
     </Box>
 

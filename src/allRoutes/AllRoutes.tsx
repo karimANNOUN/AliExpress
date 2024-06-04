@@ -52,6 +52,7 @@ import { DashbordModerate } from '../Pages/moderation/components/Dashbord/Dashbo
 import { Sellers } from '../Pages/moderation/components/sellers/Sellers'
 import { CustomersModerate } from '../Pages/moderation/components/customers/CustomersModerate'
 import { ControlSeller } from '../Pages/moderation/components/UpdateSeller/ControlSeller'
+import { Signale } from '../Pages/moderation/components/article Signale/Signale'
 
 
 export default function AllRoutes() {
@@ -119,6 +120,7 @@ export default function AllRoutes() {
            <Route path='dashboard' element={<ProtectedRoutes><DashbordModerate/></ProtectedRoutes>} />
            <Route path='sellers' element={<ProtectedRoutes><Sellers/></ProtectedRoutes>} />
            <Route path='customers' element={<ProtectedRoutes><CustomersModerate/></ProtectedRoutes>} />
+           <Route path='signale' element={<ProtectedRoutes><Signale/></ProtectedRoutes>} />
            </Route>
             
            <Route path='/controll/:sallerId' element={<ProtectedRoutes><ControlSeller/></ProtectedRoutes>} />

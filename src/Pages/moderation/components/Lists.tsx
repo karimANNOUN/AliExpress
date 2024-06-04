@@ -2,7 +2,7 @@ import { useState,useEffect } from 'react';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ErrorIcon from '@mui/icons-material/Error';
 import GroupIcon from '@mui/icons-material/Group';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import PaidIcon from '@mui/icons-material/Paid';
@@ -34,7 +34,7 @@ export const Lists = ({seller,loading}:any) => {
         setCount(1)
       }if (location.pathname == '/controlpanelmoderate/customers') {
         setCount(2)
-      }if (location.pathname == '/controlpanelseller/customers') {
+      }if (location.pathname == '/controlpanelmoderate/signale') {
         setCount(3)
       }if(location.pathname == '/controlpanelseller/reviews') {
         setCount(4)
@@ -56,12 +56,7 @@ export const Lists = ({seller,loading}:any) => {
       {id:0,name:"Dashbord",icons:<Icon path={mdiMonitorDashboard} size={1} />,url:'/controlpanelmoderate/dashboard',tolip:"Dashbord"},
       {id:1,name:"Sellers",icons:<Badge badgeContent={seller.filter((sale:any)=>sale.role == "seller attente2").length} color="warning"><Icon path={mdiCardAccountDetails} size={1} /></Badge>,url:'/controlpanelmoderate/sellers',tolip:"Explore Sellers"},
       {id:2,name:"Customers",icons:<GroupIcon/>,url:'/controlpanelmoderate/customers',tolip:"find customers"},
-      {id:3,name:"Customers",icons:<GroupIcon />,url:'/controlpanelseller/customers',tolip:"find customers"},
-      {id:4,name:"Reviews",icons:<ReviewsIcon />,url:'/controlpanelseller/reviews',tolip:"All Reviews"},
-      {id:5,name:"Transactions",icons:<PaidIcon />,url:'/controlpanelseller/transactions',tolip:"Transactions Money"},
-      {id:6,name:"Store",icons:<LanguageIcon />,url:'/controlpanelseller/storeSettings',tolip:"Update Your Store"},
-      {id:7,name:"Ajoutez Produit",icons:<AssignmentTurnedInIcon />,url:'/controlpanelseller/hotoffres',tolip:"Add New Product"},
-      {id:8,name:"Settings",icons:<SettingsIcon />,url:'/controlpanelseller/settings',tolip:"Save Your Settings"},
+      {id:3,name:"Signale",icons:<Badge badgeContent="4" color="warning"><ErrorIcon /></Badge>,url:'/controlpanelmoderate/signale',tolip:"article signalez"},
     ]
 
 
