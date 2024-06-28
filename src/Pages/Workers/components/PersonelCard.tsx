@@ -1,6 +1,6 @@
 
 import Box from '@mui/material/Box';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ImageCard } from './personelCardComponents/ImageCard';
 import { FirstCard } from './personelCardComponents/FirstCard';
 import Divider from '@mui/material/Divider';
@@ -8,13 +8,14 @@ import { CompletedCard } from './personelCardComponents/CompletedCard';
 import { Description } from './personelCardComponents/Description';
 import { Reviews } from './personelCardComponents/Reviews';
 import { ProductLikely } from './personelCardComponents/ProductLikely';
-import Skeleton from '@mui/material/Skeleton';
-import { useSelector } from 'react-redux';
 
 
-export const PersonelCard = ({loading  }:any) => {
 
-  const product=useSelector((state:any)=>state.app.product)
+
+export const PersonelCard = ({product}:any) => {
+
+
+
     
     const [activeSize,setActiveSize]=useState(0)
     const [indexs,setIndexs]=useState(product.images.filter((img:any)=> img.color !== 'imageDescription')[0].id)
@@ -41,7 +42,7 @@ export const PersonelCard = ({loading  }:any) => {
 
 
      <Box sx={{display:'flex',flexDirection:'column'}} >
-     <FirstCard activeSize={activeSize} setActiveSize={setActiveSize} indexs={indexs} setIndexs={setIndexs} totalQuantity={totalQuantity} totalRating={totalRating} setFavColor={setFavColor} />
+     <FirstCard product={product} activeSize={activeSize} setActiveSize={setActiveSize} indexs={indexs} setIndexs={setIndexs} totalQuantity={totalQuantity} totalRating={totalRating} setFavColor={setFavColor} />
      <Divider sx={{my:2}} />
      <CompletedCard/>
      <Divider sx={{my:2}} />

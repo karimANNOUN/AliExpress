@@ -10,9 +10,9 @@ import Divider from '@mui/material/Divider';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 
-export const FirstCard = ({activeSize,setActiveSize,indexs,setIndexs,totalQuantity,totalRating,setFavColor}:any) => {
+export const FirstCard = ({activeSize,setActiveSize,indexs,setIndexs,totalQuantity,totalRating,setFavColor,product}:any) => {
 
-  const product=useSelector((state:any)=>state.app.product)
+//  const product=useSelector((state:any)=>state.app.product)
 
     
 

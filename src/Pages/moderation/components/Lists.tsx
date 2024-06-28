@@ -17,7 +17,7 @@ import { mdiMonitorDashboard } from '@mdi/js';
 import { mdiCardAccountDetails } from '@mdi/js';
 import Chip from '@mui/material/Chip'
 
-export const Lists = ({seller,loading}:any) => {
+export const Lists = ({seller,loading,loading1,signale}:any) => {
 
     const navigate=useNavigate()
 
@@ -56,7 +56,7 @@ export const Lists = ({seller,loading}:any) => {
       {id:0,name:"Dashbord",icons:<Icon path={mdiMonitorDashboard} size={1} />,url:'/controlpanelmoderate/dashboard',tolip:"Dashbord"},
       {id:1,name:"Sellers",icons:<Badge badgeContent={seller.filter((sale:any)=>sale.role == "seller attente2").length} color="warning"><Icon path={mdiCardAccountDetails} size={1} /></Badge>,url:'/controlpanelmoderate/sellers',tolip:"Explore Sellers"},
       {id:2,name:"Customers",icons:<GroupIcon/>,url:'/controlpanelmoderate/customers',tolip:"find customers"},
-      {id:3,name:"Signale",icons:<Badge badgeContent="4" color="warning"><ErrorIcon /></Badge>,url:'/controlpanelmoderate/signale',tolip:"article signalez"},
+      {id:3,name:"Signale",icons:<Badge badgeContent={ signale.length === 0 ? signale.length : `${signale.length}`} color="warning"><ErrorIcon /></Badge>,url:'/controlpanelmoderate/signale',tolip:"article signalez"},
     ]
 
 

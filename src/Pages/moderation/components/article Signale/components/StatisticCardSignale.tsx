@@ -12,7 +12,7 @@ import CurrencyUsd from 'mdi-material-ui/CurrencyUsd'
 import CellphoneLink from 'mdi-material-ui/CellphoneLink'
 import { mdilComment } from '@mdi/light-js';
 import { mdilAccount } from '@mdi/light-js';
-
+import Badge from '@mui/material/Badge';
 
 
 type ThemeColor = 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success'
@@ -24,30 +24,30 @@ interface DataType {
   icon: ReactElement
 }
 
-export const StatisticCardSignale = () => {
+export const StatisticCardSignale = ({signale}:any) => {
 
 
     const salesData: DataType[] = [
         {
-          stats: `10`,
+          stats: `${signale.filter((sig:any)=> sig.Defendant == "comment" ).length}`,
           title: 'Comments',
           color: 'primary',
           icon: <Icon path={mdilComment} size={1} />
         },
         {
-          stats: `5`,
+          stats: `${signale.filter((sig:any)=> sig.Defendant == "seller" ).length}`,
           title: 'Sallers',
           color: 'success',
           icon: <Icon path={mdilAccount} size={1} />
         },
         {
-          stats: `6`,
-          color: 'warning',
+          stats: `${signale.filter((sig:any)=> sig.Defendant == "product" ).length}`,
+          color: 'secondary',
           title: 'Products',
           icon: <CellphoneLink sx={{ fontSize: '1.75rem' }} />
         },
         {
-          stats: `8`,
+          stats: `${signale.length}`,
           color: 'info',
           title: 'Total',
           icon: <CurrencyUsd sx={{ fontSize: '1.75rem' }} />
@@ -58,6 +58,7 @@ export const StatisticCardSignale = () => {
         return salesData.map((item: DataType, index: number) => (
           <Grid item xs={12} sm={3} key={index}>
             <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
+            
               <Avatar
                 variant='rounded'
                 sx={{
@@ -69,8 +70,11 @@ export const StatisticCardSignale = () => {
                   backgroundColor: `${item.color}.main`
                 }}
               >
+                <Badge badgeContent={item.stats} color="warning">
                 {item.icon}
+                </Badge>
               </Avatar>
+              
               <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Typography variant='caption'>{item.title}</Typography>
                 <Typography variant='h6'>{item.stats}</Typography>
@@ -89,7 +93,7 @@ export const StatisticCardSignale = () => {
       subheader={
         <Typography variant='body2'>
           <Box component='span' sx={{ fontWeight: 600, color: 'text.primary' }}>
-            Total 25 article a user signalez
+            Total {signale.length} article a user signalez
           </Box>{' '}
           
         </Typography>

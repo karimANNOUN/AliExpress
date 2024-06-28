@@ -8,7 +8,6 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
 import TableContainer from '@mui/material/TableContainer'
-import {calculateRevenueSeller} from './FunctionTotalModeration'
 
 
 type ThemeColor = 'info' | 'error' | 'warning' | 'success' 
@@ -22,17 +21,19 @@ type ThemeColor = 'info' | 'error' | 'warning' | 'success'
   }
   
 
+export const TableSignale = () => {
 
-export const TableProducts = ({seller}:any) => {
-
-
-      
-      const statusObj: StatusObj = {
+    const statusObj: StatusObj = {
         "seller attente1": { color: 'info' },
         "rejected": { color: 'error' },
         "seller attente2": { color: 'warning' },
         "seller": { color: 'success' }
       }
+
+      const seller =[
+        {id:0,name:"karim",email:"kkkkk",createdAt:'08/08/2024',state:'alger',role:"seller"},
+        {id:1,name:'marwa',email:"ghoza",createdAt:'08/08/2024',state:'alger',role:"seller attente1"}
+      ]
 
   return (
     <Card>
@@ -40,12 +41,12 @@ export const TableProducts = ({seller}:any) => {
         <Table sx={{ minWidth: 800 }} aria-label='table in dashboard'>
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
+              <TableCell>Signaler Name</TableCell>
+              <TableCell>Article</TableCell>
               <TableCell>Date</TableCell>
-              <TableCell>Revenu(DA)</TableCell>
+              <TableCell>Number</TableCell>
               <TableCell>Wilaya</TableCell>
-              <TableCell>Status</TableCell>
+              <TableCell>Comments</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -58,7 +59,7 @@ export const TableProducts = ({seller}:any) => {
                 </TableCell>
                 <TableCell>{row.email}</TableCell>
                 <TableCell>{row.createdAt}</TableCell>
-                <TableCell>{calculateRevenueSeller(row)}</TableCell>
+                <TableCell>100</TableCell>
                 <TableCell>{row.state}</TableCell>
                 <TableCell>
                   <Chip

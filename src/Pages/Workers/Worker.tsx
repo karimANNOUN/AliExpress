@@ -1,38 +1,45 @@
-import React from 'react'
+
 import Box from '@mui/material/Box';
 import { Header } from './components/Header';
 import { PersonelCard } from './components/PersonelCard';
 import { useEffect,useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { setProduct } from '../../storeRedux/CartSlice';
+
 export const Worker = () => {
 
   const params=useParams()
 
-  const dispatch = useDispatch()
 
-  const [loading,setLoading]=useState(false)
+  const [loading,setLoading]=useState(Boolean)
+  const [product,setProduct]=useState<any>({})
 
    useEffect( ()=>{
-    setLoading(true)
-       const getOneProduct =async()=>{
-         const response=await fetch(`http://localhost:8000/getproduct/${params.id}`, {
-          method: 'GET',
-          credentials: 'include', 
-          headers: {
-            'Content-Type': 'application/json', 
-          },
-        })
-        const data = await response.json()
-     
-      if (data.success == true) {
-        dispatch(setProduct(data.product)) 
-        setLoading(false)
+       
+        const getOneProduct =async()=>{
+           try {
             
-       
-       
-      }
+            setLoading(true)
+            const response=await fetch(`http://localhost:8000/getproduct/${params.id}`, {
+             method: 'GET',
+             credentials: 'include', 
+             headers: {
+               'Content-Type': 'application/json', 
+             },
+           })
+           const data = await response.json()
+        
+         if (data.success == true) {
+           setProduct(data.product)
+           setLoading(false)
+               
+          
+          
+         }
+
+           } catch (error) {
+            console.error(error)
+           }
+         
         
       }
        getOneProduct()
@@ -44,14 +51,18 @@ export const Worker = () => {
 
    
 
-if (loading == true) return <div>...loading</div>
+if (loading == true){
+  return <div>...loading</div>
+}
 
   return (
     <div>
-        <Box sx={{}} >
-        <Header loading={loading} setLoading={setLoading} />
-          <PersonelCard loading={loading}  />
+        <Box>
+        { loading == false ? <Header  product={product} loading={loading} /> : "" }
+        { loading == false ? <PersonelCard loading={loading} product={product} />: "" }
         </Box>
     </div>
   )
+
+
 }

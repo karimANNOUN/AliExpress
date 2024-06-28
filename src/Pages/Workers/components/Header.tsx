@@ -13,11 +13,11 @@ import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import { setProduct } from '../../../storeRedux/CartSlice';
 
-export const Header = ({loading,setLoading}:any) => {
+export const Header = ({product}:any) => {
 
         const navigate=useNavigate()
 
-        const product=useSelector((state:any)=>state.app.product)
+     //   const product=useSelector((state:any)=>state.app.product)
         const user =useSelector((state:any)=>state.app.user)
 
         const params=useParams()
@@ -126,7 +126,7 @@ export const Header = ({loading,setLoading}:any) => {
              
         const positifReviews= Math.floor(reviews.filter((rev:any)=> parseInt(rev.rating) >= 4 ).length*100*10/reviews.length)/10
 
-        if (loading == true) return <div>...loading</div>
+        
         
       
   return (
